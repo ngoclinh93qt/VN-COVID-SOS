@@ -9,6 +9,13 @@ import { BlockedComponent } from './pages/blocked/blocked.component';
 import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { NotificationComponent } from './shared/components/notification/notification.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+import { MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -18,11 +25,15 @@ import { NotificationComponent } from './shared/components/notification/notifica
     BlockedComponent,
     AuthenComponent,
     CardComponent,
-    NotificationComponent
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

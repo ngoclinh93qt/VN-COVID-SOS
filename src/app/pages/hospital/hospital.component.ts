@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HospitalComponent implements OnInit {
 
+  gridColumns = 3;
+
+  toggleGridColumns() {
+    this.gridColumns = this.gridColumns === 3 ? 4 : 3;
+  }
+
   constructor() { }
 
   ngOnInit(): void {
