@@ -9,6 +9,7 @@ import { BlockedComponent } from './pages/blocked/blocked.component';
 import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { NotificationComponent } from './shared/components/notification/notification.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NotificationComponent } from './shared/components/notification/notifica
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
