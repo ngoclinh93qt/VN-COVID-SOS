@@ -4,11 +4,20 @@
   </mat-card-header>
   <mat-card-content>
     <p>
-      Địa chỉ: {{hospital?.address}}
+      Địa chỉ: <span style="font-weight: bold;">{{hospital?.address}}</span>
     </p>
+    <div style="display: flex;">
+      <p style="margin-right: 1.2rem;"> Bệnh nhân: {{hospital?.numPatient}}</p>
+      <p>Giường bệnh: {{hospital?.numBeds}}</p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <p style="font-weight: bold; margin-top: 1rem;">Tình trạng cập nhật mới nhất</p>
+
     <div *ngFor="let status of hospital?.statusList">
       <p>
-        Cần {{status.value}}  {{status.key}}
+        Cần {{status.value}}  <span style="font-weight: bold;">{{status.key}}</span>
       </p>
     </div>
   </mat-card-content>
