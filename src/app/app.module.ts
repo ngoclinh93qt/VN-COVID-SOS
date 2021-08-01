@@ -11,6 +11,14 @@ import { CardComponent } from './shared/components/card/card.component';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+import { MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatDividerModule} from '@angular/material/divider';
+import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,12 +27,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BlockedComponent,
     AuthenComponent,
     CardComponent,
-    NotificationComponent
+    NotificationComponent,
+    CardBlockedComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

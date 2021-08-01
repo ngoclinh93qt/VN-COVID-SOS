@@ -1,1 +1,7 @@
-<p>hospital works!</p>
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let hospital of hospitals">
+      <app-card [hospital]="hospital"></app-card>
+    </div>
+  </div>
+</div>
