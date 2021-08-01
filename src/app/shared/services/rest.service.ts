@@ -9,7 +9,7 @@ import { NotificationService } from './notification.service';
 })
 export class RestService extends BaseHttpService {
 
-  constructor(http: HttpClient, notif: NotificationService, private pathName: string) { 
+  constructor(http: HttpClient, notif: NotificationService, private pathName: string) {
     super(http, notif)
   }
 
