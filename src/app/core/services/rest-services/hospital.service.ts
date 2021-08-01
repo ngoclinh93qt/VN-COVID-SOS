@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseHttpService } from '../base-http.service';
 import { NotificationService } from '../notification.service';
 import { RestService } from '../rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HospitalService extends RestService {
+export class HospitalService extends RestService<IHospital> {
 
-  constructor(http: HttpClient, notif: NotificationService) { 
-    super(http, notif, '')
+  constructor(http: HttpClient) { 
+    super(http, '')
   }
 }

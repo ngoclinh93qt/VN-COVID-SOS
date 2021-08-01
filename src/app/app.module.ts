@@ -10,6 +10,7 @@ import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { httpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
