@@ -8,10 +8,11 @@ import { BlockedService } from 'src/app/core/services/rest-services/blocked.serv
 })
 export class BlockedComponent implements OnInit {
   gridColumns = 3;
-  blockeds =[];
+  blockeds: IBlocked [] =[];
 
   constructor(private blockedService: BlockedService,) {
     blockedService.findAll()
+    this.blockeds = blockedService.blockeds;
   }
 
   ngOnInit(): void {

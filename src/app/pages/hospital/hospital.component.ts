@@ -9,10 +9,11 @@ import { Hospital } from './model/hospital.mode';
 })
 export class HospitalComponent implements OnInit {
   gridColumns = 3;
-  hospitals = [];
+  hospitals: IHospital[] = [];
 
   constructor(private hospitalService: HospitalService,) {
     hospitalService.findAll()
+    this.hospitals = hospitalService.hospitals;
   }
 
   ngOnInit(): void {}

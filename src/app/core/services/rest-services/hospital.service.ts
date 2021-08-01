@@ -15,7 +15,7 @@ export class HospitalService extends RestService<IHospital> {
   }
 
 
-  hospitals = [
+  hospitals: IHospital[] = [
     {
       id: "1",
       name: 'Bệnh viện A',

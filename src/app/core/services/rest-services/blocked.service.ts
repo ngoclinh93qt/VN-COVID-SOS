@@ -14,7 +14,7 @@ export class BlockedService extends RestService<IBlocked> {
   }
 
 
-  blockeds = [
+  public blockeds: IBlocked [] = [
     {
       id: "1",
       name: 'Khu phong tỏa P11, Quận Thủ Đức',

@@ -29,11 +29,11 @@ interface IBlocked {
 }
 
 interface IBlockedStatus {
-       value: string;
+       value: number;
        key: string;
 }
 
 interface IHospitalStatus{
-       value: string;
+       value: number;
        key: string;
 }
