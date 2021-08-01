@@ -12,6 +12,16 @@ import { NotificationComponent } from './shared/components/notification/notifica
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { httpInterceptorProviders } from './core/interceptors';
 
+
+import { MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatDividerModule} from '@angular/material/divider';
+import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
+import { AuthenService } from './core/services/rest-services/authen.service';
+import { NotificationService } from './core/services/notification.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,14 +30,23 @@ import { httpInterceptorProviders } from './core/interceptors';
     BlockedComponent,
     AuthenComponent,
     CardComponent,
-    NotificationComponent
+    NotificationComponent,
+    CardBlockedComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatDividerModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    AuthenService,
+    NotificationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

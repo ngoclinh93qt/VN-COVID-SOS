@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { url } from 'inspector';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -13,7 +12,7 @@ export abstract class RestService<T> implements IRestServices<T> {
   public model: T | undefined;
   public host: string;
 
-  constructor(public http: HttpClient, public pathName: string) { 
+  constructor(public http: HttpClient, @Inject(String) public pathName: string) { 
     this.host = environment.host;
   }
   findAll(): Observable<T[]> {

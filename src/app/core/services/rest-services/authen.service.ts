@@ -41,7 +41,7 @@ export class AuthenService extends RestService<IUser> {
     const root = environment.host;
     const signinUrl = `${root}/signin/`;
     const body: Partial<IUser> = {
-      email, // 'john@contoso.com',
+      email, // 'linh@3exp8.com',
       password, // '1234'
     };
     return this.http.post(signinUrl, body).pipe(
