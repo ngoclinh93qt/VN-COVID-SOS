@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BlockedService } from 'src/app/shared/services/rest-services/blocked.service';
 import { Blocked } from './model/blocked.model';
 
 @Component({
@@ -10,9 +11,9 @@ export class BlockedComponent implements OnInit {
   gridColumns = 3;
   blockeds: Blocked[] = [];
 
-  // constructor(private hospitalService: HospitalService,) {
-  //   this.hospitals = hospitalService.fetechHospitalList()
-  // }
+  constructor(private blockedService: BlockedService,) {
+    this.blockeds = blockedService.fetechBlockedList()
+  }
 
   ngOnInit(): void {
   }

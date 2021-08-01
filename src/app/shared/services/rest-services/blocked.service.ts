@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Blocked } from 'src/app/pages/blocked/model/blocked.model';
 import { BaseHttpService } from '../base-http.service';
 import { NotificationService } from '../notification.service';
-import { RestService } from '../rest.service';
+// import { RestService } from '../rest.service';
 
 @Injectable({
   providedIn: 'root'
