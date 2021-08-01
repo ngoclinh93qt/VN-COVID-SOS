@@ -20,6 +20,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
 import { AuthenService } from './core/services/rest-services/authen.service';
 import { NotificationService } from './core/services/notification.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { NotificationService } from './core/services/notification.service';
     MatButtonModule,
     FlexLayoutModule,
     MatDividerModule,
+    HttpClientModule
   ],
   providers: [
     httpInterceptorProviders,
