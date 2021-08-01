@@ -16,6 +16,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDividerModule} from '@angular/material/divider';
+import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatDividerModule} from '@angular/material/divider';
     AuthenComponent,
     CardComponent,
     NotificationComponent,
+    CardBlockedComponent,
   ],
   imports: [
     BrowserModule,
