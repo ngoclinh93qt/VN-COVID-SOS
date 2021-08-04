@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../notification.service';
 import { RestService } from '../rest.service';
 
 export interface SessionState {

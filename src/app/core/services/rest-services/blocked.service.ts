@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Blocked } from 'src/app/pages/blocked/model/blocked.model';
-import { NotificationService } from '../notification.service';
 import { RestService } from '../rest.service';
 
 @Injectable({
