@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HomeComponent } from './home.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HospitalComponent } from './hospital.component';
-import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { GeneralDataComponent } from './general-data/general-data.component';
+import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   {
     path: "",
-    component: HospitalComponent
+    component: HomeComponent
   }
 ]
-
 @NgModule({
   declarations: [
-    HospitalComponent,
+    HomeComponent,
+    GeneralDataComponent,
+    PostComponent
   ],
   imports: [
     CommonModule,
@@ -29,4 +28,4 @@ const routes: Routes = [
     FlexLayoutModule,
   ]
 })
-export class HospitalModule { }
+export class HomeModule { }
