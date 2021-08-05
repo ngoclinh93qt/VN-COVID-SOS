@@ -1,0 +1,17 @@
+<div class="margin-vertical"></div>
+<mat-form-field  appearance="outline">
+  <input
+    [formControl]="control"
+    matInput
+    ngDefaultControl
+    [type]="type"
+    [value]="value"
+    [min]="min"
+    [max]="max"
+    [placeholder]="placeholder"
+    [required]="required"
+  />
+
+  <mat-error>{{ this.error }}</mat-error>
+  <mat-hint>Valid? {{ control.valid }}</mat-hint>
+</mat-form-field>

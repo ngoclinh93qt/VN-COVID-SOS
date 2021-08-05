@@ -6,6 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
+import { SosInputComponent } from './components/sos-input/sos-input.component';
+import { MaterialModule } from '../material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -14,19 +17,19 @@ import { HttpClientModule } from '@angular/common/http';
     CardComponent,
     CardBlockedComponent,
     NotificationComponent,
+    SosInputComponent
 
   ],
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
-    
+    MaterialModule,
+    ReactiveFormsModule
   ],
   exports: [
     CardComponent,
     CardBlockedComponent,
     NotificationComponent,
+    SosInputComponent
   ],
 })
 export class SharedModule { }

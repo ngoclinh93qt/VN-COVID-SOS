@@ -2,13 +2,7 @@
       <mat-card class="form-card">
             <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
                   <div>
-                   <mat-form-field appearance="outline">
-                         <mat-label>Enter your email</mat-label>
-                         <input matInput placeholder="username@example.com" formControlName="username" required>
-                         <mat-error *ngIf="formGroup.controls['username'].invalid">
-                               {{getError('user')}}
-                         </mat-error>
-                   </mat-form-field>
+                  <sos-input name="username"></sos-input>
                    <br>
                    <mat-form-field appearance="outline">
                          <mat-label>Enter your password</mat-label>
