@@ -26,7 +26,10 @@ const routes: Routes = [
       {
         path: "blocked",
         loadChildren: ()=> import('./pages/blocked/blocked.module').then(m => m.BlockedModule),
-      }
+      },{
+        path: "home",
+        loadChildren: ()=> import('./pages/home/home.module').then(m => m.HomeModule),
+      },
     ]
   },
   { path: '**', redirectTo: 'login' },
