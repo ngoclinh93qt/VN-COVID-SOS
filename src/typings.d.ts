@@ -1,14 +1,34 @@
 
 declare var System: any;
 interface IUser {
-      email: string
-      password: string
+       email: string
+       password: string
 }
 
-interface INews{
-
+interface INews {
+       id?: string;
+       header?: string;
+       content?: string;
+       pubDate?: Date;
+       img?: string;
+       publisher?: IPublisher;
+}
+interface IPublisher {
+       id?: string;
+       img?: string;
+       name?: string;
+}
+interface IVolunteerGroup {
+       id?: string;
+       name?: string;
+       numVolunteer?: number;
 }
 
+interface IUrgentRequest {
+       id?: string;
+       isSupported?: boolean;
+       data?: string;
+}
 interface IHospital {
        id?: string;
        name?: string;
@@ -16,16 +36,17 @@ interface IHospital {
        numPatient?: number;
        numBeds?: number;
        statusList?: IHospitalStatus[];
-    
+       needSupport?: boolean;
 }
 
 interface IBlocked {
        id?: string;
+       needSupport?: boolean;
        name?: string;
        address?: string;
        numHouseholds?: number;
        statusList?: IBlockedStatus[];
-    
+
 }
 
 interface IBlockedStatus {
@@ -33,7 +54,35 @@ interface IBlockedStatus {
        key: string;
 }
 
-interface IHospitalStatus{
+interface IHospitalStatus {
        value: number;
        key: string;
 }
+interface IHandBook {
+       id?: string;
+       name?: string;
+       content?: string;
+       pubDate?: Date;
+}
+interface IVolunteerGroupGeneral {
+       numGroup?: number;
+}
+interface IUrgentRequestGeneral {
+       numRequest?: number;
+       numSupported?: number;
+       numUnsupported?: number;
+       requests?: IUrgentRequest[];
+}
+interface IHospitalGeneral {
+       numHospital?: number;
+       numNeedSupport?: number;
+       numStable?: number;
+       hospitals?: IHospital[];
+}
+interface IBlockedGeneral {
+       numBlocked?: number;
+       numNeedSupport?: number;
+       numStable?: number;
+       blockeds?: IBlocked[];
+}
+

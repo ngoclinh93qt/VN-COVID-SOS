@@ -11,12 +11,38 @@ export class HospitalService extends RestService<IHospital> {
   public model: any = Hospital;
   constructor(http: HttpClient) { 
     super(http, '')
+  
   }
-
+  getGeneralData(){
+    var res: IHospitalGeneral={
+      numHospital:this.getNumberOfHospitals(),
+      numNeedSupport:this.getNumberOfNeedSupportHospitals(),
+      numStable:this.getNumberOfStableHospitals(),
+    }
+    return res
+  }
+  getNumberOfHospitals(){
+    return this.hospitals.length;
+  }
+  getNumberOfNeedSupportHospitals(){
+    var res=0;
+    this.hospitals.forEach(hospital => {
+      res+=hospital.needSupport?1:0
+    });
+    return res;
+  }
+  getNumberOfStableHospitals(){
+    var res=0;
+    this.hospitals.forEach(hospital => {
+      res+=hospital.needSupport?0:1
+    });
+    return res;
+  }
 
   hospitals: IHospital[] = [
     {
       id: "1",
+      needSupport:false,
       name: 'Bệnh viện A',
       address: '311 Linh Đông, P11, Quận Thủ Đức',
       numPatient: 200,
@@ -25,6 +51,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "2",
+      needSupport:true,
       name: 'Bệnh viện B',
       address: '222 Linh Tây, P1, Quận Thủ Đức',
       numPatient: 200,
@@ -33,6 +60,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "3",
+      needSupport:true,
       name: 'Bệnh viện C',
       address: '207 Nơ Trang Long, P12, Quận B Thạnh',
       numPatient: 200,
@@ -41,6 +69,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "4",
+      needSupport:true,
       name: 'Bệnh viện A',
       address: '311 Linh Đông, P11, Quận Thủ Đức',
       numPatient: 200,
@@ -49,6 +78,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "5",
+      needSupport:false,
       name: 'Bệnh viện B',
       address: '222 Linh Tây, P1, Quận Thủ Đức',
       numPatient: 200,
@@ -57,6 +87,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "6",
+      needSupport:true,
       name: 'Bệnh viện C',
       address: '207 Nơ Trang Long, P12, Quận B Thạnh',
       numPatient: 200,
@@ -65,6 +96,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "7",
+      needSupport:true,
       name: 'Bệnh viện B',
       address: '222 Linh Tây, P1, Quận Thủ Đức',
       numPatient: 200,
@@ -73,6 +105,7 @@ export class HospitalService extends RestService<IHospital> {
     },
     {
       id: "8",
+      needSupport:false,
       name: 'Bệnh viện B',
       address: '222 Linh Tây, P1, Quận Thủ Đức',
       numPatient: 200,
