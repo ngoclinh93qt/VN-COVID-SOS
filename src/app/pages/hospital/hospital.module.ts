@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatInputModule } from '@angular/material/input';
 
 
 const routes: Routes = [
@@ -18,15 +19,14 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [
-    HospitalComponent,
-  ],
+  declarations: [HospitalComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     CoreModule,
     FlexLayoutModule,
-  ]
+    MatInputModule,
+  ],
 })
-export class HospitalModule { }
+export class HospitalModule {}

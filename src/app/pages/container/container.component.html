@@ -26,9 +26,27 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller"
     ><div class="drawer-items">
-      <div class="active-item">Tổng quan</div>
-      <div class="drawer-item">Yêu cầu khẩn cấp</div>
-      <div class="drawer-item">Bệnh viện</div>
+      <div
+        class="drawer-item"
+        [routerLink]="'home'"
+        [routerLinkActive]="['active-item']"
+      >
+        Tổng quan
+      </div>
+      <div
+        class="drawer-item"
+        [routerLink]="'blocked'"
+        [routerLinkActive]="['active-item']"
+      >
+        Khu cách li
+      </div>
+      <div
+        class="drawer-item"
+        [routerLink]="'hospital'"
+        [routerLinkActive]="['active-item']"
+      >
+        Bệnh viện
+      </div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="drawer-content"
