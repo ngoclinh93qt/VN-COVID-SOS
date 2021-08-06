@@ -1,0 +1,62 @@
+.sidebar-container {
+  width: 30vw;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tag {
+  font-size: 10px;
+  background: #05944f;
+  border-radius: 17px;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+}
+
+::ng-deep .mat-tab-label {
+  font-size: 12px;
+  height: 27px !important;
+  min-height: 5px !important;
+  margin: 3px !important;
+  max-width: 160px !important;
+  min-width: 5px !important;
+}
+
+.update-status {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0;
+}
+
+.send {
+  font-size: 10px;
+  background: red;
+  border-radius: 17px;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+}
+
+.card {
+  background: #eeeeee;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.post-card {
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.post-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}

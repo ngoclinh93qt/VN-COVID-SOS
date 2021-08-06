@@ -10,15 +10,15 @@ import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { httpInterceptorProviders } from './core/interceptors';
-
-
-import { MatCardModule} from '@angular/material/card';
+import { HospitalSidenavComponent } from './pages/container/hospital-sidenav/hospital-sidenav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
 import { AuthenService } from './core/services/rest-services/authen.service';
 import { NotificationService } from './core/services/notification.service';
@@ -28,12 +28,12 @@ import { ContainerComponent } from './pages/container/container.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     AuthenComponent,
-    ContainerComponent
+    ContainerComponent,
+    HospitalSidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,16 +41,11 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatSidenavModule,
   ],
-  exports: [
-   
-  ],
-  providers: [
-    httpInterceptorProviders,
-    AuthenService,
-    NotificationService
-  ],
+  exports: [HospitalSidenavComponent],
+  providers: [httpInterceptorProviders, AuthenService, NotificationService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

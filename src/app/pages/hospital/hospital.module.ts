@@ -9,6 +9,9 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+
 
 
 const routes: Routes = [
@@ -27,6 +30,7 @@ const routes: Routes = [
     CoreModule,
     FlexLayoutModule,
     MatInputModule,
+    MatSidenavModule,
   ],
 })
 export class HospitalModule {}
