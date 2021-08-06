@@ -41,6 +41,7 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    SharedModule,
     MaterialModule
   ],
   exports: [

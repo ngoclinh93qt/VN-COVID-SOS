@@ -28,6 +28,12 @@ interface IUrgentRequest {
        id?: string;
        isSupported?: boolean;
        data?: string;
+       status?: string;
+       typeRequest?: string;
+       senderName?: string;
+       senderPhone?: string;
+       senderAddress?: string;
+       img?:string;
 }
 interface IHospital {
        id?: string;

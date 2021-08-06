@@ -41,27 +41,62 @@ export class UrgentRequestService extends RestService<IUrgentRequest>{
     {
       id: "1",
       isSupported: true,
-      data:""
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Nhu Yếu Phẩm"
     },
     {
       id: "2",
       isSupported: true,
-      data:""
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Y tế"
     },
     {
       id: "3",
       isSupported: true,
-      data:""
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Y tế"
     },
     {
       id: "4",
       isSupported: false,
-      data:""
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Y tế"
     },
     {
       id: "5",
       isSupported: false,
-      data:""
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Y tế"
+    },
+    {
+      id: "6",
+      isSupported: true,
+      data:"",
+      senderAddress:"106 Nguyễn Văn Quá",
+      senderName:"Nguyễn Văn A",
+      senderPhone:"012345678",
+      status:"RẤT NGUY CẤP",
+      typeRequest:"Y tế"
     },
   ];
   
