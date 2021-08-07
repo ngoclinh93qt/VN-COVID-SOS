@@ -49,6 +49,7 @@ export class SosInputComponent
   stateChanges: Subject<void> = new Subject();
 
   @Input() error?: string;
+  @Input() label?: string;
 
   @Input()
   get disabled(): boolean {

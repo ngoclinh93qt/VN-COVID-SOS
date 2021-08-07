@@ -1,0 +1,19 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+a{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tag{
+    font-size: 10px;
+  background: #05944F;
+  border-radius: 17px;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+
+}

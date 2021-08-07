@@ -1,5 +1,6 @@
 <div class="margin-vertical"></div>
 <mat-form-field  appearance="outline">
+      <mat-label>{{label}}</mat-label>
   <input
     [formControl]="control"
     matInput
@@ -13,5 +14,4 @@
   />
 
   <mat-error>{{ this.error }}</mat-error>
-  <mat-hint>Valid? {{ control.valid }}</mat-hint>
 </mat-form-field>

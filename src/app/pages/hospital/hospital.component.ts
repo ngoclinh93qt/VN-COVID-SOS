@@ -9,7 +9,7 @@ import { Hospital } from './model/hospital.mode';
   styleUrls: ['./hospital.component.scss'],
 })
 export class HospitalComponent implements OnInit {
-  gridColumns = 3;
+  gridColumns = 2;
   hospitals: IHospital[] = [];
 
   constructor(private hospitalService: HospitalService, private notifSv: NotificationService) {
