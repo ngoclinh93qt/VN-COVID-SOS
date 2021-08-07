@@ -49,8 +49,7 @@
 .drawer-content {
   position: relative;
   overflow: hidden;
-  padding-top: 10vh;
-  padding-left: 40px;
+  padding: 10vh 40px 0 40px;
   background-color: white;
 }
 
@@ -77,3 +76,6 @@ mat-form-field {
   font-size: 14px;
 }
 
+mat-toolbar{
+  padding: 0 40px;
+}
