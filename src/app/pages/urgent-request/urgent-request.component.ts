@@ -1,3 +1,4 @@
+import { UrgentRequestService } from './../../core/services/rest-services/urgent-request.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./urgent-request.component.scss']
 })
 export class UrgentRequestComponent implements OnInit {
-
-  constructor() { }
+  requests: IUrgentRequest[] = [];
+  constructor(private UrgentRequestService: UrgentRequestService) {
+    this.requests = UrgentRequestService.getRequest();
+  }
 
   ngOnInit(): void {
   }

@@ -33,7 +33,12 @@ interface IUrgentRequest {
        senderName?: string;
        senderPhone?: string;
        senderAddress?: string;
-       img?:string;
+       img?: string;
+       position?: IPosition;
+}
+interface IPosition {
+       lat?: number;
+       lng?: number;
 }
 interface IHospital {
        id?: string;

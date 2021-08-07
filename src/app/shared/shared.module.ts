@@ -33,7 +33,8 @@ import { RequestCardComponent } from './components/request-card/request-card.com
     CardComponent,
     CardBlockedComponent,
     NotificationComponent,
-    ButtonComponent
+    ButtonComponent,
+    RequestCardComponent
   ],
 })
 export class SharedModule { }

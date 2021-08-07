@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UrgentRequestComponent } from './urgent-request.component';
 import { RequestContainerComponent } from './request-container/request-container.component';
 import { RouterModule, Routes } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MapsComponent } from './maps/maps.component';
 const routes: Routes = [
   {
     path: "",
@@ -16,7 +18,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     UrgentRequestComponent,
-    RequestContainerComponent
+    RequestContainerComponent,
+    MapsComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +27,7 @@ const routes: Routes = [
     SharedModule,
     CoreModule,
     FlexLayoutModule,
+    MatIconModule
   ]
 })
 export class UrgentRequestModule { }
