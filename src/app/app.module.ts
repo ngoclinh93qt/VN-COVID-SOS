@@ -41,8 +41,8 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ],
   providers: [
     httpInterceptorProviders,

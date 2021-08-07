@@ -7,4 +7,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'VNSOS';
+  color = {
+    accent: 'accent',
+    primary: 'primary',
+    warn: 'warn'
+  }
+  icon = {
+    home: 'home',
+    menu: 'menu',
+    favorite: 'favorite'
+  };
+  text = 'Home';
+  print(s:string){
+    console.log(s);
+  }
 }
