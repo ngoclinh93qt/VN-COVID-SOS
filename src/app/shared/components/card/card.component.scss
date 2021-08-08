@@ -1,19 +1,22 @@
-.header{
-    display: flex;
-    justify-content: space-between;
+.header {
+  display: flex;
+  justify-content: space-between;
 }
 
-a{
-    text-decoration: underline;
-    cursor: pointer;
+a {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.tag{
-    font-size: 10px;
-  background: #05944F;
+.tag {
+  font-size: 10px;
+  background: #05944f;
   border-radius: 17px;
   color: #ffffff;
   border: none;
   padding: 10px 15px;
+}
 
+mat-card{
+  cursor: pointer;
 }

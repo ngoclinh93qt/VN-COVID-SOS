@@ -1,7 +1,6 @@
 <div class="sidebar-container">
   <div class="header">
     <p>Bệnh viện A</p>
-    <mat-icon>clear icon</mat-icon>
   </div>
   <p>
     Địa chỉ:
@@ -15,6 +14,7 @@
     <p>Giường bệnh: 2000</p>
   </div>
   <mat-tab-group>
+    <!-- status-tab -->
     <mat-tab label="CẬP NHẬT TRẠNG THÁI">
       <div class="update-status">
         <mat-form-field appearance="outline">
@@ -24,20 +24,15 @@
         <button class="send">GỬI</button>
       </div>
       <p style="font-weight: bold">MỚI NHẤT</p>
-      <div class="card">
-        <p style="font-weight: bold">Bệnh viện tạm thời không cần gì.</p>
-        <div align="right">
-          <p>10:30 AM . Hôm nay</p>
-        </div>
+      <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px">
+        <app-comment-box [comment]="comment"></app-comment-box>
       </div>
       <p style="font-weight: bold; margin-top: 30px">LỊCH SỬ</p>
-      <div class="card">
-        <p style="font-weight: bold">Bệnh viện tạm thời không cần gì.</p>
-        <div align="right">
-          <p>10:30 AM . Hôm nay</p>
-        </div>
+      <div *ngFor="let comment of historyComment" style="margin-bottom: 15px">
+        <app-comment-box [comment]="comment"></app-comment-box>
       </div>
     </mat-tab>
+    <!-- post-tab -->
     <mat-tab label="BÀI ĐĂNG">
       <div class="update-status">
         <mat-form-field appearance="outline">
@@ -46,17 +41,9 @@
         </mat-form-field>
         <button class="send">GỬI</button>
       </div>
-      <div class="post-card">
-        <p style="font-weight: bold">Hôm nay tại BV A.</p>
-        <div align="center">
-          <img src="https://picsum.photos/200" alt="image" />
-        </div>
-        <div class="post-info">
-          <P>Đăng bởi: Hai Nguyen</P>
-          <p>10:30 AM . Hôm nay</p>
-        </div>
-      </div>
+      <app-post-card></app-post-card>
     </mat-tab>
+    <!-- volunteer-tab -->
     <mat-tab label="HOẠT ĐỘNG THIỆN NGUYỆN">
       <div class="update-status">
         <mat-form-field appearance="outline">
@@ -65,27 +52,8 @@
         </mat-form-field>
         <button class="send">GỬI</button>
       </div>
-      <div class="post-card" style="margin-bottom: 15px">
-        <p style="font-weight: bold">
-          Hôm nay đã hỗ trợ: 100 giường bệnh, 200 khẩu trang
-        </p>
-        <div class="post-info">
-          <P>Đăng bởi: Hai Nguyen</P>
-          <p>10:30 AM . Hôm nay</p>
-        </div>
-      </div>
-      <div class="post-card">
-        <p style="font-weight: bold">
-          Cập nhật mới nhất: Đã hỗ trợ 1000 khẩu trang, 300 đồ bảo hộ
-        </p>
-        <div align="center">
-          <img src="https://picsum.photos/200" alt="image" />
-        </div>
-        <div class="post-info">
-          <P>Đăng bởi: Hai Nguyen</P>
-          <p>10:30 AM . Hôm nay</p>
-        </div>
-      </div>
+      <app-post-card></app-post-card>
+      <app-post-card></app-post-card>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -10,7 +10,6 @@ import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { httpInterceptorProviders } from './core/interceptors';
-import { HospitalSidenavComponent } from './pages/container/hospital-sidenav/hospital-sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,12 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthenComponent,
-    ContainerComponent,
-    HospitalSidenavComponent,
-  ],
+  declarations: [AppComponent, AuthenComponent, ContainerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,14 +36,10 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     ReactiveFormsModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
   ],
-  providers: [
-    httpInterceptorProviders,
-    AuthenService,
-    NotificationService
-  ],
-  exports: [HospitalSidenavComponent],
+  providers: [httpInterceptorProviders, AuthenService, NotificationService],
+  exports: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

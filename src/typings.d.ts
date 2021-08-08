@@ -97,3 +97,8 @@ interface IBlockedGeneral {
        blockeds?: IBlocked[];
 }
 
+interface IComment{
+       content?: string;
+       postTime?: string;
+}
+

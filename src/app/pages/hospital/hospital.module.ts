@@ -10,19 +10,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
-
-
+import { HospitalSidenavComponent } from './hospital-sidenav/hospital-sidenav.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
-    path: "",
-    component: HospitalComponent
-  }
-]
+    path: '',
+    component: HospitalComponent,
+  },
+];
 
 @NgModule({
-  declarations: [HospitalComponent],
+  declarations: [HospitalComponent, HospitalSidenavComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -31,6 +31,8 @@ const routes: Routes = [
     FlexLayoutModule,
     MatInputModule,
     MatSidenavModule,
+    MatTabsModule,
+    MatIconModule,
   ],
 })
 export class HospitalModule {}
