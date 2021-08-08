@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 
 @Component({
@@ -8,8 +8,12 @@ import { Loader } from '@googlemaps/js-api-loader';
 })
 export class MapsComponent implements OnInit {
   @Input() requests?: IUrgentRequest[];
+  @Output() clickedRequest = new EventEmitter<IUrgentRequest>();
   constructor() { }
-
+  chooseRequest(request: IUrgentRequest) {
+    this.clickedRequest.emit(request)
+    
+  }
   ngOnInit(): void {
     let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
     console.log(this.requests);
@@ -30,20 +34,18 @@ export class MapsComponent implements OnInit {
       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
       getCurrentLocation();
       this.requests?.forEach(request => {
-        addMarker(request)
+        addMarker(request,this.chooseRequest.bind(this))
       });
     })
     
-    function addMarker(request: IUrgentRequest) {
+    function addMarker(request: IUrgentRequest,chooseRequest:Function) {
       var marker = new google.maps.Marker({
         position: { lat: <number>request?.position?.lat, lng: <number>request?.position?.lng },
-        map:map
+        map: map
       });
-      var infoWindow = new google.maps.InfoWindow({
-        content:'<h3>'+request.data+'</h3>'
-      });
-      marker.addListener('click',function(){
-        infoWindow.open(map,marker);
+
+      marker.addListener('click', function () {
+        chooseRequest(request);
       })
     }
     // locationButton.addEventListener("click", getCurrentLocation);

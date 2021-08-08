@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-request-card-details',
@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./request-card-details.component.scss']
 })
 export class RequestCardDetailsComponent implements OnInit {
-
+  @Output() close = new EventEmitter();
   @Input() request?: IUrgentRequest = {};
   constructor() { }
   color = {
@@ -44,6 +44,10 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   status = "Rất Nguy Cấp";
   typeRequest = "Y tế";
+  onclose(){
+    this.close.emit();
+    console.log("close");
+  }
   ngOnInit(): void {
     if (this.request?.status != 'RẤT NGUY CẤP') { this.selectedColor = this.color.accent; this.status = "Nguy Cấp" }
     if (this.request?.typeRequest != "Y tế") { this.typeRequest = this.text.dothietyeu; this.selectedIcon = this.icon.fastfood; }

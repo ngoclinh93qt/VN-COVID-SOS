@@ -1,4 +1,3 @@
-import { RequestCardDetailsComponent } from './components/request-card copy/request-card-details.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
@@ -14,6 +13,7 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
 import { RequestCardComponent } from './components/request-card/request-card.component';
+import { RequestCardDetailsComponent } from './components/request-card-details/request-card-details.component';
 
 
 

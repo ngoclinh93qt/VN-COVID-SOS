@@ -4,10 +4,10 @@
             <app-request-container (clickedRequest)="chooseRequest($event)" [requests]=requests></app-request-container>
         </div>
         <div fxFlex="fxFill" class="two">
-            <app-maps [requests]=requests></app-maps>
+            <app-maps (clickedRequest)="chooseRequest($event)" [requests]=requests></app-maps>
         </div>
         <div fxFlex="noshrink" class="one" *ngIf="focusRequest?.id">
-            <app-request-card-details (close)="closeFocus" [request]=focusRequest></app-request-card-details>>
+            <app-request-card-details (close)="closeFocus()" [request]=focusRequest></app-request-card-details>>
         </div>
     </div>
 </div>
