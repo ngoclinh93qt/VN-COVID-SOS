@@ -28,16 +28,15 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.sessionService.isLoggedIn;
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
-    // if (this.sessionService.isLoggedIn) {
-    //   return true;
-    // }
-    // this.router.navigate(['/signin'], {
-    //   queryParams: { redirectTo: state.url },
-    // });
-    // console.warn(this.deniedMessage);
-    // return false;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.sessionService.isLoggedIn) {
+      return true;
+    }
+    this.router.navigate(['/signin'], {
+      queryParams: { redirectTo: state.url },
+    });
+    console.warn(this.deniedMessage);
+    return false;
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

@@ -42,7 +42,8 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule,
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
   ],
   providers: [
     httpInterceptorProviders,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/core/services/dialog.service';
+import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
 
 @Component({
   selector: 'app-authen',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthenComponent implements OnInit {
   
-  constructor() {
+  constructor(private dialogService: DialogService) {
+    // dialogService.openDialog(LoginFrameComponent, {width: '100%', maxWidth: '455px'})
    }
 
   ngOnInit() {

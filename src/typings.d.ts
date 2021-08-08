@@ -5,6 +5,13 @@ interface IUser {
        password: string
 }
 
+interface ISignIn {
+       username: string
+       password: string
+       grant_type: string, 
+       scope: string
+}
+
 interface INews {
        id?: string;
        header?: string;

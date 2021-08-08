@@ -28,7 +28,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
       provide: SosInputComponent,
       useExisting:  forwardRef(() =>SosInputComponent),
       multi: true
-    }
+    },
   ],
   host: {
     '(focusout)': 'onTouched()',
@@ -48,6 +48,7 @@ export class SosInputComponent implements ControlValueAccessor, MatFormFieldCont
 
   @Input() error?: string;
   @Input() label?: string;
+  @Input() type: string = 'text';
 
   @Input()
   get disabled(): boolean {
@@ -83,7 +84,6 @@ export class SosInputComponent implements ControlValueAccessor, MatFormFieldCont
     this.stateChanges.next();
   }
 
-  type = '';
   min = 0;
   max = 10;
 

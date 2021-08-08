@@ -1,5 +1,8 @@
+import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenService } from 'src/app/core/services/rest-services/authen.service';
 
 @Component({
   selector: 'login-frame',
@@ -9,8 +12,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginFrameComponent implements OnInit {
   formGroup!: FormGroup;
   hide = true;
+  @Input() isDialog: boolean = true;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authenService: AuthenService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -24,8 +28,10 @@ export class LoginFrameComponent implements OnInit {
     });
   }
 
-  onSubmit(values: any) {
+  onSubmit(values: {username: string, password: string}) {
     console.log(this.formGroup.value)
+  //  this.authenService.signin("sos.demo@mailnesia.com", "123456789").subscribe(result=>{})
+    this.authenService.signin(values.username, values.password).subscribe(result=> this.router.navigateByUrl('/home'));
   }
 
 
