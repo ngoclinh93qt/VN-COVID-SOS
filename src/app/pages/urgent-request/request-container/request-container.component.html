@@ -1,0 +1,25 @@
+<div class="request_session">
+    <h2><b>Yêu cầu Khẩn Cấp</b><span>
+            <app-button [height]="height.small" [color]="color.accent" [text]="text.createRequest">
+            </app-button>
+        </span></h2>
+    <hr>
+    <br>
+    <div>
+        <div class="search-form float-right m-3">
+            <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+            <input type="text" class="search-input" placeholder="Tìm kiếm" />
+        </div>
+        <span>
+            <app-button [height]="height.large" [color]="color.basic" [icon]="icon.sort" [text]="text.filter">
+            </app-button>
+        </span>
+    </div>
+    <br>
+    <div class="request_items">
+        <div *ngFor="let request of requests">
+            <app-request-card (click)="chooseRequest(request)" [request]=request>
+            </app-request-card>
+        </div>
+    </div>
+</div>
