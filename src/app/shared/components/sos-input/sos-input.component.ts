@@ -6,11 +6,13 @@ import {
   OnDestroy,
   HostBinding,
   OnInit,
+  forwardRef,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   NgControl,
   FormControl,
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
@@ -23,20 +25,16 @@ import { MatFormFieldControl } from '@angular/material/form-field';
   styleUrls: ['./sos-input.component.scss'],
   providers: [
     {
-      provide: MatFormFieldControl,
-      useExisting: SosInputComponent,
+      provide: SosInputComponent,
+      useExisting:  forwardRef(() =>SosInputComponent),
+      multi: true
     }
   ],
   host: {
     '(focusout)': 'onTouched()',
   },
 })
-export class SosInputComponent
-  implements
-    ControlValueAccessor,
-    MatFormFieldControl<string>,
-    OnInit,
-    OnDestroy {
+export class SosInputComponent implements ControlValueAccessor, MatFormFieldControl<string>, OnInit, OnDestroy {
   static nextId: number = 0;
 
   private _disabled: boolean = false;

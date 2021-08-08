@@ -1,24 +1,5 @@
 <div class="container">
       <mat-card class="form-card">
-            <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-                  <div>
-                  <sos-input name="username" label="user name"></sos-input>
-                   <br>
-                   <mat-form-field appearance="outline">
-                         <mat-label>Enter your password</mat-label>
-                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                         <button mat-icon-button matSuffix (click)="hide = !hide" 
-                               [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                         </button>
-                         <mat-error *ngIf="!formGroup.controls['password'].valid">
-                               {{getError('pass')}}
-                         </mat-error>
-                   </mat-form-field>
-                   <div class="form-element">
-                         <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Login</button>
-                       </div>
-                  </div>
-             </form>
+            <login-frame></login-frame>
       </mat-card>
 </div>

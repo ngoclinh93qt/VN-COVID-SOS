@@ -12,6 +12,7 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
 import { RequestCardComponent } from './components/request-card/request-card.component';
+import { LoginFrameComponent } from './components/login-frame/login-frame.component';
 
 
 
@@ -23,16 +24,13 @@ import { RequestCardComponent } from './components/request-card/request-card.com
     SosInputComponent,
     ButtonComponent,
     RequestCardComponent,
+    LoginFrameComponent,
 
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule
+    ReactiveFormsModule
     
   ],
   exports: [
@@ -41,7 +39,8 @@ import { RequestCardComponent } from './components/request-card/request-card.com
     NotificationComponent,
     SosInputComponent,
     ButtonComponent,
-    RequestCardComponent
+    RequestCardComponent,
+    LoginFrameComponent
   ],
 })
 export class SharedModule { }

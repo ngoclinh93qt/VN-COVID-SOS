@@ -1,0 +1,11 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+      <div>
+      <sos-input formControlName="username" label="user name" [required]="true" [required]='true'></sos-input>
+       <br>
+       <sos-input type='password' formControlName="password" label="password" [required]='true'></sos-input>
+       
+       <div class="form-element">
+             <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid" >Login</button>
+           </div>
+      </div>
+ </form>
