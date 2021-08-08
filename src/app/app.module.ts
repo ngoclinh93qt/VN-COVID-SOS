@@ -42,22 +42,15 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-<<<<<<< HEAD
     SharedModule
-  ],
-  exports: [
-   
   ],
   providers: [
     httpInterceptorProviders,
     AuthenService,
-    NotificationService
-=======
+    NotificationService,
     MatSidenavModule,
->>>>>>> 7ec456145d2a5c4b7a349cf08d351930537bfa99
   ],
   exports: [HospitalSidenavComponent],
-  providers: [httpInterceptorProviders, AuthenService, NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
