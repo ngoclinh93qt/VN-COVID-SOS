@@ -14,6 +14,9 @@ import { ButtonComponent } from './components/button/button.component';
 import { RequestCardComponent } from './components/request-card/request-card.component';
 import { LoginFrameComponent } from './components/login-frame/login-frame.component';
 import { RequestCardDetailsComponent } from './components/request-card-details/request-card-details.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './components/loading/loading.service';
+import { NotificationService } from './components/notification/notification.service';
 
 
 
@@ -27,7 +30,8 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
     RequestCardComponent,
     LoginFrameComponent,
 
-    RequestCardDetailsComponent
+    RequestCardDetailsComponent,
+     LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,13 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
     ButtonComponent,
     RequestCardComponent,
     LoginFrameComponent,
-    RequestCardDetailsComponent
+    RequestCardDetailsComponent,
+    LoadingComponent
   ],
+  providers: [
+    HttpClientModule,
+    LoadingService,
+    NotificationService
+  ]
 })
 export class SharedModule { }

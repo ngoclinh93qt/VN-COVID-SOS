@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogService } from 'src/app/core/services/dialog.service';
 import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+import { DialogService } from 'src/app/shared/services/common-services/dialog.service';
 
 @Component({
   selector: 'app-authen',
@@ -9,8 +10,10 @@ import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login
 })
 export class AuthenComponent implements OnInit {
   
-  constructor(private dialogService: DialogService) {
+  constructor(private dialogService: DialogService, private notification: NotificationService) {
     // dialogService.openDialog(LoginFrameComponent, {width: '100%', maxWidth: '455px'})
+    this.notification.info("huhu");
+    this.notification.error("huhu");
    }
 
   ngOnInit() {

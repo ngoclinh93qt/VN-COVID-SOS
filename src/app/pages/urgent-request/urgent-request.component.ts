@@ -1,5 +1,6 @@
-import { UrgentRequestService } from './../../core/services/rest-services/urgent-request.service';
+
 import { Component, OnInit } from '@angular/core';
+import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
 
 @Component({
   selector: 'app-urgent-request',

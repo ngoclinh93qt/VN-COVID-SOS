@@ -5,7 +5,6 @@ import { HospitalComponent } from './hospital.component';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
@@ -27,7 +26,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    CoreModule,
     FlexLayoutModule,
     MatInputModule,
     MatSidenavModule,
