@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogService } from 'src/app/core/services/dialog.service';
 import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
+import { DialogService } from 'src/app/shared/services/common-services/dialog.service';
 
 @Component({
   selector: 'app-authen',

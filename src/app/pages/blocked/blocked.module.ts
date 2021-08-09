@@ -7,7 +7,6 @@ import { CardBlockedComponent } from 'src/app/shared/components/card-blocked/car
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/core/core.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 
@@ -26,7 +25,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    CoreModule,
     FlexLayoutModule
   ]
 })

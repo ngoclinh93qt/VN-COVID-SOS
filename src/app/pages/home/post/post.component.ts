@@ -1,6 +1,6 @@
-import { NewsService } from './../../../core/services/rest-services/news.service';
-import { HandbookService } from './../../../core/services/rest-services/handbook.service';
 import { Component, OnInit } from '@angular/core';
+import { HandbookService } from 'src/app/shared/services/rest-services/handbook.service';
+import { NewsService } from 'src/app/shared/services/rest-services/news.service';
 
 @Component({
   selector: 'app-post',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BlockedService } from 'src/app/core/services/rest-services/blocked.service';
+import { BlockedService } from 'src/app/shared/services/rest-services/blocked.service';
 
 @Component({
   selector: 'app-blocked',

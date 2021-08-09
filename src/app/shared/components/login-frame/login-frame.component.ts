@@ -2,7 +2,7 @@ import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenService } from 'src/app/core/services/rest-services/authen.service';
+import { AuthenService } from '../../services/rest-services/authen.service';
 
 @Component({
   selector: 'login-frame',
