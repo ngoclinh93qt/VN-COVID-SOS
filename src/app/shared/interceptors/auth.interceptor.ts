@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
       setHeaders: { Authorization: `Bearer ${authHeader}`, 'Content-Type': 'application/json' },
      // withCredentials: true,
     });
-
+    
     console.groupCollapsed(`${prefixReq} 🔑 Auth`);
     console.log(`Adding Auth header`);
     console.groupEnd();
