@@ -10,27 +10,28 @@ export class NotificationService {
   ngOnInit(): void {
   }
 
-  info(message: NotificationType){
-    this.openSnackBar('info', message)
+  info(message: string){
+    this.openSnackBar('info', message, 'infoNotif')
   }
 
-  warn(message: NotificationType){
-    this.openSnackBar('warn', message )
+  warn(message: string){
+    this.openSnackBar('warn', message, 'warnNotif' )
   }
 
-  error(message: NotificationType){
-    this.openSnackBar('error', message)
+  error(message: string){
+    this.openSnackBar('error', message, 'errNotif')
   }
 
-  openSnackBar(type: NotificationType, message: string){
+  openSnackBar(type: NotificationType, message: string, style: string){
     this._snackBar.openFromComponent(NotificationComponent, {
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      duration: 1000,
+      duration: 2000,
       data: {
         type: type,
         message: message
-      }
+      },
+      panelClass: [style]
     });
   }
 

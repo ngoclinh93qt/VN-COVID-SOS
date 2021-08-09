@@ -15,7 +15,8 @@ import { RequestCardComponent } from './components/request-card/request-card.com
 import { LoginFrameComponent } from './components/login-frame/login-frame.component';
 import { RequestCardDetailsComponent } from './components/request-card-details/request-card-details.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { LoadingService } from './services/common-services/loading.service';
+import { LoadingService } from './components/loading/loading.service';
+import { NotificationService } from './components/notification/notification.service';
 
 
 
@@ -50,7 +51,8 @@ import { LoadingService } from './services/common-services/loading.service';
   ],
   providers: [
     HttpClientModule,
-    LoadingService
+    LoadingService,
+    NotificationService
   ]
 })
 export class SharedModule { }

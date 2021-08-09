@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { prefixReq, prefixRes } from './http-config';
-import { LoadingService } from '../services/common-services/loading.service';
+import { LoadingService } from '../components/loading/loading.service';
 
 @Injectable()
 export class BusyInterceptor implements HttpInterceptor {
