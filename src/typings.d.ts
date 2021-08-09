@@ -159,3 +159,11 @@ interface IQueryPrams {
        end_date?: string;
        created_time?: string;
 }
+
+
+interface IHospitalPost{
+       title?: string;
+       url?: string;
+       author?:string;
+       postTime?: string;
+}

@@ -6,17 +6,9 @@
 a {
   text-decoration: underline;
   cursor: pointer;
+  font-weight: bold;
 }
-
-.tag {
-  font-size: 10px;
-  background: #05944f;
-  border-radius: 17px;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-}
-
 mat-card{
   cursor: pointer;
 }
+

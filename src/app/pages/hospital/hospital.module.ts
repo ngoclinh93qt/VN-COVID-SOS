@@ -13,6 +13,7 @@ import { HospitalSidenavComponent } from './hospital-sidenav/hospital-sidenav.co
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 
+
 const routes: Routes = [
   {
     path: '',

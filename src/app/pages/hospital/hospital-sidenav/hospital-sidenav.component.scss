@@ -1,21 +1,11 @@
 .sidebar-container {
-  width: 30vw;
-  padding: 20px;
-  overflow: hidden;
+  padding: 0 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tag {
-  font-size: 10px;
-  background: #05944f;
-  border-radius: 17px;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
+.hospital-info {
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
 }
 
 ::ng-deep .mat-tab-label {
@@ -27,18 +17,20 @@
   min-width: 5px !important;
 }
 
-.update-status {
-  display: flex;
-  align-items: flex-start;
-  margin: 10px 0;
+.post-container {
+  padding: 30px 15px 0 15px;
+  border-left: 1px ridge;
+  border-right: 1px ridge;
 }
 
-.send {
-  font-size: 10px;
-  background: red;
-  border-radius: 17px;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
+a {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+mat-icon{
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }

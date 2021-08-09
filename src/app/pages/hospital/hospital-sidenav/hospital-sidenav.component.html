@@ -1,59 +1,53 @@
-<div class="sidebar-container">
-  <div class="header">
-    <p>Bệnh viện A</p>
-  </div>
-  <p>
-    Địa chỉ:
-    <span style="font-weight: bold"
-      >Địa chỉ: 311 Khổng Tử, P. Linh Đông, TP Thủ Đức</span
+<div class="sidebar-container" fxLayout="row">
+  <mat-icon (click)="closeBottomSheet()">clear icon</mat-icon>
+  <div fxFlex="33" style="padding-right: 15px; padding-top: 30px">
+    <div class="hospital-info">
+      <p style="font-weight: bold; font-size: 17px">Bệnh viện A</p>
+
+      <p>
+        Địa chỉ:
+        <span style="font-weight: bold"
+          >Địa chỉ: 311 Khổng Tử, P. Linh Đông, TP Thủ Đức</span
+        >
+      </p>
+    </div>
+    <p style="font-weight: bold; margin-top: 15px">Trạng thái</p>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      style="margin-bottom: 25px"
     >
-  </p>
-  <button class="tag">&bull; BÌNH THƯỜNG</button>
-  <div style="display: flex; margin-top: 10px">
-    <p style="margin-right: 1.2rem">Bệnh nhân: 1200</p>
-    <p>Giường bệnh: 2000</p>
+      <app-button
+        height="40"
+        color="primary"
+        text="&bull; CẦN HỖ TRỢ"
+      ></app-button>
+      <a>SỬA</a>
+    </div>
+    <mat-divider></mat-divider>
+    <p style="font-weight: bold; margin-top: 15px">Cập nhật trạng thái</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <p style="font-weight: bold; margin-top: 15px">Cập nhật mới nhất</p>
+    <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px">
+      <app-comment-box [comment]="comment"></app-comment-box>
+    </div>
+    <p style="font-weight: bold; margin-top: 15px">Lịch sử cập nhật</p>
+    <div *ngFor="let comment of historyComment" style="margin-bottom: 15px">
+      <app-comment-box [comment]="comment"></app-comment-box>
+    </div>
   </div>
-  <mat-tab-group>
-    <!-- status-tab -->
-    <mat-tab label="CẬP NHẬT TRẠNG THÁI">
-      <div class="update-status">
-        <mat-form-field appearance="outline">
-          <mat-label>Cập nhật trạng thái...</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-        <button class="send">GỬI</button>
-      </div>
-      <p style="font-weight: bold">MỚI NHẤT</p>
-      <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px">
-        <app-comment-box [comment]="comment"></app-comment-box>
-      </div>
-      <p style="font-weight: bold; margin-top: 30px">LỊCH SỬ</p>
-      <div *ngFor="let comment of historyComment" style="margin-bottom: 15px">
-        <app-comment-box [comment]="comment"></app-comment-box>
-      </div>
-    </mat-tab>
-    <!-- post-tab -->
-    <mat-tab label="BÀI ĐĂNG">
-      <div class="update-status">
-        <mat-form-field appearance="outline">
-          <mat-label>Nhập nội dung...</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-        <button class="send">GỬI</button>
-      </div>
-      <app-post-card></app-post-card>
-    </mat-tab>
-    <!-- volunteer-tab -->
-    <mat-tab label="HOẠT ĐỘNG THIỆN NGUYỆN">
-      <div class="update-status">
-        <mat-form-field appearance="outline">
-          <mat-label>Nhập nội dung...</mat-label>
-          <textarea matInput></textarea>
-        </mat-form-field>
-        <button class="send">GỬI</button>
-      </div>
-      <app-post-card></app-post-card>
-      <app-post-card></app-post-card>
-    </mat-tab>
-  </mat-tab-group>
+  <div fxFlex="33" class="post-container">
+    <p style="font-weight: bold; font-size: 17px">Bài đăng</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </div>
+  <div fxFlex="33" style="padding-left: 15px; padding-top: 30px">
+    <p style="font-weight: bold; font-size: 17px">Hoạt động thiện nguyện</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </div>
 </div>

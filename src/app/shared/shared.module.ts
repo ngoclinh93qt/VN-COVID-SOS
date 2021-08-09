@@ -39,7 +39,12 @@ import { NotificationService } from './components/notification/notification.serv
     RequestCardDetailsComponent,
     LoadingComponent,
   ],
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+  ],
   exports: [
     CardComponent,
     CardBlockedComponent,
