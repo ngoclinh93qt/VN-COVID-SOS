@@ -15,24 +15,26 @@ export abstract class RestService<T> implements IRestServices<T> {
     this.host = environment.host;
   }
   findAll(): Observable<T[]> {
-     return this.http.get<T[]>(`${this.host}/${this.pathName}`)
+     return this.http.get<{data: T[]}>(`${this.host}/${this.pathName}`).pipe(map(res => res.data))
   }
   findOne(id: string): Observable<T> {
-    return this.http.get<T>(`${this.host}/${this.pathName}/${id}`)
+    return this.http.get<{data: T}>(`${this.host}/${this.pathName}/${id}`).pipe(map(res => res.data))
   }
-  findLimitOffset(queryParams: any): Observable<T[]> {
-    return this.http.get<T[]>(`${this.host}/${this.pathName}`)
+  findLimitOffset(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]> {
+    extendOptions = extendOptions?extendOptions: {};
+    return this.http.get<{data: T[]}>(`${this.host}/${this.pathName}`, { params: {...queryParams, ...extendOptions}}).pipe(map(res => res.data))
   }
-  findByOptions(queryParams: any): Observable<T[]> {
-    return this.http.get<T[]>(`${this.host}/${this.pathName}`)
+  findByOptions(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]> {
+    extendOptions = extendOptions?extendOptions: {};
+    return this.http.get<{data: T[]}>(`${this.host}/${this.pathName}`, { params: {...queryParams, ...extendOptions}}).pipe(map(res => res.data))
   }
 
   create(body: any, options: any):Observable<T>{
-    return this.http.put<T>(`${this.host}/${this.pathName}`, body)
+    return this.http.put<{data: T}>(`${this.host}/${this.pathName}`, body).pipe(map(res => res.data))
   }
 
   update(id : string, body: any, options: any):Observable<T>{
-    return this.http.post<T>(`${this.host}/${this.pathName}/${id}`, body)
+    return this.http.post<{data: T}>(`${this.host}/${this.pathName}/${id}`, body).pipe(map(res => res.data))
   }
 
   delete(id: string):Observable<any>{
@@ -46,8 +48,8 @@ export abstract class RestService<T> implements IRestServices<T> {
 interface IRestServices<T>{
  findAll(): Observable<T[]>;
  findOne(id: string): Observable<T>;
- findLimitOffset(queryParams: any): Observable<T[]>;
- findByOptions(queryParams: any):Observable<T[]>;
+ findLimitOffset(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]>;
+ findByOptions(qqueryParams: IQueryPrams, extendOptions?: any):Observable<T[]>;
 
  create(body: any, options: any):Observable<T>;
  update(id: string, body: any, options: any):Observable<T>;

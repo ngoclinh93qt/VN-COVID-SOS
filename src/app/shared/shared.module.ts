@@ -12,6 +12,7 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
 import { RequestCardComponent } from './components/request-card/request-card.component';
+import { LoginFrameComponent } from './components/login-frame/login-frame.component';
 import { RequestCardDetailsComponent } from './components/request-card-details/request-card-details.component';
 
 
@@ -24,16 +25,14 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
     SosInputComponent,
     ButtonComponent,
     RequestCardComponent,
+    LoginFrameComponent,
+
     RequestCardDetailsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule
   ],
   exports: [
     CardComponent,
@@ -42,6 +41,7 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
     SosInputComponent,
     ButtonComponent,
     RequestCardComponent,
+    LoginFrameComponent,
     RequestCardDetailsComponent
   ],
 })

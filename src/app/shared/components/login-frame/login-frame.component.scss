@@ -1,0 +1,33 @@
+.login-frame {
+      border-radius: 10px;
+      padding: 20px;
+      .head-frame {
+            display: flex;
+            margin-bottom: 40px;
+            h1 {
+                  margin: 10px auto 10px 10px;
+            }
+      }
+      .goto {
+            margin: 30px 0px;
+            a {
+                  margin: 10px 0px;
+                  color: black;
+            }
+      }
+      .form-btn {
+            button{
+                  width: 100%;
+                  color: white;
+            }
+      }
+      form{
+            margin-bottom: 40px;
+      }
+      h3{
+            margin: 0px;
+      }
+      .otherway{
+            margin-bottom: 30px;
+      }
+}

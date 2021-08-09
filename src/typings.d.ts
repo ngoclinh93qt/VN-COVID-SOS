@@ -5,6 +5,13 @@ interface IUser {
        password: string
 }
 
+interface ISignIn {
+       username: string
+       password: string
+       grant_type: string
+       scope: string
+}
+
 interface INews {
        id?: string;
        header?: string;
@@ -19,9 +26,52 @@ interface IPublisher {
        name?: string;
 }
 interface IVolunteerGroup {
-       id?: string;
+       id: string;
        name?: string;
-       numVolunteer?: number;
+       address_info: IAddressInfo;
+       admin_id: string;
+       contact_info: IContacInfo;
+       created_by: string;
+       created_time: string;
+       detail_info: {
+              support_types?: ISupportType[]
+       };
+       location: string;
+       members: IGroupMember[];
+       type: string;
+       updated_by: string;
+       updated_time: string;
+       verify_info: any;
+       verify_status: string;
+
+}
+
+interface IAddressInfo {
+       address: string
+       district_code: number
+       district_name: string
+       province_id: string
+       province_name: string
+       ward_code: number
+       ward_name: string
+}
+
+interface IContacInfo {
+       name: string;
+       phone_number: string;
+}
+
+interface ISupportType {
+       name: string;
+       type: string;
+}
+
+interface IGroupMember {
+       first_name: string
+       id: string
+       last_name: string
+       phone_number: string
+       role: string
 }
 
 interface IUrgentRequest {
@@ -97,3 +147,10 @@ interface IBlockedGeneral {
        blockeds?: IBlocked[];
 }
 
+interface IQueryPrams {
+       limit?: number;
+       offset?: number;
+       start_date?: string;
+       end_date?: string;
+       created_time?: string;
+}

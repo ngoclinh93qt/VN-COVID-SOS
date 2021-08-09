@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogService } from 'src/app/core/services/dialog.service';
+import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
 
 @Component({
   selector: 'app-authen',
@@ -7,44 +8,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./authen.component.scss']
 })
 export class AuthenComponent implements OnInit {
-  formGroup!: FormGroup;
-  hide = true;
   
-  constructor(private formBuilder: FormBuilder) {
-    this.createForm();
+  constructor(private dialogService: DialogService) {
+    // dialogService.openDialog(LoginFrameComponent, {width: '100%', maxWidth: '455px'})
    }
 
   ngOnInit() {
    
   }
 
-  createForm() {
-    this.formGroup = this.formBuilder.group({
-      'username': ['', Validators.required],
-      'password': ['', Validators.required],
-    });
-  }
-
-  getError(el: any) {
-    switch (el) {
-      case 'user':
-        if (this.formGroup.get('username')?.hasError('required')) {
-          return 'Username required';
-        }
-        return ''
-        break;
-      case 'pass':
-        if (this.formGroup.get('password')?.hasError('required')) {
-          return 'Password required';
-        }
-        return ''
-        break;
-      default:
-        return '';
-    }
-  }
-
-  onSubmit(values: any) {
-    // login
-  }
 }

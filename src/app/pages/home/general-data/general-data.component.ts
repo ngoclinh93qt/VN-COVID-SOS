@@ -25,6 +25,10 @@ export class GeneralDataComponent implements OnInit {
     this.BlockedGeneral = BlockedService.getGeneralData();
     this.VolunteerGroupGeneral = this.VolunteerGroupService.getGeneralData();
 
+    console.log("request")
+    this.VolunteerGroupService.findAll().subscribe(result => {
+      console.log(result)
+    })
   }
 
   ngOnInit(): void {

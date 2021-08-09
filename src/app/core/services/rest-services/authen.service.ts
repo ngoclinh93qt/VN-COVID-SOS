@@ -36,16 +36,20 @@ export class AuthenService extends RestService<IUser> {
   }
 
 
-  signin(email: string, password: string) {
+  signin(username: string, password: string) {
     const root = environment.host;
-    const signinUrl = `${root}/signin/`;
-    const body: Partial<IUser> = {
-      email, // 'linh@3exp8.com',
+    const signinUrl = `${root}/auth`;
+    const body: Partial<ISignIn> = {
+      username, // 'linh@3exp8.com',
       password, // '1234'
+      grant_type: "password", 
+       scope: "USER"
     };
     return this.http.post(signinUrl, body).pipe(
-      map((res) => {
-      
+      map((res: any) => {
+        console.log(res)
+        this.accessToken = res.auth_token
+        this._isLoggedIn = true;
       })
     );
   }

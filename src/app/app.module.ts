@@ -10,7 +10,6 @@ import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { httpInterceptorProviders } from './core/interceptors';
-import { HospitalSidenavComponent } from './pages/container/hospital-sidenav/hospital-sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +32,7 @@ import { MaterialModule } from './material.module';
     AppComponent,
     AuthenComponent,
     ContainerComponent,
-    HospitalSidenavComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -41,7 +40,10 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    SharedModule,
     MaterialModule,
+    ReactiveFormsModule,
+    CoreModule,
     SharedModule
   ],
   providers: [
@@ -50,7 +52,7 @@ import { MaterialModule } from './material.module';
     NotificationService,
     MatSidenavModule,
   ],
-  exports: [HospitalSidenavComponent],
+  exports: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
