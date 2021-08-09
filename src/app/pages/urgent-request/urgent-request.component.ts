@@ -8,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UrgentRequestComponent implements OnInit {
   requests: IUrgentRequest[] = [];
+  focusRequest: IUrgentRequest = {};
   constructor(private UrgentRequestService: UrgentRequestService) {
     this.requests = UrgentRequestService.getRequest();
   }
 
+  chooseRequest(request:IUrgentRequest)
+  {
+    this.focusRequest=request;
+  }
+  
+  closeFocus()
+  {
+    this.focusRequest={};
+  }
   ngOnInit(): void {
   }
 

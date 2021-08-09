@@ -41,13 +41,14 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SharedModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   providers: [
     httpInterceptorProviders,
     AuthenService,
-    NotificationService
+    NotificationService,
+    MatSidenavModule,
   ],
   exports: [HospitalSidenavComponent],
   bootstrap: [AppComponent],

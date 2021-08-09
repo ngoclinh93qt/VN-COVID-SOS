@@ -1,0 +1,41 @@
+<div class="request_card-details">
+    <div class="p-1">
+        <span>
+            <app-button (click)='onclose()' [icon]="icon.close" [height]="height.small" [color]="color.basic" [type]="type">
+            </app-button>
+        </span>
+        <br>
+        <app-button [icon]="icon.alert" [height]="height.small" [color]="selectedColor" [text]="status">
+        </app-button>
+        <app-button [icon]="selectedIcon" [height]="height.small" [color]="color.primary" [text]="typeRequest">
+        </app-button>
+        <app-button [icon]="icon.done" [height]="height.small" [color]="color.basic" [text]="text.daxacthuc">
+        </app-button>
+
+        <br>
+        <h3><b>{{request?.data}}</b></h3>
+        <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
+        <br>
+    
+        <h4><b>{{request?.status}}</b></h4>
+    </div>
+
+    <section *ngIf="request?.img" class="img_container"> <img src={{request?.img}}></section>
+
+    <div class="p-1">
+        <p>Người gửi: <b>{{request?.senderName}}</b></p>
+        <p>Số điện thoại: <b>{{request?.senderPhone}}</b></p>
+        <p>Địa chỉ: <b>{{request?.senderAddress}}</b></p>
+    </div>
+    <hr>
+    <div class="p-1">
+        <p>Trạng thái:</p>
+        <h3><b>{{request?.isSupported?"Đã có nhóm hỗ trợ":"Chưa có
+                nhóm
+                hỗ trợ"}}</b></h3>
+    </div>
+    <hr>
+    <div class="p-1">
+        Bình luận:
+    </div>
+</div>

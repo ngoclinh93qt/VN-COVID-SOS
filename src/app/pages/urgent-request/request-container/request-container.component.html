@@ -18,7 +18,8 @@
     <br>
     <div class="request_items">
         <div *ngFor="let request of requests">
-            <app-request-card [request]=request></app-request-card>
+            <app-request-card (click)="chooseRequest(request)" [request]=request>
+            </app-request-card>
         </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
 <div class="request_card">
-    <mat-card-header>
+    <div>
         <app-button [icon]="icon.alert" [height]="height.small" [color]="selectedColor" [text]="status">
         </app-button>
         <app-button [icon]="selectedIcon" [height]="height.small" [color]="color.primary" [text]="typeRequest">
         </app-button>
         <app-button [icon]="icon.done" [height]="height.small" [color]="color.basic" [text]="text.daxacthuc">
         </app-button>
-    </mat-card-header>
+    </div>
     <h3><b>{{request?.data}}</b></h3>
     <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
     <h4>{{request?.status}}</h4>
