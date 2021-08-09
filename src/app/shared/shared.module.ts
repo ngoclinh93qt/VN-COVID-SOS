@@ -1,4 +1,3 @@
-
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,7 +34,6 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
     MatButtonModule,
     MatDividerModule,
     MatIconModule
-
   ],
   exports: [
     CardComponent,
