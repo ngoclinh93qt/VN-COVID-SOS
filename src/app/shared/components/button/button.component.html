@@ -1,4 +1,7 @@
-<button (click)="onClick(text)" style={{style}} style="border-radius: 5rem; margin-right:4px;" mat-raised-button color={{color}}>
-    <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+<button *ngIf="type=='raised'" (click)="onClick(text)" style={{style}} style="border-radius: 5rem; margin-right:4px;" mat-raised-button color={{color}}>
+    <mat-icon style="font-size: 20px; margin-left: -5px;" *ngIf="icon">{{icon}}</mat-icon>
     <span *ngIf="text"> {{text}}</span>
+</button>
+<button *ngIf="type=='icon'" (click)="onClick(text)" mat-icon-button color={{color}}>
+    <mat-icon style="" *ngIf="icon">{{icon}}</mat-icon>
 </button>

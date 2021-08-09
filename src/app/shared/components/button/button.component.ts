@@ -8,10 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ButtonComponent implements OnInit {
 
   constructor() { }
-  @Input() color = '';
+  @Input() color = 'basic';
   @Input() icon = '';
   @Input() text = '';
   @Input() height = '';
+  @Input() type = 'raised';
   style = ''
   @Output() onClickEvent = new EventEmitter<string>();
 
@@ -20,7 +21,7 @@ export class ButtonComponent implements OnInit {
   }
   ngOnInit(): void {
     this.style = "height:" + (this.height != '' ? this.height : "20") + "px"
-    this.style = this.style+" ; font-size:" + (this.height != '32' ? "16" : "10") + "px"
+    this.style = this.style+" ; font-size:" + (this.height != '32' ? "16" : "11") + "px"
   }
 
 }

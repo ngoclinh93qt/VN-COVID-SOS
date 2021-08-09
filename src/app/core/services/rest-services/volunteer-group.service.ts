@@ -6,7 +6,7 @@ import { RestService } from '../rest.service';
 @Injectable({
   providedIn: 'root'
 })
-export class VolunteerGroupService extends RestService<IUrgentRequest>{
+export class VolunteerGroupService extends RestService<IVolunteerGroup>{
 
   constructor(http: HttpClient) {
     super(http, 'groups')

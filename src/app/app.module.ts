@@ -43,12 +43,14 @@ import { MaterialModule } from './material.module';
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   providers: [
     httpInterceptorProviders,
     AuthenService,
-    NotificationService
+    NotificationService,
+    MatSidenavModule,
   ],
   exports: [],
   bootstrap: [AppComponent],
