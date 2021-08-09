@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const authReq = req.clone({
       setHeaders: { Authorization: `Bearer ${authHeader}`, 'Content-Type': 'application/json' },
-      withCredentials: true,
+     // withCredentials: true,
     });
 
     console.groupCollapsed(`${prefixReq} 🔑 Auth`);

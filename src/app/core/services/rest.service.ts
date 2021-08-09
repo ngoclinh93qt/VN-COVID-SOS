@@ -20,11 +20,13 @@ export abstract class RestService<T> implements IRestServices<T> {
   findOne(id: string): Observable<T> {
     return this.http.get<T>(`${this.host}/${this.pathName}/${id}`)
   }
-  findLimitOffset(queryParams: any): Observable<T[]> {
-    return this.http.get<T[]>(`${this.host}/${this.pathName}`)
+  findLimitOffset(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]> {
+    extendOptions = extendOptions?extendOptions: {};
+    return this.http.get<T[]>(`${this.host}/${this.pathName}`, { params: {...queryParams, ...extendOptions}})
   }
-  findByOptions(queryParams: any): Observable<T[]> {
-    return this.http.get<T[]>(`${this.host}/${this.pathName}`)
+  findByOptions(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]> {
+    extendOptions = extendOptions?extendOptions: {};
+    return this.http.get<T[]>(`${this.host}/${this.pathName}`, { params: {...queryParams, ...extendOptions}})
   }
 
   create(body: any, options: any):Observable<T>{
@@ -46,8 +48,8 @@ export abstract class RestService<T> implements IRestServices<T> {
 interface IRestServices<T>{
  findAll(): Observable<T[]>;
  findOne(id: string): Observable<T>;
- findLimitOffset(queryParams: any): Observable<T[]>;
- findByOptions(queryParams: any):Observable<T[]>;
+ findLimitOffset(queryParams: IQueryPrams, extendOptions?: any): Observable<T[]>;
+ findByOptions(qqueryParams: IQueryPrams, extendOptions?: any):Observable<T[]>;
 
  create(body: any, options: any):Observable<T>;
  update(id: string, body: any, options: any):Observable<T>;
