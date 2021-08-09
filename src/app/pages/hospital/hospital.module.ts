@@ -31,6 +31,7 @@ const routes: Routes = [
     MatSidenavModule,
     MatTabsModule,
     MatIconModule,
+    MatDividerModule,
   ],
 })
 export class HospitalModule {}
