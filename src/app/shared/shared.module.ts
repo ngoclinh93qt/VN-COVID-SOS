@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent, CardBlockedComponent, NotificationComponent } from './components';
@@ -9,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SosInputComponent } from './components/sos-input/sos-input.component';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from './components/button/button.component';
+import { RequestCardComponent } from './components/request-card/request-card.component';
 
 
 
@@ -17,19 +20,28 @@ import { ReactiveFormsModule } from '@angular/forms';
     CardComponent,
     CardBlockedComponent,
     NotificationComponent,
-    SosInputComponent
+    SosInputComponent,
+    ButtonComponent,
+    RequestCardComponent,
 
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule
+    
   ],
   exports: [
     CardComponent,
     CardBlockedComponent,
     NotificationComponent,
-    SosInputComponent
+    SosInputComponent,
+    ButtonComponent,
+    RequestCardComponent
   ],
 })
 export class SharedModule { }

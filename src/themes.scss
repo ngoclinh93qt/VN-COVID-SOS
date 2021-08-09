@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 @include mat-core();
 
-  $primary: mat-palette($mat-red,200);
-  $accent: mat-palette($mat-gray,200);
-
-  $theme: mat-light-theme($primary, $accent);
+$primary: mat-palette($mat-red, 200);
+$accent: mat-palette($mat-red, 600);
+$primari-dark:mat-palette($mat-red, 900);
+$theme: mat-light-theme($primary, $accent,$primari-dark);
 
 @include angular-material-theme($theme);
