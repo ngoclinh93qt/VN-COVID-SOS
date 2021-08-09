@@ -1,5 +1,5 @@
-import { UrgentRequestService } from './../../../core/services/rest-services/urgent-request.service';
-import { Component, OnInit,Input } from '@angular/core';
+
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-request-container',
@@ -9,6 +9,14 @@ import { Component, OnInit,Input } from '@angular/core';
 export class RequestContainerComponent implements OnInit {
 
   @Input() requests?: IUrgentRequest[];
+  @Output() clickedRequest = new EventEmitter<IUrgentRequest>();
+  constructor() { }
+  chooseRequest(request: IUrgentRequest) {
+    this.clickedRequest.emit(request)
+    console.log(request);
+  }
+
+  focusRequest: IUrgentRequest = {};
   color = {
     accent: 'accent',
     primary: 'primary',
@@ -30,9 +38,6 @@ export class RequestContainerComponent implements OnInit {
     createRequest: "Tạo Yêu Cầu", filter: 'Bộ lọc',
   }
 
-  constructor() {
-
-  }
   ngOnInit(): void {
 
   }

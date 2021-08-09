@@ -3,21 +3,17 @@ import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { prefixReq, prefixRes } from './http-config';
-import { BusyService } from '../services/busy.service';
+import { LoadingService } from '../components/loading/loading.service';
 
 @Injectable()
 export class BusyInterceptor implements HttpInterceptor {
-  constructor(private busyService: BusyService) {}
+  constructor(private busyService: LoadingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const msg = req.method === 'GET' ? 'Loading ...' : 'Saving ...';
-    console.groupCollapsed(`${prefixReq} ⚙️ Busy Spinner`);
-    console.log(msg);
-    console.groupEnd();
-    this.busyService.increment(msg);
+    this.busyService.start();
     return next.handle(req).pipe(
       finalize(() => {
-        this.busyService.decrement();
+        this.busyService.stop();
         console.groupCollapsed(`${prefixRes} Busy Spinner`);
         console.log('Decrementing');
         console.groupEnd();

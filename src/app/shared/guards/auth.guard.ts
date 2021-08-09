@@ -28,8 +28,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.sessionService.isLoggedIn;
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    return true
     // if (this.sessionService.isLoggedIn) {
     //   return true;
     // }

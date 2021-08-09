@@ -9,7 +9,6 @@ import { BlockedComponent } from './pages/blocked/blocked.component';
 import { AuthenComponent } from './pages/authen/authen.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { httpInterceptorProviders } from './core/interceptors';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,16 +18,21 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
-import { AuthenService } from './core/services/rest-services/authen.service';
-import { NotificationService } from './core/services/notification.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { ContainerComponent } from './pages/container/container.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
+import { NotificationService } from './shared/components/notification/notification.service';
+import { AuthenService } from './shared/services/rest-services/authen.service';
 
 @NgModule({
-  declarations: [AppComponent, AuthenComponent, ContainerComponent],
+  declarations: [
+    AppComponent,
+    AuthenComponent,
+    ContainerComponent,
+    
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,8 +41,14 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule,
     SharedModule,
     MaterialModule,
+    ReactiveFormsModule,
+    CoreModule,
+    SharedModule
   ],
-  providers: [httpInterceptorProviders, AuthenService, NotificationService],
+  providers: [
+    AuthenService,
+    MatSidenavModule,
+  ],
   exports: [],
   bootstrap: [AppComponent],
 })

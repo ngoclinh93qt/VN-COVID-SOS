@@ -1,18 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-request-card',
-  templateUrl: './request-card.component.html',
-  styleUrls: ['./request-card.component.scss']
+  selector: 'app-request-card-details',
+  templateUrl: './request-card-details.component.html',
+  styleUrls: ['./request-card-details.component.scss']
 })
-export class RequestCardComponent implements OnInit {
+export class RequestCardDetailsComponent implements OnInit {
+  @Output() close = new EventEmitter();
   @Input() request?: IUrgentRequest = {};
-  @Output() clickedRequest = new EventEmitter<IUrgentRequest>();
   constructor() { }
-  chooseRequest(request: IUrgentRequest) {
-    this.clickedRequest.emit(request)
-    console.log(request);
-  }
   color = {
     accent: 'accent',
     primary: 'primary',
@@ -30,9 +26,11 @@ export class RequestCardComponent implements OnInit {
     hospital: 'local_hospital',
     done: 'done',
     alert: 'error',
-    fastfood: 'fastfood'
+    fastfood: 'fastfood',
+    close: 'close'
 
   };
+  type='icon';
   height = {
     small: '32',
     large: '40'
@@ -46,6 +44,10 @@ export class RequestCardComponent implements OnInit {
   }
   status = "Rất Nguy Cấp";
   typeRequest = "Y tế";
+  onclose(){
+    this.close.emit();
+    console.log("close");
+  }
   ngOnInit(): void {
     if (this.request?.status != 'RẤT NGUY CẤP') { this.selectedColor = this.color.accent; this.status = "Nguy Cấp" }
     if (this.request?.typeRequest != "Y tế") { this.typeRequest = this.text.dothietyeu; this.selectedIcon = this.icon.fastfood; }

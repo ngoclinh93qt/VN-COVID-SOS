@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'https://vnsos.com'
+  host: 'http://54.69.39.96/api/v1'
 };
 
 /*
