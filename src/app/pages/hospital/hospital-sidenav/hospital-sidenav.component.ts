@@ -1,6 +1,12 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { StatusDialogComponent } from './status-dialog/status-dialog.component';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hospital-sidenav',
@@ -16,9 +22,15 @@ export class HospitalSidenavComponent implements OnInit {
     this._bottomSheetRef.dismiss();
   }
 
+  openDialog() {
+    this.dialog.open(StatusDialogComponent);
+  }
+  
+
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<HospitalSidenavComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public hospital: IHospital
+    @Inject(MAT_BOTTOM_SHEET_DATA) public hospital: IHospital,
+    public dialog: MatDialog
   ) {
     this.lastestComment = [
       {
