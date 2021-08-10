@@ -13,6 +13,6 @@
     fxFlex.sm="33%"
     *ngFor="let hospital of hospitals"
   >
-    <app-card [hospital]="hospital" (click)="openBottomSheet()"></app-card>
+    <app-card [hospital]="hospital" (click)="openBottomSheet(hospital)"></app-card>
   </div>
 </div>
