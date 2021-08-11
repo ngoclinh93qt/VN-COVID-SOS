@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IPosition, ISOSRequest, IUrgentRequest, IUrgentRequestGeneral } from 'src/typings';
 
 import { RestService } from '../rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UrgentRequestService extends RestService<IUrgentRequest>{
-  public model: any;
+export class UrgentRequestService extends RestService<ISOSRequest>{
+
   constructor(http: HttpClient) {
-    super(http, '')
+    super(http, 'sos_requests')
 
   }
   getGeneralData() {

@@ -1,3 +1,4 @@
+import { IBlocked, IBlockedStatus } from "src/typings";
 
 export class Blocked implements IBlocked{
   public id?: string;

@@ -1,0 +1,65 @@
+<form class="example-form">
+    <h2><b>Gửi yêu cầu khẩn cấp</b><span style="float: right;"><button mat-icon-button
+                aria-label="close Icon">
+                <mat-icon>close</mat-icon>
+            </button></span></h2>
+
+    <br>
+    <div class="content">
+        <h4><b>Thông tin người cần giúp đỡ</b></h4>
+        <mat-form-field class="example-left-half-width" appearance="fill">
+            <mat-label>Họ và tên*</mat-label>
+            <input matInput placeholder="Họ và tên" value="">
+        </mat-form-field>
+        <mat-form-field class="example-right-half-width" appearance="fill">
+            <mat-label>Số điện thoại*</mat-label>
+            <input matInput placeholder="Số điện thoại" value="">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Tỉnh/ Thành Phố*</mat-label>
+            <input matInput placeholder="Tỉnh/ Thành Phố" value="">
+        </mat-form-field>
+        <mat-form-field class="example-left-half-width" appearance="fill">
+            <mat-label>Quận/ Huyện*</mat-label>
+            <input matInput placeholder="Quận/ Huyện" value="">
+        </mat-form-field>
+        <mat-form-field class="example-right-half-width" appearance="fill">
+            <mat-label>Xã/ Phường*</mat-label>
+            <input matInput placeholder="Xã/ Phường" value="">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Địa chỉ*</mat-label>
+            <input matInput placeholder="Số nhà, tên đường" value="">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Ghi chú địa chỉ</mat-label>
+            <input matInput placeholder="Ghi chú" value="">
+        </mat-form-field>
+        <br>
+        <h4><b>Thông tin người cần giúp đỡ</b></h4>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Loại yêu cầu*</mat-label>
+            <input matInput placeholder="Chọn loại yêu cầu" value="">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Tiêu đề*</mat-label>
+            <input matInput placeholder="Tôi cần giúp..." value="">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Mô tả</mat-label>
+            <input matInput placeholder="Thêm mô tả" value="">
+        </mat-form-field>
+        <br>
+        <h4><b>Mức độ</b></h4>
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button style="margin: 0 50px 0 0;" value="Rất Nguy Cấp">Rất Nguy cấp</mat-radio-button>
+            <mat-radio-button value="Nguy cấp">Nguy cấp</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <br>
+    <div mat-dialog-actions>
+        <button mat-flat-button style="float:right; border-radius: 5rem;" color="accent" cdkFocusInitial>Gửi yêu
+            cầu</button>
+    </div>
+</form>

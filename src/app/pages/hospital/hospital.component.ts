@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { HospitalService } from 'src/app/shared/services/rest-services/hospital.service';
+import { IHospital } from 'src/typings';
 import { Hospital } from './model/hospital.mode';
 
 @Component({

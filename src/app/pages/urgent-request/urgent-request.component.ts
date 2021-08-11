@@ -1,6 +1,9 @@
-
+import { RequestFormComponent } from './request-form/request-form.component';
+import { VolunteerGroupService } from './../../shared/services/rest-services/volunteer-group.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
+import { IUrgentRequest, ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-urgent-request',
@@ -8,22 +11,36 @@ import { UrgentRequestService } from 'src/app/shared/services/rest-services/urge
   styleUrls: ['./urgent-request.component.scss']
 })
 export class UrgentRequestComponent implements OnInit {
-  requests: IUrgentRequest[] = [];
-  focusRequest: IUrgentRequest = {};
-  constructor(private UrgentRequestService: UrgentRequestService) {
-    this.requests = UrgentRequestService.getRequest();
+  requests: ISOSRequest[] = [];
+  focusRequest: ISOSRequest = {};
+  constructor(public dialog: MatDialog, private UrgentRequestService: UrgentRequestService,
+    private VolunteerGroupService: VolunteerGroupService) {
+    this.UrgentRequestService.findAll().subscribe(result => {
+      this.requests = result
+      console.log(result);
+    })
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RequestFormComponent, {
+      width: 'auto',
+      data: { }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 
-  chooseRequest(request:IUrgentRequest)
-  {
-    this.focusRequest=request;
+  chooseRequest(request: ISOSRequest) {
+    this.focusRequest = request;
   }
-  
-  closeFocus()
-  {
-    this.focusRequest={};
+
+  closeFocus() {
+    this.focusRequest = {};
   }
   ngOnInit(): void {
   }
 
 }
+

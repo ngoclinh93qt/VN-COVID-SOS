@@ -17,9 +17,7 @@ import { RequestCardDetailsComponent } from './components/request-card-details/r
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NotificationService } from './components/notification/notification.service';
-
-
-
+import { httpInterceptorProviders } from './interceptors';
 @NgModule({
   declarations: [
     CardComponent,
@@ -52,7 +50,8 @@ import { NotificationService } from './components/notification/notification.serv
   providers: [
     HttpClientModule,
     LoadingService,
-    NotificationService
+    NotificationService,
+    httpInterceptorProviders
   ]
 })
 export class SharedModule { }

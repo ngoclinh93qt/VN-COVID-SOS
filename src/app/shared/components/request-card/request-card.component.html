@@ -2,15 +2,15 @@
     <div>
         <app-button [icon]="icon.alert" [height]="height.small" [color]="selectedColor" [text]="status">
         </app-button>
-        <app-button [icon]="selectedIcon" [height]="height.small" [color]="color.primary" [text]="typeRequest">
+        <app-button  [height]="height.small" [color]="color.primary" [text]="typeRequest">
         </app-button>
         <app-button [icon]="icon.done" [height]="height.small" [color]="color.basic" [text]="text.daxacthuc">
         </app-button>
     </div>
-    <h3><b>{{request?.data}}</b></h3>
+    <h3><b>{{request?.subject}}</b></h3>
     <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
     <h4>{{request?.status}}</h4>
     <hr>
-    <p>Người gửi: <b>{{request?.senderName}}</b> <span>{{request?.isSupported?"Đã có nhóm hỗ trợ":"Chưa có nhóm
+    <p >Người gửi: <b>{{request?.contact_info?.name}}</b> <span style="margin:0 0 0 10px"> {{request?.supporters?.length?"Đã có nhóm hỗ trợ":"Chưa có nhóm
             hỗ trợ"}}</span></p>
 </div>

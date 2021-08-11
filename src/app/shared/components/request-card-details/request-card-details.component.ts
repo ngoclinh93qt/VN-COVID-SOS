@@ -1,4 +1,6 @@
-import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {PageEvent} from '@angular/material/paginator';
+import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-request-card-details',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 })
 export class RequestCardDetailsComponent implements OnInit {
   @Output() close = new EventEmitter();
-  @Input() request?: IUrgentRequest = {};
+  @Input() request?: ISOSRequest = {};
   constructor() { }
   color = {
     accent: 'accent',
@@ -30,7 +32,7 @@ export class RequestCardDetailsComponent implements OnInit {
     close: 'close'
 
   };
-  type='icon';
+  type = 'icon';
   height = {
     small: '32',
     large: '40'
@@ -44,13 +46,22 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   status = "Rất Nguy Cấp";
   typeRequest = "Y tế";
-  onclose(){
+  onclose() {
     this.close.emit();
     console.log("close");
-  }
+  } 
+  length =0;
+  pageSize = 1;
+
+  // MatPaginator Output
+  pageEvent: PageEvent | undefined;
+
+ 
   ngOnInit(): void {
     if (this.request?.status != 'RẤT NGUY CẤP') { this.selectedColor = this.color.accent; this.status = "Nguy Cấp" }
-    if (this.request?.typeRequest != "Y tế") { this.typeRequest = this.text.dothietyeu; this.selectedIcon = this.icon.fastfood; }
+    if (this.request?.support_types?.length != 0) this.typeRequest = this.request?.support_types?.[0]?.name!;
+    this.length=this.request?.medias?.length!;
+    this.pageEvent!.pageIndex=0;
   }
 
 }

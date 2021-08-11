@@ -1,20 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
+import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.scss']
 })
-export class MapsComponent implements OnInit {
-  @Input() requests?: IUrgentRequest[];
-  @Output() clickedRequest = new EventEmitter<IUrgentRequest>();
-  constructor() { }
-  chooseRequest(request: IUrgentRequest) {
-    this.clickedRequest.emit(request)
-    
-  }
+export class MapsComponent implements OnInit, OnChanges {
+  @Input() requests?: ISOSRequest[];
+  @Output() clickedRequest = new EventEmitter<ISOSRequest>();
+  constructor() { console.log(this.requests); }
   ngOnInit(): void {
+    console.log(this.requests);
+
+  }
+  chooseRequest(request: ISOSRequest) {
+    this.clickedRequest.emit(request)
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
     let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
     console.log(this.requests);
     let loader = new Loader({
@@ -33,14 +38,20 @@ export class MapsComponent implements OnInit {
       infoWindow = new google.maps.InfoWindow();
       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
       getCurrentLocation();
+      console.log(this.requests);
       this.requests?.forEach(request => {
-        addMarker(request,this.chooseRequest.bind(this))
+        addMarker(request, this.chooseRequest.bind(this))
       });
     })
-    
-    function addMarker(request: IUrgentRequest,chooseRequest:Function) {
+
+    function addMarker(request: ISOSRequest, chooseRequest: Function) {
+      console.log(request);
+      var location = request?.location?.split(',');
+      var lat = parseFloat(location![0]);
+      var lng = parseFloat(location![1]);
+      console.log(location);
       var marker = new google.maps.Marker({
-        position: { lat: <number>request?.position?.lat, lng: <number>request?.position?.lng },
+        position: { lat: <number>lat, lng: <number>lng },
         map: map
       });
 

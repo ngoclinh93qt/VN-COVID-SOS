@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-request-card',
@@ -6,10 +7,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./request-card.component.scss']
 })
 export class RequestCardComponent implements OnInit {
-  @Input() request?: IUrgentRequest = {};
-  @Output() clickedRequest = new EventEmitter<IUrgentRequest>();
+  @Input() request?: ISOSRequest = {};
+  @Output() clickedRequest = new EventEmitter<ISOSRequest>();
   constructor() { }
-  chooseRequest(request: IUrgentRequest) {
+  chooseRequest(request: ISOSRequest) {
     this.clickedRequest.emit(request)
     console.log(request);
   }
@@ -48,7 +49,7 @@ export class RequestCardComponent implements OnInit {
   typeRequest = "Y tế";
   ngOnInit(): void {
     if (this.request?.status != 'RẤT NGUY CẤP') { this.selectedColor = this.color.accent; this.status = "Nguy Cấp" }
-    if (this.request?.typeRequest != "Y tế") { this.typeRequest = this.text.dothietyeu; this.selectedIcon = this.icon.fastfood; }
+    if (this.request?.support_types?.length!=0) this.typeRequest=this.request?.support_types?.[0]?.name!;
   }
 
 }

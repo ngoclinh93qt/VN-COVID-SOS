@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ISignIn, IUser } from 'src/typings';
 import { RestService } from '../rest.service';
 
 export interface SessionState {
@@ -48,6 +49,7 @@ export class AuthenService extends RestService<IUser> {
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
         console.log(res)
+        
         this.accessToken = res.auth_token
         this._isLoggedIn = true;
       })
