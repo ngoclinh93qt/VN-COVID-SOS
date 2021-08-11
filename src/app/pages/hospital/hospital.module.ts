@@ -12,7 +12,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { HospitalSidenavComponent } from './hospital-sidenav/hospital-sidenav.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-
+import { StatusDialogComponent } from './hospital-sidenav/status-dialog/status-dialog.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HospitalComponent, HospitalSidenavComponent],
+  declarations: [
+    HospitalComponent,
+    HospitalSidenavComponent,
+    StatusDialogComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -33,6 +38,7 @@ const routes: Routes = [
     MatTabsModule,
     MatIconModule,
     MatDividerModule,
+    MatRadioModule,
   ],
 })
 export class HospitalModule {}

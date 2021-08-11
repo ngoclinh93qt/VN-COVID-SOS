@@ -3,9 +3,7 @@ import { NotificationService } from 'src/app/shared/components/notification/noti
 import { HospitalService } from 'src/app/shared/services/rest-services/hospital.service';
 import { Hospital } from './model/hospital.mode';
 import { HospitalSidenavComponent } from './hospital-sidenav/hospital-sidenav.component';
-import {
-  MatBottomSheet,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-hospital',
@@ -25,8 +23,10 @@ export class HospitalComponent implements OnInit {
     this.hospitals = hospitalService.hospitals;
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(HospitalSidenavComponent);
+  openBottomSheet(hospital: IHospital): void {
+    this._bottomSheet.open(HospitalSidenavComponent, {
+      data: hospital,
+    });
   }
 
   ngOnInit(): void {
