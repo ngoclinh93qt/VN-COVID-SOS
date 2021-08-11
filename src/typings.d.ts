@@ -1,3 +1,4 @@
+import { IconResolver } from "@angular/material/icon";
 
 declare var System: any;
 interface IUser {
@@ -43,7 +44,6 @@ interface IVolunteerGroup {
        updated_time: string;
        verify_info: any;
        verify_status: string;
-
 }
 
 interface IAddressInfo {
@@ -55,16 +55,40 @@ interface IAddressInfo {
        ward_code: number
        ward_name: string
 }
-
+interface IProvince {
+       code?: number;
+       codename?: string;
+       created_by?: string;
+       created_time?: Date;
+       division_type?: string;
+       id: string;
+       name?: string;
+       phone_code?: number;
+       updated_by?: string;
+       updated_time?: Date;
+       districts?: IDistrict[];
+}
+interface IWards {
+       code?: number;
+       codename?: string;
+       division_type?: string;
+       name?: string;
+       short_codename?: string;
+}
+interface IDistrict {
+       code?: number;
+       codename?: string;
+       division_type?: string;
+       name?: string;
+       short_codename?: string;
+       wards?: IWards[];
+}
 interface IContacInfo {
        name: string;
        phone_number: string;
 }
 
-interface ISupportType {
-       name: string;
-       type: string;
-}
+
 
 interface IGroupMember {
        first_name: string
@@ -85,6 +109,48 @@ interface IUrgentRequest {
        senderAddress?: string;
        img?: string;
        position?: IPosition;
+}
+interface IRequesterObjectStatus {
+       content_type?: string;
+       group?: string;
+       id?: string;
+       key?: string;
+       name?: string;
+       order?: number;
+       type?: string;
+       value?: string;
+       value_obj: object;
+}
+interface ISupportType {
+       name?: string;
+       type?: string;
+}
+interface ISOSRequest {
+       address_info?: IAddressInfo;
+       contact_info?: IContacInfo;
+       created_by?: string;
+       created_time?: Date;
+       description?: string;
+       id?: string;
+       location?: string;
+       medias?: IMedias[];
+       requester_info?: string;
+       requester_object_status?: IRequesterObjectStatus;
+       requester_type?: string;
+       status?: string;
+       subject?: string;
+       support_types?: ISupportType[];
+       supporters?: [];
+       updated_by?: string;
+       updated_time?: Date;
+       verify_status?: string;
+
+}
+
+
+interface IMedias {
+       mime_type?: string;
+       url?: string;
 }
 interface IPosition {
        lat?: number;

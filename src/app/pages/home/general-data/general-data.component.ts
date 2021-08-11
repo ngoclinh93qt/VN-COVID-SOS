@@ -5,6 +5,7 @@ import { UrgentRequestService } from 'src/app/shared/services/rest-services/urge
 import { BlockedService } from 'src/app/shared/services/rest-services/blocked.service';
 import { HospitalService } from 'src/app/shared/services/rest-services/hospital.service';
 import { VolunteerGroupService } from 'src/app/shared/services/rest-services/volunteer-group.service';
+import { IBlockedGeneral, IHospitalGeneral, IUrgentRequestGeneral, IVolunteerGroupGeneral } from 'src/typings';
 
 @Component({
   selector: 'app-general-data',

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockedService } from 'src/app/shared/services/rest-services/blocked.service';
+import { IBlocked } from 'src/typings';
 
 @Component({
   selector: 'app-blocked',
