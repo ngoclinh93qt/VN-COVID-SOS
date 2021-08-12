@@ -1,34 +1,52 @@
 <div class="mat-body login-frame">
-            <div class="head-frame">
-                  <h1>Đăng Nhập</h1>
-                 <div  [hidden]="!isDialog">
-                  <button mat-icon-button>
-                        <mat-icon mat-dialog-close>close</mat-icon>
-                  </button>
-                 </div>
-            </div>
-            <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-                  <div>
-                        <sos-input type="email" formControlName="username" label="Tên đăng nhập" [required]="true" [required]='true'
-                              [error]="getError('user')"></sos-input>
-                        <br>
-                        <sos-input type="password" formControlName="password" label="Mật khẩu" [required]='true'
-                              [error]="getError('pass')"></sos-input>
-                        <div class="goto">
-                              <p><a href="/forgot">Quên mật khẩu</a></p>
-                              <p><a href="/signup">Đăng kí tài khoản mới</a></p>
-                        </div>
-                        <div class="form-btn">
-                              <button mat-raised-button color="primary" type="submit" class="button"
-                                    [disabled]="!formGroup.valid">Login</button>
-                        </div>
-                  </div>
-            </form>
-            <p class="otherway">Hoặc đăng nhập với</p>
-            <a href="">
-                  <h3>FACEBOOK</h3>
-            </a><br>
-            <a href="">
-                  <h3>GOOGLE</h3>
-            </a>
+  <div class="head-frame">
+    <h1>Đăng Nhập</h1>
+    <div [hidden]="!isDialog">
+      <button mat-icon-button>
+        <mat-icon mat-dialog-close>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+    <div>
+      <sos-input
+        type="email"
+        formControlName="username"
+        label="Tên đăng nhập"
+        [required]="true"
+        [required]="true"
+        [error]="getError('user')"
+      ></sos-input>
+      <br />
+      <sos-input
+        type="password"
+        formControlName="password"
+        label="Mật khẩu"
+        [required]="true"
+        [error]="getError('pass')"
+      ></sos-input>
+      <div class="goto">
+        <p><a href="/forgot">Quên mật khẩu</a></p>
+        <p><a href="/signup">Đăng kí tài khoản mới</a></p>
+      </div>
+      <div class="form-btn">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="button"
+          [disabled]="!formGroup.valid"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </form>
+  <p class="otherway">Hoặc đăng nhập với</p>
+  <a href="">
+    <h3>FACEBOOK</h3> </a
+  ><br />
+  <a href="">
+    <h3>GOOGLE</h3>
+  </a>
 </div>

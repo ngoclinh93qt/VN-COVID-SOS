@@ -1,0 +1,22 @@
+.container {
+  padding: 20px;
+  .form-card {
+    padding: 20px;
+    margin: auto;
+    width: 600px;
+  }
+}
+
+.signup-frame {
+  border-radius: 10px;
+  padding: 20px;
+  h1 {
+    margin: 10px auto 10px 10px;
+  }
+  .form-btn {
+    button {
+      width: 100%;
+      color: white;
+    }
+  }
+}

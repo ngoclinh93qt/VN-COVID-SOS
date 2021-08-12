@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IComment } from 'src/typings';
 
 @Component({
   selector: 'app-comment-box',

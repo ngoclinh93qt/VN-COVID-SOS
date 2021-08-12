@@ -7,6 +7,7 @@ import { NewsComponent } from './pages/news/news.component';
 import { HospitalComponent } from './pages/hospital/hospital.component';
 import { BlockedComponent } from './pages/blocked/blocked.component';
 import { AuthenComponent } from './pages/authen/authen.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,7 +32,7 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
     AppComponent,
     AuthenComponent,
     ContainerComponent,
-    
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,12 +44,9 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
     MaterialModule,
     ReactiveFormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    AuthenService,
-    MatSidenavModule,
-  ],
+  providers: [AuthenService, MatSidenavModule],
   exports: [],
   bootstrap: [AppComponent],
 })
