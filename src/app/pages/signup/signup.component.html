@@ -12,7 +12,16 @@
             [error]="getError('user')"
             [minlength]="8"
           ></sos-input>
-          <br />
+          <sos-input
+            formControlName="first_name"
+            type="text"
+            label="Họ"
+          ></sos-input>
+          <sos-input
+            formControlName="last_name"
+            type="text"
+            label="Tên"
+          ></sos-input>
           <sos-input
             formControlName="password"
             type="password"

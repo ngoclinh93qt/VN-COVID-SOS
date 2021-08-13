@@ -14,13 +14,22 @@ export class SignupService extends RestService<IUser> {
     super(http, '');
   }
 
-  signup(username: string, password: string, phone_number: string) {
+  signup(
+    username: string,
+    password: string,
+    phone_number: string,
+    first_name: string,
+    last_name: string
+  ) {
     const root = environment.host;
-    const signupUrl = `${root}/users/create`;
+    const signupUrl = `${root}/customers`;
     const body = {
       username: username,
       password: password,
       phone_number: phone_number,
+      first_name: first_name,
+      last_name: last_name,
+      debug: 'true',
     };
 
     return this.http.put(signupUrl, body).pipe(

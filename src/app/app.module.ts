@@ -26,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NotificationService } from './shared/components/notification/notification.service';
 import { AuthenService } from './shared/services/rest-services/authen.service';
+import { SignupService } from './shared/services/rest-services/signup.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
     CoreModule,
     SharedModule,
   ],
-  providers: [AuthenService, MatSidenavModule],
+  providers: [AuthenService, MatSidenavModule, SignupService],
   exports: [],
   bootstrap: [AppComponent],
 })

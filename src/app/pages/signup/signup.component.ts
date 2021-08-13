@@ -24,6 +24,8 @@ export class SignupComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(8)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       phone_number: ['', Validators.required],
+      first_name: '',
+      last_name: '',
     });
   }
 
@@ -62,13 +64,12 @@ export class SignupComponent implements OnInit {
     username: string;
     password: string;
     phone_number: string;
+    first_name: string;
+    last_name: string;
   }) {
     console.log(this.formGroup.value);
-    //  this.authenService.signin("sos.demo@mailnesia.com", "123456789").subscribe(result=>{})
-    this.signupService.signup(
-      values.username,
-      values.password,
-      values.phone_number
-    );
+    this.signupService
+      .signup(values.username, values.password, values.phone_number, values.first_name, values.last_name)
+      .subscribe((result) => {});
   }
 }
