@@ -7,6 +7,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { IComment, IHospital, IHospitalPost } from 'src/typings';
 
 @Component({
   selector: 'app-hospital-sidenav',
