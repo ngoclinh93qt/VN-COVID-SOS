@@ -1,13 +1,18 @@
-.header{
-    display: flex;
-    justify-content: space-between;
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.button {
-  background: #f60000;
-  border-radius: 17px;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
+mat-sidenav-content {
+  overflow: hidden;
+  padding: 0 1px;
+  background: white;
 }
 
+.closeIcon{
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}

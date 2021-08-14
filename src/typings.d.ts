@@ -213,10 +213,23 @@ interface IBlockedGeneral {
        blockeds?: IBlocked[];
 }
 
+interface IComment{
+       content?: string;
+       postTime?: string;
+}
+
 interface IQueryPrams {
        limit?: number;
        offset?: number;
        start_date?: string;
        end_date?: string;
        created_time?: string;
+}
+
+
+interface IHospitalPost{
+       title?: string;
+       url?: string;
+       author?:string;
+       postTime?: string;
 }
