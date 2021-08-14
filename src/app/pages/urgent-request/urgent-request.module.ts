@@ -1,5 +1,7 @@
+import { FormControl, NgForm } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel, MatFormFieldControl } from '@angular/material/form-field';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -13,6 +15,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: "",
@@ -37,7 +41,10 @@ const routes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    FormsModule
   ]
 })
 export class UrgentRequestModule { }

@@ -1,12 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ISupportType } from 'src/typings';
+import { RestService } from '../rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SupportTypesService {
+export class SupportTypesService  extends RestService<ISupportType>{
 
-  constructor() { }
+  constructor(http: HttpClient) {
+    super(http, 'support_types')
+  }
   getSupportTypes(){
     return this.support_types;
   }

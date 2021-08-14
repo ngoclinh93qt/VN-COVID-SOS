@@ -45,7 +45,6 @@ import { SignupService } from './shared/services/rest-services/signup.service';
     MaterialModule,
     ReactiveFormsModule,
     CoreModule,
-    SharedModule,
   ],
   providers: [AuthenService, MatSidenavModule, SignupService],
   exports: [],

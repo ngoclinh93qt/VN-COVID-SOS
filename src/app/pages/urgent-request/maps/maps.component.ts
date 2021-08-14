@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
-import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-maps',

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
-import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-request-card-details',
