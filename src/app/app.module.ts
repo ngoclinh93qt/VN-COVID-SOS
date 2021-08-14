@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardBlockedComponent } from './shared/components/card-blocked/card-blocked.component';
@@ -34,6 +34,7 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
     
   ],
   imports: [
+    AmplifyAngularModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -48,6 +49,7 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
   providers: [
     AuthenService,
     MatSidenavModule,
+    AmplifyService
   ],
   exports: [],
   bootstrap: [AppComponent],

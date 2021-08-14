@@ -5,6 +5,7 @@ import { SupportTypesService } from './../../../shared/services/rest-services/su
 import { ProvinceService } from './../../../shared/services/rest-services/province.service';
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { IProvince, IDistrict, ISupportType, ISOSRequest, IRequesterObjectStatus } from 'src/typings';
+import { S3Client, AbortMultipartUploadCommand } from "@aws-sdk/client-s3";
 
 @Component({
   selector: 'app-request-form',
@@ -12,6 +13,7 @@ import { IProvince, IDistrict, ISupportType, ISOSRequest, IRequesterObjectStatus
   styleUrls: ['./request-form.component.scss']
 })
 export class RequestFormComponent implements OnInit {
+
   location: string = "";
   provinces: IProvince[] = [];
   provinceID: string = '';
@@ -33,7 +35,21 @@ export class RequestFormComponent implements OnInit {
       this.requesterObjectStatus = result
     })
   }
-  onSubmit(data: ISOSRequest) {
+
+  async onSubmit(data: ISOSRequest) {
+    const client = new S3Client({ region: "REGION" });
+    const command = new AbortMultipartUploadCommand({
+      Bucket: 'hete', Key: 'test.jpg', UploadId: 'us-west-2:45b77489-2a84-4c36-ba40-f68fe13caa7b'
+      ,
+    });
+    try {
+      const data = await client.send(command);
+      // process data.
+    } catch (error) {
+      // error handling.
+    } finally {
+      // finally.
+    }
     data.requester_type = "guest";
     data.medias = [];
     data.location = this.location;
