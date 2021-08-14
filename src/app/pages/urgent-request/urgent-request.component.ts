@@ -3,7 +3,6 @@ import { VolunteerGroupService } from './../../shared/services/rest-services/vol
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
-import { IUrgentRequest, ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-urgent-request',

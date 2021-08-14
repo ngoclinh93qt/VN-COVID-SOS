@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { INews, IPublisher } from 'src/typings';
 import { RestService } from '../rest.service';
 
 @Injectable({

@@ -3,7 +3,6 @@ import { SupportTypesService } from './../../../shared/services/rest-services/su
 import { UrgentLevelService } from './../../../shared/services/rest-services/urgent-level.service';
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ISOSRequest, IUrgentRequest, ISupportType } from 'src/typings';
 
 @Component({
   selector: 'app-request-container',

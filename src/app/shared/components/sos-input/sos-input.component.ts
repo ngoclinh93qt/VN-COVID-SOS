@@ -26,17 +26,24 @@ import { MatFormFieldControl } from '@angular/material/form-field';
   providers: [
     {
       provide: SosInputComponent,
-      useExisting:  forwardRef(() =>SosInputComponent),
-      multi: true
+      useExisting: forwardRef(() => SosInputComponent),
+      multi: true,
     },
   ],
   host: {
     '(focusout)': 'onTouched()',
   },
 })
-export class SosInputComponent implements ControlValueAccessor, MatFormFieldControl<string>, OnInit, OnDestroy {
+export class SosInputComponent
+  implements
+    ControlValueAccessor,
+    MatFormFieldControl<string>,
+    OnInit,
+    OnDestroy
+{
   static nextId: number = 0;
 
+  private _minlength: number = 0;
   private _disabled: boolean = false;
   private _focused: boolean = false;
   private _placeholder: string = '';
@@ -72,6 +79,15 @@ export class SosInputComponent implements ControlValueAccessor, MatFormFieldCont
   }
   set required(value: boolean) {
     this._required = coerceBooleanProperty(value);
+    this.stateChanges.next();
+  }
+
+  @Input()
+  get minlength(): number {
+    return this._minlength;
+  }
+  set minlength(value: number) {
+    this._minlength = value;
     this.stateChanges.next();
   }
 
@@ -119,8 +135,7 @@ export class SosInputComponent implements ControlValueAccessor, MatFormFieldCont
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy.next();
@@ -161,5 +176,4 @@ export class SosInputComponent implements ControlValueAccessor, MatFormFieldCont
   writeValue(value: string | null): void {
     this.control.setValue(value);
   }
-
 }

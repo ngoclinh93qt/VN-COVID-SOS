@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IProvince, IDistrict } from 'src/typings';
 import { RestService } from '../rest.service';
 
 @Injectable({

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ISOSRequest } from 'src/typings';
 
 @Component({
   selector: 'app-request-card',

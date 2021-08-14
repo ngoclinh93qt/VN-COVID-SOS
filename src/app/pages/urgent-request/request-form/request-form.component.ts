@@ -4,7 +4,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SupportTypesService } from './../../../shared/services/rest-services/support-types.service';
 import { ProvinceService } from './../../../shared/services/rest-services/province.service';
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { IProvince, IDistrict, ISupportType, ISOSRequest, IRequesterObjectStatus } from 'src/typings';
 
 
 @Component({

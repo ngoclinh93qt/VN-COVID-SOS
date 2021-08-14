@@ -7,6 +7,7 @@ import { NewsComponent } from './pages/news/news.component';
 import { HospitalComponent } from './pages/hospital/hospital.component';
 import { BlockedComponent } from './pages/blocked/blocked.component';
 import { AuthenComponent } from './pages/authen/authen.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { CardComponent } from './shared/components/card/card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -25,13 +26,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NotificationService } from './shared/components/notification/notification.service';
 import { AuthenService } from './shared/services/rest-services/authen.service';
+import { SignupService } from './shared/services/rest-services/signup.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenComponent,
     ContainerComponent,
-    
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,12 +45,8 @@ import { AuthenService } from './shared/services/rest-services/authen.service';
     MaterialModule,
     ReactiveFormsModule,
     CoreModule,
-    SharedModule
   ],
-  providers: [
-    AuthenService,
-    MatSidenavModule
-  ],
+  providers: [AuthenService, MatSidenavModule, SignupService],
   exports: [],
   bootstrap: [AppComponent],
 })

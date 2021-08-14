@@ -9,17 +9,17 @@
     <div class="content">
         <h4><b>Thông tin người cần giúp đỡ</b></h4>
         <fieldset ngModelGroup="contact_info">
-            <mat-form-field class="example-left-half-width" appearance="fill">
+            <mat-form-field class="example-left-half-width" appearance="outline">
                 <mat-label>Họ và tên</mat-label>
                 <input ngModel name="name" matInput placeholder="Họ và tên" value="" required>
             </mat-form-field>
-            <mat-form-field class="example-right-half-width" appearance="fill">
+            <mat-form-field class="example-right-half-width" appearance="outline">
                 <mat-label>Số điện thoại</mat-label>
                 <input ngModel name="phone_number" matInput placeholder="Số điện thoại" value="" required>
             </mat-form-field>
         </fieldset>
         <fieldset ngModelGroup="address_info">
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Tỉnh/ Thành Phố</mat-label>
                 <mat-select ngModel name="province_id" required>
                     <mat-option *ngFor="let province of provinces" [value]="province.id"
@@ -28,7 +28,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="example-left-half-width" appearance="fill">
+            <mat-form-field class="example-left-half-width" appearance="outline">
                 <mat-label>Quận/ Huyện</mat-label>
                 <mat-select ngModel name="district_code" required>
                     <mat-option *ngFor="let district of province.districts" [value]="district.code"
@@ -37,7 +37,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="example-right-half-width" appearance="fill">
+            <mat-form-field class="example-right-half-width" appearance="outline">
                 <mat-label>Xã/ Phường</mat-label>
                 <mat-select ngModel name="ward_code" required>
                     <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
@@ -45,16 +45,16 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Địa chỉ</mat-label>
                 <input ngModel name="address" matInput placeholder="Số nhà, tên đường..." value="" required>
             </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Ghi chú địa chỉ</mat-label>
                 <input matInput placeholder="Ghi chú" value="">
             </mat-form-field>
         </fieldset>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Người cần hỗ trợ là</mat-label>
             <mat-select ngModel name="requester_object_status" multiple>
                 <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
@@ -64,7 +64,7 @@
         </mat-form-field>
         <br>
         <h4><b>Nội dung yêu cầu</b></h4>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Loại yêu cầu</mat-label>
             <mat-select ngModel name="support_types" required multiple>
                 <mat-option *ngFor="let type of supportTypes" [value]="type">
@@ -72,11 +72,11 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Tiêu đề</mat-label>
             <input ngModel name="subject" matInput placeholder="Tôi cần giúp..." value="" required>
         </mat-form-field>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Mô tả</mat-label>
             <input ngModel name="description" matInput placeholder="Thêm mô tả" value="">
         </mat-form-field>
