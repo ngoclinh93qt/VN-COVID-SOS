@@ -119,7 +119,7 @@ interface IRequesterObjectStatus {
        order?: number;
        type?: string;
        value?: string;
-       value_obj: object;
+       value_obj?: object;
 }
 interface ISupportType {
        name?: string;
@@ -135,7 +135,7 @@ interface ISOSRequest {
        location?: string;
        medias?: IMedias[];
        requester_info?: string;
-       requester_object_status?: IRequesterObjectStatus;
+       requester_object_status?: IRequesterObjectStatus[];
        requester_type?: string;
        status?: string;
        subject?: string;
