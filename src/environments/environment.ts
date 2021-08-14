@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'http://54.69.39.96/api/v1'
+  host: 'http://54.69.39.96/api/v1',
+  googleApiKey:'AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q'
 };
 
 /*

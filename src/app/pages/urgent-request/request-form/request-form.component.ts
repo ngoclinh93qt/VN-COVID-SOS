@@ -15,15 +15,18 @@ export class RequestFormComponent implements OnInit {
 
   location: string = "";
   provinces: IProvince[] = [];
-  provinceID: string = '';
   province: IProvince = {
     id: ''
   };
   district: IDistrict = { code: 0 };
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
-  request: ISOSRequest = {};
+
   constructor(private RequesterObjectStatusService: RequesterObjectStatusService, private ProvinceService: ProvinceService, private SupportTypesService: SupportTypesService, private UrgentRequestService: UrgentRequestService) {
+    this.fetchInit();
+  }
+
+  fetchInit() {
     this.ProvinceService.findAll().subscribe(result => {
       this.provinces = result
     })
@@ -34,9 +37,8 @@ export class RequestFormComponent implements OnInit {
       this.requesterObjectStatus = result
     })
   }
-
   async onSubmit(data: ISOSRequest) {
-  
+
     data.requester_type = "guest";
     data.medias = [];
     data.location = this.location;
@@ -68,7 +70,6 @@ export class RequestFormComponent implements OnInit {
       });
     }
     getCurrentLocation(this.setLocation.bind(this))
-
   }
 
 }
