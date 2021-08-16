@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { GroupDetailComponent } from './group-detail/group-detail.component';
 
 @Component({
   selector: 'app-group',
@@ -8,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class GroupComponent implements OnInit {
   gridColumns = 2;
 
-  constructor() {}
+  constructor(private _bottomSheet: MatBottomSheet) {}
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(GroupDetailComponent);
+  }
 
   ngOnInit(): void {}
 }

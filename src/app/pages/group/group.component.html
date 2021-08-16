@@ -8,7 +8,7 @@
   <sos-input label="Tìm kiếm"></sos-input>
 </div>
 <div fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div [fxFlex]="100 / gridColumns + '%'" fxFlex.xs="100%" fxFlex.sm="33%">
+  <div (click) = "openBottomSheet()" [fxFlex]="100 / gridColumns + '%'" fxFlex.xs="100%" fxFlex.sm="33%">
     <app-group-card></app-group-card>
   </div>
   <div [fxFlex]="100 / gridColumns + '%'" fxFlex.xs="100%" fxFlex.sm="33%">

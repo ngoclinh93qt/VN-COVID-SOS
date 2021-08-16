@@ -5,7 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GroupComponent } from './group.component';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { GroupDetailComponent } from './group-detail/group-detail.component';
+import { MatIconModule } from '@angular/material/icon';
 const routes: Routes = [
   {
     path: '',
@@ -13,13 +14,14 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [GroupComponent],
+  declarations: [GroupComponent, GroupDetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     FlexLayoutModule,
     MatDividerModule,
+    MatIconModule,
   ],
 })
 export class GroupModule {}

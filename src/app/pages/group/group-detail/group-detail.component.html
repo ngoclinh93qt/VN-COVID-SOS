@@ -1,0 +1,44 @@
+<div class="sidebar-container" fxLayout="row" fx>
+  <mat-icon (click)="closeBottomSheet()">clear icon</mat-icon>
+  <div
+    style="padding-top: 30px; border-right: 1px ridge"
+    fxFlex="50"
+    fxLayoutAlign="end"
+  >
+    <div style="max-width: 450px; padding-right: 30px">
+      <p style="font-weight: bold; font-size: 17px">Nhóm thiện nguyện từ tâm</p>
+      <mat-divider></mat-divider>
+      <p>Địa chỉ:</p>
+      <p style="font-weight: bold">
+        123 Võ Văn Tần, P.1, Quận 1, TP Hồ Chí Minh
+      </p>
+      <p>Số điện thoại:</p>
+      <p style="font-weight: bold">0385888643</p>
+      <p>Quản trị viên:</p>
+      <p style="font-weight: bold">Nguyễn Hữu Tuấn</p>
+      <mat-divider></mat-divider>
+      <p>Loại hỗ trợ:</p>
+      <div fxLayout="row wrap" fxLayoutGap="6px grid">
+        <app-button height="40" color="#FCE7E5" text="LƯƠNG THỰC"></app-button>
+        <app-button height="40" color="#FCE7E5" text="LƯƠNG THỰC"></app-button>
+        <app-button height="40" color="#FCE7E5" text="LƯƠNG THỰC"></app-button>
+      </div>
+      <mat-divider></mat-divider>
+      <p>Trạng thái</p>
+      <div class="group-status">
+        <p>
+          Nhóm đang cần thêm lương thực, nhu yếu phẩm để đi trợ giúp. Mọi thông
+          tin liên hệ số điện thoại: 012345664
+        </p>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="50" fxLayoutAlign="start" style="padding-top: 30px">
+    <div style="max-width: 450px; padding-left: 30px">
+      <p style="font-weight: bold; font-size: 17px">Hoạt động thiện nguyện</p>
+      <div *ngFor="let post of postList" style="margin-bottom: 10px">
+        <app-post-card [post]="post"></app-post-card>
+      </div>
+    </div>
+  </div>
+</div>
