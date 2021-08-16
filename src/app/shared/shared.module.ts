@@ -24,6 +24,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NotificationService } from './components/notification/notification.service';
 import { httpInterceptorProviders } from './interceptors';
+import { GroupCardComponent } from './components/group-card/group-card.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -38,6 +39,7 @@ import { httpInterceptorProviders } from './interceptors';
 
     RequestCardDetailsComponent,
     LoadingComponent,
+    GroupCardComponent,
   ],
   imports: [
     CommonModule,
@@ -57,12 +59,13 @@ import { httpInterceptorProviders } from './interceptors';
     LoginFrameComponent,
     RequestCardDetailsComponent,
     LoadingComponent,
+    GroupCardComponent,
   ],
   providers: [
     HttpClientModule,
     LoadingService,
     NotificationService,
-    httpInterceptorProviders
-  ]
+    httpInterceptorProviders,
+  ],
 })
 export class SharedModule {}

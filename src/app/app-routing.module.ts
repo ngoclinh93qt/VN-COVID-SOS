@@ -33,6 +33,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'group',
+        loadChildren: () =>
+          import('./pages/group/group.module').then((m) => m.GroupModule),
+      },
+      {
         path: 'blocked',
         loadChildren: () =>
           import('./pages/blocked/blocked.module').then((m) => m.BlockedModule),
