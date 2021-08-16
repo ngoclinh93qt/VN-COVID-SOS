@@ -2,15 +2,11 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { StatusDialogComponent } from './status-dialog/status-dialog.component';
-import { IComment } from 'src/typings';
-import { IHospitalPost } from 'src/typings';
-import { IHospital } from 'src/typings';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { IComment, IHospital, IHospitalPost } from 'src/typings';
 
 @Component({
   selector: 'app-hospital-sidenav',

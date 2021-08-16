@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ISignIn, IUser } from 'src/typings';
 import { RestService } from '../rest.service';
 
 @Injectable({

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Blocked } from 'src/app/pages/blocked/model/blocked.model';
-import { IBlocked, IBlockedGeneral } from 'src/typings';
 import { RestService } from '../rest.service';
 
 @Injectable({

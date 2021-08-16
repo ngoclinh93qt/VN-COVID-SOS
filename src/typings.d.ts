@@ -1,4 +1,3 @@
-import { IconResolver } from '@angular/material/icon';
 
 declare var System: any;
 interface IUser {
@@ -124,24 +123,25 @@ interface ISupportType {
   type?: string;
 }
 interface ISOSRequest {
-  address_info?: IAddressInfo;
-  contact_info?: IContacInfo;
-  created_by?: string;
-  created_time?: Date;
-  description?: string;
-  id?: string;
-  location?: string;
-  medias?: IMedias[];
-  requester_info?: string;
-  requester_object_status?: IRequesterObjectStatus;
-  requester_type?: string;
-  status?: string;
-  subject?: string;
-  support_types?: ISupportType[];
-  supporters?: [];
-  updated_by?: string;
-  updated_time?: Date;
-  verify_status?: string;
+       address_info?: IAddressInfo;
+       contact_info?: IContacInfo;
+       created_by?: string;
+       created_time?: Date;
+       description?: string;
+       id?: string;
+       location?: string;
+       medias?: IMedias[];
+       requester_info?: string;
+       requester_object_status?: IRequesterObjectStatus[];
+       requester_type?: string;
+       status?: string;
+       subject?: string;
+       support_types?: ISupportType[];
+       supporters?: [];
+       updated_by?: string;
+       updated_time?: Date;
+       verify_status?: string;
+
 }
 
 interface IMedias {

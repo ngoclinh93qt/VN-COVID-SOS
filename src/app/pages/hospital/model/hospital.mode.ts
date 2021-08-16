@@ -1,5 +1,3 @@
-import { IHospital, IHospitalStatus } from "src/typings";
-
 export class Hospital implements IHospital {
   public id?: string;
   public name?: string;

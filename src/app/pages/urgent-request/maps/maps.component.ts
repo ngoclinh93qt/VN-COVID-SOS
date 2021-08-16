@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { ISOSRequest } from 'src/typings';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -23,7 +23,7 @@ export class MapsComponent implements OnInit, OnChanges {
     let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
     console.log(this.requests);
     let loader = new Loader({
-      apiKey: 'AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q'
+      apiKey: environment.googleApiKey
     })
 
     // const locationButton = document.createElement("button");

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HandbookService } from 'src/app/shared/services/rest-services/handbook.service';
 import { NewsService } from 'src/app/shared/services/rest-services/news.service';
-import { IHandBook, INews } from 'src/typings';
 
 @Component({
   selector: 'app-post',

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IHospitalPost } from 'src/typings';
 
 @Component({
   selector: 'app-post-card',
