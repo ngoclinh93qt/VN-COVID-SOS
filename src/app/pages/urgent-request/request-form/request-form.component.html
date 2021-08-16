@@ -1,5 +1,5 @@
 <span style="float: right;">
-    <button  mat-icon-button aria-label="close Icon">
+    <button (click)="onClose()" mat-icon-button aria-label="close Icon">
         <mat-icon>close</mat-icon>
     </button></span>
 <form class="example-form" (submit)="onSubmit(form.value)" #form="ngForm">
@@ -91,7 +91,7 @@
     
     <div mat-dialog-actions>
         <button mat-flat-button type="submit" style="float:right; border-radius: 5rem;" color="accent"
-            cdkFocusInitial>Gửi yêu
+        (click)="onClose()" cdkFocusInitial>Gửi yêu
             cầu</button>
     </div>
 </form>

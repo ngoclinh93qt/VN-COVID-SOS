@@ -1,12 +1,16 @@
 .request_card-details {
   border: none;
   border-radius: 5px;
-  padding: 10px;
+  padding: 0px;
   margin: 0;
   top: 0;
   right: 0;
-
   height: 100%;
+  .activity_sestion {
+    border-left: 1px solid rgb(226, 226, 226);
+    border-right: 1px solid rgb(226, 226, 226);
+  }
+
   h3 {
     margin-top: 5px;
     margin-bottom: 0;

@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RequestStatusService {
+  static getRequestStatus(): string[] {
+    throw new Error('Method not implemented.');
+  }
 
   constructor() { }
   getRequestStatus(){
