@@ -24,6 +24,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NotificationService } from './components/notification/notification.service';
 import { httpInterceptorProviders } from './interceptors';
+import { MemberComponent } from './member/member.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -38,6 +39,7 @@ import { httpInterceptorProviders } from './interceptors';
 
     RequestCardDetailsComponent,
     LoadingComponent,
+    MemberComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { httpInterceptorProviders } from './interceptors';
     LoginFrameComponent,
     RequestCardDetailsComponent,
     LoadingComponent,
+    MemberComponent
   ],
   providers: [
     HttpClientModule,

@@ -33,6 +33,7 @@ interface IVolunteerGroup {
   contact_info: IContacInfo;
   created_by: string;
   created_time: string;
+  description:string;
   detail_info: {
     support_types?: ISupportType[];
   };
@@ -43,6 +44,7 @@ interface IVolunteerGroup {
   updated_time: string;
   verify_info: any;
   verify_status: string;
+  avatar?:string;
 }
 
 interface IAddressInfo {
