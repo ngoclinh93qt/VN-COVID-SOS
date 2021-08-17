@@ -1,3 +1,4 @@
+import { RequesterObjectStatusService } from './../../../shared/services/rest-services/requester-object-status.service';
 import { RequestStatusService } from './../../../shared/services/rest-services/request-status.service';
 import { SupportTypesService } from './../../../shared/services/rest-services/support-types.service';
 import { UrgentLevelService } from './../../../shared/services/rest-services/urgent-level.service';
@@ -17,16 +18,29 @@ export class RequestContainerComponent implements OnInit {
   urgentLevels: string[] = [];
   statuses: string[] = [];
   supportTypes: ISupportType[] = [];
-  constructor(private UrgentLevelService: UrgentLevelService, private SupportTypesService: SupportTypesService, private RequestStatusService: RequestStatusService) {
-    this.statuses=RequestStatusService.getRequestStatus();
-    this.urgentLevels=UrgentLevelService.getUrgentLevels();
-    this.supportTypes=this.SupportTypesService.getSupportTypes();
+  requesterObjectStatus: IRequesterObjectStatus[] = [];
+  constructor(private UrgentLevelService: UrgentLevelService,
+    private SupportTypesService: SupportTypesService,
+    private RequestStatusService: RequestStatusService, private RequesterObjectStatusService: RequesterObjectStatusService) {
+    this.statuses = RequestStatusService.getRequestStatus();
+    this.urgentLevels = UrgentLevelService.getUrgentLevels();
+    this.fetchInit();
+  }
+  fetchInit() {
+    this.SupportTypesService.findAll().subscribe(result => {
+      this.supportTypes = result
+      console.log(result);
+    })
+    this.RequesterObjectStatusService.findAll().subscribe(result => {
+      this.requesterObjectStatus = result
+      console.log(result);
+    })
   }
   chooseRequest(request: ISOSRequest) {
     this.clickedRequest.emit(request)
     console.log(request);
   }
-  createClick(){
+  createClick() {
     this.createClicked.emit();
   }
 
