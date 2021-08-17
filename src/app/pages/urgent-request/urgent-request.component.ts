@@ -1,3 +1,6 @@
+import { RequesterObjectStatusService } from './../../shared/services/rest-services/requester-object-status.service';
+import { SupportTypesService } from './../../shared/services/rest-services/support-types.service';
+import { RequestCardDetailsComponent } from './../../shared/components/request-card-details/request-card-details.component';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { VolunteerGroupService } from './../../shared/services/rest-services/volunteer-group.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,18 +14,21 @@ import { UrgentRequestService } from 'src/app/shared/services/rest-services/urge
 })
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
-  focusRequest: ISOSRequest = {};
+
   constructor(public dialog: MatDialog, private UrgentRequestService: UrgentRequestService,
-    private VolunteerGroupService: VolunteerGroupService) {
+    private SupportTypesService: SupportTypesService, private RequesterObjectStatusService: RequesterObjectStatusService) {
+    this.fetchInit()
+  }
+  fetchInit() {
     this.UrgentRequestService.findAll().subscribe(result => {
       this.requests = result
       console.log(result);
     })
   }
-  openDialog(): void {
+  openFormDialog(): void {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
-      data: { }
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -31,12 +37,18 @@ export class UrgentRequestComponent implements OnInit {
     });
   }
 
-  chooseRequest(request: ISOSRequest) {
-    this.focusRequest = request;
-  }
 
-  closeFocus() {
-    this.focusRequest = {};
+  chooseRequest(request: ISOSRequest) {
+    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
+      width: '100vw',
+      height: '100vh',
+      data: request
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
   ngOnInit(): void {
   }

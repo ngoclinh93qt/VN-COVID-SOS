@@ -1,6 +1,7 @@
 <div class="request_session">
     <h2><b>Yêu cầu Khẩn Cấp</b><span>
-            <app-button (click)="createClick()" [height]="height.small" [color]="color.accent" [text]="text.createRequest">
+            <app-button (click)="createClick()" [height]="height.small" [color]="color.accent"
+                [text]="text.createRequest">
             </app-button>
         </span></h2>
     <hr>
@@ -27,6 +28,10 @@
     <button mat-stroked-button [matMenuTriggerFor]="status">Trạng thái</button>
     <mat-menu #status="matMenu">
         <button *ngFor="let status of statuses" mat-menu-item>{{status}}</button>
+    </mat-menu>
+    <button mat-stroked-button [matMenuTriggerFor]="object">Đối tượng</button>
+    <mat-menu #object="matMenu">
+        <button *ngFor="let object of requesterObjectStatus" mat-menu-item>{{object.name}}</button>
     </mat-menu>
     <div class="request_items">
         <div *ngFor="let request of requests">

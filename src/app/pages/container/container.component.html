@@ -1,12 +1,8 @@
 <mat-toolbar>
   <div class="navbar-left">
     <div class="logo_button">
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with menu icon"
-        (click)="showFiller = !showFiller"
-      >
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+        (click)="showFiller = !showFiller">
         <mat-icon>menu</mat-icon>
       </button>
       <span>SOSVN</span>
@@ -24,27 +20,18 @@
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller"
-    ><div class="drawer-items">
-      <div
-        class="drawer-item"
-        [routerLink]="'home'"
-        [routerLinkActive]="['active-item']"
-      >
+  <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller">
+    <div class="drawer-items">
+      <div class="drawer-item" [routerLink]="'home'" [routerLinkActive]="['active-item']">
         Tổng quan
       </div>
-      <div
-        class="drawer-item"
-        [routerLink]="'blocked'"
-        [routerLinkActive]="['active-item']"
-      >
+      <div class="drawer-item" [routerLink]="'urgentRequest'" [routerLinkActive]="['active-item']">
+        Yêu cần khẩn cấp
+      </div>
+      <div class="drawer-item" [routerLink]="'blocked'" [routerLinkActive]="['active-item']">
         Khu cách li
       </div>
-      <div
-        class="drawer-item"
-        [routerLink]="'hospital'"
-        [routerLinkActive]="['active-item']"
-      >
+      <div class="drawer-item" [routerLink]="'hospital'" [routerLinkActive]="['active-item']">
         Bệnh viện
       </div>
       <div
@@ -53,10 +40,12 @@
         [routerLinkActive]="['active-item']"
       >
         Nhóm thiện nguyện
+      <div class="drawer-item" [routerLink]="'manage'" [routerLinkActive]="['active-item']">
+        Quản lí
       </div>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content class="drawer-content"
-    ><router-outlet></router-outlet
-  ></mat-sidenav-content>
+  <mat-sidenav-content class="drawer-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

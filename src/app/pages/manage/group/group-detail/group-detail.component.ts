@@ -1,23 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-request-card-details',
-  templateUrl: './request-card-details.component.html',
-  styleUrls: ['./request-card-details.component.scss']
+  selector: 'app-group-detail',
+  templateUrl: './group-detail.component.html',
+  styleUrls: ['./group-detail.component.scss']
 })
-export class RequestCardDetailsComponent implements OnInit {
-
+export class GroupDetailComponent implements OnInit {
   lastestComment: { content: string; postTime: string; }[];
 
   postList: ({ title: string; url: string; author: string; postTime: string; } | { title: string; author: string; postTime: string; url?: undefined; })[];
-
   onClose() {
     this.dialogRef.close();
   }
-  constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest) {
+  constructor(public dialogRef: MatDialogRef<GroupDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) public group: IVolunteerGroup) {
     this.lastestComment = [
       {
         content: 'Hôm nay đã gửi đến 200 giường bệnh, 1000 khẩu trang.',
@@ -43,21 +40,8 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
   }
-  status = "Rất Nguy Cấp";
-  typeRequest = "Y tế";
-
-  length = 0;
-  pageSize = 1;
-
-  // MatPaginator Output
-  pageEvent: PageEvent = new PageEvent;
-
 
   ngOnInit(): void {
-    if (this.request?.status != 'RẤT NGUY CẤP') { this.status = "Nguy Cấp" }
-    if (this.request?.support_types?.length != 0) this.typeRequest = this.request?.support_types?.[0]?.name!;
-    this.length = this.request?.medias?.length!;
-    this.pageEvent!.pageIndex = 0;
   }
 
 }
