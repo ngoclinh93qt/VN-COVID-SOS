@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-group-card',
   templateUrl: './group-card.component.html',
-  styleUrls: ['./group-card.component.scss']
+  styleUrls: ['./group-card.component.scss'],
 })
 export class GroupCardComponent implements OnInit {
+  @Input() group?: IVolunteerGroup;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,0 +1,24 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">Tạo nhóm</h1>
+  <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+</div>
+<div mat-dialog-content>
+  <sos-input label="Tên nhóm"></sos-input>
+  <sos-input label="Tỉnh/ Thành phố*"></sos-input>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <sos-input label="Phường/ Xã*" fxFlex="50"></sos-input>
+    <sos-input label="Quận/ Huyện*" fxFlex="50"></sos-input>
+  </div>
+  <sos-input label="Địa chỉ*"></sos-input>
+  <sos-input label="Số điện thoại*"></sos-input>
+  <p>Loại hỗ trợ</p>
+  <sos-input label="Chọn loại hỗ trợ"></sos-input>
+  <app-button
+    height="40"
+    color="#F600001A"
+    text="THÊM ẢNH ĐẠI DIỆN"
+  ></app-button>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end">
+  <app-button height="40" color="accent" text="LƯU"></app-button>
+</div>

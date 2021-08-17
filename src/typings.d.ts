@@ -26,23 +26,23 @@ interface IPublisher {
   name?: string;
 }
 interface IVolunteerGroup {
-  id: string;
+  id?: string;
   name?: string;
-  address_info: IAddressInfo;
-  admin_id: string;
-  contact_info: IContacInfo;
-  created_by: string;
-  created_time: string;
-  detail_info: {
+  address_info?: IAddressInfo;
+  admin_id?: string;
+  contact_info?: IContacInfo;
+  created_by?: string;
+  created_time?: string;
+  detail_info?: {
     support_types?: ISupportType[];
   };
-  location: string;
-  members: IGroupMember[];
-  type: string;
-  updated_by: string;
-  updated_time: string;
-  verify_info: any;
-  verify_status: string;
+  location?: string;
+  members?: IGroupMember[];
+  type?: string;
+  updated_by?: string;
+  updated_time?: string;
+  verify_info?: any;
+  verify_status?: string;
 }
 
 interface IAddressInfo {

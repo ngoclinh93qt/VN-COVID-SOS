@@ -2,8 +2,8 @@
   <mat-card-content fxLayout="row">
     <img class="avatar" src="https://picsum.photos/200/200" alt="image" />
     <div>
-      <p style="font-size: 17px; font-weight: bold">Nhóm thiện nguyện từ tâm</p>
-      <p>123 Võ Văn Tần, P.1, Quận 1, TP Hồ Chí Minh</p>
+      <p style="font-size: 17px; font-weight: bold">{{ group?.name }}</p>
+      <p>{{ group?.location }}</p>
       <p style="margin-top: 20px">Loại hỗ trợ</p>
       <div fxLayout="row wrap" fxLayoutGap="5px grid">
         <app-button
@@ -18,8 +18,7 @@
       <p style="margin-top: 20px">Trạng thái</p>
       <div class="group-status">
         <p>
-          Nhóm đang cần thêm lương thực, nhu yếu phẩm để đi trợ giúp. Mọi thông
-          tin liên hệ số điện thoại: 012345664
+          {{ group?.verify_status }}
         </p>
       </div>
     </div>

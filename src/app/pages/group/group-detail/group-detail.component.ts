@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-group-detail',
@@ -13,7 +14,8 @@ export class GroupDetailComponent implements OnInit {
   }
 
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<GroupDetailComponent>
+    private _bottomSheetRef: MatBottomSheetRef<GroupDetailComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public group: IVolunteerGroup
   ) {
     this.postList = [
       {

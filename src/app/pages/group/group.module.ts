@@ -7,6 +7,7 @@ import { GroupComponent } from './group.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CreateGroupComponent } from './create-group/create-group.component';
 const routes: Routes = [
   {
     path: '',
@@ -14,7 +15,7 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [GroupComponent, GroupDetailComponent],
+  declarations: [GroupComponent, GroupDetailComponent, CreateGroupComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
