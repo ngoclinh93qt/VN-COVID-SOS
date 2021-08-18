@@ -7,17 +7,15 @@
         <div class="p-1">
             <mat-chip-list aria-label="tag">
                 <mat-chip color="primary" selected>
-                    <mat-icon>error</mat-icon>{{status}}
+                    <mat-icon>error</mat-icon>{{mapPriority.get(request?.priority_type!)}}
                 </mat-chip>
-                <mat-chip color="accent" selected>{{typeRequest}}</mat-chip>
+                <mat-chip *ngFor="let type of request?.support_types" color="accent" selected>{{type.name}}</mat-chip>
+                <mat-chip *ngFor="let object of request?.requester_object_status" color="accent" selected>
+                    {{object.name}}</mat-chip>
                 <mat-chip>
                     <mat-icon>done</mat-icon>Đã xác thực
                 </mat-chip>
             </mat-chip-list>
-            <!-- <mat-chip-list aria-label="objectTag">
-                <mat-chip color="accent" selected *ngFor="let object of request?.requester_object_status">{{object.name}}
-                </mat-chip>
-            </mat-chip-list> -->
             <br>
 
 
@@ -25,8 +23,6 @@
             <h3><b>{{request?.subject}}</b></h3>
             <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
             <br>
-
-            <h4><b>{{request?.status}}</b></h4>
         </div>
 
 
@@ -52,9 +48,7 @@
         <hr>
         <div class="p-1">
             <p>Trạng thái:</p>
-            <h3><b>{{request?.supporters?.length?"Đã có nhóm hỗ trợ":"Chưa có
-                    nhóm
-                    hỗ trợ"}}</b></h3>
+            <h3><b>{{mapStatus.get(request?.status)}}</b></h3>
             <br>
             <app-button height="35" color="primary" text="Tham gia trợ giúp">
             </app-button>

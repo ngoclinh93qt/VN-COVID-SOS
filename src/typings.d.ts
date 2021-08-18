@@ -97,6 +97,15 @@ interface IGroupMember {
   role: string;
 }
 
+interface IPriorityType{
+  type:string;
+  name:string;
+}
+interface IRequestStatus{
+  type:string;
+  name:string;
+}
+
 interface IUrgentRequest {
   id?: string;
   isSupported?: boolean;
@@ -109,20 +118,30 @@ interface IUrgentRequest {
   img?: string;
   position?: IPosition;
 }
+interface IRequestFilter{
+  lat_position:number;
+  long_position:number;
+  support_types?:string[];
+  priority_type?:string[];
+  status?:string[];
+  keyword?:string;
+  distance?:number
+  object_status?:string[];
+}
 interface IRequesterObjectStatus {
   content_type?: string;
   group?: string;
   id?: string;
-  key?: string;
+  key: string;
   name?: string;
   order?: number;
-  type?: string;
+  type: string;
   value?: string;
   value_obj: object;
 }
 interface ISupportType {
   name?: string;
-  type?: string;
+  type: string;
 }
 interface ISOSRequest {
        address_info?: IAddressInfo;
@@ -143,6 +162,7 @@ interface ISOSRequest {
        updated_by?: string;
        updated_time?: Date;
        verify_status?: string;
+       priority_type?:string;
 
 }
 

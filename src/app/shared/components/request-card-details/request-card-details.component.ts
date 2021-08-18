@@ -10,7 +10,8 @@ import { PageEvent } from '@angular/material/paginator';
 export class RequestCardDetailsComponent implements OnInit {
 
   lastestComment: { content: string; postTime: string; }[];
-
+  mapPriority = new Map();
+  mapStatus = new Map();
   postList: ({ title: string; url: string; author: string; postTime: string; } | { title: string; author: string; postTime: string; url?: undefined; })[];
 
   onClose() {
@@ -18,6 +19,12 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public request: ISOSRequest) {
+    this.mapPriority.set("high", "Rất nguy cấp");
+    this.mapPriority.set("normal", "Nguy cấp")
+    this.mapPriority.set("", "Nguy cấp")
+    this.mapStatus.set("", "Đang chờ hỗ trợ");
+    this.mapStatus.set("waiting", "Đang chờ hỗ trợ");
+    this.mapStatus.set("supporting", "Đang được hỗ trợ");
     this.lastestComment = [
       {
         content: 'Hôm nay đã gửi đến 200 giường bệnh, 1000 khẩu trang.',
@@ -43,9 +50,6 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
   }
-  status = "Rất Nguy Cấp";
-  typeRequest = "Y tế";
-
   length = 0;
   pageSize = 1;
 
@@ -54,8 +58,6 @@ export class RequestCardDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.request?.status != 'RẤT NGUY CẤP') { this.status = "Nguy Cấp" }
-    if (this.request?.support_types?.length != 0) this.typeRequest = this.request?.support_types?.[0]?.name!;
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
   }

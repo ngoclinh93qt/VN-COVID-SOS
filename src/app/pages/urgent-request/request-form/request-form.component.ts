@@ -1,3 +1,6 @@
+import { UrgentLevelService } from './../../../shared/services/rest-services/urgent-level.service';
+import { NgForm } from '@angular/forms';
+import { EMPTY } from 'rxjs';
 import { RequesterObjectStatusService } from './../../../shared/services/rest-services/requester-object-status.service';
 import { UrgentRequestService } from './../../../shared/services/rest-services/urgent-request.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -21,6 +24,7 @@ export class RequestFormComponent implements OnInit {
   district: IDistrict = { code: 0 };
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
+  urgentLevels: IPriorityType[] = [];
   onClose(): void {
     this.dialogRef.close();
     console.log("closeForm");
@@ -28,7 +32,9 @@ export class RequestFormComponent implements OnInit {
   constructor(private RequesterObjectStatusService: RequesterObjectStatusService,
     private ProvinceService: ProvinceService, private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService, public dialogRef: MatDialogRef<RequestFormComponent>,
+    private UrgentLevelService: UrgentLevelService
   ) {
+    this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
   }
 
@@ -48,10 +54,15 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = "guest";
     data.medias = [];
     data.location = this.location;
+    if (!data.support_types) data.support_types = [];
+    if (!data.requester_object_status) data.requester_object_status = [];
     console.log(data);
-    this.UrgentRequestService.create(data, {});
-  }
+    this.UrgentRequestService.create(data, {}).subscribe();
 
+  }
+  checkSubmit(data: any) {
+    if (data.status == "VALID") this.onClose();
+  }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe(result => {
       this.province = result
@@ -65,17 +76,22 @@ export class RequestFormComponent implements OnInit {
   setLocation(l: string) {
     this.location = l;
   }
-  ngOnInit() {
-    var l: string = '';
-    function getCurrentLocation(setLocation: Function) {
+  getLocation(): any {
+    let location = localStorage.getItem("location");
+    if (!location) {
       navigator.geolocation.getCurrentPosition(function (position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        l = `${lat},${long}`;
-        setLocation(l);
+        localStorage.setItem("location", JSON.stringify({ lat: lat, long: long }));
       });
+      return this.getLocation();
     }
-    getCurrentLocation(this.setLocation.bind(this))
+    return JSON.parse(location!);
+  }
+  ngOnInit() {
+    var l: string = '';
+    let data = this.getLocation();
+    this.setLocation(`${data.lat},${data.long}`)
   }
 
 }

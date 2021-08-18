@@ -25,6 +25,13 @@ export class UrgentRequestComponent implements OnInit {
       console.log(result);
     })
   }
+  searchRequest(data: any) {
+    console.log(data);
+    this.UrgentRequestService.search(data).subscribe(result => {
+      this.requests = result
+      console.log(result);
+    })
+  }
   openFormDialog(): void {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
@@ -50,7 +57,19 @@ export class UrgentRequestComponent implements OnInit {
       console.log(result);
     });
   }
+  setLocation() {
+    let location = localStorage.getItem("location");
+    if (!location) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        localStorage.setItem("location", JSON.stringify({ lat: lat, long: long }));
+      });
+    }
+
+  }
   ngOnInit(): void {
+    this.setLocation();
   }
 
 }

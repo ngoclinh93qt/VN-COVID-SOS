@@ -9,8 +9,15 @@ export class UrgentLevelService {
   }
 
   constructor() { }
-  getUrgentLevels()
+  priorityTypes: IPriorityType[] = [{
+    type: 'high',
+    name: 'Rất nguy cấp'
+  },
   {
-    return ["Rất nguy cấp","Nguy cấp"];
+    type:'normal',
+    name:'Nguy cấp'
+  }]
+  getUrgentLevels() {
+    return this.priorityTypes
   }
 }

@@ -6,7 +6,7 @@
 .search-form {
     display: inline-block;
     position: relative;
-    width: calc(100%);
+    width: calc(100% - 120px);
     height: 50px;
     border-radius: 40px;
     transition: all 0.3s ease;
@@ -43,6 +43,24 @@ button{
         float: right;
     }
 }
+.mat-menu-item {
+    .mat-icon.checked {
+      display: none;
+      pointer-events: none;
+    }
+    .mat-icon.empty {
+      pointer-events: none;
+    }
+  }
+  .mat-menu-item.selected {
+    .mat-icon.empty {
+      display: none;
+    }
+    .mat-icon.checked {
+      display: unset;
+    }
+  }
+  .red { color:red }
 .request_items {
     overflow-y: scroll;
     height: calc(100vh - 270px);

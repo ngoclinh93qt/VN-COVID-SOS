@@ -7,18 +7,23 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest = {};
+  mapPriority = new Map();
+  mapStatus = new Map();
   @Output() clickedRequest = new EventEmitter<ISOSRequest>();
-  constructor() { }
+  constructor() {
+    this.mapPriority.set("high", "Rất nguy cấp");
+    this.mapPriority.set("normal", "Nguy cấp")
+    this.mapPriority.set("","Nguy cấp")
+    this.mapStatus.set("", "Đang chờ hỗ trợ");
+    this.mapStatus.set("waiting", "Đang chờ hỗ trợ");
+    this.mapStatus.set("supporting", "Đang được hỗ trợ");
+  }
   chooseRequest(request: ISOSRequest) {
     this.clickedRequest.emit(request)
     console.log(request);
   }
- 
-  status = "Rất Nguy Cấp";
-  typeRequest = "Y tế";
   ngOnInit(): void {
-    if (this.request?.status != 'RẤT NGUY CẤP') { this.status = "Nguy Cấp" }
-    if (this.request?.support_types?.length!=0) this.typeRequest=this.request?.support_types?.[0]?.name!;
+
   }
 
 }
