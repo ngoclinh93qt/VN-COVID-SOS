@@ -3,7 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGroupComponent } from './create-group/create-group.component';
-import { GroupService } from 'src/app/shared/services/rest-services/group.service';
+import { VolunteerGroupService } from 'src/app/shared/services/rest-services/volunteer-group.service';
 
 @Component({
   selector: 'app-group',
@@ -17,9 +17,16 @@ export class GroupComponent implements OnInit {
   constructor(
     private _bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
-    private groupService: GroupService
+    private groupService: VolunteerGroupService
   ) {
-    this.groups = groupService.groups;
+    this.fetchInit();
+  }
+
+  fetchInit() {
+    this.groupService.findAll().subscribe((result) => {
+      this.groups = result;
+      console.log(result);
+    });
   }
 
   openDialog() {
