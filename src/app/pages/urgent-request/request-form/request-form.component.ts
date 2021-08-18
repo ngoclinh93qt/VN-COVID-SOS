@@ -1,9 +1,9 @@
 import { RequesterObjectStatusService } from './../../../shared/services/rest-services/requester-object-status.service';
 import { UrgentRequestService } from './../../../shared/services/rest-services/urgent-request.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SupportTypesService } from './../../../shared/services/rest-services/support-types.service';
 import { ProvinceService } from './../../../shared/services/rest-services/province.service';
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Inject } from '@angular/core';
 
 
 @Component({
@@ -21,8 +21,14 @@ export class RequestFormComponent implements OnInit {
   district: IDistrict = { code: 0 };
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
-
-  constructor(private RequesterObjectStatusService: RequesterObjectStatusService, private ProvinceService: ProvinceService, private SupportTypesService: SupportTypesService, private UrgentRequestService: UrgentRequestService) {
+  onClose(): void {
+    this.dialogRef.close();
+    console.log("closeForm");
+  }
+  constructor(private RequesterObjectStatusService: RequesterObjectStatusService,
+    private ProvinceService: ProvinceService, private SupportTypesService: SupportTypesService,
+    private UrgentRequestService: UrgentRequestService, public dialogRef: MatDialogRef<RequestFormComponent>,
+  ) {
     this.fetchInit();
   }
 
