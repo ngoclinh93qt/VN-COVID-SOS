@@ -25,24 +25,17 @@ export class MapsComponent implements OnInit, OnChanges {
       navigator.geolocation.getCurrentPosition(function (position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        localStorage.setItem("location", JSON.stringify({ lat: lat, long: long }));
+        localStorage.setItem("location", JSON.stringify({ lat: lat, lng: long }));
+
       });
       return this.getLocation();
     }
     return JSON.parse(location!);
+    
   }
   ngOnChanges(changes: SimpleChanges): void {
-    const svgMarker = {
-    path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-    fillColor: "blue",
-    fillOpacity: 0.6,
-    strokeWeight: 0,
-    rotation: 0,
-    scale: 2,
-    anchor: new google.maps.Point(15, 30),
-  };
     let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
-    console.log(this.requests);
+
     let loader = new Loader({
       apiKey: environment.googleApiKey
     })
@@ -58,19 +51,18 @@ export class MapsComponent implements OnInit, OnChanges {
 
       infoWindow = new google.maps.InfoWindow();
       // map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-      getCurrentLocation();
-      console.log(this.requests);
+
       this.requests?.forEach(request => {
         addMarker(request, this.chooseRequest.bind(this))
       });
     })
 
     function addMarker(request: ISOSRequest, chooseRequest: Function) {
-      console.log(request);
+    
       var location = request?.location?.split(',');
       var lat = parseFloat(location![0]);
       var lng = parseFloat(location![1]);
-      console.log(location);
+    
       var marker = new google.maps.Marker({
         position: { lat: <number>lat, lng: <number>lng },
         map: map
@@ -91,7 +83,6 @@ export class MapsComponent implements OnInit, OnChanges {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
-
             map.setCenter(pos);
           },
           () => {
