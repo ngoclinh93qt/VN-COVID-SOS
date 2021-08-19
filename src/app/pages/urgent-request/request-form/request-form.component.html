@@ -56,7 +56,7 @@
         </fieldset>
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Người cần hỗ trợ là</mat-label>
-            <mat-select ngModel name="requester_object_status" multiple>
+            <mat-select value=[] ngModel name="requester_object_status" multiple>
                 <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
                     {{status.name}}
                 </mat-option>
@@ -66,12 +66,13 @@
         <h4><b>Nội dung yêu cầu</b></h4>
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Loại yêu cầu</mat-label>
-            <mat-select ngModel name="support_types" required multiple>
+            <mat-select ngModel name="support_types" multiple  >
                 <mat-option *ngFor="let type of supportTypes" [value]="type">
                     {{type.name}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Tiêu đề</mat-label>
             <input ngModel name="subject" matInput placeholder="Tôi cần giúp..." value="" required>
@@ -82,16 +83,15 @@
         </mat-form-field>
         <br>
         <h4><b>Mức độ</b></h4>
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button style="margin: 0 50px 0 0;" value="Rất Nguy Cấp">Rất Nguy cấp</mat-radio-button>
-            <mat-radio-button value="Nguy cấp">Nguy cấp</mat-radio-button>
+        <mat-radio-group name="priority_type" ngModel #priority_type="ngModel" > 
+            <mat-radio-button  *ngFor="let priority of urgentLevels" style="margin: 0 50px 0 0;" value={{priority.type}}>{{priority.name}}</mat-radio-button>
         </mat-radio-group>
     </div>
     <br>
-    
+
     <div mat-dialog-actions>
         <button mat-flat-button type="submit" style="float:right; border-radius: 5rem;" color="accent"
-        (click)="onClose()" cdkFocusInitial>Gửi yêu
+            (click)="checkSubmit(form)" cdkFocusInitial>Gửi yêu
             cầu</button>
     </div>
 </form>
