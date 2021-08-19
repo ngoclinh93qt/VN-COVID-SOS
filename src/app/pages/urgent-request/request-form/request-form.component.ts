@@ -82,11 +82,13 @@ export class RequestFormComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(function (position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        localStorage.setItem("location", JSON.stringify({ lat: lat, long: long }));
+        localStorage.setItem("location", JSON.stringify({ lat: lat, lng: long }));
+
       });
       return this.getLocation();
     }
     return JSON.parse(location!);
+    
   }
   ngOnInit() {
     var l: string = '';
