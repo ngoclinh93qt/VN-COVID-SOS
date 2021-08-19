@@ -24,6 +24,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NotificationService } from './components/notification/notification.service';
 import { httpInterceptorProviders } from './interceptors';
+import { GroupCardComponent } from './components/group-card/group-card.component';
 import { MemberComponent } from './member/member.component';
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MemberComponent } from './member/member.component';
 
     RequestCardDetailsComponent,
     LoadingComponent,
+    GroupCardComponent,
     MemberComponent,
   ],
   imports: [
@@ -59,13 +61,14 @@ import { MemberComponent } from './member/member.component';
     LoginFrameComponent,
     RequestCardDetailsComponent,
     LoadingComponent,
+    GroupCardComponent,
     MemberComponent
   ],
   providers: [
     HttpClientModule,
     LoadingService,
     NotificationService,
-    httpInterceptorProviders
-  ]
+    httpInterceptorProviders,
+  ],
 })
 export class SharedModule {}

@@ -16,14 +16,14 @@
         <b>{{group.name}} <a>Sửa</a></b>
         <hr>
         <p>Địa chỉ</p>
-        <b>{{group.address_info.address}} <a>Sửa</a></b>
+        <b>{{group?.address_info?.address}} <a>Sửa</a></b>
         <hr>
         <p>Số điện thoại</p>
-        <b>{{group.contact_info.phone_number}} <a>Sửa</a></b>
+        <b>{{group?.contact_info?.phone_number}} <a>Sửa</a></b>
         <hr>
         <p>Loại hỗ trợ</p>
         <mat-chip-list aria-label="objectTag">
-            <mat-chip color="accent" selected *ngFor="let type of group.detail_info.support_types">{{type.name}}
+            <mat-chip color="accent" selected *ngFor="let type of group?.detail_info?.support_types">{{type.name}}
             </mat-chip>
         </mat-chip-list>
         <hr>
