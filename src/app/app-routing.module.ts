@@ -26,11 +26,21 @@ const routes: Routes = [
           import('./pages/news/news.module').then((m) => m.NewsModule),
       },
       {
+        path: 'manage',
+        loadChildren: () =>
+          import('./pages/manage/manage.module').then((m) => m.ManageModule),
+      },
+      {
         path: 'hospital',
         loadChildren: () =>
           import('./pages/hospital/hospital.module').then(
             (m) => m.HospitalModule
           ),
+      },
+      {
+        path: 'group',
+        loadChildren: () =>
+          import('./pages/group/group.module').then((m) => m.GroupModule),
       },
       {
         path: 'blocked',

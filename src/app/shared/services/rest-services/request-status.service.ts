@@ -4,9 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RequestStatusService {
-
+  static getRequestStatus(): string[] {
+    throw new Error('Method not implemented.');
+  }
+  requestStatus: IRequestStatus[] = [{
+    type: 'supporting',
+    name: 'Đang được hỗ trợ'
+  },
+  {
+    type: 'waiting',
+    name: 'Đang chờ hỗ trợ'
+  }]
   constructor() { }
-  getRequestStatus(){
-    return ["Đã được hỗ trợ", "Chưa được hỗ trợ"];  
+  getRequestStatus() {
+    return this.requestStatus;
   }
 }

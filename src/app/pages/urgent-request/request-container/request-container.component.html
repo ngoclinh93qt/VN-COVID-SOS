@@ -1,33 +1,64 @@
 <div class="request_session">
     <h2><b>Yêu cầu Khẩn Cấp</b><span>
-            <app-button (click)="createClick()" [height]="height.small" [color]="color.accent" [text]="text.createRequest">
+            <app-button (click)="createClick()" [height]="height.small" [color]="color.accent"
+                [text]="text.createRequest">
             </app-button>
         </span></h2>
     <hr>
-    <br>
-    <div>
+    <div style="position: relative;">
         <div class="search-form float-right m-3">
             <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
-            <input type="text" class="search-input" placeholder="Tìm kiếm" />
+            <input #key type="text" class="search-input" placeholder="Tìm kiếm" (keyup.enter)="setKey($event)"
+            />
         </div>
-        <!-- <span>
-            <app-button [height]="height.large" [color]="color.basic" [icon]="icon.sort" [text]="text.filter">
-            </app-button>
-        </span> -->
+        <button class="" style="height: 50px; right: 0; position: absolute;" mat-stroked-button (click)="searchClick(key)">Tìm
+            kiếm
+        </button>
+        <br>
+        <br>
+        <button mat-stroked-button class="menuTrigger" [matMenuTriggerFor]="priority">
+            Mức độ
+        </button>
+        <mat-menu #priority="matMenu">
+            <button *ngFor="let level of urgentLevels" mat-menu-item (click)="selectPriority(level.type,$event)">
+                <mat-icon class="empty">check_box_outline_blank</mat-icon>
+                <mat-icon class="checked red">check_box</mat-icon>
+                {{level.name}}
+            </button>
+        </mat-menu>
+
+        <button mat-stroked-button [matMenuTriggerFor]="support_type">Loại yêu cầu</button>
+        <mat-menu #support_type="matMenu">
+            <button *ngFor="let type of supportTypes" mat-menu-item (click)="selectSupportType(type.type,$event)">
+                <mat-icon class="empty">check_box_outline_blank</mat-icon>
+                <mat-icon class="checked red">check_box</mat-icon>
+                {{type.name}}
+            </button>
+
+        </mat-menu>
+        <button mat-stroked-button [matMenuTriggerFor]="status">Trạng thái</button>
+        <mat-menu #status="matMenu">
+            <button *ngFor="let status of statuses" mat-menu-item (click)="selectStatus(status.type,$event)">
+                <mat-icon class="empty">check_box_outline_blank</mat-icon>
+                <mat-icon class="checked red">check_box</mat-icon>{{status.name}}
+            </button>
+        </mat-menu>
+        <button mat-stroked-button [matMenuTriggerFor]="object">Đối tượng</button>
+        <mat-menu #object="matMenu">
+            <button *ngFor="let object of requesterObjectStatus" mat-menu-item
+                (click)="selectObject(object.key,$event)">
+                <mat-icon class="empty">check_box_outline_blank</mat-icon>
+                <mat-icon class="checked red">check_box</mat-icon>{{object.name}}
+            </button>
+        </mat-menu>
+        <button style="width: 85px;" mat-stroked-button [matMenuTriggerFor]="distance">{{filterObject.distance}}
+            (km)</button>
+        <mat-menu #distance="matMenu">
+            <button *ngFor="let distance of distanceOpt" mat-menu-item
+                (click)="selectDistance(distance)">{{distance}}</button>
+        </mat-menu>
     </div>
-    <br>
-    <button mat-stroked-button [matMenuTriggerFor]="level">Mức độ</button>
-    <mat-menu #level="matMenu">
-        <button *ngFor="let level of urgentLevels" mat-menu-item>{{level}}</button>
-    </mat-menu>
-    <button mat-stroked-button [matMenuTriggerFor]="support_type">Loại yêu cầu</button>
-    <mat-menu #support_type="matMenu">
-        <button *ngFor="let type of supportTypes" mat-menu-item>{{type.name}}</button>
-    </mat-menu>
-    <button mat-stroked-button [matMenuTriggerFor]="status">Trạng thái</button>
-    <mat-menu #status="matMenu">
-        <button *ngFor="let status of statuses" mat-menu-item>{{status}}</button>
-    </mat-menu>
+
     <div class="request_items">
         <div *ngFor="let request of requests">
             <app-request-card (click)="chooseRequest(request)" [request]=request>
