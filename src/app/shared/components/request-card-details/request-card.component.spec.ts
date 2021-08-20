@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RequestCardComponent } from '../request-card/request-card.component';
 
-import { RequestCardComponent } from './request-card.component';
+
 
 describe('RequestCardComponent', () => {
   let component: RequestCardComponent;
