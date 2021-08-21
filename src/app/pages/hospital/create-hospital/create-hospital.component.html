@@ -1,5 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-between">
-  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">Tạo nhóm</h1>
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">
+    Tạo bệnh viện
+  </h1>
   <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
 </div>
 <div mat-dialog-content>
@@ -7,9 +9,9 @@
     <sos-input
       ngModel
       name="name"
-      placeholder="Tên nhóm"
+      placeholder="Tên bệnh viện"
       value=""
-      label="Tên nhóm"
+      label="Tên bệnh viện"
     ></sos-input>
     <fieldset ngModelGroup="address_info">
       <mat-form-field style="width: 100%" appearance="outline">
@@ -46,34 +48,27 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </fieldset>
-    <fieldset ngModelGroup="contact_info">
       <sos-input
         ngModel
-        name="phone_number"
+        name="address"
         matInput
-        placeholder="Số điện thoại"
+        placeholder="Nhập địa chỉ"
         value=""
         [required]="true"
-        label="Số điện thoại"
+        label="Địa chỉ"
+        type="text"
       ></sos-input>
     </fieldset>
-    <p>Loại hỗ trợ</p>
-    <fieldset ngModelGroup="detail_info">
-      <mat-form-field style="width: 100%" appearance="outline">
-        <mat-label>Loại hỗ trợ</mat-label>
-        <mat-select ngModel name="support_types" multiple>
-          <mat-option *ngFor="let type of supportTypes" [value]="type">
-            {{ type.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </fieldset>
-    <!-- <app-button
-      height="40"
-      color="#F600001A"
-      text="THÊM ẢNH ĐẠI DIỆN"
-    ></app-button> -->
+    <sos-input
+      ngModel
+      name="phone_number"
+      matInput
+      placeholder="Số điện thoại"
+      value=""
+      [required]="true"
+      label="Số điện thoại"
+      type="tel"
+    ></sos-input>
     <div mat-dialog-actions>
       <button
         mat-flat-button
