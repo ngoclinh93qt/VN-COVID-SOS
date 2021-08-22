@@ -20,11 +20,15 @@ export class UrgentRequestService extends RestService<ISOSRequest>{
     return this.http.post<{
       data: {
         sos_requests: ISOSRequest[],
-        total:number
+        total: number
       }
     }>(`${this.host}/sos_requests/search`, body).pipe(map(res => res.data.sos_requests))
   }
-
+  join(request_id: string, body: IJoinRequest): Observable<ISOSRequest> {
+    return this.http.put<{
+      data: ISOSRequest
+    }>(`${this.host}/sos_requests/${request_id}/support`, body).pipe(map(res => res.data))
+  }
   getGeneralData() {
     var res: IUrgentRequestGeneral = {
       numRequest: this.getNumberOfRequest(),

@@ -1,11 +1,16 @@
+import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
+import { FormsModule } from '@angular/forms';
+import { SupportTypesService } from './../../services/rest-services/support-types.service';
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-request-card-details',
   templateUrl: './request-card-details.component.html',
-  styleUrls: ['./request-card-details.component.scss']
+  styleUrls: ['./request-card-details.component.scss'],
+  
 })
 export class RequestCardDetailsComponent implements OnInit {
 
@@ -18,7 +23,7 @@ export class RequestCardDetailsComponent implements OnInit {
     this.dialogRef.close();
   }
   constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest) {
+    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest, public dialog: MatDialog) {
     this.mapPriority.set("high", "Rất nguy cấp");
     this.mapPriority.set("normal", "Nguy cấp")
     this.mapPriority.set("", "Nguy cấp")
@@ -50,6 +55,17 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(JoinRequestComponent, {
+      data: {request_id:this.request.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  
   length = 0;
   pageSize = 1;
 
@@ -60,6 +76,31 @@ export class RequestCardDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
+  }
+
+}
+@Component({
+  selector: 'join',
+  templateUrl: './joinForm.html',
+  providers: [MatFormFieldModule,FormsModule]
+})
+export class JoinRequestComponent {
+  supportTypes: ISupportType[] = [];
+  joinRequest: IJoinRequest = { type: "user", supporter_id: "customerc74de9034800804c5be2197f986ec520" }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<JoinRequestComponent>, private SupportTypesService: SupportTypesService,private UrgentRequestService:UrgentRequestService) {
+    this.SupportTypesService.findAll().subscribe(result => this.supportTypes = result)
+  }
+  async onSubmit(data: any) {
+    console.log(data);
+    this.joinRequest.description=data.description;
+    this.joinRequest.support_date=data.support_date;
+    console.log(this.joinRequest);
+    this.UrgentRequestService.join(this.data.request_id,this.joinRequest).subscribe();
+    this.dialogRef.close();
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
