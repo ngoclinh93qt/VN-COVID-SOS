@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { UpdateAddressComponent } from './update-address/update-address.component';
 import { UpdateNameComponent } from './update-name/update-name.component';
 import { UpdatePhoneComponent } from './update-phone/update-phone.component';
 
@@ -26,8 +27,16 @@ export class GroupDetailComponent implements OnInit {
     });
   }
 
-  openUpdatePhone() {
-    this.dialog.open(UpdatePhoneComponent);
+  openUpdatePhone(cur_phone: any, id: any) {
+    this.dialog.open(UpdatePhoneComponent, {
+      data: { cur_phone: cur_phone, id: id },
+    });
+  }
+
+  openUpdateAddress(id: any) {
+    this.dialog.open(UpdateAddressComponent, {
+      data: { id: id },
+    });
   }
   constructor(
     public dialogRef: MatDialogRef<GroupDetailComponent>,

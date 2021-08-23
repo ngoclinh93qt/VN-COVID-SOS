@@ -22,13 +22,21 @@
 
     <hr />
     <p>Tên nhóm</p>
-    <b>{{ group.name }} <a (click)="openUpdateName(group.name, group.id)">Sửa</a></b>
+    <b
+      >{{ group.name }}
+      <a (click)="openUpdateName(group.name, group.id)">Sửa</a></b
+    >
     <hr />
     <p>Địa chỉ</p>
-    <b>{{ group?.address_info?.address }} <a>Sửa</a></b>
+    <b>{{ group?.address_info?.address }} <a (click)= "openUpdateAddress(group.id)">Sửa</a></b>
     <hr />
     <p>Số điện thoại</p>
-    <b>{{ group?.contact_info?.phone_number }} <a (click)= "openUpdatePhone()">Sửa</a></b>
+    <b
+      >{{ group?.contact_info?.phone_number }}
+      <a (click)="openUpdatePhone(group?.contact_info?.phone_number, group.id)"
+        >Sửa</a
+      ></b
+    >
     <hr />
     <p>Loại hỗ trợ</p>
     <mat-chip-list aria-label="objectTag">
