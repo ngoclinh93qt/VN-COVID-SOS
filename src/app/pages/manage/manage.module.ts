@@ -1,4 +1,5 @@
 import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,6 +12,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GroupDetailComponent } from './group/group-detail/group-detail.component';
+import { UpdateNameComponent } from './group/group-detail/update-name/update-name.component';
+import { UpdatePhoneComponent } from './group/group-detail/update-phone/update-phone.component';
 
 const routes: Routes = [
   {
@@ -26,7 +29,9 @@ const routes: Routes = [
     GroupComponent,
     HospitalComponent,
     JobComponent,
-    GroupDetailComponent
+    GroupDetailComponent,
+    UpdateNameComponent,
+    UpdatePhoneComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +40,8 @@ const routes: Routes = [
     FlexLayoutModule,
     MatTabsModule,
     MatIconModule,
-    MatChipsModule
-  ]
+    MatChipsModule,
+    FormsModule,
+  ],
 })
-export class ManageModule { }
+export class ManageModule {}

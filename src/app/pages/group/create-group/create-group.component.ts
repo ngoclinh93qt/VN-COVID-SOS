@@ -59,7 +59,6 @@ export class CreateGroupComponent implements OnInit {
 
   async onSubmit(data: IVolunteerGroup) {
     data.type = 'nhom_thien_nguyen';
-    // data.detail_info!.support_types = [];
     console.log(data);
     this.GroupService.create(data, {}).subscribe();
   }
