@@ -33,7 +33,7 @@ export class TransFormComponent implements OnInit {
     data.id = "customerc74de9034800804c5be2197f986ec520";
     data.sos_request_id = this.data.request_id;
     console.log(data);
-    this.SupportTransService.create(data, {}).subscribe()
+    this.SupportTransService.create(data, {}).subscribe(res=>this.dialogRef.close(res))
   }
   show(data: any) {
     console.log(data);
@@ -64,7 +64,7 @@ export class TransFormComponent implements OnInit {
   }
   checkSubmit(data: any) {
     console.log(data);
-    if (data.status == "VALID") this.onClose();
+    // if (data.status == "VALID") this.onClose();
   }
   ngOnInit(): void {
   }

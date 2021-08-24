@@ -15,6 +15,6 @@ export class SupportTransService extends RestService<ITransaction>{
   getRequestTrans(id?: string): Observable<ITransaction[]> {
     return this.http.get<{
       data: ITransaction[]
-    }>(`${this.host}/support_trans?sos_request_id=${id}`, {}).pipe(map(res => res.data))
+    }>(`${this.host}/support_trans?filter_sos_request_id=${id}`, {}).pipe(map(res => res.data))
   }
 }

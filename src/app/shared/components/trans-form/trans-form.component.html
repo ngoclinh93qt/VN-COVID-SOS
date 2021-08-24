@@ -26,31 +26,33 @@
                 <mat-icon>add</mat-icon> New
             </mat-chip>
         </div>
-        <div *ngFor="let support of form.value.support_list; let i = index;">
-            <mat-form-field class="w33" appearance="fill">
-                <mat-label>Số lượng</mat-label>
-                <input #Amount (change)="changeAmount(form.value,i,Amount.value)" type="number" matInput
-                    value={{support.amount}} placeholder="Số lượng" />
-            </mat-form-field>
-            <mat-form-field class="w33" appearance="fill">
-                <mat-label>Đơn vị</mat-label>
-                <input #Unit (change)="changeUnit(form.value,i,Unit.value)" type="text" matInput value={{support.unit}}
-                    placeholder="Đơn vị" />
-            </mat-form-field>
-            <mat-form-field class="w33" appearance="fill">
-                <mat-label>Loại hỗ trợ</mat-label>
-                <input #Name (change)="changeName(form.value,i,Name.value)" type="text" matInput value={{support.name}}
-                    placeholder="Loại hỗ trợ" />
-            </mat-form-field>
-            <button (click)="removeObject(form.value,i)" mat-icon-button>
-                <mat-icon>delete</mat-icon>
-            </button>
+        <div class="style-3" style="max-height: 200px; overflow-y: scroll;">
+            <div *ngFor="let support of form.value.support_list; let i = index;">
+                <mat-form-field class="w33" appearance="fill">
+                    <mat-label>Số lượng</mat-label>
+                    <input #Amount (change)="changeAmount(form.value,i,Amount.value)" type="number" matInput
+                        value={{support.amount}} placeholder="Số lượng" />
+                </mat-form-field>
+                <mat-form-field class="w33" appearance="fill">
+                    <mat-label>Đơn vị</mat-label>
+                    <input #Unit (change)="changeUnit(form.value,i,Unit.value)" type="text" matInput
+                        value={{support.unit}} placeholder="Đơn vị" />
+                </mat-form-field>
+                <mat-form-field class="w33" appearance="fill">
+                    <mat-label>Loại hỗ trợ</mat-label>
+                    <input #Name (change)="changeName(form.value,i,Name.value)" type="text" matInput
+                        value={{support.name}} placeholder="Loại hỗ trợ" />
+                </mat-form-field>
+                <button (click)="removeObject(form.value,i)" mat-icon-button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
     <br>
 
     <div mat-dialog-actions>
-        <button mat-flat-button type="submit" style="width:100%;border-radius: 5rem;" color="accent"
-            cdkFocusInitial (click)="checkSubmit(form)">Cập nhật</button>
+        <button mat-flat-button type="submit" style="width:100%;border-radius: 5rem;" color="accent" cdkFocusInitial
+            (click)="checkSubmit(form)">Cập nhật</button>
     </div>
 </form>
