@@ -5,7 +5,8 @@ import { HospitalService } from 'src/app/shared/services/rest-services/hospital.
 import { Hospital } from './model/hospital.mode';
 import { HospitalSidenavComponent } from './hospital-sidenav/hospital-sidenav.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-
+import { MatDialog } from '@angular/material/dialog';
+import { CreateHospitalComponent } from './create-hospital/create-hospital.component';
 @Component({
   selector: 'app-hospital',
   templateUrl: './hospital.component.html',
@@ -18,10 +19,15 @@ export class HospitalComponent implements OnInit {
   constructor(
     private hospitalService: HospitalService,
     private notifSv: NotificationService,
+    public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet
   ) {
     hospitalService.findAll();
     this.hospitals = hospitalService.hospitals;
+  }
+
+  openDialog() {
+    this.dialog.open(CreateHospitalComponent);
   }
 
   openBottomSheet(hospital: IHospital): void {
