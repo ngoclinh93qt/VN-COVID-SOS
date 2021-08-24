@@ -1,3 +1,4 @@
+import { TransCardComponent } from './components/trans-card/trans-card.component';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
@@ -28,6 +29,7 @@ import { httpInterceptorProviders } from './interceptors';
 import { GroupCardComponent } from './components/group-card/group-card.component';
 import { MemberComponent } from './member/member.component';
 import { MatInputModule } from '@angular/material/input';
+import { TransFormComponent } from './components/trans-form/trans-form.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -38,12 +40,14 @@ import { MatInputModule } from '@angular/material/input';
     RequestCardComponent,
     CommentBoxComponent,
     PostCardComponent,
+    TransCardComponent,
     LoginFrameComponent,
     JoinRequestComponent,
     RequestCardDetailsComponent,
     LoadingComponent,
     GroupCardComponent,
     MemberComponent,
+    TransFormComponent,
   ],
   imports: [
     CommonModule,
@@ -68,7 +72,8 @@ import { MatInputModule } from '@angular/material/input';
     LoadingComponent,
     GroupCardComponent,
     MemberComponent,
-    
+    TransCardComponent,
+    TransFormComponent
   ],
   providers: [
     HttpClientModule,
