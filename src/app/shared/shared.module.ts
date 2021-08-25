@@ -31,6 +31,7 @@ import { MemberComponent } from './member/member.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
+import { CommentComponent } from './components/comment/comment.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -50,6 +51,7 @@ import { TransFormComponent } from './components/trans-form/trans-form.component
     MemberComponent,
     UploadComponent,
     TransFormComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,

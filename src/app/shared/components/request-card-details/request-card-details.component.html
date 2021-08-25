@@ -65,9 +65,10 @@
     </section>
     <section fxFlex="1/3" class="p-1 comment_sestion">
         <p style="font-weight: bold; font-size: 17px">Bình luận</p>
-        <sos-input label="Viết cập nhật..."></sos-input>
-        <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px">
-            <app-comment-box [comment]="comment"></app-comment-box>
+        <sos-input (keyup.enter)="show($event)" label="Viết cập nhật..."></sos-input>
+
+        <div *ngFor="let new of news" style="margin-bottom: 15px">
+            <app-comment [new]="new"></app-comment>
         </div>
     </section>
 
