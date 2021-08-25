@@ -83,6 +83,8 @@ interface IDistrict {
   wards?: IWards[];
 }
 interface IContacInfo {
+  first_name?: string;
+  last_name?: string;
   name: string;
   phone_number: string;
 }
@@ -95,13 +97,13 @@ interface IGroupMember {
   role: string;
 }
 
-interface IPriorityType{
-  type:string;
-  name:string;
+interface IPriorityType {
+  type: string;
+  name: string;
 }
-interface IRequestStatus{
-  type:string;
-  name:string;
+interface IRequestStatus {
+  type: string;
+  name: string;
 }
 
 interface IUrgentRequest {
@@ -116,15 +118,15 @@ interface IUrgentRequest {
   img?: string;
   position?: IPosition;
 }
-interface IRequestFilter{
-  lat_position:number;
-  long_position:number;
-  support_types?:string[];
-  priority_type?:string[];
-  status?:string[];
-  keyword?:string;
-  distance?:number
-  object_status?:string[];
+interface IRequestFilter {
+  lat_position: number;
+  long_position: number;
+  support_types?: string[];
+  priority_type?: string[];
+  status?: string[];
+  keyword?: string;
+  distance?: number
+  object_status?: string[];
 }
 interface IRequesterObjectStatus {
   content_type?: string;
@@ -142,25 +144,25 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
-       address_info?: IAddressInfo;
-       contact_info?: IContacInfo;
-       created_by?: string;
-       created_time?: Date;
-       description?: string;
-       id?: string;
-       location?: string;
-       medias?: IMedias[];
-       requester_info?: string;
-       requester_object_status?: IRequesterObjectStatus[];
-       requester_type?: string;
-       status?: string;
-       subject?: string;
-       support_types?: ISupportType[];
-       supporters?: [];
-       updated_by?: string;
-       updated_time?: Date;
-       verify_status?: string;
-       priority_type?:string;
+  address_info?: IAddressInfo;
+  contact_info?: IContacInfo;
+  created_by?: string;
+  created_time?: Date;
+  description?: string;
+  id?: string;
+  location?: string;
+  medias?: IMedias[];
+  requester_info?: string;
+  requester_object_status?: IRequesterObjectStatus[];
+  requester_type?: string;
+  status?: string;
+  subject?: string;
+  support_types?: ISupportType[];
+  supporters?: [];
+  updated_by?: string;
+  updated_time?: Date;
+  verify_status?: string;
+  priority_type?: string;
 
 }
 
@@ -181,7 +183,12 @@ interface IHospital {
   statusList?: IHospitalStatus[];
   needSupport?: boolean;
 }
-
+interface IJoinRequest {
+  type: string;
+  supporter_id: string;
+  support_date?: string;
+  description?: string;
+}
 interface IBlocked {
   id?: string;
   needSupport?: boolean;
@@ -269,4 +276,32 @@ interface ICustomerProfile {
         time_zone: string,
         type: string,
         updated_by_id: string
+}
+interface ISupport {
+  type: string;
+  amount: number;
+  unit: string;
+  name: string;
+}
+interface ISupporterInfo {
+  contact_info: IContacInfo;
+  id: string;
+  name: string;
+  type: string;
+}
+interface ITransaction {
+  sos_request_id: string;
+  type: string;
+  id: string;
+  support_time: Date;
+  medias?: IMedias[];
+  support_list?: ISupport[];
+  description?: string;
+  created_time?: Date;
+  created_by?: string;
+  requester_info?: object;
+  status?: string;
+  supporter_info?: ISupporterInfo;
+  updated_by?: string;
+  updated_time?: string;
 }

@@ -1,21 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RequestCardComponent } from '../request-card/request-card.component';
 
+import { UpdateAddressComponent } from './update-address.component';
 
-
-describe('RequestCardComponent', () => {
-  let component: RequestCardComponent;
-  let fixture: ComponentFixture<RequestCardComponent>;
+describe('UpdateAddressComponent', () => {
+  let component: UpdateAddressComponent;
+  let fixture: ComponentFixture<UpdateAddressComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RequestCardComponent ]
+      declarations: [ UpdateAddressComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestCardComponent);
+    fixture = TestBed.createComponent(UpdateAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

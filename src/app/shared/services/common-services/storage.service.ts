@@ -5,9 +5,6 @@ import { ConstantsService } from '../../constants.service';
   providedIn: 'root'
 })
 export class StorageService {
-  private _userInfo: IUserProfile | undefined;
-  private _adminInfo: ICustomerProfile | undefined;
-  private _token: string | undefined;
 
 
   constructor(private constant: ConstantsService) { }
