@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest = {};
+  @Input() type?: string = "";
   mapPriority = new Map();
   mapStatus = new Map();
   @Output() clickedRequest = new EventEmitter<ISOSRequest>();

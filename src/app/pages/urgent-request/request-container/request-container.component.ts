@@ -162,7 +162,7 @@ export class RequestContainerComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.requests);
     let data = this.getLocation();
-    this.filterObject.lat_position = data.lat.toString();
-    this.filterObject.long_position = data.lng.toString();
+    this.filterObject.lat_position = data.lat?.toString();
+    this.filterObject.long_position = data.lng?.toString();
   }
 }

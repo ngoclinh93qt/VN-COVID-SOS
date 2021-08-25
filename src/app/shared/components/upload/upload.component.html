@@ -1,0 +1,4 @@
+<div>
+	<img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
+</div>
+<input type="file" multiple (change)="detectFiles($event)">

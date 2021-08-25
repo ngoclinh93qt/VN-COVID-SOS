@@ -20,6 +20,25 @@ interface INews {
   img?: string;
   publisher?: IPublisher;
 }
+interface INew {
+  content?: string;
+  created_by_id?: string;
+  created_by_name?: string;
+  created_time?: Date;
+  detail_info?: object;
+  id?: string;
+  medias?: IMedias[];
+  published_by_id?: string;
+  published_by_name?: string;
+  published_time?: Date;
+  status?: string;
+  subject?: string;
+  target_id?: string;
+  target_type?: string;
+  updated_by_id?: string;
+  updated_by_name?: string;
+  updated_time?: Date;
+}
 interface IPublisher {
   id?: string;
   img?: string;
@@ -83,6 +102,8 @@ interface IDistrict {
   wards?: IWards[];
 }
 interface IContacInfo {
+  first_name?: string;
+  last_name?: string;
   name: string;
   phone_number: string;
 }
@@ -182,10 +203,10 @@ interface IHospital {
   needSupport?: boolean;
 }
 interface IJoinRequest {
-  type:string;
-  supporter_id:string;
-  support_date?:string;
-  description?:string;
+  type: string;
+  supporter_id: string;
+  support_date?: string;
+  description?: string;
 }
 interface IBlocked {
   id?: string;
@@ -251,4 +272,55 @@ interface IHospitalPost {
   url?: string;
   author?: string;
   postTime?: string;
+}
+
+
+interface IUserProfile {
+
+}
+
+interface ICustomerProfile {
+  addresses: [],
+        avatar: string,
+        delivery_addresses: [],
+        dob: string,
+        email: string,
+        first_name: string,
+        gender: string,
+        customer_id: string,
+        last_name: string,
+        phone_number: string,
+        referral_code: string,
+        referred_by: string,
+        time_zone: string,
+        type: string,
+        updated_by_id: string
+}
+interface ISupport {
+  type: string;
+  amount: number;
+  unit: string;
+  name: string;
+}
+interface ISupporterInfo {
+  contact_info: IContacInfo;
+  id: string;
+  name: string;
+  type: string;
+}
+interface ITransaction {
+  sos_request_id: string;
+  type: string;
+  id: string;
+  support_time: Date;
+  medias?: IMedias[];
+  support_list?: ISupport[];
+  description?: string;
+  created_time?: Date;
+  created_by?: string;
+  requester_info?: object;
+  status?: string;
+  supporter_info?: ISupporterInfo;
+  updated_by?: string;
+  updated_time?: string;
 }

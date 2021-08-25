@@ -1,3 +1,7 @@
+import { NewsService } from 'src/app/shared/services/rest-services/news.service';
+import { SupportObjectService } from './../../services/rest-services/support-object.service';
+import { TransFormComponent } from './../trans-form/trans-form.component';
+import { SupportTransService } from './../../services/rest-services/support-trans.service';
 import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
 import { FormsModule } from '@angular/forms';
 import { SupportTypesService } from './../../services/rest-services/support-types.service';
@@ -10,26 +14,27 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   selector: 'app-request-card-details',
   templateUrl: './request-card-details.component.html',
   styleUrls: ['./request-card-details.component.scss'],
-  
+
 })
 export class RequestCardDetailsComponent implements OnInit {
 
   lastestComment: { content: string; postTime: string; }[];
   mapPriority = new Map();
   mapStatus = new Map();
-  postList: ({ title: string; url: string; author: string; postTime: string; } | { title: string; author: string; postTime: string; url?: undefined; })[];
-
+  news: INew[] = [];
+  trans: ITransaction[] = [];
+  supportObject: ISupport[] = [];
+  defaultComment: INew = { subject: " ", content: "", target_type: "sos_request", target_id: this.request.id }
   onClose() {
     this.dialogRef.close();
   }
   constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest, public dialog: MatDialog) {
-    this.mapPriority.set("high", "Rất nguy cấp");
-    this.mapPriority.set("normal", "Nguy cấp")
-    this.mapPriority.set("", "Nguy cấp")
-    this.mapStatus.set("", "Đang chờ hỗ trợ");
-    this.mapStatus.set("waiting", "Đang chờ hỗ trợ");
-    this.mapStatus.set("supporting", "Đang được hỗ trợ");
+    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest, public dialog: MatDialog
+    , private SupportTransService: SupportTransService, private NewsService: NewsService,
+    private SupportObjectService: SupportObjectService) {
+    this.supportObject = this.SupportObjectService.getSupportObjectByType(this.request.support_types!)
+    this.initalize();
+    this.fetchInit();
     this.lastestComment = [
       {
         content: 'Hôm nay đã gửi đến 200 giường bệnh, 1000 khẩu trang.',
@@ -41,31 +46,52 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
 
-    this.postList = [
-      {
-        title: 'Hôm nay tại BV A, Đã hỗ trợ 200 giường bệnh',
-        url: 'https://picsum.photos/300/200',
-        author: 'Hai Nguyen',
-        postTime: '10:30 AM . Hôm nay',
-      },
-      {
-        title: 'Đã hỗ trợ 1000 khẩu trang, 300 đồ bảo hộ',
-        author: 'Nguyễn Thị N . Nhóm thiện nguyện NTN',
-        postTime: '10:30 AM . Hôm nay',
-      },
-    ];
+
+  }
+  show(data: any) {
+    let content = data.target.value;
+    if (content)
+      this.NewsService.create({ ...this.defaultComment, content: content }, {}).subscribe(res => this.news.push(res));
+    data.target.value = "";
+  }
+  fetchInit() {
+    this.SupportTransService.getRequestTrans(this.request.id).subscribe(result => this.trans = result)
+    this.NewsService.getRequestNews(this.request.id).subscribe(res => this.news = res)
+  }
+  initalize() {
+    this.mapPriority.set("high", "Rất nguy cấp");
+    this.mapPriority.set("normal", "Nguy cấp")
+    this.mapPriority.set("", "Nguy cấp")
+    this.mapStatus.set("", "Đang chờ hỗ trợ");
+    this.mapStatus.set("waiting", "Đang chờ hỗ trợ");
+    this.mapStatus.set("supporting", "Đang được hỗ trợ");
+
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(JoinRequestComponent, {
-      data: {request_id:this.request.id}
+      data: { request_id: this.request.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
+  openTransDialog(): void {
+    const dialogRef = this.dialog.open(TransFormComponent, {
+      data: {
+        supportObject: this.supportObject,
+        request_id: this.request.id
+      }
+    });
 
-  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      if (result)
+        this.trans.push(result);
+    });
+  }
+
   length = 0;
   pageSize = 1;
 
@@ -82,21 +108,22 @@ export class RequestCardDetailsComponent implements OnInit {
 @Component({
   selector: 'join',
   templateUrl: './joinForm.html',
-  providers: [MatFormFieldModule,FormsModule]
+  providers: [MatFormFieldModule, FormsModule]
 })
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
   joinRequest: IJoinRequest = { type: "user", supporter_id: "customerc74de9034800804c5be2197f986ec520" }
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<JoinRequestComponent>, private SupportTypesService: SupportTypesService,private UrgentRequestService:UrgentRequestService) {
+    public dialogRef: MatDialogRef<JoinRequestComponent>, private SupportTypesService: SupportTypesService,
+    private UrgentRequestService: UrgentRequestService) {
     this.SupportTypesService.findAll().subscribe(result => this.supportTypes = result)
   }
   async onSubmit(data: any) {
     console.log(data);
-    this.joinRequest.description=data.description;
-    this.joinRequest.support_date=data.support_date;
+    this.joinRequest.description = data.description;
+    this.joinRequest.support_date = data.support_date;
     console.log(this.joinRequest);
-    this.UrgentRequestService.join(this.data.request_id,this.joinRequest).subscribe();
+    this.UrgentRequestService.join(this.data.request_id, this.joinRequest).subscribe();
     this.dialogRef.close();
   }
   onNoClick(): void {

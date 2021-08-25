@@ -4,8 +4,18 @@
         <mat-chip color="primary" selected>
             <mat-icon>error</mat-icon>{{mapPriority.get(request?.priority_type!)}}
         </mat-chip>
-        <mat-chip *ngIf="request?.support_types![0]" color="accent" selected>{{request?.support_types![0]?.name}}</mat-chip>
-        <mat-chip *ngIf="request?.requester_object_status![0]"color="accent" selected>{{request?.requester_object_status![0]?.name!}}</mat-chip>
+        <div *ngIf="type==''">
+            <mat-chip *ngIf="request?.support_types![0]" color="accent" selected>{{request?.support_types![0]?.name}}
+            </mat-chip>
+            <mat-chip *ngIf="request?.requester_object_status![0]" color="accent" selected>
+                {{request?.requester_object_status![0]?.name!}}</mat-chip>
+        </div>
+        <div *ngIf="type=='manage'">
+            <mat-chip *ngFor="let type of request?.support_types!" color="accent" selected>{{type.name}}
+            </mat-chip>
+            <mat-chip *ngFor="let status of request?.requester_object_status!" color="accent" selected>
+                {{status.name!}}</mat-chip>
+        </div>
         <mat-chip>
             <mat-icon>done</mat-icon>Đã xác thực
         </mat-chip>
@@ -15,5 +25,5 @@
     <!-- <h4>{{request?.status}}</h4> -->
     <hr>
     <p>Người gửi: <b>{{request?.contact_info?.name}}</b> <span style="margin:0 0 0 10px">
-        {{mapStatus.get(request?.status)}} </span></p>
+            {{mapStatus.get(request?.status)}} </span></p>
 </div>

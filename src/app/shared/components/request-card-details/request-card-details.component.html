@@ -1,8 +1,7 @@
-<div class="request_card-details">
-
-    <button style=" position: absolute; top:0; right: 0;" (click)="onClose()" mat-icon-button aria-label="close Icon">
-        <mat-icon>close</mat-icon>
-    </button>
+<div class="request_card-details style-3">
+    <span style=" position: absolute;"><button (click)="onClose()" mat-icon-button aria-label="close Icon">
+            <mat-icon>close</mat-icon>
+        </button></span>
     <section fxFlex="1/3" class="request_sesstion">
         <div class="p-1">
             <mat-chip-list aria-label="tag">
@@ -54,19 +53,22 @@
             </app-button>
         </div>
     </section>
-  
+
     <section fxFlex="1/3" class=" p-1 activity_sestion">
-        <p style="font-weight: bold; font-size: 17px">Hoạt động thiện nguyện</p>
-        <sos-input label="Viết cập nhật..."></sos-input>
-        <div *ngFor="let post of postList" style="margin-bottom: 10px">
-            <app-post-card [post]="post"></app-post-card>
+        <p style="font-weight: bold; font-size: 17px">Hoạt động thiện nguyện
+        </p>
+        <button style="width: 100%; margin: 10px 0;" (click)="openTransDialog()" mat-flat-button color="primary">Cập
+            nhật</button>
+        <div *ngFor="let tran of trans" style="margin-bottom: 10px">
+            <app-trans-card [trans]="tran"></app-trans-card>
         </div>
     </section>
     <section fxFlex="1/3" class="p-1 comment_sestion">
         <p style="font-weight: bold; font-size: 17px">Bình luận</p>
-        <sos-input label="Viết cập nhật..."></sos-input>
-        <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px">
-            <app-comment-box [comment]="comment"></app-comment-box>
+        <sos-input (keyup.enter)="show($event)" label="Viết cập nhật..."></sos-input>
+
+        <div *ngFor="let new of news" style="margin-bottom: 15px">
+            <app-comment [new]="new"></app-comment>
         </div>
     </section>
 

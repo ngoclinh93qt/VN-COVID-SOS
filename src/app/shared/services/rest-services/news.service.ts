@@ -1,16 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RestService } from '../rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NewsService extends RestService<INews> {
+export class NewsService extends RestService<INew> {
 
   constructor(http: HttpClient,) {
-    super(http, '')
+    super(http, 'news')
   }
-  getNews(){
+  getRequestNews(id?: string): Observable<INew[]> {
+    return this.http.get<{
+      data: INew[]
+    }>(`${this.host}/news?filter_target_id=${id}`, {}).pipe(map(res => res.data))
+  }
+  getNews() {
     return this.news;
   }
   publisher: IPublisher = {
