@@ -12,14 +12,16 @@ import { prefixReq } from './http-config';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthenService } from '../services/rest-services/authen.service';
+import { StorageService } from '../services/common-services/storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private sessionService: AuthenService) {}
+  constructor(private router: Router, private sessionService: AuthenService, private storageService: StorageService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authHeader = this.sessionService.accessToken;
-    if(authHeader == null){
+   // const authHeader = this.sessionService.accessToken;
+   const authHeader = this.storageService.token 
+   if(authHeader == null){
       return next.handle(req).pipe(this.handleErrors);
     }
     const authReq = req.clone({

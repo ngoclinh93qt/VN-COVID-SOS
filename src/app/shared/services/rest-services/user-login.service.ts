@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RestService } from '../rest.service';
 import { map } from 'rxjs/operators';
+import { StorageService } from '../common-services/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserLoginService extends RestService<IUser> {
   accessToken: string | undefined | null;
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private storageService: StorageService) {
     super(http, 'customers');
   }
 
@@ -38,6 +39,8 @@ export class UserLoginService extends RestService<IUser> {
       map((res: any) => {
         console.log(res);
         this.accessToken = 'htY4154ZgbK1yQSUqtIszKDr3j82iBlV';
+        this.storageService.token = res.auth_token
+        console.log(res.auth_token)
         return res;
       })
     );
