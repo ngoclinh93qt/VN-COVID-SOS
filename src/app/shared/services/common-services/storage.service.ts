@@ -9,6 +9,19 @@ export class StorageService {
 
   constructor(private constant: ConstantsService) { }
 
+  public getLocation(): any {
+    let location = localStorage.getItem("location");
+    if (!location) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        localStorage.setItem("location", JSON.stringify({ lat: lat, lng: long }));
+
+      });
+      return this.getLocation();
+    }
+    return JSON.parse(location!);
+  }
 
   public get userInfo(): IUserProfile | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.USER_INFO);

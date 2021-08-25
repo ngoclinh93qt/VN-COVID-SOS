@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/shared/services/common-services/storage.service';
 import { UrgentLevelService } from './../../../shared/services/rest-services/urgent-level.service';
 import { NgForm } from '@angular/forms';
 import { EMPTY } from 'rxjs';
@@ -29,7 +30,7 @@ export class RequestFormComponent implements OnInit {
     this.dialogRef.close();
     console.log("closeForm");
   }
-  constructor(private RequesterObjectStatusService: RequesterObjectStatusService,
+  constructor(private RequesterObjectStatusService: RequesterObjectStatusService,private StorageService:StorageService,
     private ProvinceService: ProvinceService, private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService, public dialogRef: MatDialogRef<RequestFormComponent>,
     private UrgentLevelService: UrgentLevelService
@@ -76,23 +77,10 @@ export class RequestFormComponent implements OnInit {
   setLocation(l: string) {
     this.location = l;
   }
-  getLocation(): any {
-    let location = localStorage.getItem("location");
-    if (!location) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let lat = position.coords.latitude;
-        let long = position.coords.longitude;
-        localStorage.setItem("location", JSON.stringify({ lat: lat, lng: long }));
 
-      });
-      return this.getLocation();
-    }
-    return JSON.parse(location!);
-    
-  }
   ngOnInit() {
     var l: string = '';
-    let data = this.getLocation();
+    let data = this.StorageService.getLocation();
     this.setLocation(`${data.lat},${data.long}`)
   }
 
