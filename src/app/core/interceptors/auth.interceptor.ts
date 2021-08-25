@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router, private sessionService: AuthenService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authHeader = "htY4154ZgbK1yQSUqtIszKDr3j82iBlV";
+    const authHeader = this.sessionService.accessToken;
     if(authHeader == null){
       return next.handle(req).pipe(this.handleErrors);
     }

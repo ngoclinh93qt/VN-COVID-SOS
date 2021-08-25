@@ -51,7 +51,7 @@ export class RequestCardDetailsComponent implements OnInit {
   show(data: any) {
     let content = data.target.value;
     if (content)
-      this.NewsService.create({ ...this.defaultComment, content: content }, {}).subscribe(res => this.news.push(res));
+      this.NewsService.create({ ...this.defaultComment, content: content }, {}).subscribe(res => this.news=[res,...this.news]);
     data.target.value = "";
   }
   fetchInit() {

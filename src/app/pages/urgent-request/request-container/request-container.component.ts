@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/shared/services/common-services/storage.service';
 import { RequesterObjectStatusService } from './../../../shared/services/rest-services/requester-object-status.service';
 import { RequestStatusService } from './../../../shared/services/rest-services/request-status.service';
 import { SupportTypesService } from './../../../shared/services/rest-services/support-types.service';
@@ -27,7 +28,7 @@ export class RequestContainerComponent implements OnInit {
     status: [],
     support_types: []
   };
-  constructor(private UrgentLevelService: UrgentLevelService,
+  constructor(private UrgentLevelService: UrgentLevelService, private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
     private RequestStatusService: RequestStatusService, private RequesterObjectStatusService: RequesterObjectStatusService) {
     this.statuses = RequestStatusService.getRequestStatus();
@@ -144,24 +145,10 @@ export class RequestContainerComponent implements OnInit {
   text = {
     createRequest: "Tạo Yêu Cầu", filter: 'Bộ lọc',
   }
-  getLocation(): any {
-    let location = localStorage.getItem("location");
-    console.log(location!);
-    if (!location) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        let lat = position.coords.latitude;
-        let long = position.coords.longitude;
-        localStorage.setItem("location", JSON.stringify({ lat: lat, lng: long }));
 
-      });
-      return this.getLocation();
-    }
-    return JSON.parse(location!);
-    
-  }
   ngOnInit(): void {
     console.log(this.requests);
-    let data = this.getLocation();
+    let data = this.StorageService.getLocation();
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
   }
