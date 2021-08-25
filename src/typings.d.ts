@@ -247,3 +247,26 @@ interface IHospitalPost {
   author?: string;
   postTime?: string;
 }
+
+
+interface IUserProfile {
+
+}
+
+interface ICustomerProfile {
+  addresses: [],
+        avatar: string,
+        delivery_addresses: [],
+        dob: string,
+        email: string,
+        first_name: string,
+        gender: string,
+        customer_id: string,
+        last_name: string,
+        phone_number: string,
+        referral_code: string,
+        referred_by: string,
+        time_zone: string,
+        type: string,
+        updated_by_id: string
+}

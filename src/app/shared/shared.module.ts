@@ -26,6 +26,7 @@ import { NotificationService } from './components/notification/notification.serv
 import { httpInterceptorProviders } from './interceptors';
 import { GroupCardComponent } from './components/group-card/group-card.component';
 import { MemberComponent } from './member/member.component';
+import { UploadComponent } from './components/upload/upload.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -42,6 +43,7 @@ import { MemberComponent } from './member/member.component';
     LoadingComponent,
     GroupCardComponent,
     MemberComponent,
+    UploadComponent,
   ],
   imports: [
     CommonModule,
