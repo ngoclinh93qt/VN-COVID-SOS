@@ -20,6 +20,25 @@ interface INews {
   img?: string;
   publisher?: IPublisher;
 }
+interface INew {
+  content?: string;
+  created_by_id?: string;
+  created_by_name?: string;
+  created_time?: Date;
+  detail_info?: object;
+  id?: string;
+  medias?: IMedias[];
+  published_by_id?: string;
+  published_by_name?: string;
+  published_time?: Date;
+  status?: string;
+  subject?: string;
+  target_id?: string;
+  target_type?: string;
+  updated_by_id?: string;
+  updated_by_name?: string;
+  updated_time?: Date;
+}
 interface IPublisher {
   id?: string;
   img?: string;

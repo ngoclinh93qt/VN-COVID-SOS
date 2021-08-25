@@ -30,6 +30,7 @@ import { GroupCardComponent } from './components/group-card/group-card.component
 import { MemberComponent } from './member/member.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
+import { CommentComponent } from './components/comment/comment.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -48,6 +49,7 @@ import { TransFormComponent } from './components/trans-form/trans-form.component
     GroupCardComponent,
     MemberComponent,
     TransFormComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,
