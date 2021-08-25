@@ -27,6 +27,7 @@ import { MaterialModule } from './material.module';
 import { NotificationService } from './shared/components/notification/notification.service';
 import { AuthenService } from './shared/services/rest-services/authen.service';
 import { SignupService } from './shared/services/rest-services/signup.service';
+import { UserLoginComponent } from './pages/user-login/user-login.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SignupService } from './shared/services/rest-services/signup.service';
     AuthenComponent,
     ContainerComponent,
     SignupComponent,
+    UserLoginComponent,
   ],
   imports: [
     BrowserModule,

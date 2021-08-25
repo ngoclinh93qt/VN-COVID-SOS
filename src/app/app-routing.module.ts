@@ -4,6 +4,7 @@ import { AuthenComponent } from './pages/authen/authen.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ContainerComponent } from './pages/container/container.component';
 import { AuthGuard } from './shared/guards';
+import { UserLoginComponent } from './pages/user-login/user-login.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+  },
+  {
+    path: 'user-login',
+    component: UserLoginComponent,
   },
   {
     path: '',

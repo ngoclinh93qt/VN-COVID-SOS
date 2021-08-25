@@ -5,6 +5,11 @@ interface IUser {
   password: string;
 }
 
+interface INorUser{
+  phone_number: String;
+  confirm_code: String;
+}
+
 interface ISignIn {
   username: string;
   password: string;
