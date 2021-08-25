@@ -1,3 +1,4 @@
+import { NewsService } from 'src/app/shared/services/rest-services/news.service';
 import { SupportObjectService } from './../../services/rest-services/support-object.service';
 import { TransFormComponent } from './../trans-form/trans-form.component';
 import { SupportTransService } from './../../services/rest-services/support-trans.service';
@@ -20,18 +21,18 @@ export class RequestCardDetailsComponent implements OnInit {
   lastestComment: { content: string; postTime: string; }[];
   mapPriority = new Map();
   mapStatus = new Map();
-  postList: ({ title: string; url: string; author: string; postTime: string; } | { title: string; author: string; postTime: string; url?: undefined; })[];
+  news: INew[] = [];
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
+  defaultComment: INew = { subject: " ", content: "", target_type: "sos_request", target_id: this.request.id }
   onClose() {
     this.dialogRef.close();
   }
   constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public request: ISOSRequest, public dialog: MatDialog
-    , private SupportTransService: SupportTransService,
+    , private SupportTransService: SupportTransService, private NewsService: NewsService,
     private SupportObjectService: SupportObjectService) {
     this.supportObject = this.SupportObjectService.getSupportObjectByType(this.request.support_types!)
-    console.log(this.request.id);
     this.initalize();
     this.fetchInit();
     this.lastestComment = [
@@ -45,22 +46,17 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
 
-    this.postList = [
-      {
-        title: 'Hôm nay tại BV A, Đã hỗ trợ 200 giường bệnh',
-        url: 'https://picsum.photos/300/200',
-        author: 'Hai Nguyen',
-        postTime: '10:30 AM . Hôm nay',
-      },
-      {
-        title: 'Đã hỗ trợ 1000 khẩu trang, 300 đồ bảo hộ',
-        author: 'Nguyễn Thị N . Nhóm thiện nguyện NTN',
-        postTime: '10:30 AM . Hôm nay',
-      },
-    ];
+
+  }
+  show(data: any) {
+    let content = data.target.value;
+    if (content)
+      this.NewsService.create({ ...this.defaultComment, content: content }, {}).subscribe(res => this.news.push(res));
+    data.target.value = "";
   }
   fetchInit() {
     this.SupportTransService.getRequestTrans(this.request.id).subscribe(result => this.trans = result)
+    this.NewsService.getRequestNews(this.request.id).subscribe(res => this.news = res)
   }
   initalize() {
     this.mapPriority.set("high", "Rất nguy cấp");
