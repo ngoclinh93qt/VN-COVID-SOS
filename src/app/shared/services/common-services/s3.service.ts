@@ -62,7 +62,7 @@ export class S3Service {
     return new Observable(subscription => {
       const contentType = file.type;
       const params = {
-        Bucket: 'covidsos',
+        Bucket: '',
         Key: file.name,
         Body: file,
         ContentType: contentType,
