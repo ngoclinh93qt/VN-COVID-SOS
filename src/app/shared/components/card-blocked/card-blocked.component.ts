@@ -7,18 +7,18 @@ import { CardComponent } from '..';
   selector: 'app-card-blocked',
   templateUrl: './card-blocked.component.html',
   styleUrls: ['./card-blocked.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CardBlockedComponent),
-    multi: true
-  }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CardBlockedComponent),
+      multi: true,
+    },
+  ],
 })
 export class CardBlockedComponent implements OnInit {
   @Input() blocked?: Blocked;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

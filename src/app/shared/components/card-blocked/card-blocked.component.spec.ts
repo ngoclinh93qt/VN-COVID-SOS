@@ -8,9 +8,8 @@ describe('CardBlockedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardBlockedComponent ]
-    })
-    .compileComponents();
+      declarations: [CardBlockedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

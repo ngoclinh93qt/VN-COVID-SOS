@@ -6,14 +6,11 @@ import { Hospital } from 'src/app/pages/hospital/model/hospital.mode';
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
-  
 })
 export class CardComponent implements OnInit {
   @Input() hospital?: Hospital;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

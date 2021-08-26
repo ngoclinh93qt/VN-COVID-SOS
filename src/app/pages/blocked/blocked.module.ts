@@ -9,23 +9,20 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-
 const routes: Routes = [
   {
-    path: "",
-    component: BlockedComponent
-  }
-]
+    path: '',
+    component: BlockedComponent,
+  },
+];
 
 @NgModule({
-  declarations: [
-    BlockedComponent,
-  ],
+  declarations: [BlockedComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    FlexLayoutModule
-  ]
+    FlexLayoutModule,
+  ],
 })
-export class BlockedModule { }
+export class BlockedModule {}

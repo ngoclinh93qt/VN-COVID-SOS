@@ -6,32 +6,33 @@ import { RequestCardDetailsComponent } from 'src/app/shared/components/request-c
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
-  styleUrls: ['./job.component.scss']
+  styleUrls: ['./job.component.scss'],
 })
 export class JobComponent implements OnInit {
   requests: ISOSRequest[] = [];
-  constructor(public dialog: MatDialog,private UrgentRequestService: UrgentRequestService) { 
-    this.fetchInit()
+  constructor(
+    public dialog: MatDialog,
+    private UrgentRequestService: UrgentRequestService
+  ) {
+    this.fetchInit();
   }
   fetchInit() {
-    this.UrgentRequestService.findAll().subscribe(result => {
-      this.requests = result
+    this.UrgentRequestService.findAll().subscribe((result) => {
+      this.requests = result;
       console.log(result);
-    })
+    });
   }
   chooseRequest(request: ISOSRequest) {
     const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
       width: '100vw',
       height: '100vh',
-      data: request
+      data: request,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
     });
   }
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

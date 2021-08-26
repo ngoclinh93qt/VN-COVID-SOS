@@ -5,15 +5,17 @@ import { map } from 'rxjs/operators';
 import { RestService } from '../rest.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ProvinceService extends RestService<IProvince>{
-
+export class ProvinceService extends RestService<IProvince> {
   constructor(http: HttpClient) {
-    super(http, 'provinces')
+    super(http, 'provinces');
   }
   getDistrict(provinceID: string, districtID?: number): Observable<IDistrict> {
-    return this.http.get<{ data: IDistrict }>(`${this.host}/${this.pathName}/${provinceID}/${districtID}`)
-      .pipe(map(res => res.data))
+    return this.http
+      .get<{ data: IDistrict }>(
+        `${this.host}/${this.pathName}/${provinceID}/${districtID}`
+      )
+      .pipe(map((res) => res.data));
   }
 }

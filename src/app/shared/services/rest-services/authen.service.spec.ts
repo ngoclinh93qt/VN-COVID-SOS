@@ -14,8 +14,10 @@ describe('AuthenService', () => {
     expect(service).toBeTruthy();
   });
   it('login api', () => {
-    service.signin("sos.demo@mailnesia.com", '123456789').subscribe(result => {
-      expect(result).toBeDefined();
-    })
+    service
+      .signin('sos.demo@mailnesia.com', '123456789')
+      .subscribe((result) => {
+        expect(result).toBeDefined();
+      });
   });
 });

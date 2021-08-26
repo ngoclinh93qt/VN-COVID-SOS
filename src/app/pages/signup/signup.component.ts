@@ -69,7 +69,13 @@ export class SignupComponent implements OnInit {
   }) {
     console.log(this.formGroup.value);
     this.signupService
-      .signup(values.username, values.password, values.phone_number, values.first_name, values.last_name)
+      .signup(
+        values.username,
+        values.password,
+        values.phone_number,
+        values.first_name,
+        values.last_name
+      )
       .subscribe((result) => {});
   }
 }

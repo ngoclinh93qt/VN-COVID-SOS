@@ -1,11 +1,10 @@
-
 declare var System: any;
 interface IUser {
   email: string;
   password: string;
 }
 
-interface INorUser{
+interface INorUser {
   phone_number: String;
   confirm_code: String;
 }
@@ -149,7 +148,7 @@ interface IRequestFilter {
   priority_type?: string[];
   status?: string[];
   keyword?: string;
-  distance?: number
+  distance?: number;
   object_status?: string[];
 }
 interface IRequesterObjectStatus {
@@ -187,7 +186,6 @@ interface ISOSRequest {
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
-
 }
 
 interface IMedias {
@@ -279,27 +277,24 @@ interface IHospitalPost {
   postTime?: string;
 }
 
-
-interface IUserProfile {
-
-}
+interface IUserProfile {}
 
 interface ICustomerProfile {
-  addresses: [],
-        avatar: string,
-        delivery_addresses: [],
-        dob: string,
-        email: string,
-        first_name: string,
-        gender: string,
-        customer_id: string,
-        last_name: string,
-        phone_number: string,
-        referral_code: string,
-        referred_by: string,
-        time_zone: string,
-        type: string,
-        updated_by_id: string
+  addresses: [];
+  avatar: string;
+  delivery_addresses: [];
+  dob: string;
+  email: string;
+  first_name: string;
+  gender: string;
+  customer_id: string;
+  last_name: string;
+  phone_number: string;
+  referral_code: string;
+  referred_by: string;
+  time_zone: string;
+  type: string;
+  updated_by_id: string;
 }
 interface ISupport {
   type: string;

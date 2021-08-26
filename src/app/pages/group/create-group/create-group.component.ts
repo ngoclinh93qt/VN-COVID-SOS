@@ -67,6 +67,5 @@ export class CreateGroupComponent implements OnInit {
     if (data.status == 'VALID') this.CloseDialog();
   }
 
-
   ngOnInit(): void {}
 }

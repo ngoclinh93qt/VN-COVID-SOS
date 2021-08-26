@@ -36,7 +36,10 @@ export class LoginFrameComponent implements OnInit {
     //  this.authenService.signin("sos.demo@mailnesia.com", "123456789").subscribe(result=>{})
     this.authenService
       .signin(values.username, values.password)
-      .subscribe((result) => {console.log(result);this.router.navigateByUrl('/home');});
+      .subscribe((result) => {
+        console.log(result);
+        this.router.navigateByUrl('/home');
+      });
   }
 
   getError(el: any) {

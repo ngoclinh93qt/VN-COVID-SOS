@@ -2,9 +2,9 @@
   flex: 1 1 auto;
 }
 
-.logo_button{
-    display: flex;
-    align-items: center;
+.logo_button {
+  display: flex;
+  align-items: center;
 }
 
 .navbar-left {
@@ -13,7 +13,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 
 .navbar-right {
   display: flex;
@@ -76,6 +75,6 @@ mat-form-field {
   font-size: 14px;
 }
 
-mat-toolbar{
+mat-toolbar {
   padding: 0 40px;
 }

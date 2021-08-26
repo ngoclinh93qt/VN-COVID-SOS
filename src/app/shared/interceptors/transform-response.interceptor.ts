@@ -12,7 +12,10 @@ import { prefixRes } from './http-config';
 
 @Injectable()
 export class TransformResponseInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       map((event) => {
         if (event instanceof HttpResponse && ~~(event.status / 100) > 3) {

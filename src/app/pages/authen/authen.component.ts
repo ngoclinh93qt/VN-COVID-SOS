@@ -7,18 +7,18 @@ import { StorageService } from 'src/app/shared/services/common-services/storage.
 @Component({
   selector: 'app-authen',
   templateUrl: './authen.component.html',
-  styleUrls: ['./authen.component.scss']
+  styleUrls: ['./authen.component.scss'],
 })
 export class AuthenComponent implements OnInit {
-  
-  constructor(private dialogService: DialogService, private notification: NotificationService, private storage: StorageService) {
+  constructor(
+    private dialogService: DialogService,
+    private notification: NotificationService,
+    private storage: StorageService
+  ) {
     // dialogService.openDialog(LoginFrameComponent, {width: '100%', maxWidth: '455px'})
     // this.notification.info("huhu");
     // this.notification.error("huhu");
-   }
-
-  ngOnInit() {
-   
   }
 
+  ngOnInit() {}
 }

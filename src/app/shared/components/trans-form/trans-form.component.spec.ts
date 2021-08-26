@@ -8,9 +8,8 @@ describe('TransFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransFormComponent ]
-    })
-    .compileComponents();
+      declarations: [TransFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -3,12 +3,10 @@ import { Injectable } from '@angular/core';
 import { RestService } from '../rest.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class SupportTypesService  extends RestService<ISupportType>{
-
+export class SupportTypesService extends RestService<ISupportType> {
   constructor(http: HttpClient) {
-    super(http, 'support_types')
+    super(http, 'support_types');
   }
- 
 }

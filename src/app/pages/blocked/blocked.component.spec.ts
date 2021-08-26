@@ -8,9 +8,8 @@ describe('BlockedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BlockedComponent ]
-    })
-    .compileComponents();
+      declarations: [BlockedComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

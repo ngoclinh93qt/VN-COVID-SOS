@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="space-between">
-  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
     Tạo bệnh viện
   </h1>
   <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
@@ -14,7 +14,7 @@
       label="Tên bệnh viện"
     ></sos-input>
     <fieldset ngModelGroup="address_info">
-      <mat-form-field style="width: 100%" appearance="outline">
+      <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Tỉnh/ Thành Phố</mat-label>
         <mat-select ngModel name="province_id" required>
           <mat-option
@@ -27,7 +27,7 @@
         </mat-select>
       </mat-form-field>
       <div fxLayout="row" fxLayoutGap="10px">
-        <mat-form-field style="width: 100%" appearance="outline">
+        <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Quận/ Huyện</mat-label>
           <mat-select ngModel name="district_code" required>
             <mat-option
@@ -39,7 +39,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field style="width: 100%" appearance="outline">
+        <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Xã/ Phường</mat-label>
           <mat-select ngModel name="ward_code" required>
             <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
@@ -73,7 +73,7 @@
       <button
         mat-flat-button
         type="submit"
-        style="float: right; border-radius: 5rem"
+        style="float: right; border-radius: 5rem;"
         color="accent"
         (click)="checkSubmit(form)"
         cdkFocusInitial

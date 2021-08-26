@@ -4,18 +4,16 @@ import { BlockedService } from 'src/app/shared/services/rest-services/blocked.se
 @Component({
   selector: 'app-blocked',
   templateUrl: './blocked.component.html',
-  styleUrls: ['./blocked.component.scss']
+  styleUrls: ['./blocked.component.scss'],
 })
 export class BlockedComponent implements OnInit {
   gridColumns = 3;
-  blockeds: IBlocked [] =[];
+  blockeds: IBlocked[] = [];
 
-  constructor(private blockedService: BlockedService,) {
-    blockedService.findAll()
+  constructor(private blockedService: BlockedService) {
+    blockedService.findAll();
     this.blockeds = blockedService.blockeds;
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

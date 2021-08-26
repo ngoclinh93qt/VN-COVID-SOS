@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-request-container',
   templateUrl: './request-container.component.html',
-  styleUrls: ['./request-container.component.scss']
+  styleUrls: ['./request-container.component.scss'],
 })
 export class RequestContainerComponent implements OnInit {
   @Output() searchFilter = new EventEmitter();
@@ -22,15 +22,22 @@ export class RequestContainerComponent implements OnInit {
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
   filterObject: IRequestFilter = {
-    lat_position: 0, long_position: 0, distance: 10, priority_type: [],
-    keyword: "",
+    lat_position: 0,
+    long_position: 0,
+    distance: 10,
+    priority_type: [],
+    keyword: '',
     object_status: [],
     status: [],
-    support_types: []
+    support_types: [],
   };
-  constructor(private UrgentLevelService: UrgentLevelService, private StorageService: StorageService,
+  constructor(
+    private UrgentLevelService: UrgentLevelService,
+    private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
-    private RequestStatusService: RequestStatusService, private RequesterObjectStatusService: RequesterObjectStatusService) {
+    private RequestStatusService: RequestStatusService,
+    private RequesterObjectStatusService: RequesterObjectStatusService
+  ) {
     this.statuses = RequestStatusService.getRequestStatus();
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -39,7 +46,8 @@ export class RequestContainerComponent implements OnInit {
     this.select($event);
     const index: number = this.filterObject.priority_type?.indexOf(type)!;
     console.log(index);
-    if (index != -1 && index != undefined) this.filterObject.priority_type?.splice(index, 1);
+    if (index != -1 && index != undefined)
+      this.filterObject.priority_type?.splice(index, 1);
     else this.filterObject.priority_type?.push(type);
     console.log(this.filterObject.priority_type!);
   }
@@ -51,7 +59,8 @@ export class RequestContainerComponent implements OnInit {
     this.select($event);
     const index: number = this.filterObject.support_types?.indexOf(type)!;
     console.log(index);
-    if (index != -1 && index != undefined) this.filterObject.support_types?.splice(index, 1);
+    if (index != -1 && index != undefined)
+      this.filterObject.support_types?.splice(index, 1);
     else this.filterObject.support_types?.push(type);
     console.log(this.filterObject.support_types!);
   }
@@ -59,7 +68,8 @@ export class RequestContainerComponent implements OnInit {
     this.select($event);
     const index: number = this.filterObject.status?.indexOf(type)!;
     console.log(index);
-    if (index != -1 && index != undefined) this.filterObject.status?.splice(index, 1);
+    if (index != -1 && index != undefined)
+      this.filterObject.status?.splice(index, 1);
     else this.filterObject.status?.push(type);
     console.log(this.filterObject.status!);
   }
@@ -67,7 +77,8 @@ export class RequestContainerComponent implements OnInit {
     this.select($event);
     const index: number = this.filterObject.object_status?.indexOf(type)!;
     console.log(index);
-    if (index != -1 && index != undefined) this.filterObject.object_status?.splice(index, 1);
+    if (index != -1 && index != undefined)
+      this.filterObject.object_status?.splice(index, 1);
     else this.filterObject.object_status?.push(type);
     console.log(this.filterObject.object_status!);
   }
@@ -80,19 +91,17 @@ export class RequestContainerComponent implements OnInit {
     this.search();
   }
   search() {
-
     var obj = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
       object_status: this.filterObject.object_status?.toString(),
       support_types: this.filterObject.support_types?.toString(),
-      priority_type: this.filterObject.priority_type?.toString()
-    }
+      priority_type: this.filterObject.priority_type?.toString(),
+    };
     console.log(obj);
     this.searchFilter.emit(obj);
   }
   select($event: any) {
-
     // this stops the menu from closing
     $event.stopPropagation();
     $event.preventDefault();
@@ -103,34 +112,31 @@ export class RequestContainerComponent implements OnInit {
     }
 
     // add additional selection logic here.
-
   }
   fetchInit() {
-    this.SupportTypesService.findAll().subscribe(result => {
-      this.supportTypes = result
+    this.SupportTypesService.findAll().subscribe((result) => {
+      this.supportTypes = result;
       console.log(result);
-    })
-    this.RequesterObjectStatusService.findAll().subscribe(result => {
-      this.requesterObjectStatus = result
+    });
+    this.RequesterObjectStatusService.findAll().subscribe((result) => {
+      this.requesterObjectStatus = result;
       console.log(result);
-    })
-
+    });
   }
   chooseRequest(request: ISOSRequest) {
-    this.clickedRequest.emit(request)
+    this.clickedRequest.emit(request);
     console.log(request);
   }
   createClick() {
     this.createClicked.emit();
   }
 
-
   color = {
     accent: 'accent',
     primary: 'primary',
     warn: 'warn',
-    basic: 'basic'
-  }
+    basic: 'basic',
+  };
   icon = {
     home: 'home',
     menu: 'menu',
@@ -140,11 +146,12 @@ export class RequestContainerComponent implements OnInit {
   };
   height = {
     small: '40',
-    large: '50'
-  }
+    large: '50',
+  };
   text = {
-    createRequest: "Tạo Yêu Cầu", filter: 'Bộ lọc',
-  }
+    createRequest: 'Tạo Yêu Cầu',
+    filter: 'Bộ lọc',
+  };
 
   ngOnInit(): void {
     console.log(this.requests);

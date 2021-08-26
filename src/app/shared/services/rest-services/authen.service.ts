@@ -12,11 +12,9 @@ export interface SessionState {
 
 const notSignedInMessage = `Not signed in`;
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AuthenService extends RestService<IUser> {
   private _isLoggedIn = false;
   private sessionStateSubject = new BehaviorSubject<SessionState>({
@@ -31,10 +29,9 @@ export class AuthenService extends RestService<IUser> {
   readOnly = false;
   sessionState$ = this.sessionStateSubject.asObservable();
 
-  constructor(http: HttpClient) { 
-    super(http, '')
+  constructor(http: HttpClient) {
+    super(http, '');
   }
-
 
   signin(username: string, password: string) {
     const root = environment.host;
@@ -42,14 +39,14 @@ export class AuthenService extends RestService<IUser> {
     const body: Partial<ISignIn> = {
       username, // 'linh@3exp8.com',
       password, // '1234'
-      grant_type: "password", 
-       scope: "USER"
+      grant_type: 'password',
+      scope: 'USER',
     };
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
-        console.log(res)
-        
-        this.accessToken = "htY4154ZgbK1yQSUqtIszKDr3j82iBlV";
+        console.log(res);
+
+        this.accessToken = 'htY4154ZgbK1yQSUqtIszKDr3j82iBlV';
         this._isLoggedIn = true;
       })
     );
@@ -61,7 +58,10 @@ export class AuthenService extends RestService<IUser> {
 
   logout() {
     this.accessToken = null;
-    this.sessionStateSubject.next({ loggedIn: false, message: notSignedInMessage });
+    this.sessionStateSubject.next({
+      loggedIn: false,
+      message: notSignedInMessage,
+    });
     this._isLoggedIn = false;
   }
 }

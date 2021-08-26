@@ -8,9 +8,8 @@ describe('SosInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SosInputComponent ]
-    })
-    .compileComponents();
+      declarations: [SosInputComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

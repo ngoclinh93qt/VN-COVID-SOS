@@ -5,18 +5,18 @@ import { NewsService } from 'src/app/shared/services/rest-services/news.service'
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
-
   handbooks: IHandBook[] = [];
   news: INews[] = [];
-  constructor(private HandbookService: HandbookService, private NewsService: NewsService) {
-    this.handbooks=HandbookService.getHandBooks();
-    this.news=NewsService.getNews();
+  constructor(
+    private HandbookService: HandbookService,
+    private NewsService: NewsService
+  ) {
+    this.handbooks = HandbookService.getHandBooks();
+    this.news = NewsService.getNews();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

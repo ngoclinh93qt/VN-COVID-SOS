@@ -6,25 +6,26 @@ import { VolunteerGroupService } from 'src/app/shared/services/rest-services/vol
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss']
+  styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent implements OnInit {
-  groups: IVolunteerGroup[] = []
-  constructor(private VolunteerGroupService: VolunteerGroupService, public dialog: MatDialog) {
-    this.fetchInit()
+  groups: IVolunteerGroup[] = [];
+  constructor(
+    private VolunteerGroupService: VolunteerGroupService,
+    public dialog: MatDialog
+  ) {
+    this.fetchInit();
   }
   openDialog(group: IVolunteerGroup): void {
     const dialogRef = this.dialog.open(GroupDetailComponent, {
-      data: group
+      data: group,
     });
   }
   fetchInit() {
-    this.VolunteerGroupService.findAll().subscribe(result => {
+    this.VolunteerGroupService.findAll().subscribe((result) => {
       this.groups = result;
       console.log(result);
-    })
+    });
   }
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

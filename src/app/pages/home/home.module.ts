@@ -9,21 +9,17 @@ import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent
-  }
-]
+    path: '',
+    component: HomeComponent,
+  },
+];
 @NgModule({
-  declarations: [
-    HomeComponent,
-    GeneralDataComponent,
-    PostComponent
-  ],
+  declarations: [HomeComponent, GeneralDataComponent, PostComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     FlexLayoutModule,
-  ]
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

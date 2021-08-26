@@ -14,7 +14,10 @@ import { prefixReq, prefixRes } from './http-config';
 
 @Injectable()
 export class LogHttpInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const started = Date.now();
     this.logRequest(req);
     return next.handle(req).pipe(
@@ -31,7 +34,11 @@ export class LogHttpInterceptor implements HttpInterceptor {
     console.groupEnd();
   }
 
-  private logResponse(event: HttpEvent<any>, req: HttpRequest<any>, started: number) {
+  private logResponse(
+    event: HttpEvent<any>,
+    req: HttpRequest<any>,
+    started: number
+  ) {
     if (event instanceof HttpResponse) {
       console.groupCollapsed(`${prefixRes} Log Http Response`);
       const elapsed = Date.now() - started;
@@ -41,7 +48,11 @@ export class LogHttpInterceptor implements HttpInterceptor {
       console.groupEnd();
     }
   }
-  private logError(event: HttpEvent<any>, req: HttpRequest<any>, started: number) {
+  private logError(
+    event: HttpEvent<any>,
+    req: HttpRequest<any>,
+    started: number
+  ) {
     if (event instanceof HttpErrorResponse) {
       console.groupCollapsed(`${prefixRes} Log Http Response Error`);
       const elapsed = Date.now() - started;

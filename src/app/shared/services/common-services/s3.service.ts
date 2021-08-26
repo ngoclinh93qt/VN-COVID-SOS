@@ -5,20 +5,18 @@ import { Observable } from 'rxjs';
 import { LoadingService } from '../../components/loading/loading.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class S3Service {
   bucket: S3;
-  data = { message: "", data: "" };
+  data = { message: '', data: '' };
 
   constructor(private loading: LoadingService) {
-    this.bucket = new S3(
-      {
-        accessKeyId: environment.s3.AccessKeyId,
-        secretAccessKey: environment.s3.Secret,
-        region: 'us-west-2'
-      }
-    );
+    this.bucket = new S3({
+      accessKeyId: environment.s3.AccessKeyId,
+      secretAccessKey: environment.s3.Secret,
+      region: 'us-west-2',
+    });
   }
 
   // validateandUploadFile(file: File, Iheight: number, Iwidth: number) {
@@ -59,14 +57,14 @@ export class S3Service {
 
   uploadFile(file: File): Observable<any> {
     this.loading.start();
-    return new Observable(subscription => {
+    return new Observable((subscription) => {
       const contentType = file.type;
       const params = {
         Bucket: '',
         Key: file.name,
         Body: file,
         ContentType: contentType,
-        ACL: 'public-read'
+        ACL: 'public-read',
       };
       this.bucket.upload(params, (err: any, data: any) => {
         this.loading.stop();
@@ -77,18 +75,18 @@ export class S3Service {
         subscription.next(data);
         subscription.complete();
       });
-    })
+    });
   }
 
   // uploadList(prefix: string): Observable<any> {
   //   this.loading.start();
   //   return new Observable(subscription => {
-  //     var params = { 
+  //     var params = {
   //       Bucket: 'covidsos',
   //       Delimiter: '/',
   //       Prefix: prefix //Path storage
   //      }
-  //     this.bucket.listObjects(params, (err: any, data: any) => { 
+  //     this.bucket.listObjects(params, (err: any, data: any) => {
   //       this.loading.stop();
   //       if (err) {
   //         console.log('There was an error uploading your file: ', err);

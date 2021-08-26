@@ -8,9 +8,8 @@ describe('StatusDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StatusDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [StatusDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

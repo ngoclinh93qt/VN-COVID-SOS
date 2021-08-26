@@ -25,7 +25,6 @@ export class HospitalSidenavComponent implements OnInit {
   openDialog() {
     this.dialog.open(StatusDialogComponent);
   }
-  
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<HospitalSidenavComponent>,

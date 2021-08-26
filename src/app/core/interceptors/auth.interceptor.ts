@@ -13,18 +13,23 @@ import { Router } from '@angular/router';
 import { AuthenService } from 'src/app/shared/services/rest-services/authen.service';
 import { prefixReq } from 'src/app/shared/interceptors/http-config';
 
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router, private sessionService: AuthenService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const authHeader = this.sessionService.accessToken;
-    if(authHeader == null){
+    if (authHeader == null) {
       return next.handle(req).pipe(this.handleErrors);
     }
     const authReq = req.clone({
-      setHeaders: { Authorization: `Bearer ${authHeader} `, 'Content-Type': 'application/json' },
+      setHeaders: {
+        Authorization: `Bearer ${authHeader} `,
+        'Content-Type': 'application/json',
+      },
       //  withCredentials: true,
     });
 
@@ -38,14 +43,14 @@ export class AuthInterceptor implements HttpInterceptor {
   handleErrors(source: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
     return source.pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log("error");
+        console.log('error');
         return error.status === 401 ? this.handle401(error) : throwError(error);
       })
     );
   }
 
   handle401(error: HttpErrorResponse) {
-    console.log("error 401");
+    console.log('error 401');
     console.log(error);
     const authResHeader = error.headers.get('WWW-Authenticate') || '';
     if (/is expired/.test(authResHeader)) {

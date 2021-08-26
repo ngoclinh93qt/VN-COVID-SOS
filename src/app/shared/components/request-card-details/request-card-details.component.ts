@@ -5,8 +5,19 @@ import { SupportTransService } from './../../services/rest-services/support-tran
 import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
 import { FormsModule } from '@angular/forms';
 import { SupportTypesService } from './../../services/rest-services/support-types.service';
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  Inject,
+} from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -14,25 +25,34 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   selector: 'app-request-card-details',
   templateUrl: './request-card-details.component.html',
   styleUrls: ['./request-card-details.component.scss'],
-
 })
 export class RequestCardDetailsComponent implements OnInit {
-
-  lastestComment: { content: string; postTime: string; }[];
+  lastestComment: { content: string; postTime: string }[];
   mapPriority = new Map();
   mapStatus = new Map();
   news: INew[] = [];
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
-  defaultComment: INew = { subject: " ", content: "", target_type: "sos_request", target_id: this.request.id }
+  defaultComment: INew = {
+    subject: ' ',
+    content: '',
+    target_type: 'sos_request',
+    target_id: this.request.id,
+  };
   onClose() {
     this.dialogRef.close();
   }
-  constructor(public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest, public dialog: MatDialog
-    , private SupportTransService: SupportTransService, private NewsService: NewsService,
-    private SupportObjectService: SupportObjectService) {
-    this.supportObject = this.SupportObjectService.getSupportObjectByType(this.request.support_types!)
+  constructor(
+    public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
+    public dialog: MatDialog,
+    private SupportTransService: SupportTransService,
+    private NewsService: NewsService,
+    private SupportObjectService: SupportObjectService
+  ) {
+    this.supportObject = this.SupportObjectService.getSupportObjectByType(
+      this.request.support_types!
+    );
     this.initalize();
     this.fetchInit();
     this.lastestComment = [
@@ -45,34 +65,38 @@ export class RequestCardDetailsComponent implements OnInit {
         postTime: '10:30 AM . Hôm nay',
       },
     ];
-
-
   }
   show(data: any) {
     let content = data.target.value;
     if (content)
-      this.NewsService.create({ ...this.defaultComment, content: content }, {}).subscribe(res => this.news=[res,...this.news]);
-    data.target.value = "";
+      this.NewsService.create(
+        { ...this.defaultComment, content: content },
+        {}
+      ).subscribe((res) => (this.news = [res, ...this.news]));
+    data.target.value = '';
   }
   fetchInit() {
-    this.SupportTransService.getRequestTrans(this.request.id).subscribe(result => this.trans = result)
-    this.NewsService.getRequestNews(this.request.id).subscribe(res => this.news = res)
+    this.SupportTransService.getRequestTrans(this.request.id).subscribe(
+      (result) => (this.trans = result)
+    );
+    this.NewsService.getRequestNews(this.request.id).subscribe(
+      (res) => (this.news = res)
+    );
   }
   initalize() {
-    this.mapPriority.set("high", "Rất nguy cấp");
-    this.mapPriority.set("normal", "Nguy cấp")
-    this.mapPriority.set("", "Nguy cấp")
-    this.mapStatus.set("", "Đang chờ hỗ trợ");
-    this.mapStatus.set("waiting", "Đang chờ hỗ trợ");
-    this.mapStatus.set("supporting", "Đang được hỗ trợ");
-
+    this.mapPriority.set('high', 'Rất nguy cấp');
+    this.mapPriority.set('normal', 'Nguy cấp');
+    this.mapPriority.set('', 'Nguy cấp');
+    this.mapStatus.set('', 'Đang chờ hỗ trợ');
+    this.mapStatus.set('waiting', 'Đang chờ hỗ trợ');
+    this.mapStatus.set('supporting', 'Đang được hỗ trợ');
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(JoinRequestComponent, {
-      data: { request_id: this.request.id }
+      data: { request_id: this.request.id },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }
@@ -80,15 +104,14 @@ export class RequestCardDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(TransFormComponent, {
       data: {
         supportObject: this.supportObject,
-        request_id: this.request.id
-      }
+        request_id: this.request.id,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
-      if (result)
-        this.trans.push(result);
+      if (result) this.trans.push(result);
     });
   }
 
@@ -96,38 +119,46 @@ export class RequestCardDetailsComponent implements OnInit {
   pageSize = 1;
 
   // MatPaginator Output
-  pageEvent: PageEvent = new PageEvent;
-
+  pageEvent: PageEvent = new PageEvent();
 
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
   }
-
 }
 @Component({
   selector: 'join',
   templateUrl: './joinForm.html',
-  providers: [MatFormFieldModule, FormsModule]
+  providers: [MatFormFieldModule, FormsModule],
 })
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
-  joinRequest: IJoinRequest = { type: "user", supporter_id: "customerc74de9034800804c5be2197f986ec520" }
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<JoinRequestComponent>, private SupportTypesService: SupportTypesService,
-    private UrgentRequestService: UrgentRequestService) {
-    this.SupportTypesService.findAll().subscribe(result => this.supportTypes = result)
+  joinRequest: IJoinRequest = {
+    type: 'user',
+    supporter_id: 'customerc74de9034800804c5be2197f986ec520',
+  };
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<JoinRequestComponent>,
+    private SupportTypesService: SupportTypesService,
+    private UrgentRequestService: UrgentRequestService
+  ) {
+    this.SupportTypesService.findAll().subscribe(
+      (result) => (this.supportTypes = result)
+    );
   }
   async onSubmit(data: any) {
     console.log(data);
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = data.support_date;
     console.log(this.joinRequest);
-    this.UrgentRequestService.join(this.data.request_id, this.joinRequest).subscribe();
+    this.UrgentRequestService.join(
+      this.data.request_id,
+      this.joinRequest
+    ).subscribe();
     this.dialogRef.close();
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

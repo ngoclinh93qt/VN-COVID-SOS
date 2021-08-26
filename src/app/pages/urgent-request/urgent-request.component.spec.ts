@@ -8,9 +8,8 @@ describe('UrgentRequestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UrgentRequestComponent ]
-    })
-    .compileComponents();
+      declarations: [UrgentRequestComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

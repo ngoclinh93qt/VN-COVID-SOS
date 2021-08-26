@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpEvent,
+  HttpHandler,
+  HttpRequest,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { prefixReq, prefixRes } from './http-config';
 import { AuthenService } from '../services/rest-services/authen.service';
@@ -8,7 +13,10 @@ import { AuthenService } from '../services/rest-services/authen.service';
 export class ReadOnlyInterceptor implements HttpInterceptor {
   constructor(private sessionService: AuthenService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const readOnly = this.sessionService.readOnly;
     if (!readOnly || this.okIfReadOnly(req)) {
       console.groupCollapsed(`${prefixReq} 👓 Read-Only`);

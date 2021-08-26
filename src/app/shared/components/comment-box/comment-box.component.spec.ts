@@ -8,9 +8,8 @@ describe('CommentBoxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommentBoxComponent ]
-    })
-    .compileComponents();
+      declarations: [CommentBoxComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

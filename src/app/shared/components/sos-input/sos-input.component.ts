@@ -39,8 +39,7 @@ export class SosInputComponent
     ControlValueAccessor,
     MatFormFieldControl<string>,
     OnInit,
-    OnDestroy
-{
+    OnDestroy {
   static nextId: number = 0;
 
   private _minlength: number = 0;

@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="space-between">
-  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">Tạo nhóm</h1>
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">Tạo nhóm</h1>
   <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
 </div>
 <div mat-dialog-content>
@@ -12,7 +12,7 @@
       label="Tên nhóm"
     ></sos-input>
     <fieldset ngModelGroup="address_info">
-      <mat-form-field style="width: 100%" appearance="outline">
+      <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Tỉnh/ Thành Phố</mat-label>
         <mat-select ngModel name="province_id" required>
           <mat-option
@@ -25,7 +25,7 @@
         </mat-select>
       </mat-form-field>
       <div fxLayout="row" fxLayoutGap="10px">
-        <mat-form-field style="width: 100%" appearance="outline">
+        <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Quận/ Huyện</mat-label>
           <mat-select ngModel name="district_code" required>
             <mat-option
@@ -37,7 +37,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field style="width: 100%" appearance="outline">
+        <mat-form-field style="width: 100%;" appearance="outline">
           <mat-label>Xã/ Phường</mat-label>
           <mat-select ngModel name="ward_code" required>
             <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
@@ -69,7 +69,7 @@
     </fieldset>
     <p>Loại hỗ trợ</p>
     <fieldset ngModelGroup="detail_info">
-      <mat-form-field style="width: 100%" appearance="outline">
+      <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Loại hỗ trợ</mat-label>
         <mat-select ngModel name="support_types" multiple>
           <mat-option *ngFor="let type of supportTypes" [value]="type">
@@ -87,7 +87,7 @@
       <button
         mat-flat-button
         type="submit"
-        style="float: right; border-radius: 5rem"
+        style="float: right; border-radius: 5rem;"
         color="accent"
         (click)="checkSubmit(form)"
         cdkFocusInitial

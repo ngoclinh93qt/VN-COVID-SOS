@@ -4,42 +4,42 @@ export const environment = {
   googleApiKey: '-d-QPFSkfIgSH1Q',
   s3: {
     AccessKeyId: '',
-    Secret: ''
+    Secret: '',
   },
   mapStyle: [
     {
-      "featureType": "administrative",
-      "elementType": "geometry",
-      "stylers": [
+      featureType: 'administrative',
+      elementType: 'geometry',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "poi",
-      "stylers": [
+      featureType: 'poi',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "road",
-      "elementType": "labels.icon",
-      "stylers": [
+      featureType: 'road',
+      elementType: 'labels.icon',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "transit",
-      "stylers": [
+      featureType: 'transit',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
-    }
-  ]
+          visibility: 'off',
+        },
+      ],
+    },
+  ],
 };

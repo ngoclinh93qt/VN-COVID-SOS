@@ -21,5 +21,9 @@ export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: LogHeadersInterceptor, multi: true },
   // Busy: Should be first so it can turn on first, and off last.
   { provide: HTTP_INTERCEPTORS, useClass: BusyInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: TransformResponseInterceptor, multi: true },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TransformResponseInterceptor,
+    multi: true,
+  },
 ];

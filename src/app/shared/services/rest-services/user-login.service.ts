@@ -39,8 +39,8 @@ export class UserLoginService extends RestService<IUser> {
       map((res: any) => {
         console.log(res);
         this.accessToken = 'htY4154ZgbK1yQSUqtIszKDr3j82iBlV';
-        this.storageService.token = res.auth_token
-        console.log(res.auth_token)
+        this.storageService.token = res.auth_token;
+        console.log(res.auth_token);
         return res;
       })
     );

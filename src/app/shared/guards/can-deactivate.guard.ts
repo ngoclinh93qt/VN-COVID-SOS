@@ -7,8 +7,11 @@ export interface CanComponentDeactivate {
 }
 
 @Injectable({ providedIn: 'root' })
-export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
-  canDeactivate(component: CanComponentDeactivate): Observable<boolean> | boolean {
+export class CanDeactivateGuard
+  implements CanDeactivate<CanComponentDeactivate> {
+  canDeactivate(
+    component: CanComponentDeactivate
+  ): Observable<boolean> | boolean {
     // run the function for canDeactivate and if its a promise or a boolean we handle it either way
 
     // if (component.canDeactivate) {
@@ -27,7 +30,9 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
     }
   }
 
-  private toObservable(deactivate: Promise<boolean> | boolean): Observable<boolean> | boolean {
+  private toObservable(
+    deactivate: Promise<boolean> | boolean
+  ): Observable<boolean> | boolean {
     const p = Promise.resolve(deactivate);
     const o$ = from(p);
     return o$;
