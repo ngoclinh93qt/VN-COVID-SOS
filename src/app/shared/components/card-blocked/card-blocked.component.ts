@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Blocked } from 'src/app/pages/blocked/model/blocked.model';
+import { Blocked } from 'src/app/modules/blocked/model/blocked.model';
 import { CardComponent } from '..';
 
 @Component({

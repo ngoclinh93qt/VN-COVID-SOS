@@ -1,5 +1,5 @@
-import { SupportTransService } from './../../services/rest-services/support-trans.service';
-import { SupportTypesService } from './../../services/rest-services/support-types.service';
+import { SupportTransService } from '../../../core/http/support-trans.service';
+import { SupportTypesService } from '../../../core/http/support-types.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

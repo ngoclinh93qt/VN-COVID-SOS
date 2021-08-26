@@ -1,10 +1,10 @@
-import { NewsService } from 'src/app/shared/services/rest-services/news.service';
-import { SupportObjectService } from './../../services/rest-services/support-object.service';
+import { NewsService } from 'src/app/core/http/news.service';
+import { SupportObjectService } from '../../../core/http/support-object.service';
 import { TransFormComponent } from './../trans-form/trans-form.component';
-import { SupportTransService } from './../../services/rest-services/support-trans.service';
-import { UrgentRequestService } from 'src/app/shared/services/rest-services/urgent-request.service';
+import { SupportTransService } from '../../../core/http/support-trans.service';
+import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { FormsModule } from '@angular/forms';
-import { SupportTypesService } from './../../services/rest-services/support-types.service';
+import { SupportTypesService } from '../../../core/http/support-types.service';
 import {
   Component,
   OnInit,

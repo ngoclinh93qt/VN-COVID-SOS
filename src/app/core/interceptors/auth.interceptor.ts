@@ -8,29 +8,35 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError, EMPTY } from 'rxjs';
 
+import { prefixReq } from './http-config';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthenService } from 'src/app/shared/services/rest-services/authen.service';
-import { prefixReq } from 'src/app/shared/interceptors/http-config';
+import { AuthenService } from '../http/authen.service';
+import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private sessionService: AuthenService) {}
+  constructor(
+    private router: Router,
+    private sessionService: AuthenService,
+    private storageService: StorageService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authHeader = this.sessionService.accessToken;
+    // const authHeader = this.sessionService.accessToken;
+    const authHeader = this.storageService.token;
     if (authHeader == null) {
       return next.handle(req).pipe(this.handleErrors);
     }
     const authReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${authHeader} `,
+        Authorization: `Bearer ${authHeader}`,
         'Content-Type': 'application/json',
       },
-      //  withCredentials: true,
+      // withCredentials: true,
     });
 
     console.groupCollapsed(`${prefixReq} 🔑 Auth`);
@@ -43,15 +49,12 @@ export class AuthInterceptor implements HttpInterceptor {
   handleErrors(source: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
     return source.pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('error');
         return error.status === 401 ? this.handle401(error) : throwError(error);
       })
     );
   }
 
   handle401(error: HttpErrorResponse) {
-    console.log('error 401');
-    console.log(error);
     const authResHeader = error.headers.get('WWW-Authenticate') || '';
     if (/is expired/.test(authResHeader)) {
       this.router.navigate(['signin']);
