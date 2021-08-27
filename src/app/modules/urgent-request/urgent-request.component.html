@@ -1,0 +1,21 @@
+<div class="request_container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <div fxFlex="noshrink" id="request_list">
+      <app-request-container
+        (searchFilter)="searchRequest($event)"
+        (createClicked)="openFormDialog()"
+        (clickedRequest)="chooseRequest($event)"
+        [requests]="requests"
+      ></app-request-container>
+    </div>
+    <div fxFlex="fxFill" class="two">
+      <app-maps
+        (clickedRequest)="chooseRequest($event)"
+        [requests]="requests"
+      ></app-maps>
+    </div>
+    <!-- <div fxFlex="noshrink" class="one" *ngIf="focusRequest?.id">
+            <app-request-card-details (close)="closeFocus()" [request]=focusRequest></app-request-card-details>>
+        </div> -->
+  </div>
+</div>

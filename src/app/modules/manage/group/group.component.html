@@ -1,0 +1,22 @@
+<div class="group_container">
+  <div
+    (click)="openDialog(group)"
+    *ngFor="let group of groups"
+    class="group_items"
+    fxLayout="row"
+  >
+    <img
+      class="group_items_image"
+      fxFlex="130px"
+      src="https://snehan.org/wp-content/uploads/2017/11/volunteer-2055043_960_720.png"
+      alt="image"
+    />
+    <div fxFlex="auto" class="group_items_text">
+      <a href="#">Xem chi tiết</a>
+      <h4>
+        <b> {{ group.name }}</b>
+      </h4>
+      <!-- <p>{{group.description}}</p> -->
+    </div>
+  </div>
+</div>

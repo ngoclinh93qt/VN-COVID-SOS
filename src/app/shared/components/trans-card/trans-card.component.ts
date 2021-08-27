@@ -1,6 +1,4 @@
-
 import { Component, OnInit, Input } from '@angular/core';
-
 
 @Component({
   selector: 'app-trans-card',
@@ -10,7 +8,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TransCardComponent implements OnInit {
   @Input() trans?: ITransaction;
   constructor() {}
-  
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void {}
 }

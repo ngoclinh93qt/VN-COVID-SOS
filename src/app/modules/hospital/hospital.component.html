@@ -1,0 +1,26 @@
+<div class="header">
+  <p style="font-size: 20px; font-weight: bold;">Bệnh viện</p>
+  <app-button
+    (click)="openDialog()"
+    height="40"
+    color="accent"
+    text="TẠO BỆNH VIỆN"
+  ></app-button>
+</div>
+<mat-divider></mat-divider>
+<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="end">
+  <sos-input label="Tìm kiếm"></sos-input>
+</div>
+<div fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div
+    [fxFlex]="100 / gridColumns + '%'"
+    fxFlex.xs="100%"
+    fxFlex.sm="33%"
+    *ngFor="let hospital of hospitals"
+  >
+    <app-card
+      [hospital]="hospital"
+      (click)="openBottomSheet(hospital)"
+    ></app-card>
+  </div>
+</div>

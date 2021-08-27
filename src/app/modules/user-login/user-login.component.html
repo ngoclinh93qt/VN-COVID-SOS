@@ -1,0 +1,55 @@
+<div class="container">
+  <mat-card class="form-card">
+    <div class="mat-body signup-frame">
+      <h1>Đăng nhập</h1>
+      <div [hidden]="isConfirmed">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+          <sos-input
+            formControlName="phone_number"
+            type="tel"
+            label="Số điện thoại"
+            [required]="true"
+            [error]="getError('phone')"
+            [minlength]="10"
+          ></sos-input>
+          <div class="form-btn">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="button"
+              [disabled]="!formGroup.valid"
+            >
+              Tiếp tục
+            </button>
+          </div>
+        </form>
+      </div>
+      <div [hidden]="!isConfirmed">
+        <form
+          [formGroup]="formConfirm"
+          (ngSubmit)="onConfirm(formConfirm.value)"
+        >
+          <sos-input
+            formControlName="confirm_code"
+            type="text"
+            label="Mã xác nhận"
+            [required]="true"
+            [error]="getError('phone')"
+          ></sos-input>
+          <div class="form-btn">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="button"
+              [disabled]="!formConfirm.valid"
+            >
+              Tiếp tục
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card>
+</div>

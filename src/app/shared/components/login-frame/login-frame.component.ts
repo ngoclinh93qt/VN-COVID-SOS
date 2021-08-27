@@ -2,7 +2,7 @@ import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenService } from '../../services/rest-services/authen.service';
+import { AuthenService } from '../../../core/http/authen.service';
 
 @Component({
   selector: 'login-frame',
@@ -36,7 +36,10 @@ export class LoginFrameComponent implements OnInit {
     //  this.authenService.signin("sos.demo@mailnesia.com", "123456789").subscribe(result=>{})
     this.authenService
       .signin(values.username, values.password)
-      .subscribe((result) => {console.log(result);this.router.navigateByUrl('/home');});
+      .subscribe((result) => {
+        console.log(result);
+        this.router.navigateByUrl('/home');
+      });
   }
 
   getError(el: any) {

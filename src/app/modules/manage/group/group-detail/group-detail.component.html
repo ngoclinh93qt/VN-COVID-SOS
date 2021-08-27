@@ -1,0 +1,78 @@
+<div class="group-details">
+  <button
+    style="position: absolute; top: 0; right: 0;"
+    (click)="onClose()"
+    mat-icon-button
+    aria-label="close Icon"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <section
+    fxFlex="1/3"
+    class="request_sesstion p-1"
+    style="position: relative;"
+  >
+    <p style="font-weight: bold; font-size: 17px;">Thông tin</p>
+    <br />
+    <p>Ảnh đại diện</p>
+    <div>
+      <img
+        class="group_items_image"
+        width="50px"
+        src="https://snehan.org/wp-content/uploads/2017/11/volunteer-2055043_960_720.png"
+        alt="image"
+      /><a> Thay đổi</a>
+    </div>
+
+    <hr />
+    <p>Tên nhóm</p>
+    <b
+      >{{ group.name }}
+      <a (click)="openUpdateName(group.name, group.id)">Sửa</a></b
+    >
+    <hr />
+    <p>Địa chỉ</p>
+    <b
+      >{{ group?.address_info?.address }}
+      <a (click)="openUpdateAddress(group.id)">Sửa</a></b
+    >
+    <hr />
+    <p>Số điện thoại</p>
+    <b
+      >{{ group?.contact_info?.phone_number }}
+      <a (click)="openUpdatePhone(group?.contact_info?.phone_number, group.id)"
+        >Sửa</a
+      ></b
+    >
+    <hr />
+    <p>Loại hỗ trợ</p>
+    <mat-chip-list aria-label="objectTag">
+      <mat-chip
+        color="accent"
+        selected
+        *ngFor="let type of group?.detail_info?.support_types"
+        >{{ type.name }}
+      </mat-chip>
+    </mat-chip-list>
+    <hr />
+    <p>Thành viên</p>
+    <app-member
+      *ngFor="let member of group.members"
+      [member]="member"
+    ></app-member>
+  </section>
+  <section fxFlex="1/3" class="p-1 activity_sestion">
+    <p style="font-weight: bold; font-size: 17px;">Cập nhật trạng thái</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px;">
+      <app-comment-box [comment]="comment"></app-comment-box>
+    </div>
+  </section>
+  <section fxFlex="1/3" class="p-1 comment_sestion">
+    <p style="font-weight: bold; font-size: 17px;">Hoạt động thiện nguyện</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px;">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </section>
+</div>

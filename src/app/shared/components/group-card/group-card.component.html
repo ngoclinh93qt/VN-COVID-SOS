@@ -2,13 +2,13 @@
   <mat-card-content fxLayout="row">
     <img class="avatar" src="https://picsum.photos/200/200" alt="image" />
     <div>
-      <p style="font-size: 17px; font-weight: bold">{{ group?.name }}</p>
+      <p style="font-size: 17px; font-weight: bold;">{{ group?.name }}</p>
       <p>
         {{ group?.address_info?.ward_name }},
         {{ group?.address_info?.district_name }},
         {{ group?.address_info?.province_name }}
       </p>
-      <p style="margin-top: 20px">Loại hỗ trợ</p>
+      <p style="margin-top: 20px;">Loại hỗ trợ</p>
       <div fxLayout="row wrap" fxLayoutGap="5px grid">
         <app-button
           height="40"
@@ -17,7 +17,7 @@
           *ngFor="let type of group?.detail_info?.support_types"
         ></app-button>
       </div>
-      <p style="margin-top: 20px">Trạng thái</p>
+      <p style="margin-top: 20px;">Trạng thái</p>
       <div class="group-status">
         <p>
           Nhóm đang cần thêm lương thực, nhu yếu phẩm để đi trợ giúp. Mọi thông

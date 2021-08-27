@@ -1,0 +1,36 @@
+.sidebar-container {
+  padding: 0 20px;
+}
+
+.hospital-info {
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+::ng-deep .mat-tab-label {
+  font-size: 12px;
+  height: 27px !important;
+  min-height: 5px !important;
+  margin: 3px !important;
+  max-width: 160px !important;
+  min-width: 5px !important;
+}
+
+.post-container {
+  padding: 30px 15px 0 15px;
+  border-left: 1px ridge;
+  border-right: 1px ridge;
+}
+
+a {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+mat-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

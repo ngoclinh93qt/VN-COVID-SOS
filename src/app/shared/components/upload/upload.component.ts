@@ -4,15 +4,13 @@ import { LoadingService } from '../loading/loading.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   urls = new Array<string>();
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   detectFiles(event: any) {
     this.urls = [];
@@ -22,14 +20,11 @@ export class UploadComponent implements OnInit {
         let reader = new FileReader();
         reader.onload = (e: any) => {
           this.urls.push(e.target.result);
-        }
+        };
         reader.readAsDataURL(file);
       }
     }
   }
 
-  uploadfile() {
-    
-
-  }
+  uploadfile() {}
 }

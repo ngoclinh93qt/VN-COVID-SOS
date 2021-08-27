@@ -1,0 +1,40 @@
+<div class="posts_container">
+  <section class="handbook_container">
+    <h2>
+      <b>Cẩm nang</b><span><a href="">Xem tất cả</a></span>
+    </h2>
+    <hr />
+    <div *ngFor="let handbook of handbooks">
+      <h3>
+        <b>{{ handbook.name }}</b>
+      </h3>
+      <p>{{ handbook.content }}</p>
+      <hr />
+    </div>
+  </section>
+  <br />
+  <section class="news_container">
+    <h2>
+      <b>Bảng tin covid 19</b><span><a href="">Xem tất cả</a></span>
+    </h2>
+    <div *ngFor="let new of news">
+      <hr />
+      <div class="news_items" fxLayout="row">
+        <img
+          class="news_items_image"
+          fxFlex="130px"
+          src="{{ new.img }}"
+          alt="image"
+        />
+        <div fxFlex="auto" class="news_items_text">
+          <h4>
+            <img src="{{ new.publisher?.img }}" /> {{ new.publisher?.name }}
+          </h4>
+          <p class="news_items_text_content">{{ new.content }}</p>
+
+          <p>{{ new.pubDate }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import { SEC_INFO } from "./environment.sec";
+import { SEC_INFO } from './environment.sec';
 export const environment = {
   production: false,
   host: 'http://54.69.39.96/api/v1',
@@ -9,44 +9,44 @@ export const environment = {
   s3: {
     AccessKeyId: SEC_INFO.S3_ACCESS_KEY,
     Secret: SEC_INFO.S3_SECRET,
-    Bucket: SEC_INFO.S3_BUCKET
+    Bucket: SEC_INFO.S3_BUCKET,
   },
   mapStyle: [
     {
-      "featureType": "administrative",
-      "elementType": "geometry",
-      "stylers": [
+      featureType: 'administrative',
+      elementType: 'geometry',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "poi",
-      "stylers": [
+      featureType: 'poi',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "road",
-      "elementType": "labels.icon",
-      "stylers": [
+      featureType: 'road',
+      elementType: 'labels.icon',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
+          visibility: 'off',
+        },
+      ],
     },
     {
-      "featureType": "transit",
-      "stylers": [
+      featureType: 'transit',
+      stylers: [
         {
-          "visibility": "off"
-        }
-      ]
-    }
-  ]
+          visibility: 'off',
+        },
+      ],
+    },
+  ],
 };
 
 /*

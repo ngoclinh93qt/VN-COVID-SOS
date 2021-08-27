@@ -1,39 +1,44 @@
-import { SupportTransService } from './../../services/rest-services/support-trans.service';
-import { SupportTypesService } from './../../services/rest-services/support-types.service';
+import { SupportTransService } from '../../../core/http/support-trans.service';
+import { SupportTypesService } from '../../../core/http/support-types.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-trans-form',
   templateUrl: './trans-form.component.html',
-  styleUrls: ['./trans-form.component.scss']
+  styleUrls: ['./trans-form.component.scss'],
 })
 export class TransFormComponent implements OnInit {
   supportTypes: ISupportType[] = [];
-  currentTime: Date = new Date;
+  currentTime: Date = new Date();
   supportObject: ISupport[] = [];
-  defaultObject: ISupport = { amount: 1, name: "", type: "", unit: "" }
-  constructor(public dialogRef: MatDialogRef<TransFormComponent>, private SupportTypesService: SupportTypesService,
-    @Inject(MAT_DIALOG_DATA) public data: any, private SupportTransService: SupportTransService) {
+  defaultObject: ISupport = { amount: 1, name: '', type: '', unit: '' };
+  constructor(
+    public dialogRef: MatDialogRef<TransFormComponent>,
+    private SupportTypesService: SupportTypesService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private SupportTransService: SupportTransService
+  ) {
     this.fetchInit();
     this.supportObject = data.supportObject;
-
   }
   fetchInit() {
-    this.SupportTypesService.findAll().subscribe(result => {
-      this.supportTypes = result
-    })
+    this.SupportTypesService.findAll().subscribe((result) => {
+      this.supportTypes = result;
+    });
   }
   onClose(): void {
     this.dialogRef.close();
-    console.log("closeForm");
+    console.log('closeForm');
   }
   async onSubmit(data: ITransaction) {
-    data.type = "user";
-    data.id = "customerc74de9034800804c5be2197f986ec520";
+    data.type = 'user';
+    data.id = 'customerc74de9034800804c5be2197f986ec520';
     data.sos_request_id = this.data.request_id;
     console.log(data);
-    this.SupportTransService.create(data, {}).subscribe(res=>this.dialogRef.close(res))
+    this.SupportTransService.create(data, {}).subscribe((res) =>
+      this.dialogRef.close(res)
+    );
   }
   show(data: any) {
     console.log(data);
@@ -49,16 +54,19 @@ export class TransFormComponent implements OnInit {
     form.support_list[index].type = this.removeAccents(value);
   }
   removeObject(form: any, index: number) {
-    form.support_list.splice(index, 1)
+    form.support_list.splice(index, 1);
   }
   removeAccents(str: string) {
-    return str.normalize('NFD')
+    return str
+      .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(" ", "_");
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .replace(' ', '_');
   }
   add(data: ITransaction, object: ISupport) {
-
-    if (data.support_list == undefined) data.support_list = [object]; else data.support_list.push(object);
+    if (data.support_list == undefined) data.support_list = [object];
+    else data.support_list.push(object);
     console.log(data);
     console.log(object);
   }
@@ -66,7 +74,5 @@ export class TransFormComponent implements OnInit {
     console.log(data);
     // if (data.status == "VALID") this.onClose();
   }
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

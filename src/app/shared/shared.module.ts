@@ -21,13 +21,16 @@ import { RequestCardComponent } from './components/request-card/request-card.com
 import { CommentBoxComponent } from './components/comment-box/comment-box.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { LoginFrameComponent } from './components/login-frame/login-frame.component';
-import { RequestCardDetailsComponent, JoinRequestComponent } from './components/request-card-details/request-card-details.component';
+import {
+  RequestCardDetailsComponent,
+  JoinRequestComponent,
+} from './components/request-card-details/request-card-details.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NotificationService } from './components/notification/notification.service';
-import { httpInterceptorProviders } from './interceptors';
+import { httpInterceptorProviders } from '../core/interceptors';
 import { GroupCardComponent } from './components/group-card/group-card.component';
-import { MemberComponent } from './member/member.component';
+import { MemberComponent } from './components/member/member.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
@@ -60,7 +63,7 @@ import { CommentComponent } from './components/comment/comment.component';
     FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [
     CardComponent,
@@ -77,7 +80,7 @@ import { CommentComponent } from './components/comment/comment.component';
     GroupCardComponent,
     MemberComponent,
     TransCardComponent,
-    TransFormComponent
+    TransFormComponent,
   ],
   providers: [
     HttpClientModule,

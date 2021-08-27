@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+mat-sidenav-content {
+  overflow: hidden;
+  padding: 0 1px;
+  background: white;
+}
+
+.closeIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}

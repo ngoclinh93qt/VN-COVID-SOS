@@ -1,0 +1,29 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+
+  .content {
+    height: 70vh;
+    overflow-y: scroll;
+  }
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.example-full-width {
+  width: 100%;
+}
+.example-left-half-width {
+  width: calc(50% - 10px);
+  float: left;
+}
+.example-right-half-width {
+  width: calc(50% - 10px);
+  float: right;
+}

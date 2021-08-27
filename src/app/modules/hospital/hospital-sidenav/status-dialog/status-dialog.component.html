@@ -1,0 +1,25 @@
+<div style="width: 400px; border-radius: 10px; overflow-x: hidden;">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3 style="font-weight: bold;">Trạng thái</h3>
+    <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+  </div>
+  <div fxLayout="column" fxLayoutGap="10px">
+    <div class="radio-button">
+      <label for="needed">Cần hỗ trợ</label>
+      <input type="radio" id="needed" name="status" value="0" checked />
+    </div>
+    <div class="radio-button">
+      <label for="normal">Bình thường</label>
+      <input type="radio" id="normal" name="status" value="1" />
+    </div>
+  </div>
+  <div style="margin-top: 20px;" align="right">
+    <app-button
+      (click)="CloseDialog()"
+      mat-dialog-close
+      height="40"
+      color="accent"
+      text="LƯU"
+    ></app-button>
+  </div>
+</div>

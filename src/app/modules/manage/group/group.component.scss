@@ -1,0 +1,30 @@
+.group_container {
+  margin: 20px 0;
+
+  .group_items {
+    margin: 5px 0;
+    position: relative;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 5px;
+    padding: 10px;
+    .group_items_text {
+      padding: 5px;
+      margin: 0 20px;
+      h4 {
+        margin: 10px 0;
+      }
+      p {
+        font-size: 12px;
+      }
+      a {
+        position: absolute;
+        font-size: 0.9rem;
+        color: black;
+        font-weight: 600;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

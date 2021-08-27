@@ -1,17 +1,14 @@
-::ng-deep .errNotif
-{
-  color:white;
-  background: #F44336 !important;
+::ng-deep .errNotif {
+  color: white;
+  background: #f44336 !important;
 }
 
-::ng-deep .warnNotif
-{
-  color:black;
+::ng-deep .warnNotif {
+  color: black;
   background: yellow !important;
 }
 
-::ng-deep .infoNotif
-{
-  color:black;
+::ng-deep .infoNotif {
+  color: black;
   background: white !important;
 }

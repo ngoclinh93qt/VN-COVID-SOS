@@ -1,0 +1,51 @@
+<div class="sidebar-container" fxLayout="row">
+  <mat-icon (click)="closeBottomSheet()">clear icon</mat-icon>
+  <div fxFlex="1/3" style="padding-right: 15px; padding-top: 30px;">
+    <div class="hospital-info">
+      <p style="font-weight: bold; font-size: 17px;">{{ hospital?.name }}</p>
+
+      <p>
+        Địa chỉ:
+        <span style="font-weight: bold;">{{ hospital?.address }}</span>
+      </p>
+    </div>
+    <p style="font-weight: bold; margin-top: 15px;">Trạng thái</p>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      style="margin-bottom: 25px;"
+    >
+      <app-button
+        height="40"
+        color="primary"
+        text="&bull; CẦN HỖ TRỢ"
+      ></app-button>
+      <a (click)="openDialog()">SỬA</a>
+    </div>
+    <mat-divider></mat-divider>
+    <p style="font-weight: bold; margin-top: 15px;">Cập nhật trạng thái</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <p style="font-weight: bold; margin-top: 15px;">Cập nhật mới nhất</p>
+    <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px;">
+      <app-comment-box [comment]="comment"></app-comment-box>
+    </div>
+    <p style="font-weight: bold; margin-top: 15px;">Lịch sử cập nhật</p>
+    <div *ngFor="let comment of historyComment" style="margin-bottom: 15px;">
+      <app-comment-box [comment]="comment"></app-comment-box>
+    </div>
+  </div>
+  <div fxFlex="1/3" class="post-container">
+    <p style="font-weight: bold; font-size: 17px;">Bài đăng</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px;">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </div>
+  <div fxFlex="1/3" style="padding-left: 15px; padding-top: 30px;">
+    <p style="font-weight: bold; font-size: 17px;">Hoạt động thiện nguyện</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px;">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<p>news works!</p>
+
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      [fxFlex]="100 / gridColumns + '%'"
+      fxFlex.xs="100%"
+      fxFlex.sm="33%"
+      *ngFor="let blocked of blockeds"
+    >
+      <app-card-blocked [blocked]="blocked"></app-card-blocked>
+    </div>
+  </div>
+</div>

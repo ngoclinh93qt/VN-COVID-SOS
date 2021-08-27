@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenComponent } from './pages/authen/authen.component';
-import { SignupComponent } from './pages/signup/signup.component';
-import { ContainerComponent } from './pages/container/container.component';
-import { AuthGuard } from './shared/guards';
-import { UserLoginComponent } from './pages/user-login/user-login.component';
+import { AuthenComponent } from './modules/authen/authen.component';
+import { SignupComponent } from './modules/signup/signup.component';
+import { ContainerComponent } from './modules/container/container.component';
+import { AuthGuard } from './core/guards';
+import { UserLoginComponent } from './modules/user-login/user-login.component';
 
 const routes: Routes = [
   {
@@ -28,39 +28,39 @@ const routes: Routes = [
       {
         path: 'news',
         loadChildren: () =>
-          import('./pages/news/news.module').then((m) => m.NewsModule),
+          import('./modules/news/news.module').then((m) => m.NewsModule),
       },
       {
         path: 'manage',
         loadChildren: () =>
-          import('./pages/manage/manage.module').then((m) => m.ManageModule),
+          import('./modules/manage/manage.module').then((m) => m.ManageModule),
       },
       {
         path: 'hospital',
         loadChildren: () =>
-          import('./pages/hospital/hospital.module').then(
+          import('./modules/hospital/hospital.module').then(
             (m) => m.HospitalModule
           ),
       },
       {
         path: 'group',
         loadChildren: () =>
-          import('./pages/group/group.module').then((m) => m.GroupModule),
+          import('./modules/group/group.module').then((m) => m.GroupModule),
       },
       {
         path: 'blocked',
         loadChildren: () =>
-          import('./pages/blocked/blocked.module').then((m) => m.BlockedModule),
+          import('./modules/blocked/blocked.module').then((m) => m.BlockedModule),
       },
       {
         path: 'home',
         loadChildren: () =>
-          import('./pages/home/home.module').then((m) => m.HomeModule),
+          import('./modules/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'urgentRequest',
         loadChildren: () =>
-          import('./pages/urgent-request/urgent-request.module').then(
+          import('./modules/urgent-request/urgent-request.module').then(
             (m) => m.UrgentRequestModule
           ),
       },

@@ -1,0 +1,21 @@
+.generalData {
+  background-color: rgb(255, 232, 235);
+  padding: 20px;
+  border-radius: 10px;
+  h1 {
+    font-size: 2.2rem;
+  }
+  p {
+    font-size: 1rem;
+    b {
+      font-size: 1.1rem;
+    }
+    font-weight: 500;
+  }
+  a {
+    float: right;
+    font-size: 0.9rem;
+    color: black;
+    font-weight: 600;
+  }
+}

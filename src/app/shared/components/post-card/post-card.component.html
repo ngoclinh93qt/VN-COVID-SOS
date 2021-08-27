@@ -1,15 +1,15 @@
 <div class="post-card">
-  <p style="font-weight: bold; padding: 10px 10px 0 10px">{{ post?.title }}</p>
-  <div *ngIf="post?.url" style="background: black" align="center">
+  <p style="font-weight: bold; padding: 10px 10px 0 10px;">{{ post?.title }}</p>
+  <div *ngIf="post?.url" style="background: black;" align="center">
     <img src="{{ post?.url }}" alt="image" />
   </div>
   <div
-    style="padding: 10px 10px 0px 10px"
+    style="padding: 10px 10px 0px 10px;"
     fxLayout="row"
     fxLayoutAlign="space-between"
   >
     <p>
-      Đăng bởi: <span style="font-weight: bold">{{ post?.author }}</span>
+      Đăng bởi: <span style="font-weight: bold;">{{ post?.author }}</span>
     </p>
     <p>{{ post?.postTime }}</p>
   </div>
