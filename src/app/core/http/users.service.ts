@@ -26,7 +26,7 @@ export class UsersService extends RestService<IUser> {
         return res.data
       }));
   }
-  resendCode(body: IUser, options: IUser): Observable<IUser> {
+  resendCode(body: IUser, options: any): Observable<IUser> {
     return this.http
       .post<{ data: IUser }>(`${this.host}/users/resend`, body)
       .pipe(map((res) => res.data));

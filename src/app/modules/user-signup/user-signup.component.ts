@@ -88,8 +88,8 @@ export class UserSignupComponent implements OnInit {
         return 'ssss';
         break;
       case 'confirm_code':
-        if (this.firstFormGroup.get('confirm_code')?.hasError('required')) {
-          return 'Phone number required';
+        if (this.secondFormGroup.get('confirm_code')?.hasError('required')) {
+          return 'Confirm code required';
         }
         return '';
         break;
@@ -111,7 +111,15 @@ export class UserSignupComponent implements OnInit {
       error => { this.isPhoneInUsed = true; }
     );
   }
+  onResend() {
+    this.UsersService.resendCode(this.user!, {}).subscribe(
+      (result) => {
+        console.log(result);
 
+      },
+      error => { console.log(error); }
+    );
+  }
   onConfirm(event: any, user: IUser) {
     console.log(user);
     this.user!.confirm_code = user.confirm_code;
