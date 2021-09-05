@@ -21,7 +21,7 @@ export class UserSignupComponent implements OnInit {
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
   isPhoneInUsed: boolean = false;
-  isValidOTP: boolean | undefined ;
+  isValidOTP: boolean | undefined;
   constructor(
     private formBuilder: FormBuilder,
     private UsersService: UsersService,
@@ -82,10 +82,10 @@ export class UserSignupComponent implements OnInit {
         if (this.firstFormGroup.get('confirm_password')?.hasError('minlength')) {
           return 'confirm_password must at least 8 characters';
         }
-        if (this.firstFormGroup.get('confirm_password')?.hasError('passwordNotMatch')) {
+        if (this.firstFormGroup.get('confirm_password')?.value != this.firstFormGroup.get('password')?.value) {
           return 'Confirm password does not match';
         }
-        return '';
+        return 'ssss';
         break;
       case 'confirm_code':
         if (this.firstFormGroup.get('confirm_code')?.hasError('required')) {

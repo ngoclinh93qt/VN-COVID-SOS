@@ -10,7 +10,7 @@
         <form [formGroup]="firstFormGroup" (ngSubmit)="AccountSetupSubmit(firstFormGroup.value)">
           <sos-input formControlName="phone_number" type="tel" label="Số điện thoại" [required]="true"
             [error]="getError('phone')" [minlength]="10"></sos-input>
-          <p *ngIf="isPhoneInUsed">Phone number are already in use!</p>
+          <p *ngIf="isPhoneInUsed" style="font-size: small; color: red;">Phone number are already in use!</p>
           <sos-input formControlName="password" type="password" label="Mật khẩu" [required]="true"
             [error]="getError('password')" [minlength]="8"></sos-input>
           <sos-input formControlName="confirm_password" type="password" label="Nhập lại mật khẩu" [required]="true"
