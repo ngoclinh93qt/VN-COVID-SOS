@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
 import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from 'src/app/core/services/storage.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-container',
@@ -26,7 +28,6 @@ export class ContainerComponent implements OnInit {
     const dialogRef = this.dialog.open(UserSignupComponent, {
       panelClass: 'dialog-responsive',
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -71,7 +72,6 @@ export class ContainerComponent implements OnInit {
       this.showFiller = false;
     }
   }
-  
 }
 type SideItem = {
   name: string;
