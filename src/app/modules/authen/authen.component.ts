@@ -14,11 +14,7 @@ export class AuthenComponent implements OnInit {
     private dialogService: DialogService,
     private notification: NotificationService,
     private storage: StorageService
-  ) {
-    // dialogService.openDialog(LoginFrameComponent, {width: '100%', maxWidth: '455px'})
-    // this.notification.info("huhu");
-    // this.notification.error("huhu");
-  }
+  ) {}
 
   ngOnInit() {}
 }

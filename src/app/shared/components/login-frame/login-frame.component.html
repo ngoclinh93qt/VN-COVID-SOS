@@ -1,50 +1,48 @@
 <div class="mat-body login-frame">
   <div class="head-frame">
     <h1>Đăng Nhập</h1>
-    <div [hidden]="!isDialog">
-      <button mat-icon-button>
-        <mat-icon mat-dialog-close>close</mat-icon>
-      </button>
+    <div class="close-icon" [hidden]="!isDialog">
+      <mat-icon mat-dialog-close>close</mat-icon>
     </div>
   </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-    <div>
-      <sos-input
-        type="email"
-        formControlName="username"
-        label="Tên đăng nhập"
-        [required]="true"
-        [required]="true"
-        [error]="getError('user')"
-      ></sos-input>
-      <br />
-      <sos-input
-        type="password"
-        formControlName="password"
-        label="Mật khẩu"
-        [required]="true"
-        [error]="getError('pass')"
-      ></sos-input>
-      <div class="goto">
-        <p><a href="/forgot">Quên mật khẩu</a></p>
-        <p><a href="/signup">Đăng kí tài khoản mới</a></p>
+  <div class="head-sub">
+    <h4>Đăng nhập bằng số điện thoại</h4>
+  </div>
+  <form class="login-form" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+    <div class="form-item">
+      <sos-input type="text" formControlName="numberphone" label="Số điện thoại" [required]="true" [pattern]="regex" [error]="getError('phone')"></sos-input>
+    </div>
+    <div class="form-item">
+      <sos-input type="{{isShow == true ? 'text' : 'password'}}" formControlName="password" label="Mật khẩu" [required]="true" [error]="getError('pass')"></sos-input>
+      <span *ngIf="isShow == false" (click)="showPass(true)">hiện</span><span *ngIf="isShow == true" (click)="showPass(false)">ẩn</span>
+    </div>
+    <div class="goto">
+      <div class="item-goto">
+        <input type="checkbox" name="" id="">
+        <p>Ghi nhớ đăng nhập</p>
       </div>
-      <div class="form-btn">
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="button"
-          [disabled]="!formGroup.valid"
-        >
-          Login
-        </button>
+      <div class="item-goto">
+        <p>Quên mật khẩu?</p>
       </div>
     </div>
+    <div class="form-btn">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">
+        ĐĂNG NHẬP
+      </button>
+    </div>
   </form>
-  <p class="otherway">Hoặc đăng nhập với</p>
-  <a href=""> <h3>FACEBOOK</h3> </a><br />
-  <a href="">
-    <h3>GOOGLE</h3>
-  </a>
+  <p class="otherway">Hoặc</p>
+  <div class="another-login">
+    <div class="item">
+      <img src="assets/icon-google.png" alt="">
+      <p>Đăng nhập bằng Google</p>
+    </div>
+    <div class="item">
+      <img src="assets/icon-fb.png" alt="">
+      <p>Đăng nhập bằng Facebook</p>
+    </div>
+    <div class="item">
+      <p>Tạo một tài khoản</p>
+    </div>
+  </div>
 </div>
