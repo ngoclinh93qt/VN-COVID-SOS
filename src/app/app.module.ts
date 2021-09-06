@@ -1,3 +1,4 @@
+import { UserSignupComponent } from './modules/user-signup/user-signup.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -25,6 +26,7 @@ import { UserLoginComponent } from './modules/user-login/user-login.component';
     ContainerComponent,
     SignupComponent,
     UserLoginComponent,
+    UserSignupComponent
   ],
   imports: [
     BrowserModule,

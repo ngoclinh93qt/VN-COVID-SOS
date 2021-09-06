@@ -12,6 +12,8 @@ import { AuthenService } from '../../../core/http/authen.service';
 export class LoginFrameComponent implements OnInit {
   formGroup!: FormGroup;
   hide = true;
+  isShow: boolean = false;
+  regex = '(84|0[3|5|7|8|9])+([0-9]{8})';
   @Input() isDialog: boolean = true;
 
   constructor(
@@ -26,16 +28,14 @@ export class LoginFrameComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      username: ['', Validators.required],
+      numberphone: ['', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
     });
   }
 
-  onSubmit(values: { username: string; password: string }) {
-    console.log(this.formGroup.value);
-    //  this.authenService.signin("sos.demo@mailnesia.com", "123456789").subscribe(result=>{})
+  onSubmit(values: { numberphone: string; password: string }) {
     this.authenService
-      .signin(values.username, values.password)
+      .signin(values.numberphone, values.password)
       .subscribe((result) => {
         console.log(result);
         this.router.navigateByUrl('/home');
@@ -44,20 +44,26 @@ export class LoginFrameComponent implements OnInit {
 
   getError(el: any) {
     switch (el) {
-      case 'user':
-        if (this.formGroup.get('username')?.hasError('required')) {
-          return 'Username required';
+      case 'phone':
+        if (this.formGroup.get('numberphone')?.hasError('required')) {
+          return 'Chưa nhập số điện thoại';
+        } else if (this.formGroup.get('numberphone')?.hasError('pattern')) {
+          return 'Số điện thoại không đúng';
         }
         return '';
         break;
       case 'pass':
         if (this.formGroup.get('password')?.hasError('required')) {
-          return 'Password required';
+          return 'Chưa nhập mật khẩu';
         }
         return '';
         break;
       default:
         return '';
     }
+  }
+
+  showPass(value: boolean) {
+    this.isShow = value;
   }
 }
