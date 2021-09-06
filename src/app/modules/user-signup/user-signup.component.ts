@@ -45,19 +45,19 @@ export class UserSignupComponent implements OnInit {
       address: [''],
       last_name: ['']
     });
-  }
-  onClose() {
-    this.dialogRef.close();
-  }
-  password(formGroup: FormGroup) {
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirm_password')?.value;
-    return password === confirmPassword ? null : { passwordNotMatch: true };
-  }
-  getError(el: any) {
-    switch (el) {
-      case 'phone':
-        if (this.firstFormGroup.get('phone_number')?.hasError('required')) {
+    }
+    onClose() {
+      this.dialogRef.close();
+    }
+    password(formGroup: FormGroup) {
+      const password = formGroup.get('password')?.value;
+      const confirmPassword = formGroup.get('confirm_password')?.value;
+      return password === confirmPassword ? null : { passwordNotMatch: true };
+    }
+    getError(el: any) {
+      switch (el) {
+        case 'phone':
+          if (this.firstFormGroup.get('phone_number')?.hasError('required')) {
           return 'Phone number required';
         }
         if (this.firstFormGroup.get('phone_number')?.hasError('minlength')) {
