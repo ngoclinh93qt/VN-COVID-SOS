@@ -1,7 +1,15 @@
 declare var System: any;
 interface IUser {
-  email: string;
-  password: string;
+  phone_number:String;
+  address?:String;
+  first_name?:String;
+  last_name?:String;
+  role?:String;
+  avatar?:String;
+  time_zone?:Date;
+  password?:String;
+  debug?:String;
+  confirm_code?:String;
 }
 
 interface INorUser {

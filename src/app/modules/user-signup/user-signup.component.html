@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="form-card mat-body signup-frame" fxLayout="column" style="padding: 5px;">
+    <h1><b>Đăng ký</b> <span style="float:right" (click)='onClose()'>
+        <mat-icon>close</mat-icon>
+      </span></h1>
+    <mat-stepper [linear]="isLinear" #stepper>
+
+      <mat-step [stepControl]="firstFormGroup" label="Tài khoản">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="AccountSetupSubmit(firstFormGroup.value)">
+          <sos-input formControlName="phone_number" type="tel" label="Số điện thoại" [required]="true"
+            [error]="getError('phone')" [minlength]="10"></sos-input>
+          <p *ngIf="isPhoneInUsed" style="font-size: small; color: red;">Số điện thoại đã được sử dụng!</p>
+          <sos-input formControlName="password" type="password" label="Mật khẩu" [required]="true"
+            [error]="getError('password')" [minlength]="8"></sos-input>
+          <sos-input formControlName="confirm_password" type="password" label="Nhập lại mật khẩu" [required]="true"
+            [error]="getError('confirm_password')" [minlength]="8"></sos-input>
+          <div class="form-btn">
+
+            <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!firstFormGroup.valid">
+              Tiếp tục
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Xác thực OTP">
+        <form [formGroup]="secondFormGroup">
+          <sos-input formControlName="confirm_code" type="text" label="Mã xác nhận" [required]="true"
+            [error]="getError('confirm_code')"> </sos-input>
+          <button mat-flat-button (click)='onResend()' style=" float:right;  margin-top: -65px; margin-right: 15px;">Gửi lại</button>
+          <p *ngIf="isValidOTP==false">Mã không chính xác</p>
+          <div class="form-btn">
+            <button class="w50" mat-flat-button style="color: gray;" matStepperPrevious>Quay lại</button>
+            <button mat-raised-button color='primary' type="submit" class="button w50"
+              [disabled]="!secondFormGroup.valid" (click)="onConfirm($event,secondFormGroup.value)">
+              Tiếp tục
+            </button>
+          </div>
+        </form>
+
+      </mat-step>
+      <mat-step label="Thông tin cá nhân">
+        <form [formGroup]="thirdFormGroup" (ngSubmit)="finished(thirdFormGroup.value)">
+          <sos-input formControlName="first_name" type="text" label="Tên"></sos-input>
+          <sos-input formControlName="last_name" type="text" label="Họ"></sos-input>
+          <sos-input formControlName="address" type="text" label="Địa chỉ"></sos-input>
+          <div class="form-btn">
+            <button class="w50" mat-flat-button style="color: gray;" matStepperPrevious>Quay lại</button>
+            <button mat-raised-button color='primary' type="submit" (click)='onClose()' class="button w50"
+              matStepperNext>
+              Tiếp tục
+            </button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+
+  </div>
+
+</div>

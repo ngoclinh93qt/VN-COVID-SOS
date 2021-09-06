@@ -1,4 +1,7 @@
+import { UserLoginComponent } from './../user-login/user-login.component';
+import { UserSignupComponent } from './../user-signup/user-signup.component';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-container',
@@ -9,7 +12,18 @@ export class ContainerComponent implements OnInit {
   showFiller = true;
   sideItems: SideItem[] | undefined;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) { }
+  openSignupDialog(): void {
+    const dialogRef = this.dialog.open(UserSignupComponent, {
+      panelClass: 'dialog-responsive',
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
 
   ngOnInit(): void {
     this.sideItems = [
