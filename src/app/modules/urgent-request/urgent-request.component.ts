@@ -10,6 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-urgent-request',
@@ -20,6 +21,7 @@ export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
 
   constructor(
+    public bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
     private UrgentRequestService: UrgentRequestService,
     private SupportTypesService: SupportTypesService,
@@ -53,16 +55,14 @@ export class UrgentRequestComponent implements OnInit {
   }
 
   chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
+    this.bottomSheet.open(RequestCardDetailsComponent, {
       data: request,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    //   console.log(result);
+    // });
   }
   setLocation() {
     let location = localStorage.getItem('location');

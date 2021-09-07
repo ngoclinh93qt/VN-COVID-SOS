@@ -20,6 +20,8 @@ import {
 } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-request-card-details',
@@ -34,17 +36,17 @@ export class RequestCardDetailsComponent implements OnInit {
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: ' ',
+    subject: '',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
   };
   onClose() {
-    this.dialogRef.close();
+    this.bottomRef.dismiss();
   }
   constructor(
-    public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
+    public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
