@@ -29,6 +29,7 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
+  supporters: any[];
   lastestComment: { content: string; postTime: string }[];
   mapPriority = new Map();
   mapStatus = new Map();
@@ -67,6 +68,16 @@ export class RequestCardDetailsComponent implements OnInit {
         postTime: '10:30 AM . Hôm nay',
       },
     ];
+
+    this.supporters = [{
+      contact_info: {
+        phone_number: '12345679'
+      },
+      description: "test123",
+      name: "Tuan",
+      schedule_support_date:"2021-20-11",
+      status: "done"
+    }];
   }
   show(data: any) {
     let content = data.target.value;

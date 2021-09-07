@@ -52,3 +52,11 @@ a {
   cursor: pointer;
 }
 
+
+@media only screen and (max-width: 600px) {
+  .request_sesstion {
+    border-right: none !important;
+  }
+}
+
+

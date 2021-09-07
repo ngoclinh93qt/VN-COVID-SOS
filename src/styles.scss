@@ -23,7 +23,14 @@ body {
   padding-bottom: 0 !important;
   margin: 0 !important;
 }
-.mat-horizontal-content-container{
+
+@media only screen and (max-width: 600px) {
+  .mat-bottom-sheet-container {
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+  }
+}
+.mat-horizontal-content-container {
   margin: 10px 0 !important;
 }
 .mat-icon {
