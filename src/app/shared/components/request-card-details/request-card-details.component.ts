@@ -22,6 +22,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { ProposeRequestComponent } from './propose-request/propose-request.component';
 
 @Component({
   selector: 'app-request-card-details',
@@ -69,15 +70,17 @@ export class RequestCardDetailsComponent implements OnInit {
       },
     ];
 
-    this.supporters = [{
-      contact_info: {
-        phone_number: '12345679'
+    this.supporters = [
+      {
+        contact_info: {
+          phone_number: '12345679',
+        },
+        description: 'test123',
+        name: 'Tuan',
+        schedule_support_date: '2021-20-11',
+        status: 'done',
       },
-      description: "test123",
-      name: "Tuan",
-      schedule_support_date:"2021-20-11",
-      status: "done"
-    }];
+    ];
   }
   show(data: any) {
     let content = data.target.value;
@@ -111,6 +114,12 @@ export class RequestCardDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
+    });
+  }
+
+  openProposeDialog(): void {
+    const dialogRef = this.dialog.open(ProposeRequestComponent, {
+      data: { request_id: this.request.id },
     });
   }
   openTransDialog(): void {

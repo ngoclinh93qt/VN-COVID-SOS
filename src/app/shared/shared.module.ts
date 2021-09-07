@@ -36,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { SupportCardComponent } from './components/support-card/support-card.component';
+import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -57,6 +58,7 @@ import { SupportCardComponent } from './components/support-card/support-card.com
     TransFormComponent,
     CommentComponent,
     SupportCardComponent,
+    ProposeRequestComponent,
   ],
   imports: [
     CommonModule,

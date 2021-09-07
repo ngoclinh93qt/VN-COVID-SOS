@@ -20,7 +20,7 @@
       >
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-icon>pin_drop</mat-icon>
-          <a>Đề xuất cho nhóm</a>
+          <a (click) = "openProposeDialog()">Đề xuất cho nhóm</a>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-icon>check</mat-icon>
@@ -113,7 +113,7 @@
           (click)="openDialog()"
         >
         </app-button>
-        <div fxLayout="column" fxLayoutGap="10px" style="margin-top: 15px" *ngFor = 'let supporter of supporters'>
+        <div fxLayout="column" fxLayoutGap="10px" style="margin-top: 15px" *ngFor = 'let supporter of request?.supporters'>
           <app-support-card [supporter] = supporter></app-support-card>
         </div>
       </div>
