@@ -23,14 +23,14 @@ export class StorageService {
     return JSON.parse(location!);
   }
 
-  public get userInfo(): IUserProfile | undefined {
+  public get userInfo(): any | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.USER_INFO);
     if (result) {
       return JSON.parse(result);
     }
     return;
   }
-  public set userInfo(value: IUserProfile | undefined) {
+  public set userInfo(value: any | undefined) {
     if (value) {
       localStorage.setItem(
         this.constant.STORAGE_KEY.USER_INFO,

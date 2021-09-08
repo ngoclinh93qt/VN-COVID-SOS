@@ -43,6 +43,7 @@ export class SosInputComponent
   static nextId: number = 0;
 
   private _minlength: number = 0;
+  private _pattern: string | RegExp = '';
   private _disabled: boolean = false;
   private _focused: boolean = false;
   private _placeholder: string = '';
@@ -96,6 +97,15 @@ export class SosInputComponent
   }
   set value(value: string) {
     this.control.setValue(value);
+    this.stateChanges.next();
+  }
+
+  @Input()
+  get pattern(): string | RegExp {
+    return this._pattern;
+  }
+  set pattern(value: string | RegExp) {
+    this._pattern = value;
     this.stateChanges.next();
   }
 

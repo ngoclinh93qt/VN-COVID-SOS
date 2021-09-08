@@ -14,6 +14,9 @@ import {
   SimpleChanges,
   Inject,
 } from '@angular/core';
+import { Loader } from '@googlemaps/js-api-loader';
+import { environment } from 'src/environments/environment';
+import { S3Service } from 'src/app/core/services/s3.service';
 
 @Component({
   selector: 'app-request-form',
@@ -30,6 +33,10 @@ export class RequestFormComponent implements OnInit {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   urgentLevels: IPriorityType[] = [];
+  isShowmap = false;
+  isMapCreated = false;
+  imagesUploaded: string[] = [];
+  medias: IMedias[] = []
   onClose(): void {
     this.dialogRef.close();
     console.log('closeForm');
@@ -41,7 +48,8 @@ export class RequestFormComponent implements OnInit {
     private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
-    private UrgentLevelService: UrgentLevelService
+    private UrgentLevelService: UrgentLevelService,
+    private s3Service: S3Service,
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -60,7 +68,7 @@ export class RequestFormComponent implements OnInit {
   }
   async onSubmit(data: ISOSRequest) {
     data.requester_type = 'guest';
-    data.medias = [];
+    data.medias = this.medias;
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
     if (!data.requester_object_status) data.requester_object_status = [];
@@ -89,6 +97,88 @@ export class RequestFormComponent implements OnInit {
   ngOnInit() {
     var l: string = '';
     let data = this.StorageService.getLocation();
-    this.setLocation(`${data.lat},${data.long}`);
+    this.setLocation(`${data.lat},${data.lng}`);
   }
+
+  uploadImage(){
+
+    
+
+  }
+
+  pickLocation() {
+    this.isShowmap = !this.isShowmap;
+    if (this.isShowmap && !this.isMapCreated) {
+      let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
+      this.isMapCreated = true;
+      let loader = new Loader({
+        apiKey: environment.googleApiKey,
+      });
+
+      loader.load().then(() => {
+
+        map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
+          center: this.StorageService.getLocation(),
+          zoom: 15,
+          styles: environment.mapStyle,
+        });
+        var marker = new google.maps.Marker({
+          position: this.StorageService.getLocation(),
+          map: map,
+          draggable: true //make it draggable
+        });
+
+        infoWindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
+          var clickedLocation = event.latLng;
+          //If the marker hasn't been added.
+          if (!marker) {
+            //Create the marker.
+            marker = new google.maps.Marker({
+              position: clickedLocation,
+              map: map,
+              draggable: true //make it draggable
+            });
+            //Listen for drag events!
+          }
+        })
+
+        var self = this;
+
+        google.maps.event.addListener(marker, 'dragend', ()=>{
+          self.setLocation(`${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`);
+        });
+     
+      });
+    }
+  }
+  onFilePicked(event: any){
+    console.log(event.target.files[0])
+    let file = event.target.files[0]
+    this.s3Service.uploadImage(file).subscribe(res => {
+      this.medias = [...this.medias, {
+        mime_type: this.getFileType(file),
+        url: res
+      }]
+    })
+  }
+
+  getFileType(file: File): string {
+
+    if(file.type.match('image.*'))
+      return 'image';
+  
+    if(file.type.match('video.*'))
+      return 'video';
+  
+    if(file.type.match('audio.*'))
+      return 'audio';
+  
+    return 'other';
+  }
+
+  deleteImg(order: number){
+    this.medias.splice(order,1)
+  }
+
 }

@@ -1,41 +1,59 @@
-<mat-toolbar>
+<mat-toolbar #container>
   <div class="navbar-left">
     <div class="logo_button">
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with menu icon"
-        (click)="showFiller = !showFiller"
-      >
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+        (click)="showFiller = !showFiller">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>SOSVN</span>
+      <a [routerLink]="['/']">
+        <img src="assets/logo.png" alt="">
+        <span>SOSVN</span>
+      </a>
     </div>
-    <mat-form-field appearance="outline">
-      <mat-label>TP HOCHIMINH</mat-label>
-      <mat-select> </mat-select>
-    </mat-form-field>
+    <div class="location">
+      <img src="assets/icon-location.png" alt="" srcset="">
+      <select name="" id="">
+        <option value="" selected>TP.Hồ Chí Minh</option>
+        <option value="">TP.Hà Nội</option>
+        <option value="">TP.Đà Nẵng</option>
+      </select>
+      <img class="down-arrow" src="assets/down-arrow.png" alt="" srcset="">
+    </div>
   </div>
-  <span class="example-spacer"></span>
   <div class="navbar-right">
-    <p>Hotline: 18009999</p>
-    <a>ĐĂNG NHẬP</a>
-    <a>ĐĂNG KÍ</a>
+    <p><span>Hotline:</span><a href="tel:18009999">18009999</a></p>
+    <p><span>Email:</span> <a href="mailto:info@sos.vn">info@sos.vn</a></p>
+    <div class="item-log" *ngIf="!loginSuccess">
+      <p (click)="loginPopup();">ĐĂNG NHẬP</p>
+      <p (click)="openSignupDialog()">ĐĂNG KÍ</p>
+    </div>
+    <div class="item-log" *ngIf="loginSuccess">
+      <img src="{{ !isAvatar ? 'assets/icon-logo.png' : this.userInfor.avatar}}" alt="">
+      <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
+    </div>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller">
     <div class="drawer-items">
-      <div *ngFor="let item of sideItems">
-        <div
-          class="drawer-item"
-          [routerLink]="item.url"
-          [routerLinkActive]="['active-item']"
-        >
+      <div *ngFor="let item of sideItems" (click)="closeMenu();">
+        <div class="drawer-item" [routerLink]="item.url" [routerLinkActive]="['active-item']">
           <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
           {{ item.name }}
         </div>
       </div>
+    </div>
+    <div class="drawer-footer">
+      <div class="logg" *ngIf="!loginSuccess">
+        <p (click)="loginPopup();">ĐĂNG NHẬP</p>
+        <p>ĐĂNG KÍ</p>
+      </div>
+      <div class="logg" *ngIf="loginSuccess">
+        <img src="{{ !isAvatar ? 'assets/icon-logo.png' : this.userInfor.avatar}}" alt="">
+        <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
+      </div>
+      <p><span>Hotline:</span><a href="tel:18009999">18009999</a></p>
+      <p><span>Email:</span> <a href="mailto:info@sos.vn">info@sos.vn</a></p>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="drawer-content">
