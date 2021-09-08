@@ -38,6 +38,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { SupportCardComponent } from './components/support-card/support-card.component';
 import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
 import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
+import { RequestContainerComponent } from './components/request-container/request-container.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -61,6 +62,7 @@ import { ConfirmDialogComponent } from './components/request-card-details/confir
     SupportCardComponent,
     ProposeRequestComponent,
     ConfirmDialogComponent,
+    RequestContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +89,7 @@ import { ConfirmDialogComponent } from './components/request-card-details/confir
     MemberComponent,
     TransCardComponent,
     TransFormComponent,
+    RequestContainerComponent,
   ],
   providers: [
     HttpClientModule,

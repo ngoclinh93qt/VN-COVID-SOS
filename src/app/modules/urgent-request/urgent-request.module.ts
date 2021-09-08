@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material/tabs';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -49,6 +50,7 @@ const routes: Routes = [
     MatOptionModule,
     MatSelectModule,
     FormsModule,
+    MatTabsModule
   ],
 })
 export class UrgentRequestModule {}

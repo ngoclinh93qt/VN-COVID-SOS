@@ -7,7 +7,7 @@ import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-request-container',
+  selector: 'all-request-container',
   templateUrl: './request-container.component.html',
   styleUrls: ['./request-container.component.scss'],
 })

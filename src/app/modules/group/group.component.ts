@@ -24,8 +24,13 @@ export class GroupComponent implements OnInit {
 
   fetchInit() {
     this.groupService.findAll().subscribe((result) => {
+      for(let item of result){
+        if(item.avatar == '' || item.avatar == 'undefined'){
+          item.avatar = 'assets/volunteer.png'
+        }
+      }
       this.groups = result;
-      console.log(result);
+      console.log(this.groups);
     });
   }
 

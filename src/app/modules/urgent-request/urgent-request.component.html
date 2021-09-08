@@ -1,21 +1,37 @@
 <div class="request_container">
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <div fxFlex="noshrink" id="request_list">
-      <app-request-container
-        (searchFilter)="searchRequest($event)"
-        (createClicked)="openFormDialog()"
-        (clickedRequest)="chooseRequest($event)"
-        [requests]="requests"
-      ></app-request-container>
-    </div>
-    <div fxFlex="fxFill" class="two">
-      <app-maps
-        (clickedRequest)="chooseRequest($event)"
-        [requests]="requests"
-      ></app-maps>
-    </div>
-    <!-- <div fxFlex="noshrink" class="one" *ngIf="focusRequest?.id">
-            <app-request-card-details (close)="closeFocus()" [request]=focusRequest></app-request-card-details>>
-        </div> -->
+    <mat-tab-group fxFill>
+      <mat-tab label="Tất cả">
+        <ng-template matTabContent style="width:100%">
+          <div fxFlex="noshrink" id="request_list">
+            <all-request-container (searchFilter)="searchRequest($event)" (clickedRequest)="chooseRequest($event)"
+              [requests]="requests"></all-request-container>
+          </div>
+          <div fxFlex="fxFill" class="two">
+            <app-maps [requests]="requests"></app-maps>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Được đề xuất">
+        <ng-template matTabContent>
+          <app-request-container [requests]='groupSuggested'></app-request-container>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Đã tạo">
+        <ng-template matTabContent>
+          <app-request-container [requests]='userCreatedRequests'></app-request-container>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Công việc">
+        <ng-template matTabContent>
+          <app-request-container [requests]='joinedRequests'></app-request-container>
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+
   </div>
+  <app-button style=" position: absolute; right: 20px; top: 0; z-index: 10;" (click)="openFormDialog()" height="42"
+    color="accent" text="Tạo yêu cầu">
+  </app-button>
 </div>

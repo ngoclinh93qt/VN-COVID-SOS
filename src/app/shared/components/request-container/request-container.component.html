@@ -1,0 +1,7 @@
+
+    <div class="request_container scrollable">
+        <div *ngFor="let request of requests">
+            <app-request-card type="full-width" (click)="chooseRequest(request)" [request]="request">
+            </app-request-card>
+        </div>
+    </div>

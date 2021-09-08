@@ -41,7 +41,8 @@ export class RequestFormComponent implements OnInit {
     private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
-    private UrgentLevelService: UrgentLevelService
+    private UrgentLevelService: UrgentLevelService,
+
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -59,8 +60,15 @@ export class RequestFormComponent implements OnInit {
     });
   }
   async onSubmit(data: ISOSRequest) {
-    data.requester_type = 'guest';
+    data.requester_type = '';
     data.medias = [];
+    const user = this.StorageService.userInfo;
+    console.log(user);
+    if (user.role === 'USER') {
+      console.log('userrrr')
+      data.requester_type = 'user';
+      data.requester_id = user.user_id;
+    }
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
     if (!data.requester_object_status) data.requester_object_status = [];
@@ -89,6 +97,7 @@ export class RequestFormComponent implements OnInit {
   ngOnInit() {
     var l: string = '';
     let data = this.StorageService.getLocation();
-    this.setLocation(`${data.lat},${data.long}`);
+    this.setLocation(`${data.lat},${data.lng}`);
+    console.log(data);
   }
 }
