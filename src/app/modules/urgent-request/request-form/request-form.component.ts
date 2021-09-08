@@ -109,7 +109,6 @@ export class RequestFormComponent implements OnInit {
   pickLocation() {
     this.isShowmap = !this.isShowmap;
     if (this.isShowmap && !this.isMapCreated) {
-      console.log("xxx")
       let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
       this.isMapCreated = true;
       let loader = new Loader({
@@ -147,7 +146,7 @@ export class RequestFormComponent implements OnInit {
         var self = this;
 
         google.maps.event.addListener(marker, 'dragend', ()=>{
-          self.setLocation(`${marker.getPosition()?.lat, marker.getPosition()?.lng}`);
+          self.setLocation(`${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`);
         });
      
       });
