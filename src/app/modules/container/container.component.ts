@@ -98,6 +98,7 @@ export class ContainerComponent implements OnInit {
   logout(){
     this.loginSuccess = false;
     this.authService.logout();
+    window.location.reload();
   }
 }
 type SideItem = {

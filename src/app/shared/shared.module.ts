@@ -35,6 +35,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { RequestContainerComponent } from './components/request-container/request-container.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -54,7 +55,8 @@ import { CommentComponent } from './components/comment/comment.component';
     MemberComponent,
     UploadComponent,
     TransFormComponent,
-    CommentComponent
+    CommentComponent,
+    RequestContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -81,6 +83,7 @@ import { CommentComponent } from './components/comment/comment.component';
     MemberComponent,
     TransCardComponent,
     TransFormComponent,
+    RequestContainerComponent,
   ],
   providers: [
     HttpClientModule,

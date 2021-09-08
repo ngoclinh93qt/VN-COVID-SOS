@@ -10,6 +10,7 @@ interface IUser {
   password?:String;
   debug?:String;
   confirm_code?:String;
+  groups?:[]
 }
 
 interface INorUser {
@@ -59,6 +60,7 @@ interface IPublisher {
 interface IVolunteerGroup {
   id?: string;
   name?: string;
+  avatar?:String;
   address_info?: IAddressInfo;
   admin_id?: string;
   contact_info?: IContacInfo;
@@ -184,6 +186,7 @@ interface ISOSRequest {
   location?: string;
   medias?: IMedias[];
   requester_info?: string;
+  requester_id?: string;
   requester_object_status?: IRequesterObjectStatus[];
   requester_type?: string;
   status?: string;

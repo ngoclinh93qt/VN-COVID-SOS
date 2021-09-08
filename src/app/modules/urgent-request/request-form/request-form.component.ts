@@ -69,6 +69,13 @@ export class RequestFormComponent implements OnInit {
   async onSubmit(data: ISOSRequest) {
     data.requester_type = 'guest';
     data.medias = this.medias;
+    data.requester_type = '';
+    data.medias = [];
+    const user = this.StorageService.userInfo;
+    if (user!= null && user.role != 'GUEST') {
+      data.requester_type = 'user';
+      data.requester_id = user.user_id;
+    }
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
     if (!data.requester_object_status) data.requester_object_status = [];
