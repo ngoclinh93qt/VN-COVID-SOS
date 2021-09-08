@@ -54,7 +54,7 @@ import { CommentComponent } from './components/comment/comment.component';
     MemberComponent,
     UploadComponent,
     TransFormComponent,
-    CommentComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,

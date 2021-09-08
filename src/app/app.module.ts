@@ -18,6 +18,7 @@ import { MaterialModule } from './material.module';
 import { AuthenService } from './core/http/authen.service';
 import { SignupService } from './core/http/signup.service';
 import { UserLoginComponent } from './modules/user-login/user-login.component';
+import { IfRoleDirective } from './core/directives/if-role.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserLoginComponent } from './modules/user-login/user-login.component';
     ContainerComponent,
     SignupComponent,
     UserLoginComponent,
-    UserSignupComponent
+    UserSignupComponent,
+    IfRoleDirective
   ],
   imports: [
     BrowserModule,
