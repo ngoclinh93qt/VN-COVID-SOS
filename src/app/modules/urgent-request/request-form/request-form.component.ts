@@ -14,6 +14,8 @@ import {
   SimpleChanges,
   Inject,
 } from '@angular/core';
+import { Loader } from '@googlemaps/js-api-loader';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-request-form',
@@ -30,6 +32,9 @@ export class RequestFormComponent implements OnInit {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   urgentLevels: IPriorityType[] = [];
+  isShowmap = false;
+  isMapCreated = false;
+  imagesUploaded: string[] = [];
   onClose(): void {
     this.dialogRef.close();
     console.log('closeForm');
@@ -89,6 +94,63 @@ export class RequestFormComponent implements OnInit {
   ngOnInit() {
     var l: string = '';
     let data = this.StorageService.getLocation();
-    this.setLocation(`${data.lat},${data.long}`);
+    this.setLocation(`${data.lat},${data.lng}`);
   }
+
+  uploadImage(){
+
+    
+
+  }
+
+  pickLocation() {
+    this.isShowmap = !this.isShowmap;
+    if (this.isShowmap && !this.isMapCreated) {
+      console.log("xxx")
+      let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
+      this.isMapCreated = true;
+      let loader = new Loader({
+        apiKey: environment.googleApiKey,
+      });
+
+      loader.load().then(() => {
+
+        map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
+          center: this.StorageService.getLocation(),
+          zoom: 15,
+          styles: environment.mapStyle,
+        });
+        var marker = new google.maps.Marker({
+          position: this.StorageService.getLocation(),
+          map: map,
+          draggable: true //make it draggable
+        });
+
+        infoWindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
+          var clickedLocation = event.latLng;
+          //If the marker hasn't been added.
+          if (!marker) {
+            //Create the marker.
+            marker = new google.maps.Marker({
+              position: clickedLocation,
+              map: map,
+              draggable: true //make it draggable
+            });
+            //Listen for drag events!
+          }
+        })
+
+        var self = this;
+
+        google.maps.event.addListener(marker, 'dragend', ()=>{
+          self.setLocation(`${marker.getPosition()?.lat, marker.getPosition()?.lng}`);
+        });
+     
+      });
+    }
+  }
+
+ 
+
 }
