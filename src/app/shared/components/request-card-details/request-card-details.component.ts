@@ -24,6 +24,7 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { ProposeRequestComponent } from './propose-request/propose-request.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-request-card-details',
@@ -126,7 +127,7 @@ export class RequestCardDetailsComponent implements OnInit {
 
   openConfirmDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { request_id: this.request.id, status:this.request.status },
+      data: { request_id: this.request.id, status: this.request.status },
     });
   }
   openTransDialog(): void {
@@ -164,13 +165,14 @@ export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
   joinRequest: IJoinRequest = {
     type: 'user',
-    supporter_id: 'customerc74de9034800804c5be2197f986ec520',
+    supporter_id: '',
   };
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<JoinRequestComponent>,
     private SupportTypesService: SupportTypesService,
-    private UrgentRequestService: UrgentRequestService
+    private UrgentRequestService: UrgentRequestService,
+    private storageService: StorageService
   ) {
     this.SupportTypesService.findAll().subscribe(
       (result) => (this.supportTypes = result)
@@ -180,12 +182,13 @@ export class JoinRequestComponent {
     console.log(data);
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = data.support_date;
+    // this.joinRequest.supporter_id = this.storageService.userInfo.id;
     console.log(this.joinRequest);
-    this.UrgentRequestService.join(
-      this.data.request_id,
-      this.joinRequest
-    ).subscribe();
-    this.dialogRef.close();
+    // this.UrgentRequestService.join(
+    //   this.data.request_id,
+    //   this.joinRequest
+    // ).subscribe();
+    // this.dialogRef.close();
   }
   onNoClick(): void {
     this.dialogRef.close();

@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const authReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer HZWtjNUKDcDt1SUHr8SoHJG2OMeQJDsA`,
+        Authorization: `Bearer ${authHeader}`,
         'Content-Type': 'application/json',
       },
       // withCredentials: true,
