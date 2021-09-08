@@ -184,6 +184,7 @@ interface ISOSRequest {
   location?: string;
   medias?: IMedias[];
   requester_info?: string;
+  requester_id?: string;
   requester_object_status?: IRequesterObjectStatus[];
   requester_type?: string;
   status?: string;

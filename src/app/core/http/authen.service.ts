@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/core/services/storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -29,7 +30,7 @@ export class AuthenService extends RestService<IUser> {
   readOnly = false;
   sessionState$ = this.sessionStateSubject.asObservable();
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient,private StorageService:StorageService) {
     super(http, '');
   }
 
@@ -45,7 +46,8 @@ export class AuthenService extends RestService<IUser> {
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
         console.log(res);
-
+        this.StorageService.token=res.auth_token;
+        this.StorageService.userInfo=res.data;
         this.accessToken = 'htY4154ZgbK1yQSUqtIszKDr3j82iBlV';
         this._isLoggedIn = true;
       })

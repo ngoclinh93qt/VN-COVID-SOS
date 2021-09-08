@@ -15,7 +15,7 @@
         {{ request?.requester_object_status![0]?.name! }}</mat-chip
       >
     </div>
-    <div *ngIf="type == 'manage'">
+    <div *ngIf="type == 'full-width'">
       <mat-chip
         *ngFor="let type of request?.support_types!"
         color="accent"
