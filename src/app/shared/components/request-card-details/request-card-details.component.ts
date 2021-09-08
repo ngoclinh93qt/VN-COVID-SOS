@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { ProposeRequestComponent } from './propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-request-card-details',
@@ -120,6 +121,12 @@ export class RequestCardDetailsComponent implements OnInit {
   openProposeDialog(): void {
     const dialogRef = this.dialog.open(ProposeRequestComponent, {
       data: { request_id: this.request.id },
+    });
+  }
+
+  openConfirmDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { request_id: this.request.id, status:this.request.status },
     });
   }
   openTransDialog(): void {

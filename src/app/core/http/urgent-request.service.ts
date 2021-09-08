@@ -35,7 +35,17 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
     return this.http
       .post(`${this.host}/sos_requests/${request_id}/suggest`, body)
       .pipe(
-        map((res: any) => {
+        map((res) => {
+          console.log(res);
+        })
+      );
+  }
+
+  verifyRequest(request_id: string, body: any) {
+    return this.http
+      .post(`${this.host}/sos_requests/${request_id}/status`, body)
+      .pipe(
+        map((res) => {
           console.log(res);
         })
       );

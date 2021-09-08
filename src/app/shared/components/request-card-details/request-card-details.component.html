@@ -24,7 +24,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-icon>check</mat-icon>
-          <a>Xác thực</a>
+          <a (click) = "openConfirmDialog()">Xác thực</a>
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
@@ -46,7 +46,7 @@
           >
             {{ object.name }}</mat-chip
           >
-          <mat-chip> <mat-icon>done</mat-icon>Đã xác thực </mat-chip>
+          <mat-chip> <mat-icon>done</mat-icon>{{request?.status}} </mat-chip>
         </mat-chip-list>
         <br />
         <h3>

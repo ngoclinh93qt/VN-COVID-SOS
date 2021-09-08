@@ -37,6 +37,7 @@ import { TransFormComponent } from './components/trans-form/trans-form.component
 import { CommentComponent } from './components/comment/comment.component';
 import { SupportCardComponent } from './components/support-card/support-card.component';
 import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -59,6 +60,7 @@ import { ProposeRequestComponent } from './components/request-card-details/propo
     CommentComponent,
     SupportCardComponent,
     ProposeRequestComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
