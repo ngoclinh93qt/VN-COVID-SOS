@@ -5,7 +5,7 @@
     </button></span
   >
   <section
-    style="padding: 40px; border-right: 1px solid #c8c8c8"
+    style="padding: 3.5vw; border-right: 1px solid #c8c8c8"
     fxFlex="65"
     class="request_sesstion"
     fxLayout="row"
@@ -66,7 +66,7 @@
             *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='video'"
             class="img_container"
           >
-            <video height="100%" width="auto" controls>
+            <video height="100%" width="100%" controls>
               <source
                 src="{{request?.medias?.[pageEvent.pageIndex]?.url!}}"
                 type="video/mp4"
@@ -134,7 +134,7 @@
       <app-trans-card [trans]="tran"></app-trans-card>
     </div>
   </section> -->
-  <section fxFlex="35" class="p-1 comment_sestion" style="padding: 40px">
+  <section fxFlex="35" class="p-1 comment_sestion" style="padding: 3.5vw">
     <p style="font-weight: bold; font-size: 17px">Bình luận</p>
     <sos-input
       (keyup.enter)="show($event)"
