@@ -60,6 +60,7 @@ interface IPublisher {
 interface IVolunteerGroup {
   id?: string;
   name?: string;
+  avatar?:String;
   address_info?: IAddressInfo;
   admin_id?: string;
   contact_info?: IContacInfo;
