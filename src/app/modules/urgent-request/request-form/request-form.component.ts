@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
+import { S3Service } from 'src/app/core/services/s3.service';
 
 @Component({
   selector: 'app-request-form',
@@ -35,6 +36,7 @@ export class RequestFormComponent implements OnInit {
   isShowmap = false;
   isMapCreated = false;
   imagesUploaded: string[] = [];
+  medias: IMedias[] = []
   onClose(): void {
     this.dialogRef.close();
     console.log('closeForm');
@@ -46,7 +48,8 @@ export class RequestFormComponent implements OnInit {
     private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
-    private UrgentLevelService: UrgentLevelService
+    private UrgentLevelService: UrgentLevelService,
+    private s3Service: S3Service,
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -65,7 +68,7 @@ export class RequestFormComponent implements OnInit {
   }
   async onSubmit(data: ISOSRequest) {
     data.requester_type = 'guest';
-    data.medias = [];
+    data.medias = this.medias;
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
     if (!data.requester_object_status) data.requester_object_status = [];
@@ -150,7 +153,33 @@ export class RequestFormComponent implements OnInit {
       });
     }
   }
+  onFilePicked(event: any){
+    console.log(event.target.files[0])
+    let file = event.target.files[0]
+    this.s3Service.uploadImage(file).subscribe(res => {
+      this.medias = [...this.medias, {
+        mime_type: this.getFileType(file),
+        url: res
+      }]
+    })
+  }
 
- 
+  getFileType(file: File): string {
+
+    if(file.type.match('image.*'))
+      return 'image';
+  
+    if(file.type.match('video.*'))
+      return 'video';
+  
+    if(file.type.match('audio.*'))
+      return 'audio';
+  
+    return 'other';
+  }
+
+  deleteImg(order: number){
+    this.medias.splice(order,1)
+  }
 
 }

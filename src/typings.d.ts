@@ -332,3 +332,8 @@ interface ITransaction {
   updated_by?: string;
   updated_time?: string;
 }
+
+interface IpresignedUrl{
+  expired_duration: number;
+  url: string;
+}

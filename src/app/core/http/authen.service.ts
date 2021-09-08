@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from '../services/storage.service';
 import { RestService } from './rest.service';
-import { StorageService } from '../services/storage.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 export interface SessionState {
