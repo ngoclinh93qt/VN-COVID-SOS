@@ -1,10 +1,11 @@
+import { StorageService } from 'src/app/core/services/storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { RestService } from './rest.service';
-import { StorageService } from '../services/storage.service';
+
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 export interface SessionState {
@@ -49,7 +50,9 @@ export class AuthenService extends RestService<IUser> {
     };
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
-        this.storage.token = res.auth_token;
+        console.log(res);
+        this.storage.token=res.auth_token;
+        this.storage.userInfo=res.data;
         this.accessToken = res.auth_token;
         this._isLoggedIn = true;
         return res.data;

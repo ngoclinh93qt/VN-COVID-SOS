@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from '../../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { RequestCardDetailsComponent } from 'src/app/shared/components/request-card-details/request-card-details.component';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -17,7 +19,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class MapsComponent implements OnInit, OnChanges {
   @Input() requests?: ISOSRequest[];
-  @Output() clickedRequest = new EventEmitter<ISOSRequest>();
   toggleStatus: string = 'Ẩn bớt';
   toggle() {
     if (this.toggleStatus == 'Ẩn bớt') {
@@ -28,37 +29,37 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService) {
+  constructor(private StorageService: StorageService, public dialog: MatDialog) {
     console.log(this.requests);
   }
   ngOnInit(): void {
     console.log(this.requests);
-    console.log();
   }
 
   chooseRequest(request: ISOSRequest) {
-    this.clickedRequest.emit(request);
+    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
+      width: '100vw',
+      height: '100vh',
+      data: request,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
-
     let loader = new Loader({
       apiKey: environment.googleApiKey,
     });
-
-    // const locationButton = document.createElement("button");
-    // locationButton.textContent = "Current position";
-    // locationButton.classList.add("toggle");
     loader.load().then(() => {
       map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
         center: this.StorageService.getLocation(),
         zoom: 15,
         styles: environment.mapStyle,
       });
-
       infoWindow = new google.maps.InfoWindow();
-      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
-
       this.requests?.forEach((request) => {
         addMarker(request, this.chooseRequest.bind(this));
       });
@@ -84,41 +85,5 @@ export class MapsComponent implements OnInit, OnChanges {
         chooseRequest(request);
       });
     }
-    // locationButton.addEventListener("click", getCurrentLocation);
-
-    // function getCurrentLocation() {
-    //   // Try HTML5 geolocation.
-    //   if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(
-    //       (position: GeolocationPosition) => {
-    //         const pos = {
-    //           lat: position.coords.latitude,
-    //           lng: position.coords.longitude,
-    //         };
-    //         map.setCenter(pos);
-    //       },
-    //       () => {
-    //         handleLocationError(true, infoWindow, map.getCenter()!);
-    //       }
-    //     );
-    //   } else {
-    //     // Browser doesn't support Geolocation
-    //     handleLocationError(false, infoWindow, map.getCenter()!);
-    //   }
-    // }
-
-    // function handleLocationError(
-    //   browserHasGeolocation: boolean,
-    //   infoWindow: google.maps.InfoWindow,
-    //   pos: google.maps.LatLng
-    // ) {
-    //   infoWindow.setPosition(pos);
-    //   infoWindow.setContent(
-    //     browserHasGeolocation
-    //       ? "Error: The Geolocation service failed."
-    //       : "Error: Your browser doesn't support geolocation."
-    //   );
-    //   infoWindow.open(map);
-    // }
   }
 }
