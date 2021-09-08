@@ -14,6 +14,12 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
     super(http, 'sos_requests');
     this.host = environment.host;
   }
+  //'
+  getGroupSuggested(id: string): Observable<ISOSRequest[]> {
+    return this.http
+      .get<{ data: ISOSRequest[] }>(`${this.host}/groups/${id}/suggest`)
+      .pipe(map((res) => res.data));
+  }
   getByRequesterId(id: string): Observable<ISOSRequest[]> {
     return this.http
       .get<{ data: ISOSRequest[] }>(`${this.host}/sos_requests?filter_requester_id=${id}`)

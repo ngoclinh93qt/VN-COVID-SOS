@@ -21,6 +21,7 @@ export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
   userCreatedRequests: ISOSRequest[] = [];
   joinedRequests: ISOSRequest[] = [];
+  groupSuggested: ISOSRequest[] = [];
   user: any;
   constructor(
     public dialog: MatDialog,
@@ -46,6 +47,13 @@ export class UrgentRequestComponent implements OnInit {
         this.joinedRequests = result;
         console.log(result);
       });
+      this.user.groups.forEach((group:any) => {
+        this.UrgentRequestService.getJoinedRequests(group.id).subscribe((result) => {
+          this.groupSuggested = [...this.groupSuggested, ...result]
+          console.log(result);
+        });
+      });
+
     }
   }
   searchRequest(data: any) {

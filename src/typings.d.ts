@@ -10,6 +10,7 @@ interface IUser {
   password?:String;
   debug?:String;
   confirm_code?:String;
+  groups?:[]
 }
 
 interface INorUser {

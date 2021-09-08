@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { RestService } from './rest.service';
 
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
+
 export interface SessionState {
   loggedIn: boolean;
   message: string;
@@ -30,7 +32,10 @@ export class AuthenService extends RestService<IUser> {
   readOnly = false;
   sessionState$ = this.sessionStateSubject.asObservable();
 
-  constructor(http: HttpClient,private StorageService:StorageService) {
+  constructor(
+    http: HttpClient,
+    private storage: StorageService,
+    private constant: ConstantsService) {
     super(http, '');
   }
 
@@ -38,18 +43,19 @@ export class AuthenService extends RestService<IUser> {
     const root = environment.host;
     const signinUrl = `${root}/auth`;
     const body: Partial<ISignIn> = {
-      username, // 'linh@3exp8.com',
-      password, // '1234'
+      username, // '0349883326',
+      password, // 'Linh123!'
       grant_type: 'password',
       scope: 'USER',
     };
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
         console.log(res);
-        this.StorageService.token=res.auth_token;
-        this.StorageService.userInfo=res.data;
-        this.accessToken = 'htY4154ZgbK1yQSUqtIszKDr3j82iBlV';
+        this.storage.token=res.auth_token;
+        this.storage.userInfo=res.data;
+        this.accessToken = res.auth_token;
         this._isLoggedIn = true;
+        return res.data;
       })
     );
   }
@@ -60,6 +66,8 @@ export class AuthenService extends RestService<IUser> {
 
   logout() {
     this.accessToken = null;
+    localStorage.removeItem(this.constant.STORAGE_KEY.AUTH_TOKEN);
+    localStorage.removeItem(this.constant.STORAGE_KEY.USER_INFO);
     this.sessionStateSubject.next({
       loggedIn: false,
       message: notSignedInMessage,
