@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
+import { UsersService } from '../../../core/http/users.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'login-frame',
@@ -14,12 +16,15 @@ export class LoginFrameComponent implements OnInit {
   hide = true;
   isShow: boolean = false;
   regex = '(84|0[3|5|7|8|9])+([0-9]{8})';
+  user: any;
   @Input() isDialog: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
     private authenService: AuthenService,
-    private router: Router
+    private router: Router,
+    private userService: UsersService,
+    public dialogRef: MatDialogRef<LoginFrameComponent>
   ) {}
 
   ngOnInit(): void {
@@ -34,12 +39,13 @@ export class LoginFrameComponent implements OnInit {
   }
 
   onSubmit(values: { numberphone: string; password: string }) {
-    this.authenService
-      .signin(values.numberphone, values.password)
-      .subscribe((result) => {
-        console.log(result);
-        this.router.navigateByUrl('/home');
-      });
+    this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
+      this.userService.updateProfile(res,{}).subscribe((result) => {
+          this.user = result;
+          this.onClose();
+      })
+      this.router.navigateByUrl('/home');
+    })
   }
 
   getError(el: any) {
@@ -65,5 +71,9 @@ export class LoginFrameComponent implements OnInit {
 
   showPass(value: boolean) {
     this.isShow = value;
+  }
+
+  onClose() {
+    this.dialogRef.close();
   }
 }
