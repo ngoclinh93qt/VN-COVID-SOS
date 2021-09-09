@@ -40,7 +40,7 @@ export class LoginFrameComponent implements OnInit {
 
   onSubmit(values: { numberphone: string; password: string }) {
     this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
-      this.userService.updateProfile(res,{}).subscribe((result) => {
+      this.userService.getProfile().subscribe((result) => {
           this.user = result;
           this.onClose();
       })

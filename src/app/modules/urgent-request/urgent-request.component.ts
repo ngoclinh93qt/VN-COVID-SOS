@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/core/services/storage.service';
 import { RequesterObjectStatusService } from '../../core/http/requester-object-status.service';
 import { SupportTypesService } from '../../core/http/support-types.service';
 import { RequestCardDetailsComponent } from './../../shared/components/request-card-details/request-card-details.component';
@@ -19,14 +20,19 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 })
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
-
+  userCreatedRequests: ISOSRequest[] = [];
+  joinedRequests: ISOSRequest[] = [];
+  groupSuggested: ISOSRequest[] = [];
+  user: any;
   constructor(
     public bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
     private UrgentRequestService: UrgentRequestService,
     private SupportTypesService: SupportTypesService,
-    private RequesterObjectStatusService: RequesterObjectStatusService
+    private RequesterObjectStatusService: RequesterObjectStatusService,
+    private StorageService: StorageService
   ) {
+    this.user = StorageService.userInfo;
     this.fetchInit();
   }
   fetchInit() {
@@ -34,6 +40,23 @@ export class UrgentRequestComponent implements OnInit {
       this.requests = result;
       console.log(result);
     });
+    if (this.user != null) {
+      this.UrgentRequestService.getByRequesterId(this.user.user_id).subscribe((result) => {
+        this.userCreatedRequests = result;
+        console.log(result);
+      });
+      this.UrgentRequestService.getJoinedRequests(this.user.user_id).subscribe((result) => {
+        this.joinedRequests = result;
+        console.log(result);
+      });
+      this.user.groups.forEach((group:any) => {
+        this.UrgentRequestService.getJoinedRequests(group.id).subscribe((result) => {
+          this.groupSuggested = [...this.groupSuggested, ...result]
+          console.log(result);
+        });
+      });
+
+    }
   }
   searchRequest(data: any) {
     console.log(data);

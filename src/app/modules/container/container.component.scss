@@ -150,7 +150,7 @@
 .drawer-content {
   position: relative;
   overflow: hidden;
-  padding: 10vh 40px 0 40px;
+  padding: 10vh 40px 50px 40px;
   background-color: white;
 }
 
@@ -187,6 +187,9 @@
         padding-left: 20px;
       }
     }
+  }
+  .drawer-content{
+    padding: 13vh 20px 50px 20px;
   }
 
   .drawer-footer{

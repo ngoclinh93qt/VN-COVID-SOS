@@ -2,24 +2,28 @@
   <p style="font-size: 20px; font-weight: bold;">Nhóm thiện nguyện</p>
   <app-button
     height="40"
-    color="accent"
     text="TẠO NHÓM"
     (click)="openDialog()"
   ></app-button>
 </div>
 <mat-divider></mat-divider>
-<div style="margin-top: 10px;" fxLayout="row" fxLayoutAlign="space-between">
+<div class="search-group">
   <app-button height="40" color="white" text="Loại hỗ trợ"></app-button>
-  <sos-input label="Tìm kiếm"></sos-input>
+  <div class="search">
+    <input type="text" class="search-input" placeholder="Tìm kiếm">
+    <mat-icon aria-hidden="true">search</mat-icon>
+  </div>
 </div>
-<div fxLayout="row wrap" fxLayoutGap="16px grid">
+<div fxLayout="row wrap" fxLayoutGap="25px grid">
   <div
+    class="items-direction"
     [fxFlex]="100 / gridColumns + '%'"
     fxFlex.xs="100%"
     fxFlex.sm="33%"
     *ngFor="let group of groups"
   >
     <app-group-card
+    class="item-direction"
       (click)="openBottomSheet(group)"
       [group]="group"
     ></app-group-card>

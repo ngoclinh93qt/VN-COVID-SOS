@@ -22,17 +22,5 @@ export class JobComponent implements OnInit {
       console.log(result);
     });
   }
-  chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
-      data: request,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
-  }
   ngOnInit(): void {}
 }
