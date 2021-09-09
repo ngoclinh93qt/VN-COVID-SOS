@@ -1,16 +1,14 @@
 <div class="request_card">
   <mat-chip-list aria-label="tag">
-    <mat-chip color="primary" selected>
-      <mat-icon>error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
+    <mat-chip color="accent" selected>
+      <mat-icon>circle</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
     </mat-chip>
     <div *ngIf="type == ''">
-      <mat-chip *ngIf="(request?.support_types)![0]" color="accent" selected
+      <mat-chip *ngIf="(request?.support_types)![0]"
         >{{ (request?.support_types)![0]?.name }}
       </mat-chip>
       <mat-chip
         *ngIf="(request?.requester_object_status)![0]"
-        color="accent"
-        selected
       >
         {{ (request?.requester_object_status)![0]?.name! }}</mat-chip
       >
@@ -18,19 +16,15 @@
     <div *ngIf="type == 'full-width'">
       <mat-chip
         *ngFor="let type of request?.support_types!"
-        color="accent"
-        selected
         >{{ type.name }}
       </mat-chip>
       <mat-chip
         *ngFor="let status of request?.requester_object_status!"
-        color="accent"
-        selected
       >
         {{ status.name! }}</mat-chip
       >
     </div>
-    <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
+    <mat-chip>{{ request?.status }} </mat-chip>
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>

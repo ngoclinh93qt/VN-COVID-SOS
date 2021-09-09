@@ -11,7 +11,7 @@
     fxLayout="row"
     fxLayoutAlign="center"
   >
-    <div style="max-width: 450px">
+    <div style="width: 450px; max-width: 100%;"class="info_section">
       <div
         fxLayout="row"
         fxLayoutAlign="end"
@@ -29,24 +29,20 @@
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
         <mat-chip-list aria-label="tag">
-          <mat-chip color="primary" selected>
-            <mat-icon>error</mat-icon
+          <mat-chip color="accent" selected>
+            <mat-icon class="circle">circle</mat-icon
             >{{ mapPriority.get(request?.priority_type!) }}
           </mat-chip>
           <mat-chip
             *ngFor="let type of request?.support_types"
-            color="accent"
-            selected
             >{{ type.name }}</mat-chip
           >
           <mat-chip
             *ngFor="let object of request?.requester_object_status"
-            color="accent"
-            selected
           >
             {{ object.name }}</mat-chip
           >
-          <mat-chip> <mat-icon>done</mat-icon>{{request?.status}} </mat-chip>
+          <mat-chip>{{request?.status}} </mat-chip>
         </mat-chip-list>
         <br />
         <h3>
@@ -108,7 +104,7 @@
         <p style="font-weight: bold; font-size: 17px">Nhóm trợ giúp</p>
         <app-button
           height="35"
-          color="primary"
+          color="accent"
           text="Tham gia trợ giúp"
           (click)="openDialog()"
         >
