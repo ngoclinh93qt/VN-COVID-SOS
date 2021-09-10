@@ -24,33 +24,32 @@ export class IfRoleDirective implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    console.log(this.ifRoles)
-    let role: Role = this.storage.userInfo?.role || 'GUEST';
-    if (this.getNumberByRole(this.ifRoles) == 0 ) {
+    this.ifShow();
+  }
+
+  ifShow(){
+    let role: string = this.storage.userInfo?.role?.toUpperCase() || 'GUEST';
+    if (this.getRoleLevel(this.ifRoles) == 0 ) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getNumberByRole(this.ifRoles) >= 1 && this.getNumberByRole(role) >=1 ){
+    } else if (this.getRoleLevel(this.ifRoles) >= 1 && this.getRoleLevel(role) >=1 ){
       this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getNumberByRole(this.ifRoles) >= 2 && this.getNumberByRole(role) >=2 ){
+    } else if (this.getRoleLevel(this.ifRoles) >= 2 && this.getRoleLevel(role) >=2 ){
       this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getNumberByRole(this.ifRoles) >= 2 && this.getNumberByRole(role) >=3 ){
+    } else if (this.getRoleLevel(this.ifRoles) >= 3 && this.getRoleLevel(role) >=3 ){
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainerRef.clear();
     }
   }
 
-  getNumberByRole(role: string): number {
-    switch (role) {
-      case 'GUEST':
-        return 0;
-      case 'USER':
-        return 1;
-      case 'OPERATOR':
-        return 2;
-      case 'ADMIN':
-        return 3;
-      default:
-        return 0;
+
+///higher-level roles can see elements of lower-level roles
+  getRoleLevel(role: string): number {
+    try {
+      return Role[role as keyof typeof Role]
+    } catch (error) {
+      console.error(`Type ${role} not available`)
+      return -1;
     }
   }
 
@@ -58,4 +57,6 @@ export class IfRoleDirective implements OnInit, OnDestroy {
   }
 }
 
-type Role = 'GUEST' | 'USER' | 'OPERATOR' | 'ADMIN';
+enum Role {
+  GUEST, USER , OPERATOR, ADMIN
+}
