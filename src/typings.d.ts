@@ -198,8 +198,6 @@ interface ISOSRequest {
   verify_status?: string;
   priority_type?: string;
 }
-
-
 interface IMedias {
   mime_type?: string;
   url?: string;

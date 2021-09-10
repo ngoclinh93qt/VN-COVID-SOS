@@ -81,11 +81,6 @@ export class UrgentRequestComponent implements OnInit {
     this.bottomSheet.open(RequestCardDetailsComponent, {
       data: request,
     });
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   console.log(result);
-    // });
   }
   setLocation() {
     let location = localStorage.getItem('location');

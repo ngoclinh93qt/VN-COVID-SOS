@@ -32,6 +32,10 @@ import { StorageService } from 'src/app/core/services/storage.service';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
+  new_status: String = '';
+  cur_status?: String = this.request.status;
+  isOpen: boolean = false;
+  status: string[] = ['verified', 'accepted', 'rejected'];
   supporters: any[];
   lastestComment: { content: string; postTime: string }[];
   mapPriority = new Map();
@@ -54,8 +58,12 @@ export class RequestCardDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
-    private SupportObjectService: SupportObjectService
+    private SupportObjectService: SupportObjectService,
+    private UrgentRequestService: UrgentRequestService
   ) {
+    if (this.request.status === 'open') {
+      this.isOpen = true;
+    }
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
     );
@@ -129,6 +137,16 @@ export class RequestCardDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { request_id: this.request.id, status: this.request.status },
     });
+  }
+  setStatus(status: string): void {
+    this.new_status = status;
+  }
+  confirmStatus(): void {
+    this.UrgentRequestService.verifyRequest(this.request.id, {
+      status: this.new_status,
+    }).subscribe();
+    this.cur_status = this.new_status;
+    this.isOpen = false;
   }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
