@@ -1,7 +1,10 @@
-<div class="member_item" fxLayout="row">
-  <mat-icon fxFlex="50px">account_circle </mat-icon>
-  <div fxFlex="auto">
-    <b>{{ member?.last_name }} {{ member?.first_name }}</b>
-    <p class="news_items_text_content">{{ member?.phone_number }}</p>
+<div class="member_item">
+  <div class="item">
+    <mat-icon>account_circle</mat-icon>
+    <div>
+      <p>{{ member?.last_name }} {{ member?.first_name }} <span>. {{member?.role == 'admin' ? "Quản trị": ""}}</span></p>
+      <p class="news_items_text_content">{{ member?.phone_number }}</p>
+    </div>
   </div>
+  <a *ngIf="member?.role !== 'admin'" href="">Xoá</a>
 </div>

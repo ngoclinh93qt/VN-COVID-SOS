@@ -70,6 +70,9 @@
 
 @media(max-width: 768px){
   .search-group{
+    ::ng-deep .mat-form-field{
+      width: 120px;
+    }
     .search{
       input{
         padding: 0 10px;

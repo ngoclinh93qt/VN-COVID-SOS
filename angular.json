@@ -70,6 +70,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -82,6 +90,10 @@
             },
             "development": {
               "browserTarget": "VNSOS:build:development"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "VNSOS:build:hmr"
             }
           },
           "defaultConfiguration": "development"

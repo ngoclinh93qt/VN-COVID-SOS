@@ -1,52 +1,85 @@
-<div class="sidebar-container" fxLayout="row" fx>
-  <mat-icon (click)="closeBottomSheet()">clear icon</mat-icon>
-  <div
-    style="padding-top: 30px; border-right: 1px ridge;"
-    fxFlex="50"
-    fxLayoutAlign="end"
-  >
-    <div style="max-width: 450px; padding-right: 30px;">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <img class="avatar" src="https://picsum.photos/200/200" alt="image" />
-        <p style="font-weight: bold; font-size: 17px;">{{ group?.name }}</p>
+<div class="group-details">
+  <button (click)="onClose()" mat-icon-button aria-label="close Icon">
+    <mat-icon>close</mat-icon>
+  </button>
+  <section class="request_sesstion p-1" style="position: relative;">
+    <h3>Thông tin</h3>
+    <div class="item-request-section">
+      <div class="content">
+        <div class="item">
+          <p>Ảnh đại diện</p>
+          <a> Thay đổi</a>
+        </div>
+        <img class="group_items_image" width="50px" src="{{ group?.avatar }}" alt="image" />
       </div>
-      <mat-divider></mat-divider>
-      <p>Địa chỉ:</p>
-      <p style="font-weight: bold;">
-        {{ group?.address_info?.ward_name }},
-        {{ group?.address_info?.district_name }},
-        {{ group?.address_info?.province_name }}
-      </p>
-      <p>Số điện thoại:</p>
-      <p style="font-weight: bold;">{{ group?.contact_info?.phone_number }}</p>
-      <p>Quản trị viên:</p>
-      <p style="font-weight: bold;">{{ group?.contact_info?.name }}</p>
-      <mat-divider></mat-divider>
-      <p>Loại hỗ trợ:</p>
-      <div fxLayout="row wrap" fxLayoutGap="5px grid">
-        <app-button
-          height="40"
-          color="#FCE7E5"
-          text="{{ type.name }}"
-          *ngFor="let type of group?.detail_info?.support_types"
-        ></app-button>
+      <div class="content">
+        <div class="item">
+          <p>Tên nhóm</p>
+          <a (click)="openUpdateName(group.name, group.id)">Sửa</a>
+        </div>
+        <p>{{ group.name }}</p>
       </div>
-      <mat-divider></mat-divider>
-      <p>Trạng thái</p>
-      <div class="group-status">
-        <p>
-          Nhóm đang cần thêm lương thực, nhu yếu phẩm để đi trợ giúp. Mọi thông
-          tin liên hệ số điện thoại: {{ group?.contact_info?.phone_number }}
-        </p>
+      <div class="content">
+        <div class="item">
+          <p>Địa chỉ</p>
+          <a (click)="openUpdateAddress(
+            group?.address_info?.province_name,
+            group?.address_info?.province_id,
+            group?.address_info?.ward_name,
+            group?.address_info?.ward_code,
+            group?.address_info?.district_name,
+            group?.address_info?.district_code,
+            group?.address_info?.address,
+             group.id)">Sửa</a>
+        </div>
+        <p>{{ group?.address_info?.address }},
+          {{ group?.address_info?.ward_name }},
+          {{ group?.address_info?.district_name }},
+          {{ group?.address_info?.province_name }}</p>
+      </div>
+      <div class="content">
+        <div class="item">
+          <p>Số điện thoại</p>
+          <a (click)="openUpdatePhone(group?.contact_info?.phone_number, group.id)">Sửa</a>
+        </div>
+        <p>{{ group?.contact_info?.phone_number }}</p>
+      </div>
+      <div class="content">
+        <div class="item">
+          <p>Loại hỗ trợ</p>
+          <a (click)="openUpdateSupport(group?.detail_info?.support_types, group.id)">Sửa</a>
+        </div>
+        <div class="item-type" fxLayout="row wrap" fxLayoutGap="5px grid">
+          <app-button
+            height="40"
+            color="#FCE7E5"
+            text="{{ type.name }}"
+            *ngFor="let type of group?.detail_info?.support_types"
+          ></app-button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="item">
+          <p>Thành viên</p>
+          <a>+Thêm</a>
+        </div>
+        <app-member *ngFor="let member of group.members" [member]="member"></app-member>
       </div>
     </div>
-  </div>
-  <div fxFlex="50" fxLayoutAlign="start" style="padding-top: 30px;">
-    <div style="max-width: 450px; padding-left: 30px;">
-      <p style="font-weight: bold; font-size: 17px;">Hoạt động thiện nguyện</p>
-      <div *ngFor="let post of postList" style="margin-bottom: 10px;">
-        <app-post-card [post]="post"></app-post-card>
-      </div>
+    <a (click)="openDeleteGroup(group.id)">xoá nhóm</a>
+  </section> 
+  <!-- <section fxFlex="1/3" class="p-1 activity_sestion">
+    <p style="font-weight: bold; font-size: 17px;">Cập nhật trạng thái</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let comment of lastestComment" style="margin-bottom: 15px;">
+      <app-comment-box [comment]="comment"></app-comment-box>
     </div>
-  </div>
+  </section>
+  <section fxFlex="1/3" class="p-1 comment_sestion">
+    <p style="font-weight: bold; font-size: 17px;">Hoạt động thiện nguyện</p>
+    <sos-input label="Viết cập nhật..."></sos-input>
+    <div *ngFor="let post of postList" style="margin-bottom: 10px;">
+      <app-post-card [post]="post"></app-post-card>
+    </div>
+  </section> -->
 </div>

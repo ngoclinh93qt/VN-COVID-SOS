@@ -1,0 +1,17 @@
+.container {
+  width: 600px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    ::ng-deep .mat-form-field-infix {
+      width: 100%;
+    }
+  }
+  ::ng-deep .nameType {
+    max-width: 90vw !important;
+    width: 90vw;
+  }
+}

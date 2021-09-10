@@ -1,15 +1,16 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// `ng build` replaces `environment.hmr.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { SEC_INFO } from './environment.sec';
 export const environment = {
   production: false,
-  hmr: false,
+  hmr: true,
   host: 'http://54.69.39.96/api/v1',
-  googleApiKey: "AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q",
+  googleApiKey: SEC_INFO.GOOGLE_MAP_API_KEY,
   s3: {
-    AccessKeyId: "",
-    Secret: "",
-    Bucket: "",
+    AccessKeyId: SEC_INFO.S3_ACCESS_KEY,
+    Secret: SEC_INFO.S3_SECRET,
+    Bucket: SEC_INFO.S3_BUCKET,
   },
   mapStyle: [
     {

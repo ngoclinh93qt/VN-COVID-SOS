@@ -1,0 +1,27 @@
+.container {
+  width: 400px;
+  overflow: hidden;
+  .item-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 0;
+    button {
+      margin: 0 5px;
+      border: 1px solid #e53935;
+      border-radius: 5rem;
+      background-color: #e53935;
+      color: #ffffff;
+      text-transform: uppercase;
+      &:last-child {
+        background-color: #ffffff;
+        color: #e53935;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
