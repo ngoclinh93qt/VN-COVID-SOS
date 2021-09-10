@@ -5,9 +5,12 @@
       <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
       <input #key type="text" class="search-input" placeholder="Tìm kiếm" (keyup.enter)="setKey($event)" />
     </div>
-    <button class="" style="height: 50px; right: 0; position: absolute;" mat-stroked-button (click)="searchClick(key)">
+    <app-button style="height: 50px; right: 0; position: absolute;" (click)="openCreateForm()" height="50"
+      color="accent" text="Tạo yêu cầu">
+    </app-button>
+    <!-- <button class="" style="height: 50px; right: 0; position: absolute;" mat-stroked-button (click)="searchClick(key)">
       Tìm kiếm
-    </button>
+    </button> -->
     <br />
     <br />
     <button mat-stroked-button class="menuTrigger" [matMenuTriggerFor]="priority">
@@ -56,9 +59,6 @@
   </div>
 
   <div class="request_items">
-    <div *ngFor="let request of requests">
-      <app-request-card (click)="chooseRequest(request)" [request]="request">
-      </app-request-card>
-    </div>
+    <app-request-container (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
   </div>
 </div>

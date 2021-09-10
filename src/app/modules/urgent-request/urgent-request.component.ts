@@ -59,10 +59,10 @@ export class UrgentRequestComponent implements OnInit {
     }
   }
   searchRequest(data: any) {
-    console.log(data);
+    //console.log(data);
     this.UrgentRequestService.search(data).subscribe((result) => {
-      this.requests = result;
-      console.log(result);
+      this.requests = result.sos_requests;
+     // console.log(result);
     });
   }
   openFormDialog(): void {
@@ -101,6 +101,7 @@ export class UrgentRequestComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.setLocation();
+    this.user = this.StorageService.userInfo;
+
   }
 }

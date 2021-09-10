@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ScrollTrackerDirective } from './../../directives/scroll-tracker.directive';
+import { Component, EventEmitter, Input, OnInit, Output, Directive } from '@angular/core';
 import { RequestCardDetailsComponent } from '../request-card-details/request-card-details.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-request-container',
@@ -8,27 +9,26 @@ import { RequestCardDetailsComponent } from '../request-card-details/request-car
   styleUrls: ['./request-container.component.scss']
 })
 export class RequestContainerComponent implements OnInit {
+  @Output() scrollingFinished = new EventEmitter<void>();
   @Input() requests?: ISOSRequest[];
+  @Input() type?: String;
   constructor(
-    public dialog: MatDialog
+    private bottomsheet: MatBottomSheet
   ) {
 
   }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
+  }
+  onScrollingFinished() {
+    console.log("scroll end")
+    this.scrollingFinished.emit();
+  }
   chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
+    const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
       data: request,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
   }
 
 }

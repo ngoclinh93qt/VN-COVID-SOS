@@ -39,6 +39,7 @@ import { SupportCardComponent } from './components/support-card/support-card.com
 import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
 import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
+import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     ProposeRequestComponent,
     ConfirmDialogComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
     ResetPasswordFrameComponent,
   ],
   imports: [
@@ -92,6 +94,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     TransCardComponent,
     TransFormComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
     ResetPasswordFrameComponent,
   ],
   providers: [
