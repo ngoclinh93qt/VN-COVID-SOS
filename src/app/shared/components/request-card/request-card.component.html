@@ -1,4 +1,14 @@
 <div class="request_card">
+  <span *ngIf='user;'>
+    <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
+      style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
+    </mat-icon>
+    <ng-template #elseBlock>
+      <mat-icon color='primary' style="position: absolute; right: 0" (click)='mark($event,"bookmark")'>bookmark_border
+      </mat-icon>
+    </ng-template>
+  </span>
+
   <mat-chip-list aria-label="tag">
     <mat-chip color="accent" selected>
       <mat-icon>circle</mat-icon>{{ mapPriority.get(request?.priority_type!) }}

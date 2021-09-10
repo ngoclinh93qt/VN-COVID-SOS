@@ -39,6 +39,8 @@ import { SupportCardComponent } from './components/support-card/support-card.com
 import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
 import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
+import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
+import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -63,6 +65,8 @@ import { RequestContainerComponent } from './components/request-container/reques
     ProposeRequestComponent,
     ConfirmDialogComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   imports: [
     CommonModule,
@@ -90,6 +94,8 @@ import { RequestContainerComponent } from './components/request-container/reques
     TransCardComponent,
     TransFormComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   providers: [
     HttpClientModule,
@@ -98,4 +104,4 @@ import { RequestContainerComponent } from './components/request-container/reques
     httpInterceptorProviders,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

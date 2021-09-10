@@ -1,0 +1,47 @@
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
+      Chỉnh sửa
+    </h1>
+    <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+  </div>
+  <div mat-dialog-content>
+    <form (submit)="onSubmit(form.value)" #form="ngForm">
+      <fieldset ngModelGroup="address_info">
+        <mat-form-field style="width: 100%;" appearance="outline">
+          <mat-label>Tỉnh/Thành Phố</mat-label>
+          <mat-select ngModel name="province_id" [(ngModel)]="group.provinceId" required>
+            <mat-option *ngFor="let province of provinces" [value]="province.id" (click)="getProvince(province.id)">
+              {{ province.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field style="width: 100%;" appearance="outline">
+            <mat-label>{{provinceClick == true ? 'Quận/Huyện' : group.districtName}}</mat-label>
+            <mat-select ngModel name="district_code" [(ngModel)]="group.districtCode" required>
+              <mat-option *ngFor="let district of province.districts" [value]="district.code"
+                (click)="getDistrict(district?.code)">
+                {{ district.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 100%;" appearance="outline">
+            <mat-label>{{districtClick == true ? 'Phường/Xã' : group.wardName}}</mat-label>
+            <mat-select ngModel name="ward_code" [(ngModel)]="group.wardCode" required>
+              <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
+                {{ ward.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <sos-input ngModel name="address" matInput placeholder="Địa chỉ" [(ngModel)]="group.address" [required]="true"
+          label="Địa chỉ"></sos-input>
+      </fieldset>
+      <button mat-flat-button type="submit" style="float: right; border-radius: 5rem;" color="accent"
+        (click)="checkSubmit(form)" cdkFocusInitial>
+        Lưu
+      </button>
+    </form>
+  </div>
+</div>

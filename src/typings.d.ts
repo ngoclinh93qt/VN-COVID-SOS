@@ -177,6 +177,8 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
+  is_bookmarked?:boolean;
+  is_group_bookmarked?:boolean;
   address_info?: IAddressInfo;
   contact_info?: IContacInfo;
   created_by?: string;

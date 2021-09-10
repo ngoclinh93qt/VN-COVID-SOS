@@ -1,3 +1,7 @@
+import { BookmarkedComponent } from './bookmarked/bookmarked.component';
+import { JoinedComponent } from './joined/joined.component';
+import { CreatedComponent } from './created/created.component';
+import { SuggestedComponent } from './suggested/suggested.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormControl, NgForm } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,6 +26,7 @@ import { RequestFormComponent } from './request-form/request-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+
 const routes: Routes = [
   {
     path: '',
@@ -35,6 +40,10 @@ const routes: Routes = [
     RequestContainerComponent,
     MapsComponent,
     RequestFormComponent,
+    SuggestedComponent,
+    CreatedComponent,
+    JoinedComponent,
+    BookmarkedComponent
   ],
   imports: [
     CommonModule,
@@ -53,4 +62,4 @@ const routes: Routes = [
     MatTabsModule
   ],
 })
-export class UrgentRequestModule {}
+export class UrgentRequestModule { }

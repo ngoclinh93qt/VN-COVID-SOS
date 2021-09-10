@@ -65,9 +65,8 @@ export class RequestFormComponent implements OnInit {
     const user = this.StorageService.userInfo;
     console.log(user);
     if (user.role === 'USER') {
-      console.log('userrrr')
       data.requester_type = 'user';
-      data.requester_id = user.user_id;
+      data.requester_id = user.id;
     }
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
@@ -96,7 +95,7 @@ export class RequestFormComponent implements OnInit {
 
   ngOnInit() {
     var l: string = '';
-    let data = this.StorageService.getLocation();
+    let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);
     console.log(data);
   }

@@ -1,37 +1,46 @@
-<div class="request_container">
+<div class="request_page_container">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <mat-tab-group fxFill>
       <mat-tab label="Tất cả">
         <ng-template matTabContent style="width:100%">
           <div fxFlex="noshrink" id="request_list">
-            <all-request-container (searchFilter)="searchRequest($event)" (clickedRequest)="chooseRequest($event)"
-              [requests]="requests"></all-request-container>
+            <all-request-container [(requests)]='requests'></all-request-container>
           </div>
           <div fxFlex="fxFill" class="two">
             <app-maps [requests]="requests"></app-maps>
           </div>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Được đề xuất">
+      <mat-tab *ngIf='user' label="Được đề xuất">
         <ng-template matTabContent>
-          <app-request-container [requests]='groupSuggested'></app-request-container>
+          <div class="fw-container">
+            <suggested-request [groups]="user.groups" [user_id]="user.id"></suggested-request>
+          </div>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Đã tạo">
+      <mat-tab *ngIf='user' label="Đã tạo">
         <ng-template matTabContent>
-          <app-request-container [requests]='userCreatedRequests'></app-request-container>
+          <div class="fw-container">
+            <created-request [user_id]="user.id"></created-request>
+          </div>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Công việc">
+      <mat-tab *ngIf='user' label="Công việc">
         <ng-template matTabContent>
-          <app-request-container [requests]='joinedRequests'></app-request-container>
+          <div class="fw-container">
+            <joined-request [user_id]="user.id"></joined-request>
+          </div>
         </ng-template>
       </mat-tab>
-
+      <mat-tab *ngIf='user' label="Đã ghim">
+        <ng-template matTabContent>
+          <div class="fw-container">
+            <bookmarked-request></bookmarked-request>
+          </div>
+        </ng-template>
+      </mat-tab>
     </mat-tab-group>
 
   </div>
-  <app-button style=" position: absolute; right: 20px; top: 0; z-index: 10;" (click)="openFormDialog()" height="42"
-    color="accent" text="Tạo yêu cầu">
-  </app-button>
+ 
 </div>

@@ -35,6 +35,7 @@ export abstract class RestService<T> implements IRestServices<T> {
     return this.http
       .get<{ data: T[] }>(`${this.host}/${this.pathName}`, {
         params: { ...queryParams, ...extendOptions },
+        
       })
       .pipe(map((res) => res.data));
   }

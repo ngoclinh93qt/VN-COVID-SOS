@@ -10,18 +10,21 @@
   </div>
   <form class="login-form" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
     <div class="form-item">
-      <sos-input type="text" formControlName="numberphone" label="Số điện thoại" [required]="true" [pattern]="regex" [error]="getError('phone')"></sos-input>
+      <sos-input type="text" formControlName="numberphone" label="Số điện thoại" [required]="true" [pattern]="regex"
+        [error]="getError('phone')"></sos-input>
     </div>
     <div class="form-item">
-      <sos-input type="{{isShow == true ? 'text' : 'password'}}" formControlName="password" label="Mật khẩu" [required]="true" [error]="getError('pass')"></sos-input>
-      <span *ngIf="isShow == false" (click)="showPass(true)">hiện</span><span *ngIf="isShow == true" (click)="showPass(false)">ẩn</span>
+      <sos-input type="{{isShow == true ? 'text' : 'password'}}" formControlName="password" label="Mật khẩu"
+        [required]="true" [error]="getError('pass')"></sos-input>
+      <span *ngIf="isShow == false" (click)="showPass(true)">hiện</span><span *ngIf="isShow == true"
+        (click)="showPass(false)">ẩn</span>
     </div>
     <div class="goto">
       <div class="item-goto">
         <input type="checkbox" name="" id="">
         <p>Ghi nhớ đăng nhập</p>
       </div>
-      <div class="item-goto">
+      <div class="item-goto" (click)="openResetPassDialog()">
         <p>Quên mật khẩu?</p>
       </div>
     </div>

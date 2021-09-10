@@ -4,6 +4,7 @@
 // import { SEC_INFO } from './environment.sec';
 export const environment = {
   production: false,
+  hmr: false,
   host: 'http://54.69.39.96/api/v1',
   googleApiKey: '',
   s3: {

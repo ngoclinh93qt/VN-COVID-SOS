@@ -1,10 +1,12 @@
+import { ResetPasswordFrameComponent } from './../reset-password-frame/reset-password-frame.component';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { DialogService } from '../../../core/services/dialog.service';
 
 @Component({
   selector: 'login-frame',
@@ -24,8 +26,9 @@ export class LoginFrameComponent implements OnInit {
     private authenService: AuthenService,
     private router: Router,
     private userService: UsersService,
-    public dialogRef: MatDialogRef<LoginFrameComponent>
-  ) {}
+    public dialogRef: MatDialogRef<LoginFrameComponent>,
+    private dialogService: DialogService
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -41,8 +44,8 @@ export class LoginFrameComponent implements OnInit {
   onSubmit(values: { numberphone: string; password: string }) {
     this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
       this.userService.getProfile().subscribe((result) => {
-          this.user = result;
-          this.onClose();
+        this.user = result;
+        this.onClose();
       })
       this.router.navigateByUrl('/home');
     })
@@ -75,5 +78,10 @@ export class LoginFrameComponent implements OnInit {
 
   onClose() {
     this.dialogRef.close();
+  }
+
+  openResetPassDialog() {
+    this.dialogRef.close();
+    this.dialogService.openDialog(ResetPasswordFrameComponent, { panelClass: 'reset-password-frame-dialog', width: '100%', maxWidth: '585px' });
   }
 }
