@@ -35,6 +35,9 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { SupportCardComponent } from './components/support-card/support-card.component';
+import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { RequestContainerComponent } from './components/request-container/reques
     UploadComponent,
     TransFormComponent,
     CommentComponent,
+    SupportCardComponent,
+    ProposeRequestComponent,
+    ConfirmDialogComponent,
     RequestContainerComponent,
   ],
   imports: [

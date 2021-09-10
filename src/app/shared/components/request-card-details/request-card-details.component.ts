@@ -20,6 +20,11 @@ import {
 } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { ProposeRequestComponent } from './propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-request-card-details',
@@ -27,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
+  supporters: any[];
   lastestComment: { content: string; postTime: string }[];
   mapPriority = new Map();
   mapStatus = new Map();
@@ -34,17 +40,17 @@ export class RequestCardDetailsComponent implements OnInit {
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: ' ',
+    subject: '',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
   };
   onClose() {
-    this.dialogRef.close();
+    this.bottomRef.dismiss();
   }
   constructor(
-    public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
+    public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
@@ -63,6 +69,18 @@ export class RequestCardDetailsComponent implements OnInit {
       {
         content: 'Đã gửi đến 100 máy thở',
         postTime: '10:30 AM . Hôm nay',
+      },
+    ];
+
+    this.supporters = [
+      {
+        contact_info: {
+          phone_number: '12345679',
+        },
+        description: 'test123',
+        name: 'Tuan',
+        schedule_support_date: '2021-20-11',
+        status: 'done',
       },
     ];
   }
@@ -100,6 +118,18 @@ export class RequestCardDetailsComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  openProposeDialog(): void {
+    const dialogRef = this.dialog.open(ProposeRequestComponent, {
+      data: { request_id: this.request.id },
+    });
+  }
+
+  openConfirmDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { request_id: this.request.id, status: this.request.status },
+    });
+  }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
       data: {
@@ -135,13 +165,14 @@ export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
   joinRequest: IJoinRequest = {
     type: 'user',
-    supporter_id: 'customerc74de9034800804c5be2197f986ec520',
+    supporter_id: '',
   };
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<JoinRequestComponent>,
     private SupportTypesService: SupportTypesService,
-    private UrgentRequestService: UrgentRequestService
+    private UrgentRequestService: UrgentRequestService,
+    private storageService: StorageService
   ) {
     this.SupportTypesService.findAll().subscribe(
       (result) => (this.supportTypes = result)
@@ -151,12 +182,13 @@ export class JoinRequestComponent {
     console.log(data);
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = data.support_date;
+    // this.joinRequest.supporter_id = this.storageService.userInfo.id;
     console.log(this.joinRequest);
-    this.UrgentRequestService.join(
-      this.data.request_id,
-      this.joinRequest
-    ).subscribe();
-    this.dialogRef.close();
+    // this.UrgentRequestService.join(
+    //   this.data.request_id,
+    //   this.joinRequest
+    // ).subscribe();
+    // this.dialogRef.close();
   }
   onNoClick(): void {
     this.dialogRef.close();
