@@ -1,3 +1,4 @@
+import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { RequesterObjectStatusService } from '../../../core/http/requester-object-status.service';
 import { RequestStatusService } from '../../../core/http/request-status.service';
@@ -5,6 +6,8 @@ import { SupportTypesService } from '../../../core/http/support-types.service';
 import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { RequestFormComponent } from '../request-form/request-form.component';
 
 @Component({
   selector: 'all-request-container',
@@ -12,15 +15,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./request-container.component.scss'],
 })
 export class RequestContainerComponent implements OnInit {
-  @Output() searchFilter = new EventEmitter();
   @Input() requests?: ISOSRequest[];
-  @Output() clickedRequest = new EventEmitter<ISOSRequest>();
-  @Output() createClicked = new EventEmitter();
+  @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
   urgentLevels: IPriorityType[] = [];
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
+
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -31,8 +33,10 @@ export class RequestContainerComponent implements OnInit {
     status: [],
     support_types: [],
   };
-  constructor(
+  queryObject: any = {};
+  constructor( public dialog: MatDialog,
     private UrgentLevelService: UrgentLevelService,
+    private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
     private RequestStatusService: RequestStatusService,
@@ -42,14 +46,23 @@ export class RequestContainerComponent implements OnInit {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
   }
+  params: IQueryPrams = {}
+  paramsInit() {
+    this.params = { limit: 20, offset: 0 }
+  }
+  updateParams(returnNumber: number) {
+    if (returnNumber < 20) this.params.limit = 0; else
+      this.params.offset! += 20;
+  }
   selectPriority(type: string, $event: any) {
     this.select($event);
     const index: number = this.filterObject.priority_type?.indexOf(type)!;
-    console.log(index);
+
     if (index != -1 && index != undefined)
       this.filterObject.priority_type?.splice(index, 1);
     else this.filterObject.priority_type?.push(type);
     console.log(this.filterObject.priority_type!);
+    this.search();
   }
   searchClick(data: any) {
     this.filterObject.keyword = data.value;
@@ -58,32 +71,36 @@ export class RequestContainerComponent implements OnInit {
   selectSupportType(type: string, $event: any) {
     this.select($event);
     const index: number = this.filterObject.support_types?.indexOf(type)!;
-    console.log(index);
+
     if (index != -1 && index != undefined)
       this.filterObject.support_types?.splice(index, 1);
     else this.filterObject.support_types?.push(type);
     console.log(this.filterObject.support_types!);
+    this.search();
   }
   selectStatus(type: string, $event: any) {
     this.select($event);
     const index: number = this.filterObject.status?.indexOf(type)!;
-    console.log(index);
+
     if (index != -1 && index != undefined)
       this.filterObject.status?.splice(index, 1);
     else this.filterObject.status?.push(type);
     console.log(this.filterObject.status!);
+    this.search();
   }
   selectObject(type: string, $event: any) {
     this.select($event);
     const index: number = this.filterObject.object_status?.indexOf(type)!;
-    console.log(index);
+
     if (index != -1 && index != undefined)
       this.filterObject.object_status?.splice(index, 1);
     else this.filterObject.object_status?.push(type);
     console.log(this.filterObject.object_status!);
+    this.search();
   }
   selectDistance(dis: number) {
     this.filterObject.distance = dis;
+    this.search();
   }
   setKey($event: any) {
     console.log($event.target.value);
@@ -91,27 +108,31 @@ export class RequestContainerComponent implements OnInit {
     this.search();
   }
   search() {
-    var obj = {
+    this.queryObject = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
       object_status: this.filterObject.object_status?.toString(),
       support_types: this.filterObject.support_types?.toString(),
       priority_type: this.filterObject.priority_type?.toString(),
     };
-    console.log(obj);
-    this.searchFilter.emit(obj);
+    this.paramsInit();
+    this.load();
+  }
+  load() {
+    if (this.params.limit != 0)
+      this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
+        if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
+        else this.requests = result.sos_requests;
+        this.requestsChange.emit(this.requests);
+        this.updateParams(result.total);
+      });
   }
   select($event: any) {
-    // this stops the menu from closing
     $event.stopPropagation();
     $event.preventDefault();
-
-    // in this case, the check box is controlled by adding the .selected class
     if ($event.target) {
       $event.target.classList.toggle('selected');
     }
-
-    // add additional selection logic here.
   }
   fetchInit() {
     this.SupportTypesService.findAll().subscribe((result) => {
@@ -123,40 +144,23 @@ export class RequestContainerComponent implements OnInit {
       console.log(result);
     });
   }
-  chooseRequest(request: ISOSRequest) {
-    this.clickedRequest.emit(request);
-    console.log(request);
-  }
-  createClick() {
-    this.createClicked.emit();
-  }
+ 
+  openCreateForm(): void {
+    const dialogRef = this.dialog.open(RequestFormComponent, {
+      width: 'auto',
+      data: {},
+    });
 
-  color = {
-    accent: 'accent',
-    primary: 'primary',
-    warn: 'warn',
-    basic: 'basic',
-  };
-  icon = {
-    home: 'home',
-    menu: 'menu',
-    favorite: 'favorite',
-    sort: 'sort',
-    filter: 'filter',
-  };
-  height = {
-    small: '40',
-    large: '50',
-  };
-  text = {
-    createRequest: 'Tạo Yêu Cầu',
-    filter: 'Bộ lọc',
-  };
-
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
   ngOnInit(): void {
     console.log(this.requests);
-    let data = this.StorageService.getLocation();
+    let data = this.StorageService.setLocation();
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
+    this.search();
   }
 }

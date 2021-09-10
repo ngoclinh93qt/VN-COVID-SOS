@@ -11,6 +11,7 @@ import {
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import asset from '../../../../assets/marker'
 import { RequestCardDetailsComponent } from 'src/app/shared/components/request-card-details/request-card-details.component';
 @Component({
   selector: 'app-maps',
@@ -19,7 +20,13 @@ import { RequestCardDetailsComponent } from 'src/app/shared/components/request-c
 })
 export class MapsComponent implements OnInit, OnChanges {
   @Input() requests?: ISOSRequest[];
+  map: google.maps.Map | undefined;
+  infoWindow: google.maps.InfoWindow | undefined;
   toggleStatus: string = 'Ẩn bớt';
+  markers: any[] = []
+  loader = new Loader({
+    apiKey: environment.googleApiKey,
+  });
   toggle() {
     if (this.toggleStatus == 'Ẩn bớt') {
       document.getElementById('request_list')?.classList.add('n0');
@@ -32,8 +39,46 @@ export class MapsComponent implements OnInit, OnChanges {
   constructor(private StorageService: StorageService, public dialog: MatDialog) {
     console.log(this.requests);
   }
+  setMapOnAll(map: any) {
+    for (let i = 0; i < this.markers.length; i++) {
+      this.markers[i].setMap(map);
+    }
+  }
+  addMarker = (request: ISOSRequest, chooseRequest: Function) => {
+    const icon = (type: string) => {
+      if (type == 'orange')
+        return asset.orange
+      return asset.red;
+    };
+    var location = request?.location?.split(',');
+    var lat = parseFloat(location![0]);
+    var lng = parseFloat(location![1]);
+
+    var marker = new google.maps.Marker({
+      position: { lat: <number>lat, lng: <number>lng },
+      map: this.map,
+      icon: icon(request.priority_type == 'high' ? 'red' : 'orange'),
+    });
+    this.markers.push(marker);
+    marker.addListener('click', function () {
+      chooseRequest(request);
+    });
+  }
   ngOnInit(): void {
     console.log(this.requests);
+    this.loader.load().then(() => {
+      this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+        center: this.StorageService.getLocation(),
+        zoom: 15,
+        styles: environment.mapStyle,
+      });
+      this.infoWindow = new google.maps.InfoWindow();
+      this.requests?.forEach((request) => {
+        this.addMarker(request, this.chooseRequest.bind(this));
+      });
+    });
+
+
   }
 
   chooseRequest(request: ISOSRequest) {
@@ -49,41 +94,10 @@ export class MapsComponent implements OnInit, OnChanges {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
-    let loader = new Loader({
-      apiKey: environment.googleApiKey,
+    this.setMapOnAll(null);
+    this.markers = [];
+    this.requests?.forEach((request) => {
+      this.addMarker(request, this.chooseRequest.bind(this));
     });
-    loader.load().then(() => {
-      map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: this.StorageService.getLocation(),
-        zoom: 15,
-        styles: environment.mapStyle,
-      });
-      infoWindow = new google.maps.InfoWindow();
-      this.requests?.forEach((request) => {
-        addMarker(request, this.chooseRequest.bind(this));
-      });
-    });
-
-    function addMarker(request: ISOSRequest, chooseRequest: Function) {
-      const icon = (type: string) => {
-        if (type == 'orange')
-          return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMS4wNzUiIGhlaWdodD0iNDQuOTI2IiB2aWV3Qm94PSIwIDAgMzEuMDc1IDQ0LjkyNiI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6I2ZmZjtzdHJva2U6I2M4YzhjODt9LmJ7ZmlsbDojZmY2OTM3O308L3N0eWxlPjwvZGVmcz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjUgMC41KSI+PHBhdGggY2xhc3M9ImEiIGQ9Ik00Mi4wNzUsMTguMDM4YzAsNi44MzUtMTAuMTgsMjIuNzgyLTEzLjc4OSwyOC4yMThhMS41LDEuNSwwLDAsMS0yLjUsMEMyMi4xOCw0MC44MTksMTIsMjQuODcyLDEyLDE4LjAzOGExNS4wMzgsMTUuMDM4LDAsMCwxLDMwLjA3NSwwWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyIC0zKSIvPjxjaXJjbGUgY2xhc3M9ImIiIGN4PSI5LjUxOSIgY3k9IjkuNTE5IiByPSI5LjUxOSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNS43MTEgNS40NSkiLz48L2c+PC9zdmc+';
-        return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMi41OTYiIGhlaWdodD0iNDcuMTQ4IiB2aWV3Qm94PSIwIDAgMzIuNTk2IDQ3LjE0OCI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6I2ZmZjtzdHJva2U6I2M4YzhjODt9LmJ7ZmlsbDojZTExOTAwO308L3N0eWxlPjwvZGVmcz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjUgMC41KSI+PHBhdGggY2xhc3M9ImEiIGQ9Ik00My42LDE4LjhjMCw3LjE4LTEwLjcsMjMuOTM0LTE0LjQ4NywyOS42NDVhMS41NzIsMS41NzIsMCwwLDEtMi42MjIsMEMyMi43LDQyLjczMiwxMiwyNS45NzgsMTIsMTguOGExNS44LDE1LjgsMCwwLDEsMzEuNiwwWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyIC0zKSIvPjxjaXJjbGUgY2xhc3M9ImIiIGN4PSIxMCIgY3k9IjEwIiByPSIxMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNiA1LjcyNikiLz48L2c+PC9zdmc+';
-      };
-      var location = request?.location?.split(',');
-      var lat = parseFloat(location![0]);
-      var lng = parseFloat(location![1]);
-
-      var marker = new google.maps.Marker({
-        position: { lat: <number>lat, lng: <number>lng },
-        map: map,
-        icon: icon(request.priority_type == 'high' ? 'red' : 'orange'),
-      });
-
-      marker.addListener('click', function () {
-        chooseRequest(request);
-      });
-    }
   }
 }

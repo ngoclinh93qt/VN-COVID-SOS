@@ -1,36 +1,33 @@
 <div class="request_card">
+  <span *ngIf='user;'>
+    <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
+      style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
+    </mat-icon>
+    <ng-template #elseBlock>
+      <mat-icon color='primary' style="position: absolute; right: 0" (click)='mark($event,"bookmark")'>bookmark_border
+      </mat-icon>
+    </ng-template>
+  </span>
+
   <mat-chip-list aria-label="tag">
     <mat-chip color="primary" selected>
-      <mat-icon>error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
+      <mat-icon style="margin-right: 5px;">error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
     </mat-chip>
-    <div *ngIf="type == ''">
-      <mat-chip *ngIf="request?.support_types![0]" color="accent" selected
-        >{{ request?.support_types![0]?.name }}
-      </mat-chip>
-      <mat-chip
-        *ngIf="request?.requester_object_status![0]"
-        color="accent"
-        selected
-      >
-        {{ request?.requester_object_status![0]?.name! }}</mat-chip
-      >
+    <div *ngIf="type == 'half-width'">
+      <div class="chip" *ngIf="request?.support_types![0]">{{ request?.support_types![0]?.name }}
+      </div>
+      <div class="chip" *ngIf="request?.requester_object_status![0]" color="accent" selected>
+        {{ request?.requester_object_status![0]?.name! }}</div>
     </div>
     <div *ngIf="type == 'full-width'">
-      <mat-chip
-        *ngFor="let type of request?.support_types!"
-        color="accent"
-        selected
-        >{{ type.name }}
-      </mat-chip>
-      <mat-chip
-        *ngFor="let status of request?.requester_object_status!"
-        color="accent"
-        selected
-      >
-        {{ status.name! }}</mat-chip
-      >
+      <div class="chip" *ngFor="let type of request?.support_types!" color="accent" selected>{{ type.name }}
+      </div>
+      <div class="chip" *ngFor="let status of request?.requester_object_status!" color="accent" selected>
+        {{ status.name! }}</div>
     </div>
-    <mat-chip> <mat-icon>done</mat-icon>Đã xác thực </mat-chip>
+    <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
+      <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
+    </div>
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>

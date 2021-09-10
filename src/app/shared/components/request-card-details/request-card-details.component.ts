@@ -1,3 +1,5 @@
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
 import { SupportObjectService } from '../../../core/http/support-object.service';
 import { TransFormComponent } from './../trans-form/trans-form.component';
@@ -27,10 +29,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
-  lastestComment: { content: string; postTime: string }[];
-  mapPriority = new Map();
-  mapStatus = new Map();
+  mapPriority: any
+  mapStatus: any
   news: INew[] = [];
+  user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
@@ -42,29 +44,32 @@ export class RequestCardDetailsComponent implements OnInit {
   onClose() {
     this.dialogRef.close();
   }
+  mark($event: any, action?: string) {
+    console.log(action);
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.UrgentRequestService.markRequest(this.request?.id,
+      { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
+      .subscribe((res) => {
+        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
+      })
+  }
   constructor(
     public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
-    private SupportObjectService: SupportObjectService
+    private SupportObjectService: SupportObjectService,
+    private UrgentRequestService: UrgentRequestService,
+    private StorageService: StorageService,
+    private ConstantsService: ConstantsService
   ) {
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
     );
     this.initalize();
     this.fetchInit();
-    this.lastestComment = [
-      {
-        content: 'Hôm nay đã gửi đến 200 giường bệnh, 1000 khẩu trang.',
-        postTime: '10:30 AM . Hôm nay',
-      },
-      {
-        content: 'Đã gửi đến 100 máy thở',
-        postTime: '10:30 AM . Hôm nay',
-      },
-    ];
   }
   show(data: any) {
     let content = data.target.value;
@@ -84,12 +89,8 @@ export class RequestCardDetailsComponent implements OnInit {
     );
   }
   initalize() {
-    this.mapPriority.set('high', 'Rất nguy cấp');
-    this.mapPriority.set('normal', 'Nguy cấp');
-    this.mapPriority.set('', 'Nguy cấp');
-    this.mapStatus.set('', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('waiting', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('supporting', 'Đang được hỗ trợ');
+    this.mapPriority = this.ConstantsService.MAP_PRIORITY
+    this.mapStatus = this.ConstantsService.mapStatus
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(JoinRequestComponent, {
@@ -124,6 +125,7 @@ export class RequestCardDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
+    this.user = this.StorageService.userInfo;
   }
 }
 @Component({

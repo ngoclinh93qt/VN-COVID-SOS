@@ -1,4 +1,4 @@
-.request_container {
+.request_page_container {
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -11,3 +11,6 @@
   display: none !important;
 }
 
+.fw-container {
+  height: calc(100vh - 9rem);
+}

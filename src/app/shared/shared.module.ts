@@ -36,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
+import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     TransFormComponent,
     CommentComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
     ResetPasswordFrameComponent,
   ],
   imports: [
@@ -86,6 +88,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     TransCardComponent,
     TransFormComponent,
     RequestContainerComponent,
+    ScrollTrackerDirective,
     ResetPasswordFrameComponent,
   ],
   providers: [
