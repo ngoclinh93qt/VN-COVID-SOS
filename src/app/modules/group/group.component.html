@@ -8,9 +8,15 @@
 </div>
 <mat-divider></mat-divider>
 <div class="search-group">
-  <app-button height="40" color="white" text="Loại hỗ trợ"></app-button>
+  <mat-form-field>
+    <mat-select width="50" placeholder="Loại hỗ trợ" [formControl]="filterSupport" (selectionChange)="filter($event)" multiple>
+      <mat-option *ngFor="let support of supportTypes" [value]="support.type">
+        {{support.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <div class="search">
-    <input type="text" class="search-input" placeholder="Tìm kiếm">
+    <input type="text" class="search-input" placeholder="Tìm kiếm" [ngModel]="keysearch" (ngModelChange)="onSearchChange($event)">
     <mat-icon aria-hidden="true">search</mat-icon>
   </div>
 </div>
@@ -20,11 +26,11 @@
     [fxFlex]="100 / gridColumns + '%'"
     fxFlex.xs="100%"
     fxFlex.sm="33%"
-    *ngFor="let group of groups"
+    *ngFor="let group of searchData"
   >
     <app-group-card
     class="item-direction"
-      (click)="openBottomSheet(group)"
+      (click)="openDialogGroup(group)"
       [group]="group"
     ></app-group-card>
   </div>

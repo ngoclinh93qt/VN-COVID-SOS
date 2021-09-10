@@ -1,0 +1,23 @@
+.container {
+  width: 600px;
+  overflow: hidden;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    ::ng-deep .mat-form-field-infix {
+      width: 100%;
+    }
+  }
+  ::ng-deep .phoneType{
+    max-width: 90vw !important;
+    width: 90vw;
+  }
+}
