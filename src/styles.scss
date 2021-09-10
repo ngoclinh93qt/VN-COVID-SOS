@@ -64,3 +64,12 @@ body {
 .scrollable::-webkit-scrollbar-thumb {
   background-color: orangered;
 }
+
+.submit-btn{
+    display: flex;
+    button{
+      border-radius: 5rem;
+      margin-left: auto;
+      order: 2;
+    }
+}

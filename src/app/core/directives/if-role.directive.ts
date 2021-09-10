@@ -54,11 +54,7 @@ export class IfRoleDirective implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * on destroy cancels the API if its fetching.
-   */
   public ngOnDestroy(): void {
-    // this.subscription.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 }
 

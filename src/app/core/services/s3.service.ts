@@ -29,7 +29,7 @@ export class S3Service extends RestService<IpresignedUrl> {
   }
 
   uploadS3WithSigned(url: string, file: File): Observable<any>{
-    return this.http.put(`${url}`, file)
+    return this.http.put(url, file)
   }
   
 

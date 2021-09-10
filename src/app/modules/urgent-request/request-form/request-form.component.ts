@@ -72,7 +72,7 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = '';
     data.medias = [];
     const user = this.StorageService.userInfo;
-    if (user!= null && user.role != 'GUEST') {
+    if (user!== null && user.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.user_id;
     }
@@ -116,15 +116,14 @@ export class RequestFormComponent implements OnInit {
   pickLocation() {
     this.isShowmap = !this.isShowmap;
     if (this.isShowmap && !this.isMapCreated) {
-      let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
       this.isMapCreated = true;
-      let loader = new Loader({
+      const loader = new Loader({
         apiKey: environment.googleApiKey,
       });
 
       loader.load().then(() => {
-
-        map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
+        
+        const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
           center: this.StorageService.getLocation(),
           zoom: 15,
           styles: environment.mapStyle,
@@ -135,18 +134,15 @@ export class RequestFormComponent implements OnInit {
           draggable: true //make it draggable
         });
 
-        infoWindow = new google.maps.InfoWindow();
+        const infoWindow = new google.maps.InfoWindow();
         google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
           var clickedLocation = event.latLng;
-          //If the marker hasn't been added.
           if (!marker) {
-            //Create the marker.
             marker = new google.maps.Marker({
               position: clickedLocation,
               map: map,
               draggable: true //make it draggable
             });
-            //Listen for drag events!
           }
         })
 

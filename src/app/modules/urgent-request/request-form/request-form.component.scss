@@ -34,7 +34,6 @@ fieldset {
 }
 
 .list-img{
-  
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
@@ -46,3 +45,13 @@ fieldset {
     margin: 10px 0;
     padding: 5px;
 }
+.img-wrap{
+  position: relative;
+  button{
+    position: absolute;
+     top: 0; right: 0; 
+     border: none; 
+     background-color: transparent;
+  }
+}
+
