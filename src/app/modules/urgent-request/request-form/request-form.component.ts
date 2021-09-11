@@ -67,10 +67,9 @@ export class RequestFormComponent implements OnInit {
     });
   }
   async onSubmit(data: ISOSRequest) {
+    console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
-    data.requester_type = '';
-    data.medias = [];
     const user = this.StorageService.userInfo;
     if (user!== null && user.role !== 'GUEST') {
       data.requester_type = 'user';
@@ -159,6 +158,7 @@ export class RequestFormComponent implements OnInit {
     console.log(event.target.files[0])
     let file = event.target.files[0]
     this.s3Service.uploadImage(file).subscribe(res => {
+      console.log("xxx", res)
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res
@@ -184,4 +184,7 @@ export class RequestFormComponent implements OnInit {
     this.medias.splice(order,1)
   }
 
+  x(f: any){
+    console.log(f)
+  }
 }

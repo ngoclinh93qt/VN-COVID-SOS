@@ -13,6 +13,7 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthenService } from '../http/authen.service';
 import { StorageService } from '../services/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -28,6 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // const authHeader = this.sessionService.accessToken;
     const authHeader = this.storageService.token;
+    if(!req.url.includes(environment.host)){
+      return next.handle(req).pipe(this.handleErrors);
+    }
     if (authHeader == null) {
       return next.handle(req).pipe(this.handleErrors);
     }

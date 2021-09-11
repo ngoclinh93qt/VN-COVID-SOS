@@ -199,9 +199,8 @@ interface ISOSRequest {
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
+  color_info?: any;
 }
-
-
 interface IMedias {
   mime_type?: string;
   url?: string;
