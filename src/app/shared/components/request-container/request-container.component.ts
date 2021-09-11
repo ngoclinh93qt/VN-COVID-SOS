@@ -1,7 +1,7 @@
 import { ScrollTrackerDirective } from './../../directives/scroll-tracker.directive';
 import { Component, EventEmitter, Input, OnInit, Output, Directive } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { RequestCardDetailsComponent } from '../request-card-details/request-card-details.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-request-container',
@@ -13,7 +13,7 @@ export class RequestContainerComponent implements OnInit {
   @Input() requests?: ISOSRequest[];
   @Input() type?: String;
   constructor(
-    public dialog: MatDialog
+    private bottomsheet: MatBottomSheet
   ) {
 
   }
@@ -25,16 +25,10 @@ export class RequestContainerComponent implements OnInit {
     this.scrollingFinished.emit();
   }
   chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
+    const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
       data: request,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
   }
 
 }

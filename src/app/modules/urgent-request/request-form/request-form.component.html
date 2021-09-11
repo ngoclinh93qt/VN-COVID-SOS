@@ -1,47 +1,53 @@
 <span style="float: right;">
   <button (click)="onClose()" mat-icon-button aria-label="close Icon">
     <mat-icon>close</mat-icon>
-  </button></span
->
+  </button></span>
 <form class="example-form" (submit)="onSubmit(form.value)" #form="ngForm">
   <h2><b>Gửi yêu cầu khẩn cấp</b></h2>
 
   <br />
   <div class="content">
+    <h4><b>Nội dung yêu cầu</b></h4>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Loại yêu cầu</mat-label>
+      <mat-select ngModel name="support_types" multiple>
+        <mat-option *ngFor="let type of supportTypes" [value]="type">
+          {{ type.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Tiêu đề</mat-label>
+      <input ngModel name="subject" matInput placeholder="Tôi cần giúp..." value="" required />
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Mô tả</mat-label>
+      <input ngModel name="description" matInput placeholder="Thêm mô tả" value="" />
+    </mat-form-field>
+    <br />
     <h4><b>Thông tin người cần giúp đỡ</b></h4>
     <fieldset ngModelGroup="contact_info">
+
+      <mat-checkbox class="example-margin" name="show">Tôi đồng ý công khai số điện thoại để được liên hệ trợ giúp
+      </mat-checkbox>
       <mat-form-field class="example-left-half-width" appearance="outline">
         <mat-label>Họ và tên</mat-label>
-        <input
-          ngModel
-          name="name"
-          matInput
-          placeholder="Họ và tên"
-          value=""
-          required
-        />
+        <input ngModel name="name" matInput placeholder="Họ và tên" value="" required />
       </mat-form-field>
+
       <mat-form-field class="example-right-half-width" appearance="outline">
         <mat-label>Số điện thoại</mat-label>
-        <input
-          ngModel
-          name="phone_number"
-          matInput
-          placeholder="Số điện thoại"
-          value=""
-          required
-        />
+        <input ngModel name="phone_number" matInput placeholder="Số điện thoại" value="" required />
       </mat-form-field>
+
     </fieldset>
+
     <fieldset ngModelGroup="address_info">
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Tỉnh/ Thành Phố</mat-label>
         <mat-select ngModel name="province_id" required>
-          <mat-option
-            *ngFor="let province of provinces"
-            [value]="province.id"
-            (click)="getProvince(province.id)"
-          >
+          <mat-option *ngFor="let province of provinces" [value]="province.id" (click)="getProvince(province.id)">
             {{ province.name }}
           </mat-option>
         </mat-select>
@@ -49,11 +55,8 @@
       <mat-form-field class="example-left-half-width" appearance="outline">
         <mat-label>Quận/ Huyện</mat-label>
         <mat-select ngModel name="district_code" required>
-          <mat-option
-            *ngFor="let district of province.districts"
-            [value]="district.code"
-            (click)="getDistrict(district?.code)"
-          >
+          <mat-option *ngFor="let district of province.districts" [value]="district.code"
+            (click)="getDistrict(district?.code)">
             {{ district.name }}
           </mat-option>
         </mat-select>
@@ -68,85 +71,48 @@
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Địa chỉ</mat-label>
-        <input
-          ngModel
-          name="address"
-          matInput
-          placeholder="Số nhà, tên đường..."
-          value=""
-          required
-        />
+        <input ngModel name="address" matInput placeholder="Số nhà, tên đường..." value="" required />
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Ghi chú địa chỉ</mat-label>
+        <mat-label>Ghi chú địa chỉ:</mat-label>
         <input matInput placeholder="Ghi chú" value="" />
       </mat-form-field>
     </fieldset>
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Người cần hỗ trợ là</mat-label>
       <mat-select value="[]" ngModel name="requester_object_status" multiple>
-        <mat-option
-          *ngFor="let status of requesterObjectStatus"
-          [value]="status"
-        >
+        <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
           {{ status.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <br />
-    <h4><b>Nội dung yêu cầu</b></h4>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Loại yêu cầu</mat-label>
-      <mat-select ngModel name="support_types" multiple>
-        <mat-option *ngFor="let type of supportTypes" [value]="type">
-          {{ type.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
 
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Tiêu đề</mat-label>
-      <input
-        ngModel
-        name="subject"
-        matInput
-        placeholder="Tôi cần giúp..."
-        value=""
-        required
-      />
-    </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Mô tả</mat-label>
-      <input
-        ngModel
-        name="description"
-        matInput
-        placeholder="Thêm mô tả"
-        value=""
-      />
-    </mat-form-field>
-    <br />
-    <h4><b>Mức độ</b></h4>
-    <mat-radio-group name="priority_type" ngModel #priority_type="ngModel">
-      <mat-radio-button
-        *ngFor="let priority of urgentLevels"
-        style="margin: 0 50px 0 0;"
-        value="{{ priority.type }}"
-        >{{ priority.name }}</mat-radio-button
-      >
-    </mat-radio-group>
+    <a 
+    style="cursor: pointer; color: red; margin: 10px 0;"
+    (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
+    <div [ngStyle]="{'display': isShowmap? 'block': 'none'}" class="map" id="mapx"></div>
+    <br>
+   <div style="margin: 20px 0;">
+    <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
+    <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;" class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh</label>
+   </div>
+    <br>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
+      <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index" class="img-wrap">
+        <button type="button" (click)="deleteImg(i)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <img width="100%" src="{{item.url}}" alt="">
+      </div>
+    </div>
   </div>
   <br />
 
-  <div mat-dialog-actions>
-    <button
-      mat-flat-button
-      type="submit"
-      style="float: right; border-radius: 5rem;"
-      color="accent"
-      (click)="checkSubmit(form)"
-      cdkFocusInitial
-    >
+
+  <div mat-dialog-actions class="submit-btn">
+    <button mat-flat-button type="submit" color="accent"
+      (click)="checkSubmit(form)" cdkFocusInitial>
       Gửi yêu cầu
     </button>
   </div>

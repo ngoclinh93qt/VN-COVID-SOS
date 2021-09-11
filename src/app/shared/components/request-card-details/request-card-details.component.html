@@ -1,79 +1,126 @@
-<div class="request_card-details style-3">
-  <span style="position: absolute;"><button (click)="onClose()" mat-icon-button aria-label="close Icon">
+<div class="request_card-details style-3" fxLayout="row" fxLayout.xs="column">
+  <span style="position: absolute; right: 10px; top: 10px"
+    ><button (click)="onClose()" mat-icon-button aria-label="close Icon">
       <mat-icon>close</mat-icon>
-    </button></span>
-  <section fxFlex="1/3" class="request_sesstion">
-    <span *ngIf='user;'>
-      <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
-        style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
-      </mat-icon>
-      <ng-template #elseBlock>
-        <mat-icon color='primary' style="position: absolute; right: 0" (click)='mark($event,"bookmark")'>bookmark_border
-        </mat-icon>
-      </ng-template>
-    </span>
-    <div class="p-1">
-      <mat-chip-list aria-label="tag">
-        <mat-chip color="primary" selected>
-          <mat-icon style="margin-right: 5px;">error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
-        </mat-chip>
-        <div class="chip" *ngFor="let type of request?.support_types!" color="accent" selected>{{ type.name }}
+    </button></span
+  >
+  <section
+    style="padding: 3.5vw; border-right: 1px solid #c8c8c8"
+    fxFlex="65"
+    class="request_sesstion"
+    fxLayout="row"
+    fxLayoutAlign="center"
+  >
+    <div style="max-width: 450px">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="end"
+        fxLayoutGap="10px"
+        style="margin-bottom: 10px"
+      >
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>pin_drop</mat-icon>
+          <a (click) = "openProposeDialog()">Đề xuất cho nhóm</a>
         </div>
-        <div class="chip" *ngFor="let status of request?.requester_object_status!" color="accent" selected>
-          {{ status.name! }}</div>
-
-        <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
-          <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>check</mat-icon>
+          <a (click) = "openConfirmDialog()">Xác thực</a>
         </div>
-      </mat-chip-list>
-      <br />
+      </div>
+      <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
+        <mat-chip-list aria-label="tag">
+          <mat-chip color="primary" selected>
+            <mat-icon>error</mat-icon
+            >{{ mapPriority.get(request?.priority_type!) }}
+          </mat-chip>
+          <mat-chip
+            *ngFor="let type of request?.support_types"
+            color="accent"
+            selected
+            >{{ type.name }}</mat-chip
+          >
+          <mat-chip
+            *ngFor="let object of request?.requester_object_status"
+            color="accent"
+            selected
+          >
+            {{ object.name }}</mat-chip
+          >
+          <mat-chip> <mat-icon>done</mat-icon>{{request?.status}} </mat-chip>
+        </mat-chip-list>
+        <br />
+        <h3>
+          <b>{{ request?.subject }}</b>
+        </h3>
+        <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
+        <br />
+        <div *ngIf="pageEvent" style="margin-top: 15px">
+          <section
+            *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='image'"
+            class="img_container"
+          >
+            <img src="{{request?.medias?.[pageEvent.pageIndex]?.url!}}" />
+          </section>
 
-      <br />
-      <h3>
-        <b>{{ request?.subject }}</b>
-      </h3>
-      <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
-      <br />
-    </div>
+          <section
+            *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='video'"
+            class="img_container"
+          >
+            <video height="100%" width="100%" controls>
+              <source
+                src="{{request?.medias?.[pageEvent.pageIndex]?.url!}}"
+                type="video/mp4"
+              />
+            </video>
+          </section>
+          <mat-paginator
+            [hidePageSize]="true"
+            [length]="length"
+            [pageSize]="pageSize"
+            (page)="pageEvent = $event"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+        </div>
+        <div>
+          <p>
+            Người cần hỗ trợ: <b>{{ request?.contact_info?.name }}</b>
+          </p>
+          <p>
+            Số điện thoại: <b>{{ request?.contact_info?.phone_number }}</b>
+          </p>
+          <p>
+            Địa chỉ: <b>{{ request?.address_info?.address! }}</b>
+          </p>
+          <p style="margin-top: 30px">
+            Người gửi:<br />
+            <b>{{ request?.created_by }}</b>
+          </p>
+        </div>
+      </div>
 
-    <div *ngIf="pageEvent">
-      <section *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='image'" class="img_container">
-        <img src="{{request?.medias?.[pageEvent.pageIndex]?.url!}}" />
-      </section>
-
-      <section *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='video'" class="img_container">
-        <video height="100%" width="auto" controls>
-          <source src="{{request?.medias?.[pageEvent.pageIndex]?.url!}}" type="video/mp4" />
-        </video>
-      </section>
-    </div>
-    <mat-paginator [hidePageSize]="true" [length]="length" [pageSize]="pageSize" (page)="pageEvent = $event"
-      aria-label="Select page">
-    </mat-paginator>
-    <div class="p-1">
-      <p>
-        Người gửi: <b>{{ request?.contact_info?.name }}</b>
-      </p>
-      <p>
-        Số điện thoại: <b>{{ request?.contact_info?.phone_number }}</b>
-      </p>
-      <p>
-        Địa chỉ: <b>{{ request?.address_info?.address! }}</b>
-      </p>
-    </div>
-    <hr />
-    <div class="p-1">
-      <p>Trạng thái:</p>
-      <h3>
-        <b>{{ mapStatus.get(request?.status) }}</b>
-      </h3>
-      <br />
-      <app-button height="35" color="primary" text="Tham gia trợ giúp" (click)="openDialog()">
-      </app-button>
+      <div style="margin-top: 30px">
+        <!-- <p>Trạng thái:</p>
+        <h3>
+          <b>{{ mapStatus.get(request?.status) }}</b>
+        </h3>
+        <br /> -->
+        <p style="font-weight: bold; font-size: 17px">Nhóm trợ giúp</p>
+        <app-button
+          height="35"
+          color="primary"
+          text="Tham gia trợ giúp"
+          (click)="openDialog()"
+        >
+        </app-button>
+        <div fxLayout="column" fxLayoutGap="10px" style="margin-top: 15px" *ngFor = 'let supporter of request?.supporters'>
+          <app-support-card [supporter] = supporter></app-support-card>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section fxFlex="1/3" class="p-1 activity_sestion">
+  <!-- <section fxFlex="1/3" class="p-1 activity_sestion">
     <p style="font-weight: bold; font-size: 17px;">Hoạt động thiện nguyện</p>
     <button style="width: 100%; margin: 10px 0;" (click)="openTransDialog()" mat-flat-button color="primary">
       Cập nhật
@@ -81,12 +128,15 @@
     <div *ngFor="let tran of trans" style="margin-bottom: 10px;">
       <app-trans-card [trans]="tran"></app-trans-card>
     </div>
-  </section>
-  <section fxFlex="1/3" class="p-1 comment_sestion">
-    <p style="font-weight: bold; font-size: 17px;">Bình luận</p>
-    <sos-input (keyup.enter)="show($event)" label="Viết cập nhật..."></sos-input>
+  </section> -->
+  <section fxFlex="35" class="p-1 comment_sestion" style="padding: 3.5vw">
+    <p style="font-weight: bold; font-size: 17px">Bình luận</p>
+    <sos-input
+      (keyup.enter)="show($event)"
+      label="Viết cập nhật..."
+    ></sos-input>
 
-    <div *ngFor="let new of news" style="margin-bottom: 15px;">
+    <div *ngFor="let new of news" style="margin-bottom: 15px">
       <app-comment [new]="new"></app-comment>
     </div>
   </section>

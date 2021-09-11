@@ -1,16 +1,15 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import { SEC_INFO } from './environment.sec';
 export const environment = {
   production: false,
   hmr: false,
   host: 'http://54.69.39.96/api/v1',
-  googleApiKey: SEC_INFO.GOOGLE_MAP_API_KEY,
+  googleApiKey: "AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q",
   s3: {
-    AccessKeyId: SEC_INFO.S3_ACCESS_KEY,
-    Secret: SEC_INFO.S3_SECRET,
-    Bucket: SEC_INFO.S3_BUCKET,
+    AccessKeyId: "",
+    Secret: "",
+    Bucket: "",
   },
   mapStyle: [
     {

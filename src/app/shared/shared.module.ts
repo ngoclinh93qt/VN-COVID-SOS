@@ -35,6 +35,9 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { SupportCardComponent } from './components/support-card/support-card.component';
+import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
 import { RequestContainerComponent } from './components/request-container/request-container.component';
 import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
@@ -58,6 +61,9 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     UploadComponent,
     TransFormComponent,
     CommentComponent,
+    SupportCardComponent,
+    ProposeRequestComponent,
+    ConfirmDialogComponent,
     RequestContainerComponent,
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,

@@ -17,8 +17,18 @@ body {
 }
 .mat-bottom-sheet-container {
   min-height: 95vh;
-  min-width: 99vw !important;
+  min-width: 100vw !important;
   border-radius: 20px 20px 0 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .mat-bottom-sheet-container {
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+  }
 }
 .mat-horizontal-content-container {
   margin: 10px 0 !important;
@@ -53,6 +63,15 @@ body {
 
 .scrollable::-webkit-scrollbar-thumb {
   background-color: orangered;
+}
+
+.submit-btn{
+    display: flex;
+    button{
+      border-radius: 5rem;
+      margin-left: auto;
+      order: 2;
+    }
 }
 .chip {
   margin: 4px;

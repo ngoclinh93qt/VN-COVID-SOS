@@ -201,6 +201,7 @@ interface ISOSRequest {
   priority_type?: string;
 }
 
+
 interface IMedias {
   mime_type?: string;
   url?: string;
@@ -336,4 +337,9 @@ interface ITransaction {
   supporter_info?: ISupporterInfo;
   updated_by?: string;
   updated_time?: string;
+}
+
+interface IpresignedUrl{
+  expired_duration: number;
+  url: string;
 }

@@ -25,9 +25,10 @@
       <div class="chip" *ngFor="let status of request?.requester_object_status!" color="accent" selected>
         {{ status.name! }}</div>
     </div>
-    <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
+    <!-- <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
       <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
-    </div>
+    </div> -->
+    <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>
@@ -37,7 +38,7 @@
   <hr />
   <p>
     Người gửi: <b>{{ request?.contact_info?.name }}</b>
-    <span style="margin: 0 0 0 10px;">
+    <span style="margin: 0 0 0 10px">
       {{ mapStatus.get(request?.status) }}
     </span>
   </p>

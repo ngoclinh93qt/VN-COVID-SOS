@@ -13,6 +13,7 @@ import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import asset from '../../../../assets/marker'
 import { RequestCardDetailsComponent } from 'src/app/shared/components/request-card-details/request-card-details.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -36,7 +37,8 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, public dialog: MatDialog) {
+  constructor(private StorageService: StorageService, 
+    private bottomsheet: MatBottomSheet) {
     console.log(this.requests);
   }
   setMapOnAll(map: any) {
@@ -82,15 +84,8 @@ export class MapsComponent implements OnInit, OnChanges {
   }
 
   chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
+    const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
       data: request,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
     });
   }
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,4 +1,4 @@
-<div style="width: 500px;">
+<div>
   <form (submit)="onSubmit(form.value)" #form="ngForm">
     <h1><b>Gửi yêu cầu tham gia trợ giúp</b></h1>
     <mat-form-field style="width: 100%;" appearance="fill">
@@ -23,7 +23,7 @@
     <button
       type="submit"
       mat-flat-button
-      style="float: right; border-radius: 5rem;"
+      class="submit-btn"
       color="primary"
     >
       Gửi yêu cầu

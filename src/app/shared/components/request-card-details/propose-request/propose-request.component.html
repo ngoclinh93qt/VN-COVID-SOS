@@ -1,0 +1,39 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">
+    Đề xuất cho nhóm
+  </h1>
+  <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+</div>
+<div mat-dialog-content style="overflow: hidden; padding-top: 15px">
+  <form (submit)="onSubmit(form.value)" #form="ngForm">
+    <mat-form-field style="width: 100%" appearance="outline">
+      <mat-label>Nhóm thiện nguyện</mat-label>
+      <mat-select ngModel name="target_id" required>
+        <mat-option *ngFor="let group of groups" [value]="group.id"
+          >{{ group.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <sos-input
+      ngModel
+      name="note"
+      matInput
+      placeholder="Viết mô tả"
+      value=""
+      label="Mô tả"
+    ></sos-input>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+      <button
+        mat-flat-button
+        type="submit"
+        style="border-radius: 5rem"
+        color="accent"
+        (click)="checkSubmit(form)"
+        cdkFocusInitial
+      >
+        Đề xuất
+      </button>
+    </div>
+  </form>
+</div>
