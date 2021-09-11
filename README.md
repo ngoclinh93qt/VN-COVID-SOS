@@ -39,3 +39,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - `src/app/core` - This module is for classes used by file `app.module.ts`. Resources which are always loaded such as route guards, HTTP interceptors, and application level services.
 - `src/app/modules` - The module directory contains a collection of modules have its own routing which is a `loadChildren` route resource defined in the `AppRoutingModule`.
 - `src/app/shared` - The shared module contains classes and resources which are used in more than one dynamically loaded module. By always loading with the application the shared components are ready whenever a module requests them.
+
+## Release using Github Action
+- Go to `Action` tab
+- Choose `release` workflow
+- Click on `Run workflow`
+- Fill in the release tag name (ie, v1.0.0)
+- Click on `Run workflow`
+
+<img width="1336" alt="Screen Shot 2021-09-12 at 2 55 07" src="https://user-images.githubusercontent.com/7227377/132956913-4d065823-22d4-4729-93df-9ff9facf8e4c.png">
+
