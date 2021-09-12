@@ -85,10 +85,20 @@ body {
   height: 20px;
   background-color: #fce7e5;
   font-weight: 500;
+  p{
+    margin: auto !important;
+  }
 }
 .priority-circle{
   background-color: yellow;
   border-radius: 50%;
   width: 30px;
   height: 30px;
+}
+
+.icon-16{
+  mat-icon{
+    font-size: 16px !important;
+    height: 16px !important;
+  }
 }

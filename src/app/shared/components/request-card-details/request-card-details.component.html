@@ -37,40 +37,32 @@
           </div>
           <div *ngIf="!isOpen" fxLayout="row" fxLayoutAlign="center center">
             <mat-icon style="color: #05944f">check</mat-icon>
-            <a style="color: #05944f; cursor: none" disabled>Đã xác thực</a>
+            <a style="color: #05944f;" disabled>Đã xác thực</a>
           </div>
         </div>
         <div>
-          <mat-form-field
-            *ngIf="isOpen"
-            style="width: 150px; border-radius: 22px; margin-bottom: -1.25em"
-            appearance="outline"
-          >
-            <mat-label>Trạng thái</mat-label>
-            <mat-select>
-              <mat-option
-                *ngFor="let each of status"
-                [value]="each"
-                (click)="setStatus(each)"
-                >{{ each }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger
+          [disabled]="getStatusSteps(mapStatus).length === 0">
+            {{getStatusView(mapStatus)}}<mat-icon>expand_more</mat-icon></button>
+          <mat-menu #menu="matMenu" >
+            <div>
+              <button mat-menu-item
+              *ngFor="let item of getStatusSteps(mapStatus)"
+              (click)="updateRequestStatus(item)">{{mapStatus.get(item)?.action_view}}</button>
+            </div>
+          </mat-menu>
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
         <mat-chip-list aria-label="tag">
-          <mat-chip color="accent" selected>
-            <mat-icon class="circle">circle</mat-icon
-            >{{ mapPriority.get(request?.priority_type!) }}
-          </mat-chip>
+          <div class="priority-circle" [ngStyle]="{'background-color': mapPriority.get(request?.color_info?.color) || 'yellow'}">
+          </div>
           <mat-chip *ngFor="let type of request?.support_types">{{
             type.name
           }}</mat-chip>
-          <mat-chip *ngFor="let object of request?.requester_object_status">
-            {{ object.name }}</mat-chip
+          <div class="chip" *ngFor="let object of request?.requester_object_status">
+            {{ object.name }}</div
           >
-          <mat-chip>{{ cur_status }} </mat-chip>
         </mat-chip-list>
         <br />
         <h3>

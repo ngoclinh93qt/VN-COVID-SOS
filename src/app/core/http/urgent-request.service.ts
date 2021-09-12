@@ -63,23 +63,29 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
       }>(`${this.host}/sos_requests/${request_id}/support`, body)
       .pipe(map((res) => res.data));
   }
+
+
+  updateSupporterStatus(request_id: string, body: ISupporterUpdate): Observable<ISOSRequest> {
+    return this.http
+      .put<{
+        data: ISOSRequest;
+      }>(`${this.host}/sos_requests/${request_id}/support`, body)
+      .pipe(map((res) => res.data));
+  }
+
   propose(request_id: string, body: any) {
     return this.http
-      .post(`${this.host}/sos_requests/${request_id}/suggest`, body)
+      .post<{data: ISOSRequest}>(`${this.host}/sos_requests/${request_id}/suggest`, body)
       .pipe(
-        map((res) => {
-          console.log(res);
-        })
+        map((res) => res.data)
       );
   }
 
   verifyRequest(request_id?: string, body?: any) {
     return this.http
-      .post(`${this.host}/sos_requests/${request_id}/status`, body)
+      .post<{data: ISOSRequest}>(`${this.host}/sos_requests/${request_id}/status`, body)
       .pipe(
-        map((res) => {
-          console.log(res);
-        })
+        map((res) => res.data)
       );
   }
   getGeneralData() {

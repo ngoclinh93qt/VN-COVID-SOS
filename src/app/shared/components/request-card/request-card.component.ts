@@ -10,7 +10,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
-  @Input() type?: String;
+  @Input() type: String = '';
   user: any;
   mapPriority: any;
   mapStatus: any;
@@ -28,7 +28,7 @@ export class RequestCardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.mapPriority = this.ConstantsService.MAP_PRIORITY;
-    this.mapStatus = this.ConstantsService.MAP_STATUS
+    this.mapStatus = this.ConstantsService.REQUEST_STATUS
     this.user = this.StorageService.userInfo;
   }
 }

@@ -224,6 +224,11 @@ interface IJoinRequest {
   support_date?: string;
   description?: string;
 }
+interface ISupporterUpdate {
+  type: string;
+  supporter_id: string;
+  support_status: string;
+}
 interface IBlocked {
   id?: string;
   needSupport?: boolean;
@@ -341,4 +346,14 @@ interface ITransaction {
 interface IpresignedUrl{
   expired_duration: number;
   url: string;
+}
+interface IBaseStatus {
+  action_view: string
+  action: string
+  status: string
+  status_view: string
+  next_step: string[]
+  color?: string
+  bg_color?: string
+  icon? :string
 }

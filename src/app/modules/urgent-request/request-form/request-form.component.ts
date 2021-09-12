@@ -13,6 +13,8 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
@@ -24,6 +26,7 @@ import { S3Service } from 'src/app/core/services/s3.service';
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
+  @ViewChild('content') private myScrollContainer!: ElementRef;
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
@@ -71,7 +74,7 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = 'guest';
     data.medias = this.medias;
     const user = this.StorageService.userInfo;
-    if (user!== null && user.role !== 'GUEST') {
+    if (user!== null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
@@ -104,12 +107,6 @@ export class RequestFormComponent implements OnInit {
     var l: string = '';
     let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);
-  }
-
-  uploadImage(){
-
-    
-
   }
 
   pickLocation() {
@@ -158,7 +155,7 @@ export class RequestFormComponent implements OnInit {
     console.log(event.target.files[0])
     let file = event.target.files[0]
     this.s3Service.uploadImage(file).subscribe(res => {
-      console.log("xxx", res)
+      this.myScrollContainer.nativeElement.scrollTop = Math.max(0, this.myScrollContainer.nativeElement.scrollHeight - this.myScrollContainer.nativeElement.offsetHeight);
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res
@@ -182,9 +179,5 @@ export class RequestFormComponent implements OnInit {
 
   deleteImg(order: number){
     this.medias.splice(order,1)
-  }
-
-  x(f: any){
-    console.log(f)
   }
 }

@@ -5,7 +5,7 @@
 <form class="example-form" (submit)="onSubmit(form.value)" #form="ngForm">
   <h2><b>Gửi yêu cầu khẩn cấp</b></h2>
   <br />
-  <div class="content">
+  <div #content class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Loại yêu cầu</mat-label>
@@ -87,32 +87,34 @@
     </mat-form-field>
     <br />
 
-    <a 
-    style="cursor: pointer; color: red; margin: 10px 0;"
-    (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
+    <a style="cursor: pointer; color: red; margin: 10px 0;" (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
     <div [ngStyle]="{'display': isShowmap? 'block': 'none'}" class="map" id="mapx"></div>
     <br>
-   <div style="margin: 20px 0;">
-    <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
-    <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;" class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh</label>
-   </div>
+    <div style="margin: 20px 0;">
+      <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
+      <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;"
+        class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh/video</label>
+    </div>
     <br>
     <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
-      <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index" class="img-wrap">
+      <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index"
+        class="img-wrap">
         <button type="button" (click)="deleteImg(i)">
           <mat-icon>cancel</mat-icon>
         </button>
-        <img width="100%" src="{{item.url}}" alt="">
+        <div *ngIf="item.mime_type !== 'video'"><img width="100%" src="{{item.url}}" alt=""></div>
+        <div *ngIf="item.mime_type === 'video'">
+          <video width="100%" >
+            <source src="{{item.url}}" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
   </div>
   <br />
 
-  <button type="button" (click)="x(form)">xxx</button>
-
   <div mat-dialog-actions class="submit-btn">
-    <button mat-flat-button type="submit" color="accent"
-      (click)="checkSubmit(form)" cdkFocusInitial>
+    <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form)" cdkFocusInitial>
       Gửi yêu cầu
     </button>
   </div>
