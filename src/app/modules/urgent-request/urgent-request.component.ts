@@ -1,3 +1,4 @@
+import { StorageService } from 'src/app/core/services/storage.service';
 import { RequesterObjectStatusService } from '../../core/http/requester-object-status.service';
 import { SupportTypesService } from '../../core/http/support-types.service';
 import { RequestCardDetailsComponent } from './../../shared/components/request-card-details/request-card-details.component';
@@ -10,6 +11,7 @@ import {
 } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-urgent-request',
@@ -18,13 +20,19 @@ import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 })
 export class UrgentRequestComponent implements OnInit {
   requests: ISOSRequest[] = [];
-
+  userCreatedRequests: ISOSRequest[] = [];
+  joinedRequests: ISOSRequest[] = [];
+  groupSuggested: ISOSRequest[] = [];
+  user: any;
   constructor(
+    public bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
     private UrgentRequestService: UrgentRequestService,
     private SupportTypesService: SupportTypesService,
-    private RequesterObjectStatusService: RequesterObjectStatusService
+    private RequesterObjectStatusService: RequesterObjectStatusService,
+    private StorageService: StorageService
   ) {
+    this.user = StorageService.userInfo;
     this.fetchInit();
   }
   fetchInit() {
@@ -32,12 +40,29 @@ export class UrgentRequestComponent implements OnInit {
       this.requests = result;
       console.log(result);
     });
+    if (this.user != null) {
+      this.UrgentRequestService.getByRequesterId(this.user.user_id).subscribe((result) => {
+        this.userCreatedRequests = result;
+        console.log(result);
+      });
+      this.UrgentRequestService.getJoinedRequests(this.user.user_id).subscribe((result) => {
+        this.joinedRequests = result;
+        console.log(result);
+      });
+      this.user.groups.forEach((group:any) => {
+        this.UrgentRequestService.getJoinedRequests(group.id).subscribe((result) => {
+          this.groupSuggested = [...this.groupSuggested, ...result]
+          console.log(result);
+        });
+      });
+
+    }
   }
   searchRequest(data: any) {
-    console.log(data);
+    //console.log(data);
     this.UrgentRequestService.search(data).subscribe((result) => {
-      this.requests = result;
-      console.log(result);
+      this.requests = result.sos_requests;
+     // console.log(result);
     });
   }
   openFormDialog(): void {
@@ -53,16 +78,14 @@ export class UrgentRequestComponent implements OnInit {
   }
 
   chooseRequest(request: ISOSRequest) {
-    const dialogRef = this.dialog.open(RequestCardDetailsComponent, {
-      width: '100vw',
-      height: '100vh',
+    this.bottomSheet.open(RequestCardDetailsComponent, {
       data: request,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    //   console.log(result);
+    // });
   }
   setLocation() {
     let location = localStorage.getItem('location');
@@ -78,6 +101,7 @@ export class UrgentRequestComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.setLocation();
+    this.user = this.StorageService.userInfo;
+
   }
 }

@@ -18,6 +18,8 @@ import { MaterialModule } from './material.module';
 import { AuthenService } from './core/http/authen.service';
 import { SignupService } from './core/http/signup.service';
 import { UserLoginComponent } from './modules/user-login/user-login.component';
+import { IfRoleDirective } from './core/directives/if-role.directive';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { UserLoginComponent } from './modules/user-login/user-login.component';
     ContainerComponent,
     SignupComponent,
     UserLoginComponent,
-    UserSignupComponent
+    UserSignupComponent,
+    IfRoleDirective
   ],
   imports: [
     BrowserModule,
@@ -39,8 +42,13 @@ import { UserLoginComponent } from './modules/user-login/user-login.component';
     ReactiveFormsModule,
     CoreModule,
   ],
-  providers: [AuthenService, MatSidenavModule, SignupService],
+  providers: [
+    AuthenService,
+    MatSidenavModule,
+    SignupService,
+    { provide: MatBottomSheetRef, useValue: {} },
+    { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }],
   exports: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

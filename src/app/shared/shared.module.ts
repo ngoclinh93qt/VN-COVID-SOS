@@ -35,6 +35,13 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MatInputModule } from '@angular/material/input';
 import { TransFormComponent } from './components/trans-form/trans-form.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { SupportCardComponent } from './components/support-card/support-card.component';
+import { ProposeRequestComponent } from './components/request-card-details/propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './components/request-card-details/confirm-dialog/confirm-dialog.component';
+import { RequestContainerComponent } from './components/request-container/request-container.component';
+import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
+import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     CardComponent,
@@ -55,6 +62,12 @@ import { CommentComponent } from './components/comment/comment.component';
     UploadComponent,
     TransFormComponent,
     CommentComponent,
+    SupportCardComponent,
+    ProposeRequestComponent,
+    ConfirmDialogComponent,
+    RequestContainerComponent,
+    ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +77,7 @@ import { CommentComponent } from './components/comment/comment.component';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatMenuModule
   ],
   exports: [
     CardComponent,
@@ -81,6 +95,9 @@ import { CommentComponent } from './components/comment/comment.component';
     MemberComponent,
     TransCardComponent,
     TransFormComponent,
+    RequestContainerComponent,
+    ScrollTrackerDirective,
+    ResetPasswordFrameComponent,
   ],
   providers: [
     HttpClientModule,
@@ -89,4 +106,4 @@ import { CommentComponent } from './components/comment/comment.component';
     httpInterceptorProviders,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

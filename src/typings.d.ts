@@ -10,6 +10,7 @@ interface IUser {
   password?:String;
   debug?:String;
   confirm_code?:String;
+  groups?:[]
 }
 
 interface INorUser {
@@ -59,6 +60,7 @@ interface IPublisher {
 interface IVolunteerGroup {
   id?: string;
   name?: string;
+  avatar?:String;
   address_info?: IAddressInfo;
   admin_id?: string;
   contact_info?: IContacInfo;
@@ -175,6 +177,8 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
+  is_bookmarked?:boolean;
+  is_group_bookmarked?:boolean;
   address_info?: IAddressInfo;
   contact_info?: IContacInfo;
   created_by?: string;
@@ -184,6 +188,7 @@ interface ISOSRequest {
   location?: string;
   medias?: IMedias[];
   requester_info?: string;
+  requester_id?: string;
   requester_object_status?: IRequesterObjectStatus[];
   requester_type?: string;
   status?: string;
@@ -194,8 +199,8 @@ interface ISOSRequest {
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
+  color_info?: any;
 }
-
 interface IMedias {
   mime_type?: string;
   url?: string;
@@ -218,6 +223,11 @@ interface IJoinRequest {
   supporter_id: string;
   support_date?: string;
   description?: string;
+}
+interface ISupporterUpdate {
+  type: string;
+  supporter_id: string;
+  support_status: string;
 }
 interface IBlocked {
   id?: string;
@@ -336,4 +346,14 @@ interface ITransaction {
 interface IpresignedUrl{
   expired_duration: number;
   url: string;
+}
+interface IBaseStatus {
+  action_view: string
+  action: string
+  status: string
+  status_view: string
+  next_step: string[]
+  color?: string
+  bg_color?: string
+  icon? :string
 }

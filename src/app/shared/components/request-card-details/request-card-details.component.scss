@@ -1,14 +1,14 @@
 .request_card-details {
   border: none;
-  border-radius: 5px;
-  padding: 0px;
+  // border-radius: 5px;
+  padding: 0;
   margin: 0;
   top: 0;
   right: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: relative;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   .activity_sestion {
     position: relative;
     border-left: 1px solid rgb(226, 226, 226);
@@ -28,6 +28,9 @@
     position: absolute;
     z-index: 2;
   }
+  .request_sesstion{
+    position: relative;
+  }
   .img_container {
     background-color: black;
     height: 200px;
@@ -43,5 +46,40 @@
   }
 }
 .p-1 {
-  padding: 10px 25px;
+  padding: 20px 15px;
 }
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 599px) {
+  .request_sesstion {
+    border-right: none !important;
+    padding-top: 50px !important;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .info_section {
+    width: 100% !important;
+  }
+}
+
+.mat-chip{
+  background-color:#FCE7E5 ;
+}
+
+.circle {
+  font-size: 10px;
+  height: 10px;
+  width: 20px !important;
+}
+
+.status-btn{
+  border-radius: 20px;
+}
+

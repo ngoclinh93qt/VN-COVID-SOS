@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
   production: false,
+  hmr: false,
   host: 'http://54.69.39.96/api/v1',
   googleApiKey: "AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q",
   s3: {

@@ -37,10 +37,12 @@
   <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller">
     <div class="drawer-items">
       <div *ngFor="let item of sideItems" (click)="closeMenu();">
-        <div class="drawer-item" [routerLink]="item.url" [routerLinkActive]="['active-item']">
+       <div *ifRoles="item.role">
+        <div class="drawer-item"  [routerLink]="item.url" [routerLinkActive]="['active-item']">
           <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
           {{ item.name }}
         </div>
+       </div>
       </div>
     </div>
     <div class="drawer-footer">

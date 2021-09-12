@@ -34,4 +34,12 @@ export class UsersService extends RestService<IUser> {
         return res.data
       }));
   }
+  getProfile(): Observable<IUser> {
+    return this.http
+      .get<{ data: IUser }>(`${this.host}/users/profile`)
+      .pipe(map((res) => {
+        this.StorageService.userInfo = res.data;
+        return res.data
+      }));
+  }
 }

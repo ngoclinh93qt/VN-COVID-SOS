@@ -38,31 +38,33 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.sideItems = [
-      {
-        name: 'Tổng quan',
-        icon: 'home',
-        url: 'home',
-      },
+      // {
+      //   name: 'Tổng quan',
+      //   icon: 'home',
+      //   url: 'home',
+      // },
       {
         name: 'Yêu cầu khẩn cấp',
         icon: 'support',
         url: 'urgentRequest',
+        role: 'GUEST'
       },
-      {
-        name: 'Bệnh viện',
-        icon: 'local_hospital',
-        url: 'hospital',
-      },
+      // {
+      //   name: 'Bệnh viện',
+      //   icon: 'local_hospital',
+      //   url: 'hospital',
+      // },
       {
         name: 'Nhóm thiện nguyện',
         icon: 'group',
         url: 'group',
+        role: 'OPERATOR'
       },
-      {
-        name: 'Quản lí',
-        icon: 'inventory',
-        url: 'manage',
-      },
+      // {
+      //   name: 'Quản lí',
+      //   icon: 'inventory',
+      //   url: 'manage',
+      // },
     ];
   }
 
@@ -96,12 +98,14 @@ export class ContainerComponent implements OnInit {
   logout(){
     this.loginSuccess = false;
     this.authService.logout();
+    window.location.reload();
   }
 }
 type SideItem = {
   name: string;
   icon: string;
   url: string;
+  role: string;
 };
 
 function openSignupDialog() {

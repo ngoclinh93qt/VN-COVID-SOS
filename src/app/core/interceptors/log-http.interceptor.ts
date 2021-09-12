@@ -7,13 +7,17 @@ import {
   HttpResponseBase,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { prefixReq, prefixRes } from './http-config';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Injectable()
 export class LogHttpInterceptor implements HttpInterceptor {
+
+  constructor(private notification: NotificationService){}
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -53,6 +57,8 @@ export class LogHttpInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     started: number
   ) {
+    console.log(event)
+    this.notification.error("Bạn cần phải đăng nhập")
     if (event instanceof HttpErrorResponse) {
       console.groupCollapsed(`${prefixRes} Log Http Response Error`);
       const elapsed = Date.now() - started;

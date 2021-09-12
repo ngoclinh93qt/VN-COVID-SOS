@@ -1,0 +1,38 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+  <h1 mat-dialog-title style="font-size: 22px; font-weight: bold">
+    Xác thực yêu cầu<ul></ul>
+  </h1>
+  <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+</div>
+<div mat-dialog-content style="overflow: hidden; padding-top: 15px">
+  <form (submit)="onSubmit(form.value)" #form="ngForm">
+      <mat-form-field style="width: 100%" appearance="outline">
+      <mat-label>Trạng thái</mat-label>
+      <mat-select ngModel name="status" required>
+        <mat-option *ngFor="let status of statusList" [value]="status"
+          >{{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <sos-input
+      ngModel
+      name="note"
+      matInput
+      placeholder="Viết mô tả"
+      value=""
+      label="Mô tả xác thực"
+    ></sos-input>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+      <button
+        mat-flat-button
+        type="submit"
+        style="border-radius: 5rem"
+        color="accent"
+        (click)="checkSubmit(form)"
+        cdkFocusInitial
+      >
+        Xác thực
+      </button>
+    </div>
+  </form>
+</div>

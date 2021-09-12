@@ -13,6 +13,8 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
@@ -24,6 +26,7 @@ import { S3Service } from 'src/app/core/services/s3.service';
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
+  @ViewChild('content') private myScrollContainer!: ElementRef;
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
@@ -67,8 +70,14 @@ export class RequestFormComponent implements OnInit {
     });
   }
   async onSubmit(data: ISOSRequest) {
+    console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
+    const user = this.StorageService.userInfo;
+    if (user!== null && user?.role !== 'GUEST') {
+      data.requester_type = 'user';
+      data.requester_id = user.id;
+    }
     data.location = this.location;
     if (!data.support_types) data.support_types = [];
     if (!data.requester_object_status) data.requester_object_status = [];
@@ -96,28 +105,21 @@ export class RequestFormComponent implements OnInit {
 
   ngOnInit() {
     var l: string = '';
-    let data = this.StorageService.getLocation();
+    let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);
-  }
-
-  uploadImage(){
-
-    
-
   }
 
   pickLocation() {
     this.isShowmap = !this.isShowmap;
     if (this.isShowmap && !this.isMapCreated) {
-      let map: google.maps.Map, infoWindow: google.maps.InfoWindow;
       this.isMapCreated = true;
-      let loader = new Loader({
+      const loader = new Loader({
         apiKey: environment.googleApiKey,
       });
 
       loader.load().then(() => {
-
-        map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
+        
+        const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
           center: this.StorageService.getLocation(),
           zoom: 15,
           styles: environment.mapStyle,
@@ -128,18 +130,15 @@ export class RequestFormComponent implements OnInit {
           draggable: true //make it draggable
         });
 
-        infoWindow = new google.maps.InfoWindow();
+        const infoWindow = new google.maps.InfoWindow();
         google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
           var clickedLocation = event.latLng;
-          //If the marker hasn't been added.
           if (!marker) {
-            //Create the marker.
             marker = new google.maps.Marker({
               position: clickedLocation,
               map: map,
               draggable: true //make it draggable
             });
-            //Listen for drag events!
           }
         })
 
@@ -156,6 +155,7 @@ export class RequestFormComponent implements OnInit {
     console.log(event.target.files[0])
     let file = event.target.files[0]
     this.s3Service.uploadImage(file).subscribe(res => {
+      this.myScrollContainer.nativeElement.scrollTop = Math.max(0, this.myScrollContainer.nativeElement.scrollHeight - this.myScrollContainer.nativeElement.offsetHeight);
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res
@@ -180,5 +180,4 @@ export class RequestFormComponent implements OnInit {
   deleteImg(order: number){
     this.medias.splice(order,1)
   }
-
 }

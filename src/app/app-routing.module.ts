@@ -25,38 +25,38 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       // { path: '', redirectTo: 'news', pathMatch: 'full' },
-      {
-        path: 'news',
-        loadChildren: () =>
-          import('./modules/news/news.module').then((m) => m.NewsModule),
-      },
-      {
-        path: 'manage',
-        loadChildren: () =>
-          import('./modules/manage/manage.module').then((m) => m.ManageModule),
-      },
-      {
-        path: 'hospital',
-        loadChildren: () =>
-          import('./modules/hospital/hospital.module').then(
-            (m) => m.HospitalModule
-          ),
-      },
+      // {
+      //   path: 'news',
+      //   loadChildren: () =>
+      //     import('./modules/news/news.module').then((m) => m.NewsModule),
+      // },
+      // {
+      //   path: 'manage',
+      //   loadChildren: () =>
+      //     import('./modules/manage/manage.module').then((m) => m.ManageModule),
+      // },
+      // {
+      //   path: 'hospital',
+      //   loadChildren: () =>
+      //     import('./modules/hospital/hospital.module').then(
+      //       (m) => m.HospitalModule
+      //     ),
+      // },
       {
         path: 'group',
         loadChildren: () =>
           import('./modules/group/group.module').then((m) => m.GroupModule),
       },
-      {
-        path: 'blocked',
-        loadChildren: () =>
-          import('./modules/blocked/blocked.module').then((m) => m.BlockedModule),
-      },
-      {
-        path: 'home',
-        loadChildren: () =>
-          import('./modules/home/home.module').then((m) => m.HomeModule),
-      },
+      // {
+      //   path: 'blocked',
+      //   loadChildren: () =>
+      //     import('./modules/blocked/blocked.module').then((m) => m.BlockedModule),
+      // },
+      // {
+      //   path: 'home',
+      //   loadChildren: () =>
+      //     import('./modules/home/home.module').then((m) => m.HomeModule),
+      // },
       {
         path: 'urgentRequest',
         loadChildren: () =>
@@ -64,6 +64,8 @@ const routes: Routes = [
             (m) => m.UrgentRequestModule
           ),
       },
+
+    { path: '**', redirectTo: 'urgentRequest' }
     ],
   },
   { path: '**', redirectTo: 'login' },

@@ -19,7 +19,10 @@ export class S3Service extends RestService<IpresignedUrl> {
   uploadImage(file: File): Observable<string>{
     return this.getPresignerdUrl('sos_bucket').pipe(
       switchMap(res => this.uploadS3WithSigned(res, file).pipe(
-        map(_ => res.split('?')[0])
+        map(_ => {
+          console.log(res, res.split('?')[0])
+          return res.split('?')[0]
+        })
       ))
     )
   }
@@ -29,7 +32,7 @@ export class S3Service extends RestService<IpresignedUrl> {
   }
 
   uploadS3WithSigned(url: string, file: File): Observable<any>{
-    return this.http.put(`${url}`, file)
+    return this.http.put(url, file)
   }
   
 

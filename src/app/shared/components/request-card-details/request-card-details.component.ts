@@ -1,3 +1,5 @@
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { NewsService } from 'src/app/core/http/news.service';
 import { SupportObjectService } from '../../../core/http/support-object.service';
 import { TransFormComponent } from './../trans-form/trans-form.component';
@@ -12,6 +14,7 @@ import {
   Output,
   EventEmitter,
   Inject,
+  ViewChild,
 } from '@angular/core';
 import {
   MatDialog,
@@ -20,6 +23,14 @@ import {
 } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { ProposeRequestComponent } from './propose-request/propose-request.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { NotificationService } from '../notification/notification.service';
+import * as dayjs from 'dayjs';
+import { group } from '@angular/animations';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-request-card-details',
@@ -27,44 +38,62 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
-  lastestComment: { content: string; postTime: string }[];
-  mapPriority = new Map();
-  mapStatus = new Map();
+  
+  @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
+  supporters: any[] = [];
+  lastestComment: { content: string; postTime: string; }[] | undefined;
+
+  new_status: String = '';
+  cur_status?: String = this.request.status;
+  isOpen: boolean = false;
+  status: string[] = ['verified', 'accepted', 'rejected'];
+  mapStatus!: Map<string, IBaseStatus>; 
+  mapSupportStatus!: Map<string, IBaseStatus>;
+  mapPriority: any
   news: INew[] = [];
+  user: any;
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
-    subject: ' ',
+    subject: 'new_comment',
     content: '',
     target_type: 'sos_request',
     target_id: this.request.id,
   };
   onClose() {
-    this.dialogRef.close();
+    this.bottomRef.dismiss();
+  }
+  mark($event: any, action?: string) {
+    console.log(action);
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.UrgentRequestService.markRequest(this.request?.id,
+      { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
+      .subscribe((res) => {
+        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
+      })
   }
   constructor(
-    public dialogRef: MatDialogRef<RequestCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public request: ISOSRequest,
+    public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
-    private SupportObjectService: SupportObjectService
+    private SupportObjectService: SupportObjectService,
+    private UrgentRequestService: UrgentRequestService,
+    private StorageService: StorageService,
+    private ConstantsService: ConstantsService,
+    private storageService: StorageService,
+    private notification: NotificationService
   ) {
+    if (this.request.status === 'open') {
+      this.isOpen = true;
+    }
     this.supportObject = this.SupportObjectService.getSupportObjectByType(
       this.request.support_types!
     );
     this.initalize();
     this.fetchInit();
-    this.lastestComment = [
-      {
-        content: 'Hôm nay đã gửi đến 200 giường bệnh, 1000 khẩu trang.',
-        postTime: '10:30 AM . Hôm nay',
-      },
-      {
-        content: 'Đã gửi đến 100 máy thở',
-        postTime: '10:30 AM . Hôm nay',
-      },
-    ];
   }
   show(data: any) {
     let content = data.target.value;
@@ -84,21 +113,84 @@ export class RequestCardDetailsComponent implements OnInit {
     );
   }
   initalize() {
-    this.mapPriority.set('high', 'Rất nguy cấp');
-    this.mapPriority.set('normal', 'Nguy cấp');
-    this.mapPriority.set('', 'Nguy cấp');
-    this.mapStatus.set('', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('waiting', 'Đang chờ hỗ trợ');
-    this.mapStatus.set('supporting', 'Đang được hỗ trợ');
+    this.mapPriority = this.ConstantsService.MAP_PRIORITY
+    this.mapStatus = this.ConstantsService.REQUEST_STATUS
   }
   openDialog(): void {
+    if (!this.StorageService.token) {
+      this.notification.error("Đăng nhập hoặc đăng kí để tham gia.")
+      return
+    }
     const dialogRef = this.dialog.open(JoinRequestComponent, {
       data: { request_id: this.request.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
+      if(result != null){
+        this.supporters = result.supporters
+      }
     });
+  }
+
+  updateSupportStatus(item: string){
+    const status = this.mapSupportStatus.get(item)?.status || ''
+    this.UrgentRequestService.updateSupporterStatus(
+      this.request.id || '',
+      {
+        type: 'group',
+        supporter_id: this.storageService.userInfo.groups[0].id,
+        support_status: status
+      }
+    ).subscribe(result => {
+      this.supporters = result.supporters || []
+    });
+  }
+
+  getStatusView(map: Map<string, IBaseStatus>): string{
+    return map.get(this.request?.status || '')?.status_view || ''
+  }
+
+  getStatusSteps(map: Map<string, IBaseStatus>): string[]{
+    return map.get(this.request?.status || '')?.next_step || []
+  }
+
+  getStatusString(map: Map<string, IBaseStatus>): string {
+    return map.get(this.request?.status || '')?.status || ''
+  }
+  updateRequestStatus(item: string){
+    console.log(this.mapStatus.get(item))
+    const status = this.mapStatus.get(item)?.status || ''
+    this.UrgentRequestService.verifyRequest(
+      this.request.id || '',
+      {
+        status,
+        note: ''
+      }
+    ).subscribe(result => {
+      this.request = result
+    });
+  }
+
+  openProposeDialog(): void {
+    const dialogRef = this.dialog.open(ProposeRequestComponent, {
+      data: { request_id: this.request.id },
+    });
+  }
+
+  openConfirmDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { request_id: this.request.id, status: this.request.status },
+    });
+  }
+  setStatus(status: string): void {
+    this.new_status = status;
+  }
+  confirmStatus(): void {
+    this.UrgentRequestService.verifyRequest(this.request.id, {
+      status: this.new_status,
+    }).subscribe();
+    this.cur_status = this.new_status;
+    this.isOpen = false;
   }
   openTransDialog(): void {
     const dialogRef = this.dialog.open(TransFormComponent, {
@@ -124,6 +216,7 @@ export class RequestCardDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
+    this.user = this.StorageService.userInfo;
   }
 }
 @Component({
@@ -134,14 +227,15 @@ export class RequestCardDetailsComponent implements OnInit {
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
   joinRequest: IJoinRequest = {
-    type: 'user',
-    supporter_id: 'customerc74de9034800804c5be2197f986ec520',
+    type: 'group',
+    supporter_id: '',
   };
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<JoinRequestComponent>,
     private SupportTypesService: SupportTypesService,
-    private UrgentRequestService: UrgentRequestService
+    private UrgentRequestService: UrgentRequestService,
+    private storageService: StorageService
   ) {
     this.SupportTypesService.findAll().subscribe(
       (result) => (this.supportTypes = result)
@@ -150,13 +244,14 @@ export class JoinRequestComponent {
   async onSubmit(data: any) {
     console.log(data);
     this.joinRequest.description = data.description;
-    this.joinRequest.support_date = data.support_date;
-    console.log(this.joinRequest);
+    this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
+   this.joinRequest.supporter_id = this.storageService.userInfo.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest
-    ).subscribe();
-    this.dialogRef.close();
+    ).subscribe(result => {
+      this.dialogRef.close(result);
+    });
   }
   onNoClick(): void {
     this.dialogRef.close();
