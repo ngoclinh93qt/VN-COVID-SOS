@@ -11,7 +11,13 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set release version
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.deploy_version  }}
+      - 
+        name: Set release version
         run: |
           pwd
           sed -i 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-prod.yml
