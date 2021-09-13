@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Set release version
         run: |
-          sed 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-prod.yml > ./k8s/deploy.yml
+          sed -i 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-prod.yml
       -
         name: Push to k8s
         uses: steebchen/kubectl@v2.0.0
