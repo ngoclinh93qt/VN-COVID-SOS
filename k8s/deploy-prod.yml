@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ghcr.io/sos-hub-vn/sos-website:latest
+          image: ghcr.io/sos-hub-vn/sos-website:$<<version>>
           ports:
             - containerPort: 80
       imagePullSecrets:
