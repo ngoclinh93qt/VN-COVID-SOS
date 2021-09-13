@@ -17,12 +17,11 @@ jobs:
       - 
         name: Set release version
         run: |
-          pwd
           sed -i 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-prod.yml
       -
         name: Push to k8s
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.VINACIS_KUBE_CONFIG }}
-          command: apply -f ./k8s/deploy.yml
+          command: apply -f ./k8s/deploy-prod.yml
       
