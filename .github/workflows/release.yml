@@ -6,15 +6,9 @@ on:
       deploy_version:
         description: 'The version to be deployed (tag name, ex: v1.0)'
         required: true
-      deploy_password:
-        description: 'The password to trigger the deployment'
-        required: true
 
 jobs:
   docker:
-    env:
-      DEPLOYMENT_PASSWORD: secrets.DEPLOYMENT_PASSWORD
-    if: ${{ github.event.inputs.deploy_password }} == ${{ env.DEPLOYMENT_PASSWORD }}
     runs-on: ubuntu-latest
     steps:
       -
