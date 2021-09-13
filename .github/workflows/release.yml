@@ -12,7 +12,9 @@ on:
 
 jobs:
   docker:
-    if: ${{ github.event.inputs.deploy_password }} == ${{ secrets.DEPLOYMENT_PASSWORD }}
+    env:
+      DEPLOYMENT_PASSWORD: secrets.DEPLOYMENT_PASSWORD
+    if: ${{ github.event.inputs.deploy_password }} == ${{ DEPLOYMENT_PASSWORD }}
     runs-on: ubuntu-latest
     steps:
       -
