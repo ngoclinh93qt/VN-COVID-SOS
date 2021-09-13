@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Set release version
         run: |
+          pwd
           sed -i 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-prod.yml
       -
         name: Push to k8s
