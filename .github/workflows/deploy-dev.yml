@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'kube-config'
 
 jobs:
   docker:
@@ -34,4 +35,11 @@ jobs:
           push: true
           tags: |
             ghcr.io/sos-hub-vn/sos-website:dev-latest
-            ghcr.io/sos-hub-vn/sos-website:dev-1.0.0
+            ghcr.io/sos-hub-vn/sos-website:dev-1.0.0      
+      -
+        name: Push to k8s
+        uses: steebchen/kubectl@v2.0.0
+        with:
+          config: ${{ secrets.VINACIS_KUBE_CONFIG }}
+          command: apply -f ./k8s/deploy-dev.yml
+      
