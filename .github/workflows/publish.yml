@@ -15,7 +15,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.deploy_version  }}
+          ref: 'origin/master'
       - 
         name: Set release version
         run: |
