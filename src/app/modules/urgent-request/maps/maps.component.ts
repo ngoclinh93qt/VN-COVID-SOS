@@ -38,7 +38,7 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, private ConstantsService:ConstantsService,
+  constructor(private StorageService: StorageService, private constantsService:ConstantsService,
     private bottomsheet: MatBottomSheet) {
     console.log(this.requests);
   }
@@ -48,7 +48,7 @@ export class MapsComponent implements OnInit, OnChanges {
     }
   }
   addMarker = (request: ISOSRequest, chooseRequest: Function) => {
-    const icon = (color: string = this.ConstantsService.DEFAULT_REQUEST_COLOR) => {
+    const icon = (color: string = this.constantsService.DEFAULT_REQUEST_COLOR) => {
       return asset.createMarker(color)
     };
     var location = request?.location?.split(',');
