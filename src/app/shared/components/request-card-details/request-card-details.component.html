@@ -118,10 +118,33 @@
   </section> -->
   <section fxFlex="35" class="p-1 comment_sestion" style="padding: 3.5vw">
     <p style="font-weight: bold; font-size: 17px">Bình luận</p>
-    <sos-input (keyup.enter)="show($event)" label="Viết bình luận..."></sos-input>
-
-    <div *ngFor="let new of news" style="margin-bottom: 15px">
-      <app-comment [new]="new"></app-comment>
+    <div class="comment-block">
+      <mat-form-field appearance="fill">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="3"
+                  placeholder="Viết bình luận...."
+                  value="{{content.value}}"
+                  #content></textarea>
+      </mat-form-field>
+      <div class="preFile" *ngIf="preUploadFile">
+        <div class="content-prefile">
+          <mat-icon (click)="preUploadFile = null">close</mat-icon>
+          <img src="{{preUploadFile}}" alt="">
+        </div>
+      </div>
+      <button mat-flat-button color="accent" (click)="show(content)" cdkFocusInitial>Đăng bình luận</button>
+      <div class="fileUpload btn btn--browse">
+        <mat-icon>add_a_photo</mat-icon>
+        <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event)"> 
+      </div>
+    </div>
+    <div class="comment-list scrollable">
+      <div *ngFor="let new of news" style="margin-bottom: 15px">
+        <app-comment [new]="new"></app-comment>
+      </div>
     </div>
   </section>
 </div>

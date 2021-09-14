@@ -28,7 +28,7 @@
     position: absolute;
     z-index: 2;
   }
-  .request_sesstion{
+  .request_sesstion {
     position: relative;
   }
   .img_container {
@@ -60,8 +60,8 @@ a {
   }
 }
 
-.mat-chip{
-  background-color:#FCE7E5 ;
+.mat-chip {
+  background-color: #fce7e5;
 }
 
 .circle {
@@ -69,6 +69,99 @@ a {
   height: 10px;
   width: 20px !important;
 }
-.status-btn{
+.status-btn {
   border-radius: 20px;
+}
+
+.comment_sestion {
+  .comment-list{
+    max-height: 60vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    @media(max-width: 599px){
+      max-height: 300px!important;
+    }
+  }
+  .comment-block{
+    margin-bottom: 20px;
+    position: relative;
+    height: 200px;
+    ::ng-deep .mat-form-field {
+      width: 100%;
+      height: 100%;
+      .mat-form-field-wrapper,
+      .mat-form-field-flex {
+        height: 100%;
+      }
+      .mat-form-field-flex {
+        background-color: unset;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        padding-right: 40px;
+      }
+      .mat-form-field-underline {
+        display: none;
+      }
+      textarea {
+        height: 100%;
+      }
+    }
+    button {
+      border-radius: 5rem;
+      margin-right: 4px;
+      font-size: 16px;
+      height: 35px;
+      left: 15px;
+      bottom: 15px;
+      position: absolute;
+    }
+    .fileUpload{
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        width: 25px;
+      }
+      .btn--browse {
+        color: #000000;
+        font-size: 14px;
+        text-decoration: underline;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+      }
+    }
+    .preFile{
+      position: absolute;
+      width: 90px;
+      bottom: 10px;
+      right: 30px;
+      .content-prefile{
+        position: relative;
+        mat-icon{
+          position: absolute;
+          right: -15px;
+          top: -15px;
+          background-color: rgba($color: #ddd, $alpha: .3);
+          border: unset;
+          border-radius: 50%;
+          padding: 5px;
+        }
+      }
+      img{
+        width: 100%;
+      }
+    }
+  }
 }

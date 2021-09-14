@@ -1,10 +1,9 @@
 <div class="card">
-  <b style="font-size: x-small; font-weight: bold;"
-    >{{ new?.created_by_name }}:
-    <span style="color: grey; font-size: x-small">{{
-      new?.published_time
-    }}</span></b
-  >
-  <p style="font-weight: bold;">{{ new?.content }}</p>
-  <div style="width: 100%; text-align: right;"></div>
+  <div class="member">
+    {{ new?.created_by_name }}<span>{{ new?.published_time | date:'HH:mm . dd/MM/YYYY'}}</span>
+  </div>
+  <p>
+    <img *ngFor="let item of new?.medias" src="{{item.url}}" alt="">
+    {{new?.content}}
+  </p>
 </div>
