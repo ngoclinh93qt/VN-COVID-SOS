@@ -1,7 +1,8 @@
+import { LocationService } from './../../../shared/subjects/location.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { NgForm } from '@angular/forms';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { RequesterObjectStatusService } from '../../../core/http/requester-object-status.service';
 import { UrgentRequestService } from '../../../core/http/urgent-request.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,6 +14,9 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
+  ElementRef,
+  ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
@@ -44,7 +48,8 @@ export class RequestFormComponent implements OnInit {
   imagesUploaded: string[] = [];
   medias: IMedias[] = [];
   user: any;
-  name: string = 'asdasdasd'
+  name: string = ''
+  subscription: Subscription | undefined
   onClose(): void {
     if (!this.onPickFile)
       this.dialogRef.close();
@@ -59,9 +64,14 @@ export class RequestFormComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestFormComponent>,
     private UrgentLevelService: UrgentLevelService,
     private s3Service: S3Service,
+    private LocationService: LocationService
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
+    console.log("formConstruct");
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   fetchInit() {
@@ -82,8 +92,6 @@ export class RequestFormComponent implements OnInit {
     console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
-    data.requester_type = '';
-    data.medias = [];
     const user = this.StorageService.userInfo;
     if (user!= null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
@@ -111,14 +119,17 @@ export class RequestFormComponent implements OnInit {
       }
     );
   }
-  setLocation(l: string) {
-    this.location = l;
+  setLocation(location: any) {
+    this.location = `${location.lat},${location.lng}`;
   }
 
   ngOnInit() {
+
+    console.log("formInit");
     var l: string = '';
-    let data = this.StorageService.setLocation();
-    this.setLocation(`${data.lat},${data.lng}`);
+    this.setLocation(this.StorageService.location);
+    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    // this.LocationService.updateLocation();
     this.user = this.StorageService.userInfo;
     if (this.user) {
       this.formProfile.value.name = this.user.last_name + ' ' + this.user.first_name
@@ -126,12 +137,6 @@ export class RequestFormComponent implements OnInit {
       this.formProfile.value.address = this.user.address
       console.log(this.formProfile.value);
     }
-  }
-
-  uploadImage(){
-
-    
-
   }
 
   pickLocation() {
@@ -145,12 +150,12 @@ export class RequestFormComponent implements OnInit {
       loader.load().then(() => {
 
         const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
-          center: this.StorageService.getLocation(),
+          center: this.StorageService.location,
           zoom: 15,
           styles: environment.mapStyle,
         });
         var marker = new google.maps.Marker({
-          position: this.StorageService.getLocation(),
+          position: this.StorageService.location,
           map: map,
           draggable: true //make it draggable
         });
@@ -170,14 +175,13 @@ export class RequestFormComponent implements OnInit {
         var self = this;
 
         google.maps.event.addListener(marker, 'dragend', () => {
-          self.setLocation(`${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`);
+          return self.setLocation(marker.getPosition());
         });
 
       });
     }
   }
   onFilePicked(event: any) {
-    this.dialogRef.disableClose = true;
     this.onPickFile = true;
     console.log(event.target.files[0])
     let file = event.target.files[0]
@@ -187,7 +191,6 @@ export class RequestFormComponent implements OnInit {
         url: res
       }]
       this.onPickFile = false;
-      this.dialogRef.disableClose = false;
     })
   }
 

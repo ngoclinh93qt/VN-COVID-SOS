@@ -1,4 +1,4 @@
-<div class="request_card-details style-3" fxLayout="row" fxLayout.xs="column">
+<div class="request_card-details scrollable" fxLayout="row" fxLayout.xs="column">
   <span style="position: absolute; right: 10px; top: 10px"><button (click)="onClose()" mat-icon-button
       aria-label="close Icon">
       <mat-icon>close</mat-icon>
@@ -57,7 +57,7 @@
         <h3>
           <b>{{ request?.subject }}</b>
         </h3>
-        <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
+        <mat-card-subtitle>{{create_time}}, {{distance}}</mat-card-subtitle>
         <br />
         <div *ngIf="pageEvent" style="margin-top: 15px">
           <section *ngIf="request?.medias?.[pageEvent.pageIndex]?.mime_type=='image'" class="img_container">

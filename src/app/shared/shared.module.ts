@@ -1,3 +1,4 @@
+import { LocationService } from './subjects/location.service';
 import { TransCardComponent } from './components/trans-card/trans-card.component';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -110,6 +111,7 @@ import { IfRoleDirective } from '../core/directives/if-role.directive';
     LoadingService,
     NotificationService,
     httpInterceptorProviders,
+    LocationService
   ],
 })
 export class SharedModule { }

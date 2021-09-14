@@ -5,8 +5,16 @@
 <form class="example-form" #form="ngForm">
   <h2><b>Gửi yêu cầu khẩn cấp</b></h2>
   <br />
-  <div class="content">
+  <div #content class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Người cần hỗ trợ là</mat-label>
+      <mat-select value="[]" ngModel name="requester_object_status" multiple>
+        <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Loại yêu cầu</mat-label>
       <mat-select ngModel name="support_types" multiple>
@@ -82,28 +90,21 @@
         <input matInput placeholder="Ghi chú" value="" />
       </mat-form-field>
     </fieldset>
-    <mat-form-field class="example-full-width" appearance="outline">
-      <mat-label>Người cần hỗ trợ là</mat-label>
-      <mat-select value="[]" ngModel name="requester_object_status" multiple>
-        <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
-          {{ status.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+
     <br />
 
-    <a 
-    style="cursor: pointer; color: red; margin: 10px 0;"
-    (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
+    <a style="cursor: pointer; color: red; margin: 10px 0;" (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
     <div [ngStyle]="{'display': isShowmap? 'block': 'none'}" class="map" id="mapx"></div>
     <br>
-   <div style="margin: 20px 0;">
-    <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
-    <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;" class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh</label>
-   </div>
+    <div style="margin: 20px 0;">
+      <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
+      <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;"
+        class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh/video</label>
+    </div>
     <br>
     <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
-      <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index" class="img-wrap">
+      <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index"
+        class="img-wrap">
         <button type="button" (click)="deleteImg(i)">
           <mat-icon>cancel</mat-icon>
         </button> 

@@ -73,7 +73,6 @@ button {
   color: red;
 }
 .request_items {
-  overflow-y: scroll;
   height: calc(100vh - 280px);
 }
 .request_items::-webkit-scrollbar {

@@ -1,16 +1,16 @@
 declare var System: any;
 interface IUser {
-  phone_number:String;
-  address?:String;
-  first_name?:String;
-  last_name?:String;
-  role?:String;
-  avatar?:String;
-  time_zone?:Date;
-  password?:String;
-  debug?:String;
-  confirm_code?:String;
-  groups?:[]
+  phone_number: String;
+  address?: String;
+  first_name?: String;
+  last_name?: String;
+  role?: String;
+  avatar?: String;
+  time_zone?: Date;
+  password?: String;
+  debug?: String;
+  confirm_code?: String;
+  groups?: []
 }
 
 interface INorUser {
@@ -60,7 +60,7 @@ interface IPublisher {
 interface IVolunteerGroup {
   id?: string;
   name?: string;
-  avatar?:String;
+  avatar?: String;
   address_info?: IAddressInfo;
   admin_id?: string;
   contact_info?: IContacInfo;
@@ -77,7 +77,10 @@ interface IVolunteerGroup {
   verify_info?: any;
   verify_status?: string;
 }
-
+interface ILocation {
+  lat: number;
+  lng: number;
+}
 interface IAddressInfo {
   address: string;
   district_code: number;
@@ -177,8 +180,8 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
-  is_bookmarked?:boolean;
-  is_group_bookmarked?:boolean;
+  is_bookmarked?: boolean;
+  is_group_bookmarked?: boolean;
   address_info?: IAddressInfo;
   contact_info?: IContacInfo;
   created_by?: string;
@@ -295,7 +298,7 @@ interface IHospitalPost {
   postTime?: string;
 }
 
-interface IUserProfile {}
+interface IUserProfile { }
 
 interface ICustomerProfile {
   addresses: [];
@@ -343,7 +346,7 @@ interface ITransaction {
   updated_time?: string;
 }
 
-interface IpresignedUrl{
+interface IpresignedUrl {
   expired_duration: number;
   url: string;
 }
@@ -355,5 +358,5 @@ interface IBaseStatus {
   next_step: string[]
   color?: string
   bg_color?: string
-  icon? :string
+  icon?: string
 }

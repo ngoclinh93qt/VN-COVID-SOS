@@ -39,7 +39,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
   styleUrls: ['./request-card-details.component.scss'],
 })
 export class RequestCardDetailsComponent implements OnInit {
-  
+
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string; }[] | undefined;
@@ -48,12 +48,12 @@ export class RequestCardDetailsComponent implements OnInit {
   cur_status?: String = this.request.status;
   isOpen: boolean = false;
   status: string[] = ['verified', 'accepted', 'rejected'];
-  mapStatus!: Map<string, IBaseStatus>; 
+  mapStatus!: Map<string, IBaseStatus>;
   mapSupportStatus!: Map<string, IBaseStatus>;
   mapPriority: any
   news: INew[] = [];
   user: any;
-  create_time:string='';
+  create_time: string = '';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
   defaultComment: INew = {
@@ -101,7 +101,7 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   show(data: any) {
     let content = data.target.value;
-    if(!this.storageService.userInfo){
+    if (!this.storageService.userInfo) {
       this.notification.error("Hãy đăng nhập hoặc đăng kí để được bình luận")
       return
     }
@@ -134,24 +134,24 @@ export class RequestCardDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result != null){
+      if (result != null) {
         this.request = result
       }
     });
   }
 
-  getStatusView(map: Map<string, IBaseStatus>): string{
+  getStatusView(map: Map<string, IBaseStatus>): string {
     return map.get(this.request?.status || '')?.status_view || ''
   }
 
-  getStatusSteps(map: Map<string, IBaseStatus>): string[]{
+  getStatusSteps(map: Map<string, IBaseStatus>): string[] {
     return map.get(this.request?.status || '')?.next_step || []
   }
 
   getStatusString(map: Map<string, IBaseStatus>): string {
     return map.get(this.request?.status || '')?.status || ''
   }
-  updateRequestStatus(item: string){
+  updateRequestStatus(item: string) {
     console.log(this.mapStatus.get(item))
     const status = this.mapStatus.get(item)?.status || ''
     this.UrgentRequestService.verifyRequest(
@@ -205,12 +205,15 @@ export class RequestCardDetailsComponent implements OnInit {
 
   // MatPaginator Output
   pageEvent: PageEvent = new PageEvent();
-
+  distance: string = ''
   ngOnInit(): void {
     this.length = this.request?.medias?.length!;
     this.pageEvent!.pageIndex = 0;
     this.user = this.StorageService.userInfo;
-    this.create_time=this.generalService.diffDate(new Date(this.request?.created_time!))
+    this.create_time = this.generalService.diffDate(new Date(this.request?.created_time!))
+    const RLocation = this.request?.location?.split(',')
+    const CLocation = this.StorageService.location;
+    this.distance = this.generalService.getDistanceFromLatLonInKm(parseFloat(RLocation![0]), parseFloat(RLocation![1]), CLocation.lat, CLocation.lng);
   }
 }
 @Component({
@@ -238,7 +241,7 @@ export class JoinRequestComponent {
       (result) => (this.supportTypes = result)
     );
     this.groups = this.storageService.userInfo?.groups || []
-    if(this.groups.length > 0){
+    if (this.groups.length > 0) {
       this.group_type = 'group'
     }
   }
@@ -246,7 +249,7 @@ export class JoinRequestComponent {
     this.joinRequest.type = this.group_type;
     this.joinRequest.description = data.description;
     this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-   this.joinRequest.supporter_id = this.group_type == 'user'?this.storageService.userInfo?.id:this.storageService.userInfo?.groups[0].id;
+    this.joinRequest.supporter_id = this.group_type == 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
     this.UrgentRequestService.join(
       this.data.request_id,
       this.joinRequest

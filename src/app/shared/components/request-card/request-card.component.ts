@@ -44,7 +44,7 @@ export class RequestCardComponent implements OnInit {
     this.user = this.StorageService.userInfo;
     this.createTime = this.GeneralService.diffDate(new Date(this.request?.created_time!))
     const RLocation = this.request?.location?.split(',')
-    const CLocation = this.StorageService.getLocation();
+    const CLocation = this.StorageService.location;
     this.distance = this.GeneralService.getDistanceFromLatLonInKm(parseFloat(RLocation![0]), parseFloat(RLocation![1]), CLocation.lat, CLocation.lng);
   }
 }

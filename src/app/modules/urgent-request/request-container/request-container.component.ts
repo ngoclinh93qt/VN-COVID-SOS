@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs';
+import { LocationService } from './../../../shared/subjects/location.service';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { RequesterObjectStatusService } from '../../../core/http/requester-object-status.service';
@@ -5,7 +7,7 @@ import { RequestStatusService } from '../../../core/http/request-status.service'
 import { SupportTypesService } from '../../../core/http/support-types.service';
 import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestFormComponent } from '../request-form/request-form.component';
 
@@ -14,7 +16,7 @@ import { RequestFormComponent } from '../request-form/request-form.component';
   templateUrl: './request-container.component.html',
   styleUrls: ['./request-container.component.scss'],
 })
-export class RequestContainerComponent implements OnInit {
+export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
   urgentLevels: IPriorityType[] = [];
@@ -33,18 +35,21 @@ export class RequestContainerComponent implements OnInit {
     support_types: [],
   };
   queryObject: any = {};
-  constructor( public dialog: MatDialog,
+  subscription: Subscription | undefined
+  constructor(public dialog: MatDialog,
     private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
     private RequestStatusService: RequestStatusService,
-    private RequesterObjectStatusService: RequesterObjectStatusService
+    private RequesterObjectStatusService: RequesterObjectStatusService,
+    private LocationService: LocationService
   ) {
     this.statuses = RequestStatusService.getRequestStatus();
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
   }
+
   params: IQueryPrams = {}
   paramsInit() {
     this.params = { limit: 20, offset: 0 }
@@ -101,15 +106,14 @@ export class RequestContainerComponent implements OnInit {
     this.filterObject.distance = dis;
     this.search();
   }
-  clearKey(){
-    this.filterObject.keyword=""
+  clearKey() {
+    this.filterObject.keyword = ""
   }
   setKey($event: any) {
     console.log($event.target.value);
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
-  
   search() {
     this.queryObject = {
       ...this.filterObject,
@@ -147,11 +151,12 @@ export class RequestContainerComponent implements OnInit {
       console.log(result);
     });
   }
- 
+
   openCreateForm(): void {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: {},
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -159,11 +164,18 @@ export class RequestContainerComponent implements OnInit {
       console.log(result);
     });
   }
-  ngOnInit(): void {
-    console.log(this.requests);
-    let data = this.StorageService.setLocation();
+  setLocation(data: any) {
+    console.log("set location: ", data)
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
+  }
+  ngOnInit(): void {
+    this.setLocation(this.StorageService.location);
+    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    this.LocationService.updateLocation();
     this.search();
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }
