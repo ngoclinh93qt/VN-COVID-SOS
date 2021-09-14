@@ -41,6 +41,9 @@ import { ConfirmDialogComponent } from './components/request-card-details/confir
 import { RequestContainerComponent } from './components/request-container/request-container.component';
 import { ScrollTrackerDirective } from './directives/scroll-tracker.directive';
 import { ResetPasswordFrameComponent } from './components/reset-password-frame/reset-password-frame.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { IfNotRoleDirective } from '../core/directives/if-not-role.directive';
+import { IfRoleDirective } from '../core/directives/if-role.directive';
 @NgModule({
   declarations: [
     CardComponent,
@@ -67,6 +70,8 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     RequestContainerComponent,
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
+    IfRoleDirective,
+    IfNotRoleDirective
   ],
   imports: [
     CommonModule,
@@ -76,6 +81,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatMenuModule
   ],
   exports: [
     CardComponent,
@@ -96,6 +102,8 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
     RequestContainerComponent,
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
+    IfRoleDirective,
+    IfNotRoleDirective
   ],
   providers: [
     HttpClientModule,

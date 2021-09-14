@@ -13,6 +13,10 @@ export class NotificationService {
     this.openSnackBar('info', message, 'infoNotif');
   }
 
+  success(message: string) {
+    this.openSnackBar('success', message, 'successNotif');
+  }
+
   warn(message: string) {
     this.openSnackBar('warn', message, 'warnNotif');
   }
@@ -35,9 +39,9 @@ export class NotificationService {
   }
 }
 
-export type NotificationType = 'info' | 'warn' | 'error';
+export type NotificationType = 'info' | 'success' | 'warn' | 'error';
 
 export type NotificationData = {
-  type: 'info' | 'warn' | 'error';
+  type: 'info'| 'success' | 'warn' | 'error';
   message: string;
 };

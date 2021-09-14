@@ -1,7 +1,12 @@
 .search-icon {
-  position: relative;
-  top: 15px;
+  position: absolute;
+  top: 14px;
   left: 12px;
+}
+.clear-icon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
 }
 .search-form {
   display: inline-block;
@@ -26,7 +31,7 @@ button {
   font-size: 14px;
   background: none;
   color: #5a6674;
-  width: 70%;
+  width: calc(100% - 80px);
   height: 20px;
   border: none;
   -webkit-appearance: none;
@@ -39,9 +44,13 @@ button {
   appearance: none;
 }
 .request_session {
+  position: relative;
   span {
     float: right;
   }
+}
+.menuTrigger {
+  margin-top: 10px;
 }
 .mat-menu-item {
   .mat-icon.checked {

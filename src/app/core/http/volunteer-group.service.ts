@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Blocked } from 'src/app/modules/blocked/model/blocked.model';
+import { map } from 'rxjs/operators';
 
 import { RestService } from './rest.service';
 @Injectable({
@@ -23,6 +23,28 @@ export class VolunteerGroupService extends RestService<IVolunteerGroup> {
   getGroup() {
     return this.groups;
   }
+
+  addMemberGroup(groupId: any, body: any){
+    return this.http.post<{ data: any}>(`${this.host}/groups/${groupId}/members`, body).pipe(
+      map((res) => {
+        return res.data;
+      })
+    );
+  }
+
+  removeMemberGroup(groupId: any, body: any){
+    return this.http.delete<{ data: any}>(`${this.host}/groups/${groupId}/members`, {body: body}).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
+  delete(id: string){
+    return this.http.delete(`${this.host}/groups/${id}`);
+  }
+
+
 
   groups: IVolunteerGroup[] = [
     {

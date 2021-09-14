@@ -1,9 +1,10 @@
 <div class="card">
-  <b>{{ new?.created_by_name }}: {{ new?.subject }}</b>
-  <p>{{ new?.content }}</p>
-  <div style="width: 100%; text-align: right;">
-    <span style="color: grey; font-size: x-small;">{{
+  <b style="font-size: x-small; font-weight: bold;"
+    >{{ new?.created_by_name }}:
+    <span style="color: grey; font-size: x-small">{{
       new?.published_time
-    }}</span>
-  </div>
+    }}</span></b
+  >
+  <p style="font-weight: bold;">{{ new?.content }}</p>
+  <div style="width: 100%; text-align: right;"></div>
 </div>

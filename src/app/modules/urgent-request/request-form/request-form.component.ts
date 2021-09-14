@@ -17,18 +17,24 @@ import {
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
 import { S3Service } from 'src/app/core/services/s3.service';
-
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-request-form',
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
+  public formProfile: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    phone_number: new FormControl(''),
+    address: new FormControl(''),
+  });
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
     id: '',
   };
+  onPickFile: boolean = false;
   district: IDistrict = { code: 0 };
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
@@ -36,9 +42,12 @@ export class RequestFormComponent implements OnInit {
   isShowmap = false;
   isMapCreated = false;
   imagesUploaded: string[] = [];
-  medias: IMedias[] = []
+  medias: IMedias[] = [];
+  user: any;
+  name: string = 'asdasdasd'
   onClose(): void {
-    this.dialogRef.close();
+    if (!this.onPickFile)
+      this.dialogRef.close();
     console.log('closeForm');
   }
   constructor(
@@ -60,19 +69,23 @@ export class RequestFormComponent implements OnInit {
       this.provinces = result;
     });
     this.SupportTypesService.findAll().subscribe((result) => {
-      this.supportTypes = result;
+      this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
+      console.log(this.supportTypes);
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
-      this.requesterObjectStatus = result;
+      this.requesterObjectStatus = result.map(x => { return { name: x.name, type: x.key } });
+      console.log(this.requesterObjectStatus);
     });
   }
-  async onSubmit(data: ISOSRequest) {
+  onSubmit(data: ISOSRequest) {
+    console.log(data)
+    console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
     data.requester_type = '';
     data.medias = [];
     const user = this.StorageService.userInfo;
-    if (user!== null && user.role !== 'GUEST') {
+    if (user!= null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
@@ -82,8 +95,9 @@ export class RequestFormComponent implements OnInit {
     console.log(data);
     this.UrgentRequestService.create(data, {}).subscribe();
   }
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.onClose();
+  checkSubmit(data: any, isAccepted: any) {
+    console.log(isAccepted._checked);
+    if (isAccepted._checked && data.status == 'VALID' && !this.onPickFile) { this.onSubmit(data.value); this.onClose(); }
   }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
@@ -105,6 +119,13 @@ export class RequestFormComponent implements OnInit {
     var l: string = '';
     let data = this.StorageService.setLocation();
     this.setLocation(`${data.lat},${data.lng}`);
+    this.user = this.StorageService.userInfo;
+    if (this.user) {
+      this.formProfile.value.name = this.user.last_name + ' ' + this.user.first_name
+      this.formProfile.value.phone_number = this.user.phone_number
+      this.formProfile.value.address = this.user.address
+      console.log(this.formProfile.value);
+    }
   }
 
   uploadImage(){
@@ -122,7 +143,7 @@ export class RequestFormComponent implements OnInit {
       });
 
       loader.load().then(() => {
-        
+
         const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
           center: this.StorageService.getLocation(),
           zoom: 15,
@@ -148,14 +169,16 @@ export class RequestFormComponent implements OnInit {
 
         var self = this;
 
-        google.maps.event.addListener(marker, 'dragend', ()=>{
+        google.maps.event.addListener(marker, 'dragend', () => {
           self.setLocation(`${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`);
         });
-     
+
       });
     }
   }
-  onFilePicked(event: any){
+  onFilePicked(event: any) {
+    this.dialogRef.disableClose = true;
+    this.onPickFile = true;
     console.log(event.target.files[0])
     let file = event.target.files[0]
     this.s3Service.uploadImage(file).subscribe(res => {
@@ -163,25 +186,27 @@ export class RequestFormComponent implements OnInit {
         mime_type: this.getFileType(file),
         url: res
       }]
+      this.onPickFile = false;
+      this.dialogRef.disableClose = false;
     })
   }
 
   getFileType(file: File): string {
 
-    if(file.type.match('image.*'))
+    if (file.type.match('image.*'))
       return 'image';
-  
-    if(file.type.match('video.*'))
+
+    if (file.type.match('video.*'))
       return 'video';
-  
-    if(file.type.match('audio.*'))
+
+    if (file.type.match('audio.*'))
       return 'audio';
-  
+
     return 'other';
   }
 
-  deleteImg(order: number){
-    this.medias.splice(order,1)
+  deleteImg(order: number) {
+    this.medias.splice(order, 1)
   }
 
 }

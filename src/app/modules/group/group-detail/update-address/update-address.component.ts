@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { ProvinceService } from 'src/app/core/http/province.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 @Component({
   selector: 'app-update-address',
   templateUrl: './update-address.component.html',
@@ -18,7 +19,8 @@ export class UpdateAddressComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<UpdateAddressComponent>,
     private GroupService: VolunteerGroupService,
-    public ProvinceService: ProvinceService
+    public ProvinceService: ProvinceService,
+    private notification: NotificationService
   ) {
     this.fetchInit();
   }
@@ -27,13 +29,15 @@ export class UpdateAddressComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
-  }
-
   async onSubmit(data: string) {
-    console.log(data);
-    this.GroupService.update(this.group.id, data, {}).subscribe();
+    this.GroupService.update(this.group.id, data, {}).subscribe((data: any) => {
+      if(data){
+        this.notification.success("Sửa thông tin thành công");
+        this._dialogRef.close({data: data});
+        return;
+      }
+      this.notification.error("Sửa thông tin thất bại");
+    });
   }
 
   fetchInit() {

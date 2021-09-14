@@ -1,6 +1,6 @@
 <mat-card class="mat-elevation-z4">
   <mat-card-content fxLayout="row">
-    <img class="avatar" src="{{group?.avatar}}" alt="image" />
+    <img class="avatar" src="{{ group?.avatar == '' || group?.avatar == undefined ? 'assets/volunteer.png' : group?.avatar }}" alt="image" />
     <div class="mat-item">
       <p class="title">{{ group?.name }}</p>
       <p class="address">

@@ -2,9 +2,8 @@
   <button (click)="onClose()" mat-icon-button aria-label="close Icon">
     <mat-icon>close</mat-icon>
   </button></span>
-<form class="example-form" (submit)="onSubmit(form.value)" #form="ngForm">
+<form class="example-form" #form="ngForm">
   <h2><b>Gửi yêu cầu khẩn cấp</b></h2>
-
   <br />
   <div class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
@@ -29,16 +28,21 @@
     <h4><b>Thông tin người cần giúp đỡ</b></h4>
     <fieldset ngModelGroup="contact_info">
 
-      <mat-checkbox class="example-margin" name="show">Tôi đồng ý công khai số điện thoại để được liên hệ trợ giúp
+      <mat-checkbox class="example-margin" name="show" #isAccepted>Tôi đồng ý công khai số điện thoại để được liên hệ
+        trợ giúp
       </mat-checkbox>
-      <mat-form-field class="example-left-half-width" appearance="outline">
-        <mat-label>Họ và tên</mat-label>
-        <input ngModel name="name" matInput placeholder="Họ và tên" value="" required />
-      </mat-form-field>
+      <div>
+        <mat-form-field class="example-left-half-width" appearance="outline">
+          <mat-label>Họ và tên</mat-label>
+          <input [(ngModel)]="formProfile.value.name" value="{{formProfile.value.name}}" name="name" matInput placeholder="Họ và tên"
+             required />
+
+        </mat-form-field>
+      </div>
 
       <mat-form-field class="example-right-half-width" appearance="outline">
         <mat-label>Số điện thoại</mat-label>
-        <input ngModel name="phone_number" matInput placeholder="Số điện thoại" value="" required />
+        <input  [(ngModel)]="formProfile.value.phone_number" value="{{formProfile.value.phone_number}}" name="phone_number" matInput placeholder="Số điện thoại" value="" required />
       </mat-form-field>
 
     </fieldset>
@@ -71,7 +75,7 @@
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Địa chỉ</mat-label>
-        <input ngModel name="address" matInput placeholder="Số nhà, tên đường..." value="" required />
+        <input  [(ngModel)]="formProfile.value.address" value="{{formProfile.value.address}}" name="address" matInput placeholder="Số nhà, tên đường..." value="" required />
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Ghi chú địa chỉ:</mat-label>
@@ -102,17 +106,19 @@
       <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index" class="img-wrap">
         <button type="button" (click)="deleteImg(i)">
           <mat-icon>cancel</mat-icon>
-        </button>
-        <img width="100%" src="{{item.url}}" alt="">
+        </button> 
+        <div *ngIf="item.mime_type !== 'video'"><img width="100%" src="{{item.url}}" alt=""></div>
+        <div *ngIf="item.mime_type === 'video'">
+          <video width="100%">
+            <source src="{{item.url}}" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
   </div>
   <br />
-
-
   <div mat-dialog-actions class="submit-btn">
-    <button mat-flat-button type="submit" color="accent"
-      (click)="checkSubmit(form)" cdkFocusInitial>
+    <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form,isAccepted)" cdkFocusInitial>
       Gửi yêu cầu
     </button>
   </div>

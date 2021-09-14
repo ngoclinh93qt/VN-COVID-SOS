@@ -22,9 +22,6 @@ export class BusyInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       finalize(() => {
         this.busyService.stop();
-        console.groupCollapsed(`${prefixRes} Busy Spinner`);
-        console.log('Decrementing');
-        console.groupEnd();
       })
     );
   }

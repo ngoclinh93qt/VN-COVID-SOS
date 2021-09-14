@@ -1,6 +1,7 @@
 import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenService } from '../http/authen.service';
+import { UsersService } from '../http/users.service';
 import { StorageService } from '../services/storage.service';
 
 @Directive({
@@ -9,7 +10,7 @@ import { StorageService } from '../services/storage.service';
 export class IfRoleDirective implements OnInit, OnDestroy {
   private subscription: Subscription[] = [];
   // the role the user must have
-  @Input() public ifRoles: string = 'GUEST';
+  @Input() public ifRoles: string[] = ['GUEST'];
 
   /**
    * @param {ViewContainerRef} viewContainerRef -- the location where we need to render the templateRef
@@ -20,36 +21,21 @@ export class IfRoleDirective implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private templateRef: TemplateRef<any>,
     private storage: StorageService,
-    private loginService: AuthenService
+    private userService: UsersService
   ) { }
 
   public ngOnInit(): void {
     this.ifShow();
+    this.userService.userSubject.subscribe(result => this.ifShow(result))
   }
 
-  ifShow(){
-    let role: string = this.storage.userInfo?.role?.toUpperCase() || 'GUEST';
-    if (this.getRoleLevel(this.ifRoles) == 0 ) {
-      this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getRoleLevel(this.ifRoles) >= 1 && this.getRoleLevel(role) >=1 ){
-      this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getRoleLevel(this.ifRoles) >= 2 && this.getRoleLevel(role) >=2 ){
-      this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else if (this.getRoleLevel(this.ifRoles) >= 3 && this.getRoleLevel(role) >=3 ){
-      this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainerRef.clear();
-    }
-  }
+  ifShow(user?: IUser){
+    console.log(this.ifRoles)
+    let role: Role = (user? user:this.storage.userInfo)?.role?.toUpperCase() || 'GUEST';
 
-
-///higher-level roles can see elements of lower-level roles
-  getRoleLevel(role: string): number {
-    try {
-      return Role[role as keyof typeof Role]
-    } catch (error) {
-      console.error(`Type ${role} not available`)
-      return -1;
+    this.viewContainerRef.clear();
+    if(this.ifRoles.includes(role.toString())){
+      this.viewContainerRef.createEmbeddedView(this.templateRef);
     }
   }
 

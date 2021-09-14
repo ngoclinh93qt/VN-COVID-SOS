@@ -22,7 +22,6 @@ export class RequestContainerComponent implements OnInit {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
-
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -102,11 +101,15 @@ export class RequestContainerComponent implements OnInit {
     this.filterObject.distance = dis;
     this.search();
   }
+  clearKey(){
+    this.filterObject.keyword=""
+  }
   setKey($event: any) {
     console.log($event.target.value);
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
+  
   search() {
     this.queryObject = {
       ...this.filterObject,

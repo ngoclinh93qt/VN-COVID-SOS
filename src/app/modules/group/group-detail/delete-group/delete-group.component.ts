@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-delete-group',
@@ -14,7 +15,8 @@ export class DeleteGroupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<DeleteGroupComponent>,
     private GroupService: VolunteerGroupService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -25,8 +27,13 @@ export class DeleteGroupComponent implements OnInit {
   }
 
   async deleteGroup(){
-    this.GroupService.delete(this.group.id).subscribe();
-    this.CloseDialog();
-    this.router.navigate(['/group']);
+    this.GroupService.delete(this.group.id).subscribe((data: any) => {
+      if(data){
+        this.notification.success("Xoá nhóm thành công");
+        this._dialogRef.close({data: data});
+        return;
+      }
+      this.notification.error("Xoá nhóm thất bại");
+    });
   }
 }

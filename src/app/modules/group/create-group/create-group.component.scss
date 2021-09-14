@@ -1,12 +1,32 @@
-::ng-deep.mat-dialog-container {
+::ng-deep.diaglog-createGroup{
   width: 600px;
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 30px;
+  padding: 20px;
+  .mat-dialog-container{
+    box-shadow: unset;
+    border-radius: 10px;
+    overflow: hidden;
+  }
 }
 
 fieldset {
   margin: 0;
   padding: 0;
   border: none;
+}
+
+
+@media (max-width: 768px) {
+  ::ng-deep .diaglog-createGroup{
+    max-width: 90vw!important;
+    width: 90vw;
+    padding: 0;
+    .mat-dialog-container{
+      height: 400px;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
+    .mat-form-field-infix{
+      width: 100%;
+    }
+  }
 }

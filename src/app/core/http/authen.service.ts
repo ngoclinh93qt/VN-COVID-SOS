@@ -50,7 +50,6 @@ export class AuthenService extends RestService<IUser> {
     };
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
-        console.log(res);
         this.storage.token=res.auth_token;
         this.storage.userInfo=res.data;
         this.accessToken = res.auth_token;

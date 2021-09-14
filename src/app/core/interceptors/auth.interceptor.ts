@@ -13,37 +13,41 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthenService } from '../http/authen.service';
 import { StorageService } from '../services/storage.service';
+import { environment } from 'src/environments/environment';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginFrameComponent } from 'src/app/shared/components/login-frame/login-frame.component';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  authHeader: string | undefined
   constructor(
     private router: Router,
-    private sessionService: AuthenService,
-    private storageService: StorageService
+    private notificationService: NotificationService,
+    private storageService: StorageService,
+    public dialog: MatDialog,
   ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // const authHeader = this.sessionService.accessToken;
-    const authHeader = this.storageService.token;
-    if (authHeader == null) {
-      return next.handle(req).pipe(this.handleErrors);
+    this.authHeader = this.storageService.token;
+    if(!req.url.includes(environment.host)){
+      return next.handle(req).pipe(this.handleErrors.bind(this));
+    }
+    if (!this.authHeader) {
+      return next.handle(req).pipe(this.handleErrors.bind(this));
     }
     const authReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${authHeader}`,
+        Authorization: `Bearer ${this.authHeader}`,
         'Content-Type': 'application/json',
       },
       // withCredentials: true,
     });
 
-    console.groupCollapsed(`${prefixReq} 🔑 Auth`);
-    console.log(`Adding Auth header`);
-    console.groupEnd();
-    // Pass on the cloned request instead of the original request.
-    return next.handle(authReq).pipe(this.handleErrors);
+    return next.handle(authReq).pipe(this.handleErrors.bind(this));
   }
 
   handleErrors(source: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
@@ -55,12 +59,11 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   handle401(error: HttpErrorResponse) {
-    const authResHeader = error.headers.get('WWW-Authenticate') || '';
-    if (/is expired/.test(authResHeader)) {
-      this.router.navigate(['signin']);
-      // this.sessionService.refreshToken();
-    } else {
-      this.router.navigate(['authfailed']);
+    if (this.authHeader) {
+      this.notificationService.error("Đã hết hạn đăng nhập")
+      localStorage.clear();
+      this.dialog.open(LoginFrameComponent,
+        {panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px'})
     }
     return EMPTY;
   }

@@ -52,7 +52,7 @@ export class SupportObjectService {
   getSupportObjectByType(supportType: ISupportType[]) {
     let res: ISupport[] = [];
     supportType.forEach((support) => {
-      let x = this.SupportObjectMap.get(support.type);
+      let x = this.SupportObjectMap.get(support.type!);
       if (x != undefined) res.push(...x);
     });
     return res;

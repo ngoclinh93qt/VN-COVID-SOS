@@ -54,13 +54,21 @@ a {
   text-decoration-thickness: 2px;
   cursor: pointer;
 }
-
-
-@media only screen and (max-width: 600px) {
-  .request_sesstion {
-    border-right: none !important;
-    padding-top: 50px !important;
+@media screen and (max-width: 599px) {
+  .info_section {
+    width: 100% !important;
   }
 }
 
+.mat-chip{
+  background-color:#FCE7E5 ;
+}
 
+.circle {
+  font-size: 10px;
+  height: 10px;
+  width: 20px !important;
+}
+.status-btn{
+  border-radius: 20px;
+}

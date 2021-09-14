@@ -1,5 +1,6 @@
 import { ScrollTrackerDirective } from './../../directives/scroll-tracker.directive';
 import { Component, EventEmitter, Input, OnInit, Output, Directive } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RequestCardDetailsComponent } from '../request-card-details/request-card-details.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
@@ -27,7 +28,10 @@ export class RequestContainerComponent implements OnInit {
   chooseRequest(request: ISOSRequest) {
     const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
       data: request,
+      hasBackdrop: false
     });
+
+    dialogRef.afterDismissed().subscribe(res => this.requests = this.requests?.map(element => element.id === res.id? res: element ))
 
   }
 

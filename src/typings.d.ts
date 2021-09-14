@@ -165,12 +165,12 @@ interface IRequesterObjectStatus {
   content_type?: string;
   group?: string;
   id?: string;
-  key: string;
+  key?: string;
   name?: string;
   order?: number;
-  type: string;
+  type?: string;
   value?: string;
-  value_obj: object;
+  value_obj?: object;
 }
 interface ISupportType {
   name?: string;
@@ -199,9 +199,8 @@ interface ISOSRequest {
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
+  color_info?: any;
 }
-
-
 interface IMedias {
   mime_type?: string;
   url?: string;
@@ -224,6 +223,11 @@ interface IJoinRequest {
   supporter_id: string;
   support_date?: string;
   description?: string;
+}
+interface ISupporterUpdate {
+  type: string;
+  supporter_id: string;
+  support_status: string;
 }
 interface IBlocked {
   id?: string;
@@ -342,4 +346,14 @@ interface ITransaction {
 interface IpresignedUrl{
   expired_duration: number;
   url: string;
+}
+interface IBaseStatus {
+  action_view: string
+  action: string
+  status: string
+  status_view: string
+  next_step: string[]
+  color?: string
+  bg_color?: string
+  icon? :string
 }

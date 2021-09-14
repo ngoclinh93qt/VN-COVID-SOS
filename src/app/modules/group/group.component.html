@@ -4,6 +4,7 @@
     height="40"
     text="TẠO NHÓM"
     (click)="openDialog()"
+    *ifRoles="['ADMIN']"
   ></app-button>
 </div>
 <mat-divider></mat-divider>

@@ -1,0 +1,67 @@
+.container {
+  width: 400px;
+  overflow: hidden;
+  .search {
+    position: relative;
+    input {
+      width: 150px;
+      height: 40px;
+      border: 1px solid #eeeeee;
+      background-color: #eeeeee;
+      border-radius: 30px;
+      padding: 0 20px 0 50px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 400;
+      color: #757575;
+    }
+    mat-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 15px;
+    }
+  }
+  .items-member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    a {
+      color: #000000;
+      font-size: 14px;
+      text-decoration: underline;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      outline: none;
+      padding-bottom: 0;
+    }
+    &.none-member {
+      justify-content: center;
+    }
+    button {
+      background-color: #E11900;
+      border: unset;
+      border-radius: 30px;
+      height: 30px;
+      color: #ffffff;
+      font-size: 12px;
+      padding: 0 10px;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    ::ng-deep .mat-form-field-infix {
+      width: 100%;
+    }
+  }
+  ::ng-deep .addMember {
+    max-width: 90vw !important;
+    width: 90vw;
+  }
+}
