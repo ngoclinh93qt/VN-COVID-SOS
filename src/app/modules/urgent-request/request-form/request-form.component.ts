@@ -27,6 +27,7 @@ export class RequestFormComponent implements OnInit {
   location: string = '';
   provinces: IProvince[] = [];
   districts?: IDistrict[] = [];
+  wards?: IWards[] = [];
   province: IProvince = {
     id: '',
   };
@@ -89,14 +90,14 @@ export class RequestFormComponent implements OnInit {
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
-      console.log(this.province.districts![1].name);
-      this.districts = this.formatDistrict(this.province.districts)
+      this.districts = this.formatDistrict(this.province.districts);
     });
   }
   getDistrict(id?: number) {
     this.ProvinceService.getDistrict(this.province.id, id).subscribe(
       (result) => {
         this.district = result;
+        this.wards = this.formatWard(this.district.wards);
       }
     );
   }
@@ -115,6 +116,22 @@ export class RequestFormComponent implements OnInit {
       }
     }
     return districts;
+  }
+
+  formatWard(wards?: IWards[]) {
+    for (let i = 0; i < wards!.length; i++) {
+      const number = wards![i].name?.replace(/[^0-9]/g, '');
+      if (number?.length == 1) {
+        const index = wards![i].name?.indexOf(number);
+        const newname = [
+          wards![i].name?.slice(0, index),
+          '0',
+          wards![i].name?.slice(index),
+        ].join('');
+        wards![i].name = newname;
+      }
+    }
+    return wards;
   }
   setLocation(l: string) {
     this.location = l;
