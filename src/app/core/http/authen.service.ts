@@ -50,13 +50,20 @@ export class AuthenService extends RestService<IUser> {
     };
     return this.http.post(signinUrl, body).pipe(
       map((res: any) => {
-        this.storage.token=res.auth_token;
-        this.storage.userInfo=res.data;
+        this.storage.token = res.auth_token;
+        this.storage.userInfo = res.data;
         this.accessToken = res.auth_token;
         this._isLoggedIn = true;
         return res.data;
       })
     );
+  }
+
+  public autoSignin(authToken: string, userInfo: any) {
+    this.storage.token = authToken;
+    this.storage.userInfo = userInfo;
+    this.accessToken = authToken;
+    this._isLoggedIn = true;
   }
 
   refreshToken() {

@@ -1,15 +1,15 @@
+import { AuthenService } from 'src/app/core/http/authen.service';
 import { StorageService } from './../services/storage.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { RestService } from './rest.service';
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService extends RestService<IUser> {
-  constructor(http: HttpClient, private StorageService: StorageService) {
+  constructor(http: HttpClient, private StorageService: StorageService, private authService: AuthenService) {
     super(http, 'users');
   }
   userSubject = new Subject<IUser>();
@@ -47,14 +47,26 @@ export class UsersService extends RestService<IUser> {
         return res.data
       }));
   }
-
-  searchProfile(data: any){
+  searchProfile(data: any) {
     return this.http
       .post<{ data: any }>(`${this.host}/users/search`, data)
       .pipe(
         map((res) => {
           return res.data;
         })
+      );
+  }
+  forgotPassword(body: IUser, options: any): Observable<IUser> {
+    return this.http
+      .post<{ data: IUser }>(`${this.host}/forgot`, body)
+      .pipe(map((res) => res.data));
+  }
+  resetPassword(body: IUser, options: any): Observable<IUser> {
+    return this.http
+      .post<{ data: IUser, auth_token: string, access_token: string }>(`${this.host}/reset`, body)
+      .pipe(
+        tap(res => this.authService.autoSignin(res.auth_token, res.data)),
+        map((res) => res.data)
       );
   }
 }
