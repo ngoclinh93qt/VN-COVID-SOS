@@ -65,6 +65,7 @@ export class RequestCardDetailsComponent implements OnInit {
   };
   preUploadFile: any;
   file: any;
+  isActive: boolean = false;
   onClose() {
     this.bottomRef.dismiss(this.request);
   }

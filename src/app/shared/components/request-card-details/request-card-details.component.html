@@ -118,7 +118,7 @@
   </section> -->
   <section fxFlex="35" class="p-1 comment_sestion" style="padding: 3.5vw">
     <p style="font-weight: bold; font-size: 17px">Bình luận</p>
-    <div class="comment-block">
+    <div class="comment-block" (click)="isActive = true" [ngClass]="isActive == true ? 'active' : ''">
       <mat-form-field appearance="fill">
         <textarea matInput
                   cdkTextareaAutosize
@@ -131,7 +131,7 @@
       </mat-form-field>
       <div class="preFile" *ngIf="preUploadFile">
         <div class="content-prefile">
-          <mat-icon (click)="preUploadFile = null">close</mat-icon>
+          <mat-icon (click)="preUploadFile = null" aria-hidden="false">close</mat-icon>
           <img src="{{preUploadFile}}" alt="">
         </div>
       </div>
