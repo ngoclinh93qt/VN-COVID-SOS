@@ -19,6 +19,7 @@
       <span *ngIf="isShow == false" (click)="showPass(true)">hiện</span><span *ngIf="isShow == true"
         (click)="showPass(false)">ẩn</span>
     </div>
+    <p *ngIf='isError' style="color: red">Tên đăng nhập hoặc mật khẩu không chính xác</p>
     <div class="goto">
       <div class="item-goto">
         <input type="checkbox" name="" id="">

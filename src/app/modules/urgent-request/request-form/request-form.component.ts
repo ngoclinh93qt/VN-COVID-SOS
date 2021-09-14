@@ -26,6 +26,7 @@ import { S3Service } from 'src/app/core/services/s3.service';
 export class RequestFormComponent implements OnInit {
   location: string = '';
   provinces: IProvince[] = [];
+  districts?: IDistrict[] = [];
   province: IProvince = {
     id: '',
   };
@@ -36,7 +37,7 @@ export class RequestFormComponent implements OnInit {
   isShowmap = false;
   isMapCreated = false;
   imagesUploaded: string[] = [];
-  medias: IMedias[] = []
+  medias: IMedias[] = [];
   onClose(): void {
     this.dialogRef.close();
     console.log('closeForm');
@@ -49,7 +50,7 @@ export class RequestFormComponent implements OnInit {
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
     private UrgentLevelService: UrgentLevelService,
-    private s3Service: S3Service,
+    private s3Service: S3Service
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -72,7 +73,7 @@ export class RequestFormComponent implements OnInit {
     data.requester_type = '';
     data.medias = [];
     const user = this.StorageService.userInfo;
-    if (user!== null && user.role !== 'GUEST') {
+    if (user !== null && user.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
@@ -88,6 +89,8 @@ export class RequestFormComponent implements OnInit {
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
+      console.log(this.province.districts![1].name);
+      this.districts = this.formatDistrict(this.province.districts)
     });
   }
   getDistrict(id?: number) {
@@ -96,6 +99,22 @@ export class RequestFormComponent implements OnInit {
         this.district = result;
       }
     );
+  }
+
+  formatDistrict(districts?: IDistrict[]) {
+    for (let i = 0; i < districts!.length; i++) {
+      const number = districts![i].name?.replace(/[^0-9]/g, '');
+      if (number?.length == 1) {
+        const index = districts![i].name?.indexOf(number);
+        const newname = [
+          districts![i].name?.slice(0, index),
+          '0',
+          districts![i].name?.slice(index),
+        ].join('');
+        districts![i].name = newname;
+      }
+    }
+    return districts;
   }
   setLocation(l: string) {
     this.location = l;
@@ -107,11 +126,7 @@ export class RequestFormComponent implements OnInit {
     this.setLocation(`${data.lat},${data.lng}`);
   }
 
-  uploadImage(){
-
-    
-
-  }
+  uploadImage() {}
 
   pickLocation() {
     this.isShowmap = !this.isShowmap;
@@ -122,66 +137,71 @@ export class RequestFormComponent implements OnInit {
       });
 
       loader.load().then(() => {
-        
-        const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
-          center: this.StorageService.getLocation(),
-          zoom: 15,
-          styles: environment.mapStyle,
-        });
+        const map = new google.maps.Map(
+          document.getElementById('mapx') as HTMLElement,
+          {
+            center: this.StorageService.getLocation(),
+            zoom: 15,
+            styles: environment.mapStyle,
+          }
+        );
         var marker = new google.maps.Marker({
           position: this.StorageService.getLocation(),
           map: map,
-          draggable: true //make it draggable
+          draggable: true, //make it draggable
         });
 
         const infoWindow = new google.maps.InfoWindow();
-        google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
-          var clickedLocation = event.latLng;
-          if (!marker) {
-            marker = new google.maps.Marker({
-              position: clickedLocation,
-              map: map,
-              draggable: true //make it draggable
-            });
+        google.maps.event.addListener(
+          map,
+          'click',
+          function (event: { latLng: any }) {
+            var clickedLocation = event.latLng;
+            if (!marker) {
+              marker = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true, //make it draggable
+              });
+            }
           }
-        })
+        );
 
         var self = this;
 
-        google.maps.event.addListener(marker, 'dragend', ()=>{
-          self.setLocation(`${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`);
+        google.maps.event.addListener(marker, 'dragend', () => {
+          self.setLocation(
+            `${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`
+          );
         });
-     
       });
     }
   }
-  onFilePicked(event: any){
-    console.log(event.target.files[0])
-    let file = event.target.files[0]
-    this.s3Service.uploadImage(file).subscribe(res => {
-      this.medias = [...this.medias, {
-        mime_type: this.getFileType(file),
-        url: res
-      }]
-    })
+  onFilePicked(event: any) {
+    console.log(event.target.files[0]);
+    let file = event.target.files[0];
+    this.s3Service.uploadImage(file).subscribe((res) => {
+      this.medias = [
+        ...this.medias,
+        {
+          mime_type: this.getFileType(file),
+          url: res,
+        },
+      ];
+    });
   }
 
   getFileType(file: File): string {
+    if (file.type.match('image.*')) return 'image';
 
-    if(file.type.match('image.*'))
-      return 'image';
-  
-    if(file.type.match('video.*'))
-      return 'video';
-  
-    if(file.type.match('audio.*'))
-      return 'audio';
-  
+    if (file.type.match('video.*')) return 'video';
+
+    if (file.type.match('audio.*')) return 'audio';
+
     return 'other';
   }
 
-  deleteImg(order: number){
-    this.medias.splice(order,1)
+  deleteImg(order: number) {
+    this.medias.splice(order, 1);
   }
-
 }

@@ -15,6 +15,7 @@ import { DialogService } from '../../../core/services/dialog.service';
 })
 export class LoginFrameComponent implements OnInit {
   formGroup!: FormGroup;
+  isError: boolean = false;
   hide = true;
   isShow: boolean = false;
   regex = '(84|0[3|5|7|8|9])+([0-9]{8})';
@@ -28,7 +29,7 @@ export class LoginFrameComponent implements OnInit {
     private userService: UsersService,
     public dialogRef: MatDialogRef<LoginFrameComponent>,
     private dialogService: DialogService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -42,13 +43,19 @@ export class LoginFrameComponent implements OnInit {
   }
 
   onSubmit(values: { numberphone: string; password: string }) {
-    this.authenService.signin(values.numberphone, values.password).subscribe((res: any) => {
-      this.userService.getProfile().subscribe((result) => {
-        this.user = result;
-        this.onClose();
-      })
-      this.router.navigateByUrl('/home');
-    })
+    this.authenService.signin(values.numberphone, values.password).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.userService.getProfile().subscribe((result) => {
+          this.user = result;
+          this.onClose();
+        });
+        this.router.navigateByUrl('/home');
+      },
+      (error) => {
+        this.isError = true;
+      }
+    );
   }
 
   getError(el: any) {
@@ -82,6 +89,10 @@ export class LoginFrameComponent implements OnInit {
 
   openResetPassDialog() {
     this.dialogRef.close();
-    this.dialogService.openDialog(ResetPasswordFrameComponent, { panelClass: 'reset-password-frame-dialog', width: '100%', maxWidth: '585px' });
+    this.dialogService.openDialog(ResetPasswordFrameComponent, {
+      panelClass: 'reset-password-frame-dialog',
+      width: '100%',
+      maxWidth: '585px',
+    });
   }
 }
