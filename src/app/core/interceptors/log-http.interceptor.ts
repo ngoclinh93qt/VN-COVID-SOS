@@ -28,8 +28,6 @@ export class LogHttpInterceptor implements HttpInterceptor {
   }
 
   private logRequest(req: HttpRequest<any>) {
-    console.groupCollapsed(`${prefixReq} 📝 Log Http Request`);
-    console.log(`${req.method} "${req.urlWithParams}"`);
     console.groupEnd();
   }
 }

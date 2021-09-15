@@ -40,7 +40,6 @@ export class MapsComponent implements OnInit, OnChanges {
   }
   constructor(private StorageService: StorageService, private constantsService: ConstantsService,
     private bottomsheet: MatBottomSheet) {
-    console.log(this.requests);
   }
   setMapOnAll(map: any) {
     for (let i = 0; i < this.markers.length; i++) {
