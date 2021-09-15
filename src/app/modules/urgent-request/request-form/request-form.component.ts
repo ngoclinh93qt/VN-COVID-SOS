@@ -61,6 +61,8 @@ export class RequestFormComponent implements OnInit {
     if (!this.onPickFile)
       this.dialogRef.close(res);
   }
+  isSending = false;
+
   constructor(
     private RequesterObjectStatusService: RequesterObjectStatusService,
     private ProvinceService: ProvinceService,
@@ -237,9 +239,10 @@ export class RequestFormComponent implements OnInit {
   }
   onFilePicked(event: any) {
     this.onPickFile = true;
-    console.log(event.target.files[0])
     let file = event.target.files[0]
+    this.isSending = true;
     this.s3Service.uploadImage(file).subscribe(res => {
+      this.isSending = false;
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res

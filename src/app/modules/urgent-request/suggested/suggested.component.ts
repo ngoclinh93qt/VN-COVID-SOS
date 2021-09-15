@@ -16,7 +16,7 @@ export class SuggestedComponent implements OnInit {
 
   params: IQueryPrams[] = []
   paramsInit() {
-    this.numGroup=this.groups.length;
+    this.numGroup=this.groups?.length;
     for (var i = 0; i <= this.numGroup; i++) this.params.push({ limit: 10, offset: 0 })
   }
   updateParams(index: number, returnNumber: number) {

@@ -226,6 +226,7 @@ interface IJoinRequest {
   supporter_id: string;
   support_date?: string;
   description?: string;
+  is_support_all?: boolean;
 }
 interface ISupporterUpdate {
   type: string;

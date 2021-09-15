@@ -36,7 +36,7 @@
     <h4><b>Thông tin người cần giúp đỡ</b></h4>
     <fieldset ngModelGroup="contact_info">
 
-      <mat-checkbox class="example-margin" name="show" #isAccepted>Tôi đồng ý công khai số điện thoại để được liên hệ
+      <mat-checkbox class="check-box" name="show" #isAccepted>Tôi đồng ý công khai số điện thoại để được liên hệ
         trợ giúp*
       </mat-checkbox>
       <div>
@@ -102,6 +102,7 @@
         class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh/video</label>
     </div>
     <br>
+    <app-spinner *ngIf="isSending"></app-spinner>
     <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
       <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index"
         class="img-wrap">
@@ -119,7 +120,7 @@
   </div>
   <br />
   <div mat-dialog-actions class="submit-btn">
-    <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form,isAccepted)" cdkFocusInitial>
+    <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form,isAccepted)" cdkFocusInitial [disabled]='isSending'>
       Gửi yêu cầu
     </button>
   </div>

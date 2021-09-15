@@ -1,4 +1,12 @@
 .request_container {
   height: 100%;
   overflow-y: scroll;
+  .empty{
+   img{
+    width: 50%;
+    max-width: 400px;
+    display: block;
+    margin: 30% auto;
+   }
+  }
 }
