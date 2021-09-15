@@ -35,6 +35,7 @@ export class UsersService extends RestService<IUser> {
       .pipe(
         map((res) => {
           this.StorageService.userInfo = res.data;
+          this.userSubject.next(res.data)
           return res.data;
         })
       );

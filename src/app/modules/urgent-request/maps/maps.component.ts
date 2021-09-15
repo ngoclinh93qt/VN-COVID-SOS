@@ -40,7 +40,6 @@ export class MapsComponent implements OnInit, OnChanges {
   }
   constructor(private StorageService: StorageService, private constantsService: ConstantsService,
     private bottomsheet: MatBottomSheet) {
-    console.log(this.requests);
   }
   setMapOnAll(map: any) {
     for (let i = 0; i < this.markers.length; i++) {
@@ -54,7 +53,6 @@ export class MapsComponent implements OnInit, OnChanges {
     var location = request?.location?.split(',');
     var lat = parseFloat(location![0]);
     var lng = parseFloat(location![1]);
-
     var marker = new google.maps.Marker({
       position: { lat: <number>lat, lng: <number>lng },
       map: this.map,
@@ -66,7 +64,6 @@ export class MapsComponent implements OnInit, OnChanges {
     });
   }
   ngOnInit(): void {
-    console.log(this.requests);
     this.loader.load().then(() => {
       this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
         center: this.StorageService.location,

@@ -144,11 +144,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   fetchInit() {
     this.SupportTypesService.findAll().subscribe((result) => {
       this.supportTypes = result;
-      console.log(result);
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
       this.requesterObjectStatus = result;
-      console.log(result);
     });
   }
 
@@ -160,12 +158,13 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      if (!result) {
+        return
+      }
+      this.requests = this.requests?[result, ...this.requests]:[result]
     });
   }
   setLocation(data: any) {
-    console.log("set location: ", data)
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
   }

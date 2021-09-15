@@ -14,7 +14,7 @@ export class LogHeadersInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.logRequest(req);
+    // this.logRequest(req);
     return next.handle(req);
   }
 

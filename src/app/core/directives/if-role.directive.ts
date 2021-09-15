@@ -30,7 +30,6 @@ export class IfRoleDirective implements OnInit, OnDestroy {
   }
 
   ifShow(user?: IUser){
-    console.log(this.ifRoles)
     let role: Role = (user? user:this.storage.userInfo)?.role?.toUpperCase() || 'GUEST';
 
     this.viewContainerRef.clear();

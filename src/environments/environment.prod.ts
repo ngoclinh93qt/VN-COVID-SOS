@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   hmr: false,
-  host: 'http://54.69.39.96/api/v1',
-  googleApiKey: '-d-QPFSkfIgSH1Q',
+  host: 'https://sos-api.3exp8.network/api/v1',
+  googleApiKey: 'AIzaSyBvYXrHhLWYyrAywQ-LvZXY1Vy8149azIc',
   s3: {
     AccessKeyId: '',
     Secret: '',
