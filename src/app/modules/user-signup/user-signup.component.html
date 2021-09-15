@@ -4,7 +4,6 @@
         <mat-icon>close</mat-icon>
       </span></h1>
     <mat-stepper [linear]="isLinear" #stepper>
-
       <mat-step [stepControl]="firstFormGroup" label="Tài khoản">
         <form [formGroup]="firstFormGroup" (ngSubmit)="AccountSetupSubmit(firstFormGroup.value)">
           <sos-input formControlName="phone_number" type="tel" label="Số điện thoại" [required]="true"
@@ -26,8 +25,7 @@
         <form [formGroup]="secondFormGroup">
           <sos-input formControlName="confirm_code" type="text" label="Mã xác nhận" [required]="true"
             [error]="getError('confirm_code')"> </sos-input>
-          <button mat-flat-button (click)='onResend()' style=" float:right;  margin-top: -65px; margin-right: 15px;">Gửi lại</button>
-          <p>Mã xác nhận: {{user.confirm_code}}</p>
+          <button class="button-check" mat-flat-button (click)='onResend();isCountdown = true;' style=" float:right;  margin-top: -65px; margin-right: 15px;" [disabled]="isCountdown">{{isCountdown == false ? 'Gửi lại' : this.seconds+'s'}}</button>
           <p *ngIf="isValidOTP==false">Mã không chính xác</p>
           <div class="form-btn">
             <button class="w50" mat-flat-button style="color: gray;" matStepperPrevious>Quay lại</button>

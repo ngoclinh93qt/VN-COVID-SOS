@@ -22,6 +22,8 @@ export class UserSignupComponent implements OnInit {
   thirdFormGroup!: FormGroup;
   isPhoneInUsed: boolean = false;
   isValidOTP: boolean | undefined;
+  seconds: number = 0;
+  isCountdown: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public phone: number,
     private formBuilder: FormBuilder,
@@ -113,8 +115,18 @@ export class UserSignupComponent implements OnInit {
     );
   }
   onResend() {
+    this.seconds = 60;
+    const timer = setInterval(() => {
+      this.seconds--;
+      console.log(this.seconds);
+      if (this.seconds === 0) {
+        clearInterval(timer);
+        this.isCountdown = false;
+      };
+    },1000);
     this.UsersService.resendCode(this.user!, {}).subscribe(
       (result) => {
+        console.log(result);
       },
       error => { console.log(error); }
     );
