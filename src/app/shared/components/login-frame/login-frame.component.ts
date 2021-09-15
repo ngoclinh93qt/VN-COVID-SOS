@@ -89,6 +89,7 @@ export class LoginFrameComponent implements OnInit {
   }
 
   signup(){
+    this.dialogRef.close();
     this.dialog.open(UserSignupComponent, {
       panelClass: 'dialog-responsive'
     });
