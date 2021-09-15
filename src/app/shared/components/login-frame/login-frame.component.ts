@@ -2,11 +2,12 @@ import { ResetPasswordFrameComponent } from './../reset-password-frame/reset-pas
 import { Inject, Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
 import { DialogService } from '../../../core/services/dialog.service';
+import { UserSignupComponent } from 'src/app/modules/user-signup/user-signup.component';
 
 @Component({
   selector: 'login-frame',
@@ -28,7 +29,8 @@ export class LoginFrameComponent implements OnInit {
     private router: Router,
     private userService: UsersService,
     public dialogRef: MatDialogRef<LoginFrameComponent>,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +38,6 @@ export class LoginFrameComponent implements OnInit {
   }
 
   createForm() {
-    console.log("this ogin frame with dataxxxx",this.phone)
     this.formGroup = this.formBuilder.group({
       numberphone: [this.phone ? this.phone : '', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
@@ -85,5 +86,11 @@ export class LoginFrameComponent implements OnInit {
   openResetPassDialog() {
     this.dialogRef.close();
     this.dialogService.openDialog(ResetPasswordFrameComponent, { panelClass: 'reset-password-frame-dialog', width: '100%', maxWidth: '585px' });
+  }
+
+  signup(){
+    this.dialog.open(UserSignupComponent, {
+      panelClass: 'dialog-responsive'
+    });
   }
 }
