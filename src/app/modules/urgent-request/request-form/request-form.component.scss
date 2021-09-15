@@ -7,6 +7,10 @@
     height: 70vh;
     overflow-y: scroll;
     padding-bottom: 80px;
+
+    .check-box {
+      margin-bottom: 10px;
+    }
   }
   .content::-webkit-scrollbar {
     display: none;
@@ -31,28 +35,28 @@ fieldset {
 
 .map {
   width: 100%;
-  height: 200px ;
+  height: 200px;
 }
 
-.list-img{
+.list-img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-.add-img-btn{
+.add-img-btn {
   cursor: pointer;
-    color: red;
-    border: 1px solid;
-    border-radius: 20px;
-    margin: 10px 0;
-    padding: 5px;
+  color: red;
+  border: 1px solid;
+  border-radius: 20px;
+  margin: 10px 0;
+  padding: 5px;
 }
-.img-wrap{
+.img-wrap {
   position: relative;
-  button{
+  button {
     position: absolute;
-     top: 0; right: 0; 
-     border: none; 
-     background-color: transparent;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent;
   }
 }
-

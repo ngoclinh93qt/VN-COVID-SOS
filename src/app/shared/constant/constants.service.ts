@@ -134,9 +134,9 @@ export class ConstantsService {
 
     this.SUPPORT_STATUS.set('resolved', {
       action: 'resolved',
-      action_view: 'Thực hiện',
+      action_view: 'Hoàn thành',
       status: 'resolved',
-      status_view: 'Đã thực hiện',
+      status_view: 'Đã hoàn thành',
       next_step: []
     })
 

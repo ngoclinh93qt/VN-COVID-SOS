@@ -6,6 +6,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-propose-request',
@@ -19,6 +20,7 @@ export class ProposeRequestComponent implements OnInit {
     private _dialogRef: MatDialogRef<ProposeRequestComponent>,
     private VolunteerGroupService: VolunteerGroupService,
     private UrgentRequestService: UrgentRequestService,
+    private notification: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.fetchInit();
@@ -43,9 +45,9 @@ export class ProposeRequestComponent implements OnInit {
   async onSubmit(data: any) {
     data.target_type = 'group';
     data.target_id = data.target_id
-    console.log(data, this.data.request_id);
     this.UrgentRequestService.propose(this.data.request_id, data).subscribe(
       (result) => {
+        this.notification.success("Đã đề xuất cho nhóm")
       }
     );
   }
