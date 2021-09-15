@@ -8,9 +8,12 @@
       <div class="content">
         <div class="item">
           <p>Ảnh đại diện</p>
-          <a> Thay đổi</a>
+          <div class="fileUpload btn btn--browse">
+            <span>+ Thay đổi</span>
+            <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event, group.id)"> 
+          </div>
         </div>
-        <img class="group_items_image" width="50px" src="{{ group?.avatar }}" alt="image" />
+        <img class="group_items_image" width="50px" src="{{ group?.avatar == '' || group?.avatar == undefined ? 'assets/volunteer.png' : group?.avatar }}" alt="image" />
       </div>
       <div class="content">
         <div class="item">
@@ -50,24 +53,23 @@
           <a (click)="openUpdateSupport(group?.detail_info?.support_types, group.id)">Sửa</a>
         </div>
         <div class="item-type" fxLayout="row wrap" fxLayoutGap="5px grid">
-          <app-button
-            height="40"
-            color="#FCE7E5"
-            text="{{ type.name }}"
-            *ngFor="let type of group?.detail_info?.support_types"
-          ></app-button>
+          <app-button height="40" color="#FCE7E5" text="{{ type.name }}"
+            *ngFor="let type of group?.detail_info?.support_types"></app-button>
         </div>
       </div>
       <div class="content">
         <div class="item">
           <p>Thành viên</p>
-          <a>+Thêm</a>
+          <a (click)="openAddMember(group.members, group.id)">+Thêm</a>
         </div>
-        <app-member *ngFor="let member of group.members" [member]="member"></app-member>
+        <div class="member" *ngFor="let member of group.members">
+          <app-member [member]="member"></app-member>
+          <a *ngIf="member?.role !== 'admin'" (click)="removeMember(group.id, member?.id)">Xoá</a>
+        </div>
       </div>
     </div>
     <a (click)="openDeleteGroup(group.id)">xoá nhóm</a>
-  </section> 
+  </section>
   <!-- <section fxFlex="1/3" class="p-1 activity_sestion">
     <p style="font-weight: bold; font-size: 17px;">Cập nhật trạng thái</p>
     <sos-input label="Viết cập nhật..."></sos-input>

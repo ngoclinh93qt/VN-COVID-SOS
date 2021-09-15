@@ -18,7 +18,6 @@ import { MaterialModule } from './material.module';
 import { AuthenService } from './core/http/authen.service';
 import { SignupService } from './core/http/signup.service';
 import { UserLoginComponent } from './modules/user-login/user-login.component';
-import { IfRoleDirective } from './core/directives/if-role.directive';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     SignupComponent,
     UserLoginComponent,
     UserSignupComponent,
-    IfRoleDirective
   ],
   imports: [
     BrowserModule,

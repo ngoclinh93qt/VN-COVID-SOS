@@ -1,7 +1,8 @@
+import { LocationService } from './../../../shared/subjects/location.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { NgForm } from '@angular/forms';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { RequesterObjectStatusService } from '../../../core/http/requester-object-status.service';
 import { UrgentRequestService } from '../../../core/http/urgent-request.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,23 +14,33 @@ import {
   OnChanges,
   SimpleChanges,
   Inject,
+  ElementRef,
+  ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
 import { S3Service } from 'src/app/core/services/s3.service';
 import { FormatService } from 'src/app/core/services/format.service';
 
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-request-form',
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
+  public formProfile: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    phone_number: new FormControl(''),
+    address: new FormControl(''),
+  });
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
     id: '',
   };
+  onPickFile: boolean = false;
   district: IDistrict = { code: 0 };
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
@@ -38,8 +49,12 @@ export class RequestFormComponent implements OnInit {
   isMapCreated = false;
   imagesUploaded: string[] = [];
   medias: IMedias[] = [];
+  user: any;
+  name: string = ''
+  subscription: Subscription | undefined
   onClose(): void {
-    this.dialogRef.close();
+    if (!this.onPickFile)
+      this.dialogRef.close();
     console.log('closeForm');
   }
   constructor(
@@ -52,9 +67,14 @@ export class RequestFormComponent implements OnInit {
     private UrgentLevelService: UrgentLevelService,
     private s3Service: S3Service,
     private formatService: FormatService,
+    private LocationService: LocationService
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
+    console.log("formConstruct");
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   fetchInit() {
@@ -62,19 +82,21 @@ export class RequestFormComponent implements OnInit {
       this.provinces = result;
     });
     this.SupportTypesService.findAll().subscribe((result) => {
-      this.supportTypes = result;
+      this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
+      console.log(this.supportTypes);
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
-      this.requesterObjectStatus = result;
+      this.requesterObjectStatus = result.map(x => { return { name: x.name, type: x.key } });
+      console.log(this.requesterObjectStatus);
     });
   }
-  async onSubmit(data: ISOSRequest) {
+  onSubmit(data: ISOSRequest) {
+    console.log(data)
+    console.log(this.medias)
     data.requester_type = 'guest';
     data.medias = this.medias;
-    data.requester_type = '';
-    data.medias = [];
     const user = this.StorageService.userInfo;
-    if (user !== null && user.role !== 'GUEST') {
+    if (user!= null && user?.role !== 'GUEST') {
       data.requester_type = 'user';
       data.requester_id = user.id;
     }
@@ -84,8 +106,9 @@ export class RequestFormComponent implements OnInit {
     console.log(data);
     this.UrgentRequestService.create(data, {}).subscribe();
   }
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.onClose();
+  checkSubmit(data: any, isAccepted: any) {
+    console.log(isAccepted._checked);
+    if (isAccepted._checked && data.status == 'VALID' && !this.onPickFile) { this.onSubmit(data.value); this.onClose(); }
   }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
@@ -101,18 +124,25 @@ export class RequestFormComponent implements OnInit {
       }
     );
   }
-
-  setLocation(l: string) {
-    this.location = l;
+  setLocation(location: any) {
+    this.location = `${location.lat},${location.lng}`;
   }
 
   ngOnInit() {
-    var l: string = '';
-    let data = this.StorageService.setLocation();
-    this.setLocation(`${data.lat},${data.lng}`);
-  }
 
-  uploadImage() {}
+    console.log("formInit");
+    var l: string = '';
+    this.setLocation(this.StorageService.location);
+    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    // this.LocationService.updateLocation();
+    this.user = this.StorageService.userInfo;
+    if (this.user) {
+      this.formProfile.value.name = this.user.last_name + ' ' + this.user.first_name
+      this.formProfile.value.phone_number = this.user.phone_number
+      this.formProfile.value.address = this.user.address
+      console.log(this.formProfile.value);
+    }
+  }
 
   pickLocation() {
     this.isShowmap = !this.isShowmap;
@@ -123,16 +153,14 @@ export class RequestFormComponent implements OnInit {
       });
 
       loader.load().then(() => {
-        const map = new google.maps.Map(
-          document.getElementById('mapx') as HTMLElement,
-          {
-            center: this.StorageService.getLocation(),
-            zoom: 15,
-            styles: environment.mapStyle,
-          }
-        );
+
+        const map = new google.maps.Map(document.getElementById('mapx') as HTMLElement, {
+          center: this.StorageService.location,
+          zoom: 15,
+          styles: environment.mapStyle,
+        });
         var marker = new google.maps.Marker({
-          position: this.StorageService.getLocation(),
+          position: this.StorageService.location,
           map: map,
           draggable: true, //make it draggable
         });
@@ -156,38 +184,39 @@ export class RequestFormComponent implements OnInit {
         var self = this;
 
         google.maps.event.addListener(marker, 'dragend', () => {
-          self.setLocation(
-            `${marker.getPosition()?.lat()}, ${marker.getPosition()?.lng()}`
-          );
+          return self.setLocation(marker.getPosition());
         });
+
       });
     }
   }
   onFilePicked(event: any) {
-    console.log(event.target.files[0]);
-    let file = event.target.files[0];
-    this.s3Service.uploadImage(file).subscribe((res) => {
-      this.medias = [
-        ...this.medias,
-        {
-          mime_type: this.getFileType(file),
-          url: res,
-        },
-      ];
-    });
+    this.onPickFile = true;
+    console.log(event.target.files[0])
+    let file = event.target.files[0]
+    this.s3Service.uploadImage(file).subscribe(res => {
+      this.medias = [...this.medias, {
+        mime_type: this.getFileType(file),
+        url: res
+      }]
+      this.onPickFile = false;
+    })
   }
 
   getFileType(file: File): string {
-    if (file.type.match('image.*')) return 'image';
+    if (file.type.match('image.*'))
+      return 'image';
 
-    if (file.type.match('video.*')) return 'video';
+    if (file.type.match('video.*'))
+      return 'video';
 
-    if (file.type.match('audio.*')) return 'audio';
+    if (file.type.match('audio.*'))
+      return 'audio';
 
     return 'other';
   }
 
   deleteImg(order: number) {
-    this.medias.splice(order, 1);
+    this.medias.splice(order, 1)
   }
 }

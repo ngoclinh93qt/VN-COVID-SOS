@@ -7,21 +7,25 @@
         <p>{{ supporter?.contact_info?.phone_number }}</p>
       </div>
     </div>
-    <mat-form-field
-      *ngIf="isMe; else notme"
-      style="width: 100px"
-      appearance="outline"
-    >
-      <mat-label>Trạng thái</mat-label>
-      <mat-select>
-        <mat-option>123 </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-template #notme>
-      <p style="font-weight: bold">{{ supporter?.status }}</p>
-    </ng-template>
+    <div class="status-btn" *ifRoles="['GUEST']" >
+      <button mat-stroked-button color="primary"  >
+        {{getStatusView(mapSupportStatus)}}</button>
+    </div>
+    
+    <div  *ifRoles="['OPERATOR', 'USER', 'ADMIN']">
+      <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuSupportTrigger 
+      [disabled]="getStatusSteps(mapSupportStatus).length === 0">
+        {{getStatusView(mapSupportStatus)}}<mat-icon>expand_more</mat-icon></button>
+      <mat-menu #menu="matMenu" >
+        <div>
+          <button mat-menu-item
+          *ngFor="let item of getStatusSteps(mapSupportStatus)"
+          (click)="updateSupportStatus(item)">{{mapSupportStatus.get(item)?.action_view}}</button>
+        </div>
+      </mat-menu>
+    </div>
   </div>
-  <p>Loại hình hỗ trợ: <span>Toàn bộ</span></p>
+  <!-- <p>Loại hình hỗ trợ: <span>Toàn bộ</span></p> -->
   <p>
     Thời gian hỗ trợ dự kiến:
     <span>{{ supporter?.schedule_support_date }}</span>
@@ -29,7 +33,7 @@
   <p>
     Mô tả: <span>{{ supporter?.description }}</span>
   </p>
-  <div style="margin-top: 15px">
+  <!-- <div style="margin-top: 15px">
     <p>Tham gia vào: <span>09/10/2021</span></p>
-  </div>
+  </div> -->
 </div>

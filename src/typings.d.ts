@@ -1,16 +1,16 @@
 declare var System: any;
 interface IUser {
-  phone_number:String;
-  address?:String;
-  first_name?:String;
-  last_name?:String;
-  role?:String;
-  avatar?:String;
-  time_zone?:Date;
-  password?:String;
-  debug?:String;
-  confirm_code?:String;
-  groups?:[]
+  phone_number: String;
+  address?: String;
+  first_name?: String;
+  last_name?: String;
+  role?: String;
+  avatar?: String;
+  time_zone?: Date;
+  password?: String;
+  debug?: String;
+  confirm_code?: String;
+  groups?: []
 }
 
 interface INorUser {
@@ -60,7 +60,7 @@ interface IPublisher {
 interface IVolunteerGroup {
   id?: string;
   name?: string;
-  avatar?:String;
+  avatar?: String;
   address_info?: IAddressInfo;
   admin_id?: string;
   contact_info?: IContacInfo;
@@ -77,7 +77,10 @@ interface IVolunteerGroup {
   verify_info?: any;
   verify_status?: string;
 }
-
+interface ILocation {
+  lat: number;
+  lng: number;
+}
 interface IAddressInfo {
   address: string;
   district_code: number;
@@ -165,20 +168,20 @@ interface IRequesterObjectStatus {
   content_type?: string;
   group?: string;
   id?: string;
-  key: string;
+  key?: string;
   name?: string;
   order?: number;
-  type: string;
+  type?: string;
   value?: string;
-  value_obj: object;
+  value_obj?: object;
 }
 interface ISupportType {
   name?: string;
   type: string;
 }
 interface ISOSRequest {
-  is_bookmarked?:boolean;
-  is_group_bookmarked?:boolean;
+  is_bookmarked?: boolean;
+  is_group_bookmarked?: boolean;
   address_info?: IAddressInfo;
   contact_info?: IContacInfo;
   created_by?: string;
@@ -199,9 +202,8 @@ interface ISOSRequest {
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
+  color_info?: any;
 }
-
-
 interface IMedias {
   mime_type?: string;
   url?: string;
@@ -224,6 +226,11 @@ interface IJoinRequest {
   supporter_id: string;
   support_date?: string;
   description?: string;
+}
+interface ISupporterUpdate {
+  type: string;
+  supporter_id: string;
+  support_status: string;
 }
 interface IBlocked {
   id?: string;
@@ -291,7 +298,7 @@ interface IHospitalPost {
   postTime?: string;
 }
 
-interface IUserProfile {}
+interface IUserProfile { }
 
 interface ICustomerProfile {
   addresses: [];
@@ -339,7 +346,17 @@ interface ITransaction {
   updated_time?: string;
 }
 
-interface IpresignedUrl{
+interface IpresignedUrl {
   expired_duration: number;
   url: string;
+}
+interface IBaseStatus {
+  action_view: string
+  action: string
+  status: string
+  status_view: string
+  next_step: string[]
+  color?: string
+  bg_color?: string
+  icon?: string
 }

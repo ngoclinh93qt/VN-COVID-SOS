@@ -19,15 +19,9 @@ export class ReadOnlyInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const readOnly = this.sessionService.readOnly;
     if (!readOnly || this.okIfReadOnly(req)) {
-      console.groupCollapsed(`${prefixReq} 👓 Read-Only`);
-      console.log(`Data is not read-only`);
-      console.groupEnd();
       return next.handle(req);
     } else {
       const msg = `Can't ${req.method} ${req.url} when read-only`;
-      console.groupCollapsed(`${prefixReq} Read-Only`);
-      console.error(msg);
-      console.groupEnd();
       return throwError(new Error(msg));
     }
   }

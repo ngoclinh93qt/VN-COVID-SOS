@@ -1,0 +1,20 @@
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
+      Thêm thành viên
+    </h1>
+    <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+  </div>
+  <div class="search">
+      <input type="text" class="search-input" placeholder="Nhập số điện thoại" [ngModel]="keysearch" (ngModelChange)="onSearchChange($event)">
+      <mat-icon aria-hidden="true">search</mat-icon>
+  </div>
+  <div class="items-member" *ngIf="isData">
+      <app-member [member]="searchData"></app-member>
+      <a (click)="onSubmit(searchData)" *ngIf="!isSame">+Thêm</a>
+      <button *ngIf="isSame">thành viên</button>
+  </div>
+  <div class="items-member none-member" *ngIf="!isData">
+      <p>Không có giá trị phù hợp</p>
+  </div>
+</div>

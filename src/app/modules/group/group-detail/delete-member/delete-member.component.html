@@ -1,0 +1,12 @@
+<div class="container">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
+            Bạn xác nhận xoá thành viên?
+        </h1>
+        <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
+    </div>
+    <div class="item-button">
+        <button mat-flat-button (click)="deleteMember()">Có</button>
+        <button mat-flat-button (click)="CloseDialog()">Huỷ</button>
+    </div>
+</div>

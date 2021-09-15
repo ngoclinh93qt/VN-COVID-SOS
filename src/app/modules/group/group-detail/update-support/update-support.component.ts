@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'app-update-support',
@@ -17,6 +18,7 @@ export class UpdateSupportComponent implements OnInit {
     private _dialogRef: MatDialogRef<UpdateSupportComponent>,
     private GroupService: VolunteerGroupService,
     private SupportTypesService: SupportTypesService,
+    private notification: NotificationService
   ) {
     this.fetchInit();
   }
@@ -34,10 +36,6 @@ export class UpdateSupportComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
-  }
-
   compareObjects(o1: any, o2: any) {
     if(o1.type == o2.type )
     return true;
@@ -45,7 +43,14 @@ export class UpdateSupportComponent implements OnInit {
   }
 
   async onSubmit(data: any) {
-    this.GroupService.update(this.group.id, data, {}).subscribe();
+    this.GroupService.update(this.group.id, data, {}).subscribe((data: any) => {
+      if(data){
+        this.notification.success("Sửa thông tin thành công");
+        this._dialogRef.close({data: data});
+        return;
+      }
+      this.notification.error("Sửa thông tin thất bại");
+    });
   }
 
 }

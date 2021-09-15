@@ -47,7 +47,7 @@ export class ContainerComponent implements OnInit {
         name: 'Yêu cầu khẩn cấp',
         icon: 'support',
         url: 'urgentRequest',
-        role: 'GUEST'
+        roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
       },
       // {
       //   name: 'Bệnh viện',
@@ -58,7 +58,7 @@ export class ContainerComponent implements OnInit {
         name: 'Nhóm thiện nguyện',
         icon: 'group',
         url: 'group',
-        role: 'OPERATOR'
+        roles: ['OPERATOR', 'ADMIN', 'USER']
       },
       // {
       //   name: 'Quản lí',
@@ -105,7 +105,7 @@ type SideItem = {
   name: string;
   icon: string;
   url: string;
-  role: string;
+  roles: string[];
 };
 
 function openSignupDialog() {

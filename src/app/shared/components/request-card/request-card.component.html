@@ -1,5 +1,5 @@
-<div class="request_card">
-  <span *ngIf='user;'>
+<div class="request_card" [ngStyle]="{'border': '1px solid '+ mapPriority.get(request?.color_info?.color)}">
+  <span class="bookmark">
     <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
       style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
     </mat-icon>
@@ -10,36 +10,39 @@
   </span>
 
   <mat-chip-list aria-label="tag">
-    <mat-chip color="primary" selected>
-      <mat-icon style="margin-right: 5px;">error</mat-icon>{{ mapPriority.get(request?.priority_type!) }}
-    </mat-chip>
-    <div *ngIf="type == 'half-width'">
-      <div class="chip" *ngIf="request?.support_types![0]">{{ request?.support_types![0]?.name }}
-      </div>
-      <div class="chip" *ngIf="request?.requester_object_status![0]" color="accent" selected>
-        {{ request?.requester_object_status![0]?.name! }}</div>
+    <div>
+      <mat-chip *ngIf="(request?.support_types)![0]?.name || false"
+        >{{ (request?.support_types)![0]?.name }}
+      </mat-chip>
+      <mat-chip
+        *ngIf="(request?.requester_object_status)![0]"
+      >
+        {{ (request?.requester_object_status)![0]?.name! }}</mat-chip
+      >
     </div>
     <div *ngIf="type == 'full-width'">
-      <div class="chip" *ngFor="let type of request?.support_types!" color="accent" selected>{{ type.name }}
-      </div>
-      <div class="chip" *ngFor="let status of request?.requester_object_status!" color="accent" selected>
-        {{ status.name! }}</div>
+      <mat-chip
+        *ngFor="let type of request?.support_types!"
+        >{{ type.name }}
+      </mat-chip>
+      <mat-chip
+        *ngFor="let status of request?.requester_object_status!">
+        {{ status.name! }}</mat-chip>
     </div>
-    <!-- <div class="chip" style="background-color: #E6F2ED; color: #05944f;">
-      <mat-icon style="margin-right: 5px;">done</mat-icon>Đã xác thực
-    </div> -->
-    <mat-chip> <mat-icon>done</mat-icon>{{ request?.status }} </mat-chip>
+    <div class="chip icon-16" [ngStyle]="{'display': request?.verify_status === 'verified'? 'inline flex': 'none', 'background-color': mapStatus.get('verified')?.bg_color, color: mapStatus.get('verified')?.color}">
+      <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}"> {{mapStatus.get('verified')?.icon}}</mat-icon> 
+      <p>{{ mapStatus.get('verified')?.status_view }}</p>
+    </div>
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>
   </h3>
-  <mat-card-subtitle>10 phút trước, Hôm nay</mat-card-subtitle>
-  <!-- <h4>{{request?.status}}</h4> -->
+  <mat-card-subtitle>{{createTime}} , {{distance}}</mat-card-subtitle>
   <hr />
   <p>
     Người gửi: <b>{{ request?.contact_info?.name }}</b>
     <span style="margin: 0 0 0 10px">
-      {{ mapStatus.get(request?.status) }}
+      {{ mapStatus.get(request?.status)?.status_view }}
     </span>
   </p>
 </div>

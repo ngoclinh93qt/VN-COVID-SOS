@@ -5,26 +5,23 @@ import { ConstantsService } from '../../shared/constant/constants.service';
   providedIn: 'root',
 })
 export class StorageService {
-  constructor(private constant: ConstantsService) {}
-  public setLocation(): any {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      let lat = position.coords.latitude;
-      let long = position.coords.longitude;
+  constructor(private constant: ConstantsService) { }
+  public get location(): any | undefined {
+    let result = localStorage.getItem(this.constant.STORAGE_KEY.LOCATION);
+    if (result) {
+      return JSON.parse(result);
+    }
+    return this.constant.DEFAULT_LOCATION;
+  }
+  public set location(value: any | undefined) {
+    if (value) {
       localStorage.setItem(
-        'location',
-        JSON.stringify({ lat: lat, lng: long })
+        this.constant.STORAGE_KEY.LOCATION,
+        JSON.stringify(value)
       );
-    });
-    return this.getLocation();
+    }
   }
 
-  public getLocation(): any {
-    let location = localStorage.getItem('location');
-    if (!location) {
-      return this.setLocation();
-    }
-    return JSON.parse(location!);
-  }
 
   public get userInfo(): any | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.USER_INFO);

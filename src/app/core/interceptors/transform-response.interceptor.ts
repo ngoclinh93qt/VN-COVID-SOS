@@ -4,11 +4,13 @@ import {
   HttpRequest,
   HttpEvent,
   HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { prefixRes } from './http-config';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Injectable()
 export class TransformResponseInterceptor implements HttpInterceptor {

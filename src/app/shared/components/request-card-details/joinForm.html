@@ -1,31 +1,30 @@
 <div>
+
+  <h1><b>Gửi yêu cầu tham gia trợ giúp</b></h1>
+  <div style="margin: 10px 0;">
+    <label id="example-radio-group-label">Tôi tham gia với tư cách là:</label><br><br>
+    <mat-radio-group aria-label="Tôi tham gia với tư cách" [(ngModel)]="group_type">
+      <mat-radio-button value="user">Cá nhân</mat-radio-button> &nbsp;
+      <mat-radio-button value="group">Nhóm</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <br>
   <form (submit)="onSubmit(form.value)" #form="ngForm">
-    <h1><b>Gửi yêu cầu tham gia trợ giúp</b></h1>
-    <mat-form-field style="width: 100%;" appearance="fill">
-      <mat-label>Chọn ngày dự định hỗ trợ</mat-label>
-      <input
-        ngModel
-        name="support_date"
-        type="date"
-        matInput
-        placeholder="Chọn ngày dự định hỗ trợ"
-      />
-    </mat-form-field>
+    <div *ngIf="groups.length !== 0">
+      <mat-form-field class="example-right-half-width" appearance="outline" *ngIf="group_type == 'group'">
+        <mat-label>Nhóm của tôi là</mat-label>
+        <mat-select ngModel name="type" required>
+          <mat-option *ngFor="let group of groups" [value]="group">
+            {{ group.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <mat-form-field style="width: 100%;" appearance="fill">
       <mat-label>Thêm ghi chú</mat-label>
-      <textarea
-        ngModel
-        name="description"
-        matInput
-        placeholder="Thêm ghi chú"
-      ></textarea>
+      <textarea ngModel name="description" matInput placeholder="Thêm ghi chú"></textarea>
     </mat-form-field>
-    <button
-      type="submit"
-      mat-flat-button
-      class="submit-btn"
-      color="primary"
-    >
+    <button type="submit" mat-flat-button class="submit-btn" color="primary">
       Gửi yêu cầu
     </button>
   </form>

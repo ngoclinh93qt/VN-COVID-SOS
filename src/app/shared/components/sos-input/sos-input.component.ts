@@ -133,7 +133,7 @@ export class SosInputComponent
     return !this.control.value;
   }
   get errorState(): boolean {
-    return this.ngControl?.control !== null ? !!this.ngControl?.control : false;
+    return this.ngControl?.control != null ? !!this.ngControl?.control : false;
   }
 
   constructor(@Optional() @Self() public ngControl: NgControl | null) {

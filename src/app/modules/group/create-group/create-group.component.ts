@@ -8,6 +8,8 @@ import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service
 import { ProvinceService } from 'src/app/core/http/province.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+
 @Component({
   selector: 'app-create-group',
   templateUrl: './create-group.component.html',
@@ -27,7 +29,8 @@ export class CreateGroupComponent implements OnInit {
     private ProvinceService: ProvinceService,
     private SupportTypesService: SupportTypesService,
     private GroupService: VolunteerGroupService,
-    private FormatService: FormatService
+    private FormatService: FormatService,
+    private notification: NotificationService,
   ) {
     this.fetchInit();
   }
@@ -62,12 +65,15 @@ export class CreateGroupComponent implements OnInit {
 
   async onSubmit(data: IVolunteerGroup) {
     data.type = 'nhom_thien_nguyen';
-    console.log(data);
-    this.GroupService.create(data, {}).subscribe();
-  }
-
-  checkSubmit(data: any) {
-    if (data.status == 'VALID') this.CloseDialog();
+    this.GroupService.create(data, {}).subscribe((data: any) =>{
+      if(data){
+        this.notification.success("Tạo nhóm thành công");
+        this._dialogRef.close({data: data});
+        return;
+      }
+      this.CloseDialog();
+      this.notification.error("Xoá nhóm thất bại");
+    });
   }
 
   ngOnInit(): void {}

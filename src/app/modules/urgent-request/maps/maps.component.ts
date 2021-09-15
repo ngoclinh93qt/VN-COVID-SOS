@@ -1,3 +1,4 @@
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import {
   Component,
@@ -37,7 +38,7 @@ export class MapsComponent implements OnInit, OnChanges {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, 
+  constructor(private StorageService: StorageService, private constantsService:ConstantsService,
     private bottomsheet: MatBottomSheet) {
     console.log(this.requests);
   }
@@ -47,10 +48,8 @@ export class MapsComponent implements OnInit, OnChanges {
     }
   }
   addMarker = (request: ISOSRequest, chooseRequest: Function) => {
-    const icon = (type: string) => {
-      if (type == 'orange')
-        return asset.orange
-      return asset.red;
+    const icon = (color: string = this.constantsService.DEFAULT_REQUEST_COLOR) => {
+      return asset.createMarker(color)
     };
     var location = request?.location?.split(',');
     var lat = parseFloat(location![0]);
@@ -59,7 +58,7 @@ export class MapsComponent implements OnInit, OnChanges {
     var marker = new google.maps.Marker({
       position: { lat: <number>lat, lng: <number>lng },
       map: this.map,
-      icon: icon(request.priority_type == 'high' ? 'red' : 'orange'),
+      icon: icon(request.color_info.color),
     });
     this.markers.push(marker);
     marker.addListener('click', function () {
@@ -70,7 +69,7 @@ export class MapsComponent implements OnInit, OnChanges {
     console.log(this.requests);
     this.loader.load().then(() => {
       this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: this.StorageService.getLocation(),
+        center: this.StorageService.location,
         zoom: 15,
         styles: environment.mapStyle,
       });

@@ -5,7 +5,7 @@ export const environment = {
   production: false,
   hmr: false,
   host: 'http://54.69.39.96/api/v1',
-  googleApiKey: "AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q",
+  googleApiKey: "AIzaSyBvYXrHhLWYyrAywQ-LvZXY1Vy8149azIc",
   s3: {
     AccessKeyId: "",
     Secret: "",
