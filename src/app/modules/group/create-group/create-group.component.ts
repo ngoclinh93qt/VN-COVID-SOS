@@ -7,6 +7,7 @@ import {
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { ProvinceService } from 'src/app/core/http/province.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
+import { FormatService } from 'src/app/core/services/format.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class CreateGroupComponent implements OnInit {
     private ProvinceService: ProvinceService,
     private SupportTypesService: SupportTypesService,
     private GroupService: VolunteerGroupService,
+    private FormatService: FormatService,
     private notification: NotificationService,
   ) {
     this.fetchInit();
@@ -45,12 +47,14 @@ export class CreateGroupComponent implements OnInit {
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
+      this.FormatService.format(this.province.districts);
     });
   }
   getDistrict(id?: number) {
     this.ProvinceService.getDistrict(this.province.id, id).subscribe(
       (result) => {
         this.district = result;
+        this.FormatService.format(this.district.wards);
       }
     );
   }
