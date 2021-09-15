@@ -12,16 +12,48 @@ export class ConstantsService {
     LOCATION: 'location',
 
   };
+  public SESSION = {
+    CREATED_REQUESTS: 'created_requests',
+    MAP_REQUESTS: 'map_requests',
+    ALL_REQUESTS: 'app_requests',
+    SUGGESTED_REQUESTS: 'suggested_requests',
+    JOINED_REQUESTS: 'joined_requests',
+    BOOKMARKED_REQUESTS: 'bookmarked_request',
+    DEFAULT: 'default'
+  }
+  public MAP_SESSION_STATUS = new Map<string, Map<string, IBaseStatus>>();
   public DEFAULT_LOCATION = { lat: 10.762622, lng: 106.660172 }
-  public DEFAULT_REQUEST_COLOR='oranged'
+  public DEFAULT_REQUEST_COLOR = 'oranged'
   public MAP_PRIORITY = this.mapPriority;
   public REQUEST_STATUS = new Map<string, IBaseStatus>();
+  public OWNER_REQUEST_STATUS = new Map<string, IBaseStatus>();
   public SUPPORT_STATUS = new Map<string, IBaseStatus>();
   constructor() {
+
+    this.MAP_SESSION_STATUS.set(this.SESSION.ALL_REQUESTS, this.REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.BOOKMARKED_REQUESTS, this.REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.CREATED_REQUESTS, this.OWNER_REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.JOINED_REQUESTS, this.REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.SUGGESTED_REQUESTS, this.REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.MAP_REQUESTS, this.REQUEST_STATUS)
+    this.MAP_SESSION_STATUS.set(this.SESSION.DEFAULT, this.REQUEST_STATUS)
     this.mapPriority.set('red', 'red');
     this.mapPriority.set('orange', 'orange');
     this.mapPriority.set('yellow', '#FF6936');
-
+    this.OWNER_REQUEST_STATUS.set('open', {
+      action: 'open',
+      action_view: 'Mở',
+      status: 'open',
+      status_view: 'Đã mở',
+      next_step: ['resolved']
+    })
+    this.OWNER_REQUEST_STATUS.set('resolved', {
+      action: 'resolved',
+      action_view: 'Hoàn thành',
+      status: 'resolved',
+      status_view: 'Đã giải quyết',
+      next_step: []
+    })
     this.REQUEST_STATUS.set('open', {
       action: 'open',
       action_view: 'Mở',
