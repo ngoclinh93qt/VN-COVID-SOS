@@ -105,6 +105,7 @@ export class UserSignupComponent implements OnInit {
       (result) => {
         console.log(result);
         this.user.phone_number = result.phone_number;
+        this.user.confirm_code = result.confirm_code;
         this.stepper.next();
 
       },

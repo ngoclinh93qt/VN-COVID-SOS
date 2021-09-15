@@ -17,6 +17,7 @@ import {
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
 import { S3Service } from 'src/app/core/services/s3.service';
+import { FormatService } from 'src/app/core/services/format.service';
 
 @Component({
   selector: 'app-request-form',
@@ -26,8 +27,6 @@ import { S3Service } from 'src/app/core/services/s3.service';
 export class RequestFormComponent implements OnInit {
   location: string = '';
   provinces: IProvince[] = [];
-  districts?: IDistrict[] = [];
-  wards?: IWards[] = [];
   province: IProvince = {
     id: '',
   };
@@ -51,7 +50,8 @@ export class RequestFormComponent implements OnInit {
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
     private UrgentLevelService: UrgentLevelService,
-    private s3Service: S3Service
+    private s3Service: S3Service,
+    private formatService: FormatService,
   ) {
     this.urgentLevels = UrgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -90,49 +90,18 @@ export class RequestFormComponent implements OnInit {
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
-      this.districts = this.formatDistrict(this.province.districts);
+      this.formatService.format(this.province.districts)
     });
   }
   getDistrict(id?: number) {
     this.ProvinceService.getDistrict(this.province.id, id).subscribe(
       (result) => {
         this.district = result;
-        this.wards = this.formatWard(this.district.wards);
+        this.formatService.format(this.district.wards);
       }
     );
   }
 
-  formatDistrict(districts?: IDistrict[]) {
-    for (let i = 0; i < districts!.length; i++) {
-      const number = districts![i].name?.replace(/[^0-9]/g, '');
-      if (number?.length == 1) {
-        const index = districts![i].name?.indexOf(number);
-        const newname = [
-          districts![i].name?.slice(0, index),
-          '0',
-          districts![i].name?.slice(index),
-        ].join('');
-        districts![i].name = newname;
-      }
-    }
-    return districts;
-  }
-
-  formatWard(wards?: IWards[]) {
-    for (let i = 0; i < wards!.length; i++) {
-      const number = wards![i].name?.replace(/[^0-9]/g, '');
-      if (number?.length == 1) {
-        const index = wards![i].name?.indexOf(number);
-        const newname = [
-          wards![i].name?.slice(0, index),
-          '0',
-          wards![i].name?.slice(index),
-        ].join('');
-        wards![i].name = newname;
-      }
-    }
-    return wards;
-  }
   setLocation(l: string) {
     this.location = l;
   }
