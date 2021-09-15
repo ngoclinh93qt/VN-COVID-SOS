@@ -43,11 +43,10 @@ export class RequestCardDetailsComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
   supporters: any[] = [];
   lastestComment: { content: string; postTime: string }[] | undefined;
-
+  request: ISOSRequest;
   new_status: String = '';
-  cur_status?: String = this.request.status;
+  cur_status?: String;
   isOpen: boolean = false;
-  status: string[] = ['verified', 'accepted', 'rejected'];
   mapStatus!: Map<string, IBaseStatus>;
   mapSupportStatus!: Map<string, IBaseStatus>;
   mapPriority: any;
@@ -56,13 +55,7 @@ export class RequestCardDetailsComponent implements OnInit {
   create_time: string = '';
   trans: ITransaction[] = [];
   supportObject: ISupport[] = [];
-  defaultComment: INew = {
-    subject: 'new_comment',
-    content: '',
-    medias: [],
-    target_type: 'sos_request',
-    target_id: this.request.id,
-  };
+  defaultComment: INew;
   preUploadFile: any;
   file: any;
   isActive: boolean = false;
@@ -90,7 +83,7 @@ export class RequestCardDetailsComponent implements OnInit {
 
   constructor(
     public bottomRef: MatBottomSheetRef<RequestCardDetailsComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public request: ISOSRequest,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { request: ISOSRequest, session: string },
     public dialog: MatDialog,
     private SupportTransService: SupportTransService,
     private NewsService: NewsService,
@@ -103,6 +96,15 @@ export class RequestCardDetailsComponent implements OnInit {
     private generalService: GeneralService,
     private s3Service: S3Service
   ) {
+    this.request = data.request
+    this.cur_status = this.request.status
+    this.defaultComment = {
+      subject: 'new_comment',
+      content: '',
+      medias: [],
+      target_type: 'sos_request',
+      target_id: this.request.id,
+    };
     if (this.isOpen = this.request.status === 'open') {
       this.isOpen = true;
     }
@@ -129,13 +131,13 @@ export class RequestCardDetailsComponent implements OnInit {
       return
     }
     if (content) {
-      if(!this.preUploadFile){
+      if (!this.preUploadFile) {
         this.NewsService.create(
           { ...this.defaultComment, content: content },
           {}
         ).subscribe((res) => (this.news = [res, ...this.news]));
       }
-      else{
+      else {
         this.s3Service.uploadImage(this.file).subscribe((res) => {
           if (res) {
             let fetchData = {
@@ -163,8 +165,10 @@ export class RequestCardDetailsComponent implements OnInit {
   }
   initalize() {
     this.mapPriority = this.ConstantsService.MAP_PRIORITY;
-    this.mapStatus = this.ConstantsService.REQUEST_STATUS;
+    if (!!!this.data.session) this.data.session = this.ConstantsService.SESSION.DEFAULT;
+    this.mapStatus = this.ConstantsService.MAP_SESSION_STATUS.get(this.data.session)!;
   }
+
   openDialog(): void {
     if (!this.StorageService.token) {
       this.notification.error('Đăng nhập hoặc đăng kí để tham gia.');
