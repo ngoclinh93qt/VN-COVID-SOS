@@ -27,7 +27,7 @@ export class ConstantsService {
       action_view: 'Mở',
       status: 'open',
       status_view: 'Đã mở',
-      next_step: ['verified', 'accepted', 'rejected']
+      next_step: ['verified', 'accepted', 'rejected', 'resolved']
     })
     this.REQUEST_STATUS.set('verified', {
       action: 'verified',

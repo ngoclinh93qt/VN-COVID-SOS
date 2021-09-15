@@ -160,8 +160,10 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      if (!result) {
+        return
+      }
+      this.requests = this.requests?[result, ...this.requests]:[result]
     });
   }
   setLocation(data: any) {

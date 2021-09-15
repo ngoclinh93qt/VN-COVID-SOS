@@ -1,10 +1,10 @@
 import { RequesterObjectStatusService } from './../../core/http/requester-object-status.service';
 import { UsersService } from './../../core/http/users.service';
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-signup',
@@ -23,6 +23,7 @@ export class UserSignupComponent implements OnInit {
   isPhoneInUsed: boolean = false;
   isValidOTP: boolean | undefined;
   constructor(
+    @Inject(MAT_DIALOG_DATA) public phone: number,
     private formBuilder: FormBuilder,
     private UsersService: UsersService,
     private router: Router,
@@ -31,7 +32,7 @@ export class UserSignupComponent implements OnInit {
 
   createForm() {
     this.firstFormGroup = this.formBuilder.group({
-      phone_number: ['', [Validators.required, Validators.minLength(10)]],
+      phone_number: [this.phone? this.phone:'', [Validators.required, Validators.minLength(10)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]],
     }, {
@@ -103,7 +104,6 @@ export class UserSignupComponent implements OnInit {
 
     this.UsersService.create({ phone_number: user.phone_number, password: user.password, debug: "true" }, {}).subscribe(
       (result) => {
-        console.log(result);
         this.user.phone_number = result.phone_number;
         this.stepper.next();
 
@@ -114,8 +114,6 @@ export class UserSignupComponent implements OnInit {
   onResend() {
     this.UsersService.resendCode(this.user!, {}).subscribe(
       (result) => {
-        console.log(result);
-
       },
       error => { console.log(error); }
     );
@@ -126,7 +124,6 @@ export class UserSignupComponent implements OnInit {
     this.UsersService.confirm(this.user!, {}).subscribe(
       (result) => {
         this.user = result;
-        console.log(this.user);
         this.isValidOTP = true;
         this.stepper.next()
       },
@@ -139,12 +136,10 @@ export class UserSignupComponent implements OnInit {
     this.UsersService.updateProfile(userInfo, {}).subscribe(
       (result) => {
         this.user = result;
-        console.log(this.user);
+        this.router.navigateByUrl('/home');
       },
       error => { console.log(error); }
     );
-    console.log(this.user);
-    this.router.navigateByUrl('/home');
   }
   ngOnInit(): void {
 

@@ -1,8 +1,8 @@
 import { ResetPasswordFrameComponent } from './../reset-password-frame/reset-password-frame.component';
-import { Input } from '@angular/core';
+import { Inject, Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
@@ -22,6 +22,7 @@ export class LoginFrameComponent implements OnInit {
   @Input() isDialog: boolean = true;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public phone: number,
     private formBuilder: FormBuilder,
     private authenService: AuthenService,
     private router: Router,
@@ -35,8 +36,9 @@ export class LoginFrameComponent implements OnInit {
   }
 
   createForm() {
+    console.log("this ogin frame with dataxxxx",this.phone)
     this.formGroup = this.formBuilder.group({
-      numberphone: ['', [Validators.required, Validators.pattern(this.regex)]],
+      numberphone: [this.phone ? this.phone : '', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
     });
   }
