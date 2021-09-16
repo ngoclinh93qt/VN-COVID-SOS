@@ -1,3 +1,4 @@
+import { LocationService } from './../../../shared/subjects/location.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import {
@@ -8,6 +9,7 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from '../../../../environments/environment';
@@ -15,12 +17,14 @@ import { MatDialog } from '@angular/material/dialog';
 import asset from '../../../../assets/marker'
 import { RequestCardDetailsComponent } from 'src/app/shared/components/request-card-details/request-card-details.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.scss'],
 })
-export class MapsComponent implements OnInit, OnChanges {
+export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() requests?: ISOSRequest[];
   map: google.maps.Map | undefined;
   infoWindow: google.maps.InfoWindow | undefined;
@@ -29,6 +33,7 @@ export class MapsComponent implements OnInit, OnChanges {
   loader = new Loader({
     apiKey: environment.googleApiKey,
   });
+  private destroy$ = new Subject();
   toggle() {
     if (this.toggleStatus == 'Ẩn bớt') {
       document.getElementById('request_list')?.classList.add('n0');
@@ -75,8 +80,12 @@ export class MapsComponent implements OnInit, OnChanges {
         this.addMarker(request, this.chooseRequest.bind(this));
       });
     });
-
-
+    this.StorageService.locationSubject.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(location => this.map?.setCenter({
+      lat: location.lat,
+      lng: location.lng
+    }));
   }
 
   chooseRequest(request: ISOSRequest) {
@@ -84,11 +93,17 @@ export class MapsComponent implements OnInit, OnChanges {
       data: { request, session: this.constantsService.SESSION.MAP_REQUESTS },
     });
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.setMapOnAll(null);
     this.markers = [];
     this.requests?.forEach((request) => {
       this.addMarker(request, this.chooseRequest.bind(this));
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

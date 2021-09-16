@@ -12,11 +12,11 @@
     </div>
     <div class="location">
       <img src="assets/icon-location.png" alt="" srcset="">
-      <select name="" id="">
-        <option value="" selected>TP.Hồ Chí Minh</option>
-        <option value="">TP.Hà Nội</option>
-        <option value="">TP.Đà Nẵng</option>
-      </select>
+      <form [formGroup]="provinceForm">
+        <select formControlName="province">
+          <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
+        </select>
+      </form>
       <img class="down-arrow" src="assets/down-arrow.png" alt="" srcset="">
     </div>
   </div>
@@ -37,12 +37,12 @@
   <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller">
     <div class="drawer-items">
       <div *ngFor="let item of sideItems" (click)="closeMenu();">
-       <div *ifRoles="item.roles">
-        <div class="drawer-item"  [routerLink]="item.url" [routerLinkActive]="['active-item']">
-          <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
-          {{ item.name }}
+        <div *ifRoles="item.roles">
+          <div class="drawer-item" [routerLink]="item.url" [routerLinkActive]="['active-item']">
+            <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
+            {{ item.name }}
+          </div>
         </div>
-       </div>
       </div>
     </div>
     <div class="drawer-footer">

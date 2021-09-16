@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   z-index: 10;
-  border-bottom: 1px solid #C8C8C8;
+  border-bottom: 1px solid #c8c8c8;
   justify-content: space-between;
   padding: 0 30px;
   .navbar-left {
@@ -15,32 +15,32 @@
       display: flex;
       align-items: center;
       width: 241px;
-      a{
+      a {
         display: flex;
         align-items: center;
         text-decoration: none;
-        img{
+        img {
           padding: 0 5px 0 15px;
         }
-        span{
+        span {
           color: #545454;
           font-size: 18px;
           font-weight: 700;
         }
       }
     }
-    .location{
+    .location {
       display: flex;
       align-items: center;
       position: relative;
-      img{
+      img {
         position: absolute;
         left: 15px;
       }
-      select{
-        width: 206px;
+      select {
+        width: 256px;
         height: 41px;
-        border: 1px solid #C8C8C8;
+        border: 1px solid #c8c8c8;
         border-radius: 20px;
         padding-left: 35px;
         outline: none;
@@ -53,9 +53,9 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         text-indent: 1px;
-        text-overflow: '';
+        text-overflow: "";
       }
-      .down-arrow{
+      .down-arrow {
         left: unset;
         right: 15px;
       }
@@ -64,44 +64,46 @@
   .navbar-right {
     display: flex;
     justify-content: space-between;
-    p{
+    p {
       margin-bottom: 0;
       margin-left: 50px;
-      &:last-child{
+      &:last-child {
         margin-left: 10px;
       }
     }
-    p,a,span{
+    p,
+    a,
+    span {
       font-size: 14px;
       color: #000000;
       font-weight: 700;
       cursor: pointer;
       outline: none;
-      span{
+      span {
         font-weight: 400;
         color: #545454;
         padding-right: 5px;
       }
     }
-    a{
+    a {
       text-decoration: none;
     }
-    .item-log{
+    .item-log {
       display: flex;
       align-items: center;
-      p{
-        border: 1px solid rgba($color: #E11900, $alpha: .6);
+      p {
+        border: 1px solid rgba($color: #e11900, $alpha: 0.6);
         padding: 0 15px;
         border-radius: 20px;
-        &:first-child{
-          background-color: #E11900;
+        &:first-child {
+          background-color: #e11900;
           color: #ffffff;
         }
       }
-      img{
+      img {
         margin-left: 50px;
       }
-      mat-icon{
+      mat-icon {
         margin-left: 10px;
       }
     }
@@ -133,18 +135,18 @@
       color: #707070;
       &.active-item {
         color: #000000;
-        background-color: rgba($color: #F60000, $alpha: .1);
+        background-color: rgba($color: #f60000, $alpha: 0.1);
         border: none;
         border-radius: 0px 28px 28px 0px;
         opacity: 1;
-        mat-icon{
-          color: #E11900;
+        mat-icon {
+          color: #e11900;
         }
       }
     }
   }
 }
-.drawer-footer{
+.drawer-footer {
   display: none;
 }
 .drawer-content {
@@ -154,82 +156,84 @@
   background-color: white;
 }
 
-@media(max-width: 768px){
-  .mat-toolbar{
+@media (max-width: 768px) {
+  .mat-toolbar {
     padding: 0 10px;
     height: 70px;
-    .navbar-left{
+    .navbar-left {
       justify-content: space-between;
       width: 100%;
-      .logo_button{
+      .logo_button {
         width: unset;
-        a{
-          img{
+        a {
+          img {
             padding: 0;
             padding-left: 10px;
           }
-          span{
+          span {
             display: none;
           }
         }
       }
     }
-    .navbar-right{
+    .navbar-right {
       display: none;
     }
   }
-  .drawer{
+  .drawer {
     width: 100%;
-    .drawer-items{
+    .drawer-items {
       width: 100%;
       max-width: 340px;
-      .drawer-item{
+      .drawer-item {
         padding-left: 20px;
       }
     }
   }
-  .drawer-content{
+  .drawer-content {
     padding: 13vh 20px 50px 20px;
   }
 
-  .drawer-footer{
+  .drawer-footer {
     display: block;
     padding-left: 20px;
     margin-top: 40px;
-    p{
+    p {
       margin-bottom: 20px;
     }
-    p,a,span{
+    p,
+    a,
+    span {
       font-size: 16px;
       color: #000000;
       font-weight: 700;
       cursor: pointer;
       outline: none;
-      span{
+      span {
         font-weight: 400;
         color: #545454;
         padding-right: 5px;
       }
     }
-    a{
+    a {
       text-decoration: none;
     }
-    .logg{
+    .logg {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      p{
-        border: 1px solid rgba($color: #E11900, $alpha: .6);
+      p {
+        border: 1px solid rgba($color: #e11900, $alpha: 0.6);
         padding: 5px 15px;
         border-radius: 20px;
         margin-right: 10px;
-        &:first-child{
-          background-color: #E11900;
+        &:first-child {
+          background-color: #e11900;
           color: #ffffff;
         }
         margin-bottom: 0;
       }
-      img{
+      img {
         margin-right: 10px;
       }
     }
