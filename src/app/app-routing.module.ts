@@ -65,14 +65,14 @@ const routes: Routes = [
           ),
       },
 
-    { path: '**', redirectTo: 'urgentRequest' }
+      { path: '**', redirectTo: 'urgentRequest' }
     ],
   },
-  { path: '**', redirectTo: 'login' },
+  // { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
