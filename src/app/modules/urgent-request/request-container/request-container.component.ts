@@ -144,11 +144,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   fetchInit() {
     this.SupportTypesService.findAll().subscribe((result) => {
       this.supportTypes = result;
-      console.log(result);
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
       this.requesterObjectStatus = result;
-      console.log(result);
     });
   }
 
@@ -167,7 +165,6 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     });
   }
   setLocation(data: any) {
-    console.log("set location: ", data)
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
   }

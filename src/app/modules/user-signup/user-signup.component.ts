@@ -105,6 +105,7 @@ export class UserSignupComponent implements OnInit {
     this.UsersService.create({ phone_number: user.phone_number, password: user.password, debug: "true" }, {}).subscribe(
       (result) => {
         this.user.phone_number = result.phone_number;
+        this.user.confirm_code = result.confirm_code;
         this.stepper.next();
 
       },

@@ -11,7 +11,7 @@
   <br>
   <form (submit)="onSubmit(form.value)" #form="ngForm">
     <div *ngIf="groups.length !== 0">
-      <mat-form-field class="example-right-half-width" appearance="outline" *ngIf="group_type == 'group'">
+      <mat-form-field style="width: 100%;" appearance="outline" *ngIf="group_type == 'group'">
         <mat-label>Nhóm của tôi là</mat-label>
         <mat-select ngModel name="type" required>
           <mat-option *ngFor="let group of groups" [value]="group">
@@ -19,6 +19,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div style="margin: 10px 0;">
+      <label >Sẽ hổ trợ một phần hay toàn bộ?</label><br><br>
+      <mat-radio-group aria-label="Tôi tham gia với tư cách" [value]="is_support_all">
+        <mat-radio-button [checked]="true" value="false">Một phần</mat-radio-button> &nbsp;
+        <mat-radio-button value="true">Toàn bộ</mat-radio-button>
+      </mat-radio-group>
     </div>
     <mat-form-field style="width: 100%;" appearance="fill">
       <mat-label>Thêm ghi chú</mat-label>

@@ -82,11 +82,19 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
   }
   verifyRequest(request_id?: string, body?: any) {
     return this.http
+      .post<{data: ISOSRequest}>(`${this.host}/sos_requests/${request_id}/verify`, body)
+      .pipe(
+        map((res) => res.data)
+      );
+  }
+  updateRequestStatus(request_id?: string, body?: any) {
+    return this.http
       .post<{data: ISOSRequest}>(`${this.host}/sos_requests/${request_id}/status`, body)
       .pipe(
         map((res) => res.data)
       );
   }
+
   getGeneralData() {
     var res: IUrgentRequestGeneral = {
       numRequest: this.getNumberOfRequest(),

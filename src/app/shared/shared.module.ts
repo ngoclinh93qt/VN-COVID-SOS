@@ -45,6 +45,7 @@ import { ResetPasswordFrameComponent } from './components/reset-password-frame/r
 import { MatMenuModule } from '@angular/material/menu';
 import { IfNotRoleDirective } from '../core/directives/if-not-role.directive';
 import { IfRoleDirective } from '../core/directives/if-role.directive';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 @NgModule({
   declarations: [
     CardComponent,
@@ -72,7 +73,8 @@ import { IfRoleDirective } from '../core/directives/if-role.directive';
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
     IfRoleDirective,
-    IfNotRoleDirective
+    IfNotRoleDirective,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -104,7 +106,8 @@ import { IfRoleDirective } from '../core/directives/if-role.directive';
     ScrollTrackerDirective,
     ResetPasswordFrameComponent,
     IfRoleDirective,
-    IfNotRoleDirective
+    IfNotRoleDirective,
+    SpinnerComponent
   ],
   providers: [
     HttpClientModule,
@@ -113,5 +116,11 @@ import { IfRoleDirective } from '../core/directives/if-role.directive';
     httpInterceptorProviders,
     LocationService
   ],
+  bootstrap: [
+    SpinnerComponent
+  ],
+  entryComponents: [
+    SpinnerComponent
+  ]
 })
 export class SharedModule { }

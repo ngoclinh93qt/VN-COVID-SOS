@@ -21,6 +21,8 @@ import {
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
 import { S3Service } from 'src/app/core/services/s3.service';
+import { FormatService } from 'src/app/core/services/format.service';
+
 import { FormGroup, FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { UsersService } from 'src/app/core/http/users.service';
@@ -59,6 +61,8 @@ export class RequestFormComponent implements OnInit {
     if (!this.onPickFile)
       this.dialogRef.close(res);
   }
+  isSending = false;
+
   constructor(
     private RequesterObjectStatusService: RequesterObjectStatusService,
     private ProvinceService: ProvinceService,
@@ -72,7 +76,8 @@ export class RequestFormComponent implements OnInit {
     private userService: UsersService,
     private router: Router,
     public dialog: MatDialog,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private formatService: FormatService,
   ) {
     this.urgentLevels = urgentLevelService.getUrgentLevels();
     this.fetchInit();
@@ -167,12 +172,14 @@ export class RequestFormComponent implements OnInit {
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
+      this.formatService.format(this.province.districts)
     });
   }
   getDistrict(id?: number) {
     this.ProvinceService.getDistrict(this.province.id, id).subscribe(
       (result) => {
         this.district = result;
+        this.formatService.format(this.district.wards);
       }
     );
   }
@@ -201,20 +208,24 @@ export class RequestFormComponent implements OnInit {
         var marker = new google.maps.Marker({
           position: this.storageService.location,
           map: map,
-          draggable: true //make it draggable
+          draggable: true, //make it draggable
         });
 
         const infoWindow = new google.maps.InfoWindow();
-        google.maps.event.addListener(map, 'click', function (event: { latLng: any; }) {
-          var clickedLocation = event.latLng;
-          if (!marker) {
-            marker = new google.maps.Marker({
-              position: clickedLocation,
-              map: map,
-              draggable: true //make it draggable
-            });
+        google.maps.event.addListener(
+          map,
+          'click',
+          function (event: { latLng: any }) {
+            var clickedLocation = event.latLng;
+            if (!marker) {
+              marker = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true, //make it draggable
+              });
+            }
           }
-        })
+        );
 
         var self = this;
 
@@ -228,9 +239,10 @@ export class RequestFormComponent implements OnInit {
   }
   onFilePicked(event: any) {
     this.onPickFile = true;
-    console.log(event.target.files[0])
     let file = event.target.files[0]
+    this.isSending = true;
     this.s3Service.uploadImage(file).subscribe(res => {
+      this.isSending = false;
       this.medias = [...this.medias, {
         mime_type: this.getFileType(file),
         url: res
@@ -240,7 +252,6 @@ export class RequestFormComponent implements OnInit {
   }
 
   getFileType(file: File): string {
-
     if (file.type.match('image.*'))
       return 'image';
 
@@ -256,5 +267,4 @@ export class RequestFormComponent implements OnInit {
   deleteImg(order: number) {
     this.medias.splice(order, 1)
   }
-
 }

@@ -13,6 +13,7 @@ export class RequestContainerComponent implements OnInit {
   @Output() scrollingFinished = new EventEmitter<void>();
   @Input() requests?: ISOSRequest[];
   @Input() type?: String;
+  @Input() session?: String;
   constructor(
     private bottomsheet: MatBottomSheet
   ) {
@@ -27,11 +28,11 @@ export class RequestContainerComponent implements OnInit {
   }
   chooseRequest(request: ISOSRequest) {
     const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
-      data: request,
+      data: { request, session: this.session },
       hasBackdrop: false
     });
 
-    dialogRef.afterDismissed().subscribe(res => this.requests = this.requests?.map(element => element.id === res.id? res: element ))
+    dialogRef.afterDismissed().subscribe(res => this.requests = this.requests?.map(element => element.id === res.id ? res : element))
 
   }
 
