@@ -1,4 +1,38 @@
 ##################################################################################################
+#  Nginx Configmap
+##################################################################################################
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    worker_processes  1;
+
+    events {
+        worker_connections  1024;
+    }
+
+    http {
+        include       mime.types;
+        default_type  application/octet-stream;
+        sendfile        on;
+        keepalive_timeout  65;
+        server {
+            listen       80;
+            server_name  localhost;
+            root /usr/share/nginx/html;
+            location / {
+                try_files $uri $uri/ /index.html;
+            }
+            error_page   500 502 503 504  /50x.html;
+            location = /50x.html {
+                root   html;
+            }
+        }
+    }
+---
+##################################################################################################
 #  Nginx Service
 ##################################################################################################
 apiVersion: v1
@@ -32,12 +66,21 @@ spec:
       labels:
         app: nginx
     spec:
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config
       containers:
         - name: nginx
           image: ghcr.io/sos-hub-vn/sos-website:dev-latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
       imagePullSecrets:
         - name: gitcred
 ---
