@@ -3,6 +3,7 @@ import { UrgentRequestComponent } from './../urgent-request.component';
 
 
 import { Component, Input, OnInit } from '@angular/core';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 @Component({
   selector: 'bookmarked-request',
@@ -12,8 +13,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BookmarkedComponent implements OnInit {
 
   userMarkedRequests: ISOSRequest[] = [];
-  constructor(private UrgentRequestService: UrgentRequestService) { }
+  constructor(private UrgentRequestService: UrgentRequestService, private constant: ConstantsService) {
+    this.session = this.constant.SESSION.BOOKMARKED_REQUESTS
+  }
   params: IQueryPrams = {}
+  session: string;
   paramsInit() {
     this.params = { limit: 20, offset: 0 }
   }

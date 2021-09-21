@@ -8,6 +8,7 @@ import { AuthenService } from '../../../core/http/authen.service';
 import { UsersService } from '../../../core/http/users.service';
 import { DialogService } from '../../../core/services/dialog.service';
 import { UserSignupComponent } from 'src/app/modules/user-signup/user-signup.component';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'login-frame',
@@ -32,14 +33,14 @@ export class LoginFrameComponent implements OnInit {
     public dialogRef: MatDialogRef<LoginFrameComponent>,
     private dialogService: DialogService,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
   }
 
   createForm() {
-    console.log("this ogin frame with dataxxxx",this.phone)
+    console.log("this ogin frame with dataxxxx", this.phone)
     this.formGroup = this.formBuilder.group({
       numberphone: [this.phone ? this.phone : '', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
@@ -49,7 +50,6 @@ export class LoginFrameComponent implements OnInit {
   onSubmit(values: { numberphone: string; password: string }) {
     this.authenService.signin(values.numberphone, values.password).subscribe(
       (res: any) => {
-        console.log(res);
         this.userService.getProfile().subscribe((result) => {
           this.user = result;
           this.onClose();
@@ -100,7 +100,7 @@ export class LoginFrameComponent implements OnInit {
     });
   }
 
-  signup(){
+  signup() {
     this.dialogRef.close();
     this.dialog.open(UserSignupComponent, {
       panelClass: 'dialog-responsive'
