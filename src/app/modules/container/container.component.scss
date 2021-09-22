@@ -106,6 +106,19 @@
       mat-icon {
         margin-left: 10px;
       }
+      .short-name{
+        margin-left: 50px;
+        font-size: 12px;
+        padding: 2px;
+        border: unset;
+        border-radius: 50%;
+        background-color: #dfe1e6;
+        height: 28px;
+        width: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }
@@ -235,6 +248,19 @@
       }
       img {
         margin-right: 10px;
+      }
+      .short-name{
+        margin-right: 10px;
+        font-size: 12px;
+        padding: 2px;
+        border: unset;
+        border-radius: 50%;
+        background-color: #dfe1e6;
+        height: 28px;
+        width: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

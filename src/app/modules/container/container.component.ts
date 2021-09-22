@@ -136,6 +136,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.authService.logout();
     window.location.reload();
   }
+
+  getShortName(fullName: string) { 
+    return fullName.split(' ').map(n => n[0]).join('');
+  }
 }
 type SideItem = {
   name: string;
