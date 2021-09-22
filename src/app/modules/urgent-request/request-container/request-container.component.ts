@@ -161,7 +161,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       if (!result) {
         return
       }
-      this.requests = this.requests?[result, ...this.requests]:[result]
+      this.requests = this.requests ? [result, ...this.requests] : [result]
     });
   }
   setLocation(data: any) {

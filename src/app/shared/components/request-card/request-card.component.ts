@@ -13,35 +13,44 @@ import { NotificationService } from '../notification/notification.service';
 export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
   @Input() type?: String;
+  @Input() session?: String;
   createTime: string = ''
   user: any;
   mapPriority: any;
   mapStatus: any;
   distance: string = ''
-  constructor(private GeneralService: GeneralService, 
+  isBookmarkSession: boolean = false;
+  isRemote: boolean = false
+  constructor(private GeneralService: GeneralService,
     private UrgentRequestService: UrgentRequestService,
-     private StorageService: StorageService,
-      private ConstantsService: ConstantsService,
-      private notificationService: NotificationService) {
+    private StorageService: StorageService,
+    protected constant: ConstantsService,
+    private notificationService: NotificationService) {
   }
   mark($event: any, action?: string) {
     $event.stopPropagation();
     $event.preventDefault();
-    if(!this.user){
+    if (!this.user) {
       this.notificationService.warn("Bạn cần phải đăng nhập để sử dụng chức năng này")
       return
     }
     this.UrgentRequestService.markRequest(this.request?.id,
       { bookmarker_type: 'user', action: action, bookmarker_id: this.user.id })
       .subscribe((res) => {
-        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; } else { console.log("else"); this.request!.is_bookmarked = false; }
+        if (action == 'bookmark') { console.log(true); this.request!.is_bookmarked = true; }
+        else {
+          console.log("else"); this.request!.is_bookmarked = false;
+          if (this.isBookmarkSession == true) this.isRemote = true;;
+        }
       })
+
   }
 
   ngOnInit(): void {
-    this.mapPriority = this.ConstantsService.MAP_PRIORITY;
-    this.mapStatus = this.ConstantsService.REQUEST_STATUS
+    this.mapPriority = this.constant.MAP_PRIORITY;
+    this.mapStatus = this.constant.REQUEST_STATUS
     this.user = this.StorageService.userInfo;
+    this.isBookmarkSession = (this.session == this.constant.SESSION.BOOKMARKED_REQUESTS)
     this.createTime = this.GeneralService.diffDate(new Date(this.request?.created_time!))
     const RLocation = this.request?.location?.split(',')
     const CLocation = this.StorageService.location;

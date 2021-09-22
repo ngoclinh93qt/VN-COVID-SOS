@@ -102,6 +102,7 @@ interface IProvince {
   updated_by?: string;
   updated_time?: Date;
   districts?: IDistrict[];
+  default_location?: string;
 }
 interface IWards {
   code?: number;

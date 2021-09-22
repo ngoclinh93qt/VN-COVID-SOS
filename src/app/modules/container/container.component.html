@@ -12,23 +12,24 @@
     </div>
     <div class="location">
       <img src="assets/icon-location.png" alt="" srcset="">
-      <select name="" id="">
-        <option value="" selected>TP.Hồ Chí Minh</option>
-        <option value="">TP.Hà Nội</option>
-        <option value="">TP.Đà Nẵng</option>
-      </select>
+      <form [formGroup]="provinceForm">
+        <select formControlName="province">
+          <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
+        </select>
+      </form>
       <img class="down-arrow" src="assets/down-arrow.png" alt="" srcset="">
     </div>
   </div>
   <div class="navbar-right">
-    <p><span>Hotline:</span><a href="tel:18009999">18009999</a></p>
-    <p><span>Email:</span> <a href="mailto:info@sos.vn">info@sos.vn</a></p>
+    <p><span>Hotline:</span><a href="tel:18001562">18001562</a></p>
+    <p><span>Email:</span> <a href="mailto:info@tiepsuc.org">info@tiepsuc.org</a></p>
     <div class="item-log" *ngIf="!loginSuccess">
       <p (click)="loginPopup();">ĐĂNG NHẬP</p>
       <p (click)="openSignupDialog()">ĐĂNG KÍ</p>
     </div>
     <div class="item-log" *ngIf="loginSuccess">
-      <img src="{{ !isAvatar ? 'assets/icon-logo.png' : this.userInfor.avatar}}" alt="">
+      <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
+      <div class="short-name" *ngIf="!isAvatar"><span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span></div>
       <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
     </div>
   </div>
@@ -37,12 +38,12 @@
   <mat-sidenav mode="side" opened class="drawer" *ngIf="showFiller">
     <div class="drawer-items">
       <div *ngFor="let item of sideItems" (click)="closeMenu();">
-       <div *ifRoles="item.roles">
-        <div class="drawer-item"  [routerLink]="item.url" [routerLinkActive]="['active-item']">
-          <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
-          {{ item.name }}
+        <div *ifRoles="item.roles">
+          <div class="drawer-item" [routerLink]="item.url" [routerLinkActive]="['active-item']">
+            <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
+            {{ item.name }}
+          </div>
         </div>
-       </div>
       </div>
     </div>
     <div class="drawer-footer">
@@ -51,11 +52,12 @@
         <p>ĐĂNG KÍ</p>
       </div>
       <div class="logg" *ngIf="loginSuccess">
-        <img src="{{ !isAvatar ? 'assets/icon-logo.png' : this.userInfor.avatar}}" alt="">
+        <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
+        <div class="short-name" *ngIf="!isAvatar"><span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span></div>
         <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
       </div>
-      <p><span>Hotline:</span><a href="tel:18009999">18009999</a></p>
-      <p><span>Email:</span> <a href="mailto:info@sos.vn">info@sos.vn</a></p>
+      <p><span>Hotline:</span><a href="tel:18001562">18001562</a></p>
+      <p><span>Email:</span> <a href="mailto:info@tiepsuc.org">info@tiepsuc.org</a></p>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="drawer-content">

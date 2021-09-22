@@ -18,4 +18,10 @@ export class ProvinceService extends RestService<IProvince> {
       )
       .pipe(map((res) => res.data));
   }
+  getProvinces(): Observable<IProvince[]> {
+    return this.http
+      .get<{ data: IProvince[] }>(`${this.host}/${this.pathName}`).pipe(
+        map(res => res.data)
+      );
+  }
 }
