@@ -40,7 +40,6 @@ export class LoginFrameComponent implements OnInit {
   }
 
   createForm() {
-    console.log("this ogin frame with dataxxxx", this.phone)
     this.formGroup = this.formBuilder.group({
       numberphone: [this.phone ? this.phone : '', [Validators.required, Validators.pattern(this.regex)]],
       password: ['', Validators.required],
