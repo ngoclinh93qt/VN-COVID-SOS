@@ -1,6 +1,7 @@
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { GroupedObservable } from 'rxjs';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 @Component({
   selector: 'suggested-request',
@@ -12,11 +13,14 @@ export class SuggestedComponent implements OnInit {
   @Input() groups: any[] = [];
   numGroup: number = 0;
   @Input() user_id: string = '';
-  constructor(private UrgentRequestService: UrgentRequestService) { }
+  session: string;
+  constructor(private UrgentRequestService: UrgentRequestService, private constant: ConstantsService) {
+    this.session = this.constant.SESSION.SUGGESTED_REQUESTS
+  }
 
   params: IQueryPrams[] = []
   paramsInit() {
-    this.numGroup=this.groups?.length;
+    this.numGroup = this.groups?.length;
     for (var i = 0; i <= this.numGroup; i++) this.params.push({ limit: 10, offset: 0 })
   }
   updateParams(index: number, returnNumber: number) {

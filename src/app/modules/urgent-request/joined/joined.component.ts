@@ -1,5 +1,6 @@
 import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 @Component({
   selector: 'joined-request',
@@ -9,8 +10,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class JoinedComponent implements OnInit {
   joinedRequests: ISOSRequest[] = [];
   @Input() user_id: string = '';
-
-  constructor(private UrgentRequestService: UrgentRequestService) { }
+  session: string;
+  constructor(private UrgentRequestService: UrgentRequestService, private constant: ConstantsService) {
+    this.session = this.constant.SESSION.JOINED_REQUESTS
+  }
 
   params: IQueryPrams = {}
   paramsInit() {
@@ -26,7 +29,7 @@ export class JoinedComponent implements OnInit {
   }
   load() {
     if (this.params.limit != 0)
-    this.UrgentRequestService.getJoinedRequests(this.user_id, this.params).subscribe((result) => {
+      this.UrgentRequestService.getJoinedRequests(this.user_id, this.params).subscribe((result) => {
         this.joinedRequests = [...this.joinedRequests, ...result];
         this.updateParams(result.length);
       });

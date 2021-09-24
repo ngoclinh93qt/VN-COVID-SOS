@@ -10,6 +10,7 @@ import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestFormComponent } from '../request-form/request-form.component';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
 
 @Component({
   selector: 'all-request-container',
@@ -19,7 +20,7 @@ import { RequestFormComponent } from '../request-form/request-form.component';
 export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
-  urgentLevels: IPriorityType[] = [];
+  session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
@@ -36,17 +37,17 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   };
   queryObject: any = {};
   subscription: Subscription | undefined
+  subscriptionLocation: Subscription | undefined
   constructor(public dialog: MatDialog,
-    private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
-    private RequestStatusService: RequestStatusService,
     private RequesterObjectStatusService: RequesterObjectStatusService,
-    private LocationService: LocationService
+    private LocationService: LocationService,
+    private constantsService: ConstantsService,
   ) {
-    this.statuses = RequestStatusService.getRequestStatus();
-    this.urgentLevels = UrgentLevelService.getUrgentLevels();
+    this.statuses = this.constantsService.STATUS_LIST
+    this.session = this.constantsService.SESSION.DEFAULT
     this.fetchInit();
   }
 
@@ -170,11 +171,18 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.setLocation(this.StorageService.location);
-    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
+    this.subscriptionLocation = this.StorageService.locationSubject.subscribe({
+      next: (location) => { this.setLocation(location); this.search() } // detect city change
+    })
+    this.subscription = this.LocationService.locationSubject.subscribe({
+      next: (location: ILocation) => { this.setLocation(location); this.search() } //detect current location change
+    })
     this.LocationService.updateLocation();
+
     this.search();
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.subscriptionLocation?.unsubscribe();
   }
 }
