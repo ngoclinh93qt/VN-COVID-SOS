@@ -52,7 +52,7 @@ export class ConstantsService {
       action_view: 'Hoàn thành',
       status: 'resolved',
       status_view: 'Đã giải quyết',
-      next_step: []
+      next_step: ['re-open']
     })
     this.REQUEST_STATUS.set('open', {
       action: 'open',
@@ -137,7 +137,7 @@ export class ConstantsService {
       action_view: 'Hoàn thành',
       status: 'resolved',
       status_view: 'Đã hoàn thành',
-      next_step: []
+      next_step: ['re-open']
     })
 
     this.SUPPORT_STATUS.set('pending', {

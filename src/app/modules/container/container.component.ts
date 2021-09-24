@@ -9,6 +9,7 @@ import { AuthenService } from 'src/app/core/http/authen.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LocationService } from 'src/app/shared/subjects/location.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-container',
@@ -33,7 +34,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
     private locationService: LocationService,
     private authService: AuthenService,
     private provinceService: ProvinceService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.checkLogin();
     if (window.innerWidth <= 768) {
@@ -133,8 +135,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
   logout() {
     this.loginSuccess = false;
+    this.router.navigate([''])
     this.authService.logout();
-    window.location.reload();
   }
 
   getShortName(fullName: string) { 
