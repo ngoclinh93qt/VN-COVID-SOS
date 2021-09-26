@@ -116,6 +116,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.search();
   }
   search() {
+    console.log("search");
+
+    this.requests = [];
     this.queryObject = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
@@ -124,15 +127,22 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       priority_type: this.filterObject.priority_type?.toString(),
     };
     this.paramsInit();
+    console.log(this.params.offset)
     this.load();
   }
   load() {
+    console.log("load");
+    console.log(this.params.offset)
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
         if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
         else this.requests = result.sos_requests;
         this.requestsChange.emit(this.requests);
+        console.log(this.params.offset)
         this.updateParams(result.total);
+        console.log(this.requests)
+        console.log(result);
+
       });
   }
   select($event: any) {
@@ -170,16 +180,13 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.filterObject.long_position = data.lng?.toString();
   }
   ngOnInit(): void {
+    console.log("INITTT")
     this.setLocation(this.StorageService.location);
-    this.subscriptionLocation = this.StorageService.locationSubject.subscribe({
-      next: (location) => { this.setLocation(location); this.search() } // detect city change
-    })
-    this.subscription = this.LocationService.locationSubject.subscribe({
-      next: (location: ILocation) => { this.setLocation(location); this.search() } //detect current location change
-    })
-    this.LocationService.updateLocation();
 
-    this.search();
+    this.subscription = this.StorageService.locationSubject.subscribe({
+      next: (location: ILocation) => { this.setLocation(location); console.log("location", location); this.search() } //detect current location change
+    })
+   
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

@@ -27,7 +27,7 @@
             </div>
           </ng-container>
         </div>
-        
+
         <button class="status-btn" mat-stroked-button color="primary"
           *ifRoles="['GUEST']">{{getStatusView(mapStatus)}}</button>
         <div *ifRoles="['OPERATOR', 'USER', 'ADMIN']">
@@ -43,6 +43,8 @@
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
+        <mat-icon (click)="openRequestForm()" *ngIf="data.session===constantsService.SESSION.CREATED_REQUESTS" color="primary" style="float:right">
+          edit</mat-icon>
         <mat-chip-list aria-label="tag">
           <div class="priority-circle"
             [ngStyle]="{'background-color': mapPriority.get(request?.color_info?.color) || 'yellow'}">
@@ -120,14 +122,8 @@
     <p style="font-weight: bold; font-size: 17px">Bình luận</p>
     <div class="comment-block" (click)="isActive = true" [ngClass]="isActive == true ? 'active' : ''">
       <mat-form-field appearance="fill">
-        <textarea matInput
-                  cdkTextareaAutosize
-                  #autosize="cdkTextareaAutosize"
-                  cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="3"
-                  placeholder="Viết bình luận...."
-                  value="{{content.value}}"
-                  #content></textarea>
+        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3" placeholder="Viết bình luận...." value="{{content.value}}" #content></textarea>
       </mat-form-field>
       <div class="preFile" *ngIf="preUploadFile">
         <div class="content-prefile">
@@ -138,7 +134,7 @@
       <button mat-flat-button color="accent" (click)="show(content)" cdkFocusInitial>Đăng bình luận</button>
       <div class="fileUpload btn btn--browse">
         <mat-icon>add_a_photo</mat-icon>
-        <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event)"> 
+        <input id="uploadBtn" class="upload" type="file" (change)="onFileSelected($event)">
       </div>
     </div>
     <div class="comment-list scrollable">

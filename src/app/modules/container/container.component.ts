@@ -8,7 +8,6 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { AuthenService } from 'src/app/core/http/authen.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { LocationService } from 'src/app/shared/subjects/location.service';
 
 @Component({
   selector: 'app-container',
@@ -23,14 +22,13 @@ export class ContainerComponent implements OnInit, OnDestroy {
   userInfor: any;
   provinces: IProvince[] = [];
   provinceForm!: FormGroup;
-
+  isInitialized: boolean = false;
   private destroy$ = new Subject();
   private DEFAULT_PROVINCE_CODE: number = 79;
 
   constructor(
     public dialog: MatDialog,
     private storage: StorageService,
-    private locationService: LocationService,
     private authService: AuthenService,
     private provinceService: ProvinceService,
     private formBuilder: FormBuilder
@@ -85,10 +83,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
     });
     this.provinceForm.get('province')?.valueChanges.pipe(
       takeUntil(this.destroy$)
-    ).subscribe(province => {
-      const coordinates = province.default_location.split(',');
-      const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
-      this.storage.location = location;
+    ).subscribe((province) => {
+      if (this.isInitialized == false) this.isInitialized = true; else {
+        const coordinates = province.default_location.split(',');
+        const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
+        this.storage.location = location;
+      }
     });
     this.provinceService.getProvinces().pipe(
       takeUntil(this.destroy$)
@@ -137,7 +137,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
-  getShortName(fullName: string) { 
+  getShortName(fullName: string) {
     return fullName.split(' ').map(n => n[0]).join('');
   }
 }

@@ -181,23 +181,26 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
-  is_bookmarked?: boolean;
-  is_group_bookmarked?: boolean;
-  address_info?: IAddressInfo;
+  type?: string;
+  subject?: string;
+  share_phone_numbber?: string
+  support_types?: ISupportType[];
   contact_info?: IContacInfo;
-  created_by?: string;
-  created_time?: Date;
-  description?: string;
-  id?: string;
-  location?: string;
-  medias?: IMedias[];
-  requester_info?: string;
-  requester_id?: string;
   requester_object_status?: IRequesterObjectStatus[];
   requester_type?: string;
+  requester_id?: string;
+  medias?: IMedias[];
+  description?: string;
+  address_info?: IAddressInfo;
+
+  is_bookmarked?: boolean;
+  is_group_bookmarked?: boolean;
+  created_by?: string;
+  created_time?: Date;
+  id?: string;
+  location?: string;
+  requester_info?: string;
   status?: string;
-  subject?: string;
-  support_types?: ISupportType[];
   supporters?: [];
   updated_by?: string;
   updated_time?: Date;

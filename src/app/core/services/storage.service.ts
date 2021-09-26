@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ConstantsService } from '../../shared/constant/constants.service';
 
@@ -6,9 +6,9 @@ import { ConstantsService } from '../../shared/constant/constants.service';
   providedIn: 'root',
 })
 export class StorageService {
-  locationSubject: BehaviorSubject<ILocation>;
+
+  public locationSubject = new Subject<ILocation>();
   constructor(private constant: ConstantsService) {
-    this.locationSubject = new BehaviorSubject(this.location);
   }
   public get location(): any | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.LOCATION);
@@ -23,7 +23,7 @@ export class StorageService {
         this.constant.STORAGE_KEY.LOCATION,
         JSON.stringify(value)
       );
-      this.locationSubject.next(value);
+      this.locationSubject.next(value)
     }
   }
 

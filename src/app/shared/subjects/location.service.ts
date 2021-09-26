@@ -6,14 +6,14 @@ import { Subject } from 'rxjs';
 })
 export class LocationService {
   constructor(private storage: StorageService) { }
-  public locationSubject = new Subject<ILocation>();
+ 
   public updateLocation(): any {
     var self = this;
     navigator.geolocation.getCurrentPosition(function (position: any) {
+      console.log("ádasdasdas")
       let lat = position.coords.latitude;
       let long = position.coords.longitude;
       self.storage.location = { lat: lat, lng: long }
-      self.locationSubject.next({ lat: lat, lng: long })
     });
   }
 

@@ -1,4 +1,4 @@
-import { LocationService } from './../../../shared/subjects/location.service';
+
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import {
@@ -19,6 +19,7 @@ import { RequestCardDetailsComponent } from 'src/app/shared/components/request-c
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { LocationService } from 'src/app/shared/subjects/location.service';
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
@@ -33,7 +34,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   loader = new Loader({
     apiKey: environment.googleApiKey,
   });
-  private destroy$ = new Subject();
+  subscription: any;
   toggle() {
     if (this.toggleStatus == 'Ẩn bớt') {
       document.getElementById('request_list')?.classList.add('n0');
@@ -43,7 +44,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, private constantsService: ConstantsService,
+  constructor(private StorageService: StorageService, private constantsService: ConstantsService, private locationService: LocationService,
     private bottomsheet: MatBottomSheet) {
   }
   setMapOnAll(map: any) {
@@ -80,12 +81,14 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
         this.addMarker(request, this.chooseRequest.bind(this));
       });
     });
-    this.StorageService.locationSubject.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(location => this.map?.setCenter({
-      lat: location.lat,
-      lng: location.lng
-    }));
+    this.subscription = this.StorageService.locationSubject.subscribe({
+      next: (location: ILocation) => {
+        this.map?.setCenter({
+          lat: location.lat,
+          lng: location.lng
+        })
+      }
+    })
   }
 
   chooseRequest(request: ISOSRequest) {
@@ -103,7 +106,6 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.subscription.unsubscribe();
   }
 }
