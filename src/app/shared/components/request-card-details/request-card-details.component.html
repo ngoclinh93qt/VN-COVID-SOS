@@ -8,12 +8,12 @@
     <div style="width: 450px; max-width: 100%" class="info_section">
       <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px" style="margin-bottom: 10px; width: 100%">
         <div fxLayout="row">
-          <div fxLayout="row" *ifRoles="['OPERATOR', 'USER', 'ADMIN']" fxLayoutAlign="center center"
+          <div fxLayout="row" *ifRoles="['OPERATOR', 'ADMIN']" fxLayoutAlign="center center"
             style="margin-right: 10px">
             <mat-icon>pin_drop</mat-icon>
             <a (click)="openProposeDialog()">Đề xuất cho nhóm</a>
           </div>
-          <ng-container *ifRoles="['OPERATOR', 'USER', 'ADMIN']">
+          <ng-container *ifRoles="['OPERATOR', 'ADMIN']">
             <div *ngIf="request.verify_status !== 'verified' " fxLayout="row" fxLayoutAlign="center center">
               <mat-icon>check</mat-icon>
               <a (click)="confirmStatus()">Xác thực</a>
@@ -30,7 +30,7 @@
 
         <button class="status-btn" mat-stroked-button color="primary"
           *ifRoles="['GUEST']">{{getStatusView(mapStatus)}}</button>
-        <div *ifRoles="['OPERATOR', 'USER', 'ADMIN']">
+        <div *ifRoles="['OPERATOR', 'ADMIN']">
           <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger
             [disabled]="getStatusSteps(mapStatus).length === 0">
             {{getStatusView(mapStatus)}}<mat-icon>expand_more</mat-icon></button>
