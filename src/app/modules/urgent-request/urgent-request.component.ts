@@ -14,6 +14,7 @@ import { UrgentRequestService } from 'src/app/core/http/urgent-request.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UsersService } from 'src/app/core/http/users.service';
 import { Subscription } from 'rxjs';
+import { LocationService } from 'src/app/shared/subjects/location.service';
 
 @Component({
   selector: 'app-urgent-request',
@@ -24,22 +25,26 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
   requests: ISOSRequest[] = [];
   user: any;
   mobileScreen: string = "MAP"
-  subscription: Subscription | undefined
+  subscriptionUser: Subscription | undefined
+
   constructor(
 
-    private StorageService: StorageService, private userService: UsersService
+    private StorageService: StorageService, private userService: UsersService, private locationService: LocationService,
   ) { }
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscriptionUser?.unsubscribe();
+
   }
   toggleMap() {
     if (this.mobileScreen === 'MAP') this.mobileScreen = "REQUESTS"; else this.mobileScreen = 'MAP'
   }
   ngOnInit(): void {
     this.user = this.StorageService.userInfo;
-    this.subscription = this.userService.userSubject.subscribe({
+    this.locationService.updateLocation();
+    this.subscriptionUser = this.userService.userSubject.subscribe({
       next: (user) => { this.user = user; console.log(user) }
     });
+
   }
 
 }

@@ -24,7 +24,7 @@ export class RequestCardComponent implements OnInit {
   constructor(private GeneralService: GeneralService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
-    protected constant: ConstantsService,
+    public constant: ConstantsService,
     private notificationService: NotificationService) {
   }
   mark($event: any, action?: string) {

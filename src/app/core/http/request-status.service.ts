@@ -17,7 +17,7 @@ export class RequestStatusService {
       name: 'Đang chờ hỗ trợ',
     },
   ];
-  constructor() {}
+  constructor() { }
   getRequestStatus() {
     return this.requestStatus;
   }

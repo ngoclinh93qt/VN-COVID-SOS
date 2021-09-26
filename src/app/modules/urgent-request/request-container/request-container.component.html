@@ -18,18 +18,7 @@
         height="50" color="accent" text="Tạo yêu cầu">
       </app-button>
     </div>
-    <button matBadge="{{filterObject.priority_type?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
-      mat-stroked-button class="menuTrigger" [matMenuTriggerFor]="priority">
-      Mức độ
-    </button>
 
-    <mat-menu #priority="matMenu">
-      <button *ngFor="let level of urgentLevels" mat-menu-item (click)="selectPriority(level.type, $event)">
-        <mat-icon class="empty">check_box_outline_blank</mat-icon>
-        <mat-icon class="checked red">check_box</mat-icon>
-        {{ level.name }}
-      </button>
-    </mat-menu>
 
     <button matBadge="{{filterObject.support_types?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
       class="menuTrigger" mat-stroked-button [matMenuTriggerFor]="support_type">
@@ -68,6 +57,6 @@
     </mat-menu>
   </div>
   <div class="request_items">
-    <app-request-container (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
+    <app-request-container session='{{session}}' (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
   </div>
 </div>

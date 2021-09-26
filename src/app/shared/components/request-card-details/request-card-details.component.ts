@@ -33,6 +33,7 @@ import * as dayjs from 'dayjs';
 import { group } from '@angular/animations';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { S3Service } from 'src/app/core/services/s3.service';
+import { RequestFormComponent } from 'src/app/modules/urgent-request/request-form/request-form.component';
 
 @Component({
   selector: 'app-request-card-details',
@@ -90,7 +91,7 @@ export class RequestCardDetailsComponent implements OnInit {
     private SupportObjectService: SupportObjectService,
     private urgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
-    private constantsService: ConstantsService,
+    public constantsService: ConstantsService,
     private storageService: StorageService,
     private notification: NotificationService,
     private generalService: GeneralService,
@@ -114,7 +115,20 @@ export class RequestCardDetailsComponent implements OnInit {
     this.initalize();
     this.fetchInit();
   }
+  openRequestForm(): void {
+    const dialogRef = this.dialog.open(RequestFormComponent, {
+      width: 'auto',
+      data: { action: 'update', request: this.request },
+      disableClose: true
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return
+      }
+      this.request = result;
+    });
+  }
   onFileSelected(event: any) {
     this.file = event.target.files[0];
     var reader = new FileReader();
