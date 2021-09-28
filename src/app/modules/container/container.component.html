@@ -29,7 +29,9 @@
     </div>
     <div class="item-log" *ngIf="loginSuccess">
       <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
-      <div class="short-name" *ngIf="!isAvatar"><span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span></div>
+      <div class="short-name" *ngIf="!isAvatar">
+        <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>
+      </div>
       <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
     </div>
   </div>
@@ -53,7 +55,9 @@
       </div>
       <div class="logg" *ngIf="loginSuccess">
         <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
-        <div class="short-name" *ngIf="!isAvatar"><span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span></div>
+        <div class="short-name" *ngIf="!isAvatar">
+          <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>
+        </div>
         <mat-icon (click)="logout()" aria-hidden="false">logout</mat-icon>
       </div>
       <p><span>Hotline:</span><a href="tel:18001562">18001562</a></p>

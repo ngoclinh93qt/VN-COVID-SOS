@@ -60,6 +60,7 @@ export class RequestCardDetailsComponent implements OnInit {
   preUploadFile: any;
   file: any;
   isActive: boolean = false;
+  editable: boolean = false;
   onClose() {
     this.bottomRef.dismiss(this.request);
   }
@@ -98,6 +99,7 @@ export class RequestCardDetailsComponent implements OnInit {
     private s3Service: S3Service
   ) {
     this.request = data.request
+
     this.cur_status = this.request.status
     this.defaultComment = {
       subject: 'new_comment',
@@ -119,7 +121,8 @@ export class RequestCardDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: { action: 'update', request: this.request },
-      disableClose: true
+      disableClose: true,
+      maxWidth: '100vw'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -181,6 +184,7 @@ export class RequestCardDetailsComponent implements OnInit {
     this.mapPriority = this.constantsService.MAP_PRIORITY;
     if (!!!this.data.session) this.data.session = this.constantsService.SESSION.DEFAULT;
     this.mapStatus = this.constantsService.MAP_SESSION_STATUS.get(this.data.session)!;
+
   }
 
   openDialog(): void {
@@ -275,6 +279,7 @@ export class RequestCardDetailsComponent implements OnInit {
     const RLocation = this.request?.location?.split(',')
     const CLocation = this.StorageService.location;
     this.distance = this.generalService.getDistanceFromLatLonInKm(parseFloat(RLocation![0]), parseFloat(RLocation![1]), CLocation.lat, CLocation.lng);
+    this.editable = this.data.request?.requester_info?.id === this.user?.id
   }
 }
 @Component({

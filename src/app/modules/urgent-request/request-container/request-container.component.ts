@@ -127,12 +127,11 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       priority_type: this.filterObject.priority_type?.toString(),
     };
     this.paramsInit();
-    console.log(this.params.offset)
+
     this.load();
   }
   load() {
-    console.log("load");
-    console.log(this.params.offset)
+
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
         if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
@@ -165,7 +164,8 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: {},
-      disableClose: true
+      disableClose: true,
+      maxWidth: '100vw'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -181,12 +181,13 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     console.log("INITTT")
-    this.setLocation(this.StorageService.location);
-
+    console.log(this.StorageService.location)
     this.subscription = this.StorageService.locationSubject.subscribe({
-      next: (location: ILocation) => { this.setLocation(location); console.log("location", location); this.search() } //detect current location change
+      next: (location: ILocation) => {
+        console.log("location change")
+        this.setLocation(location); console.log("location", location); this.search()
+      }
     })
-   
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

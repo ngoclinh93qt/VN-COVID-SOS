@@ -83,7 +83,7 @@ export class RequestFormComponent implements OnInit {
       requester_object_status: new FormControl(''),
       subject: new FormControl(''),
       support_types: new FormControl(''),
-      share_phone_numbber: new FormControl('private'),
+      share_phone_number: new FormControl('private'),
     });
     console.log(data.request)
 
@@ -177,7 +177,7 @@ export class RequestFormComponent implements OnInit {
     console.log(this.requestForm.value)
     request.requester_type = 'guest';
     request.medias = this.medias;
-    request.share_phone_numbber = 'public'
+    request.share_phone_number = 'public'
 
     if (this.user != null && this.user?.role !== 'GUEST') {
       request.requester_type = 'user';
@@ -211,7 +211,7 @@ export class RequestFormComponent implements OnInit {
           {
             panelClass: 'login-frame-dialog',
             width: '100%',
-            maxWidth: '585px',
+            maxWidth: '585px ',
             data: data.contact_info?.phone_number
           })
       } else {

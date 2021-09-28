@@ -2,7 +2,7 @@
   <button (click)="onClose()" mat-icon-button aria-label="close Icon">
     <mat-icon>close</mat-icon>
   </button></span>
-<form class="example-form" [formGroup]="requestForm" (ngSubmit)="checkSubmit(isAccepted)">
+<form class="example-form" [formGroup]="requestForm" (ngSubmit)="checkSubmit(isAccepted)" style="width:100%">
   <h2><b *ngIf="data.action!='update'">Gửi yêu cầu khẩn cấp</b><b *ngIf="data.action==='update'">Cập nhật yêu cầu
       khẩn cấp</b></h2>
   <br />
@@ -31,20 +31,17 @@
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Mô tả</mat-label>
-      <input formControlName="description" matInput placeholder="Thêm mô tả" />
+      <textarea formControlName="description" matInput placeholder="Thêm mô tả"></textarea>
     </mat-form-field>
     <br />
     <h4><b>Thông tin người cần giúp đỡ</b></h4>
     <fieldset formGroupName="contact_info">
 
-      <mat-checkbox class="check-box" name="show" #isAccepted>Tôi đồng ý công khai số điện thoại để được liên hệ
-        trợ giúp*
-      </mat-checkbox>
+
 
       <mat-form-field class="example-left-half-width" appearance="outline">
         <mat-label>Họ và tên</mat-label>
         <input formControlName="name" matInput placeholder="Họ và tên" required />
-
       </mat-form-field>
 
 
@@ -116,7 +113,13 @@
         </div>
       </div>
     </div>
+    <mat-checkbox fxLayout="wrap" class="example-full-width check-box" name="show" #isAccepted
+      style="word-wrap: normal">
+      Tôi đồng ý công khai số điện thoại để được liên hệ
+      trợ giúp*
+    </mat-checkbox>
   </div>
+
   <br />
   <div mat-dialog-actions class="submit-btn">
     <button *ngIf="data.action!='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial

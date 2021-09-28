@@ -8,8 +8,7 @@
     <div style="width: 450px; max-width: 100%" class="info_section">
       <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px" style="margin-bottom: 10px; width: 100%">
         <div fxLayout="row">
-          <div fxLayout="row" *ifRoles="['OPERATOR', 'ADMIN']" fxLayoutAlign="center center"
-            style="margin-right: 10px">
+          <div fxLayout="row" *ifRoles="['OPERATOR', 'ADMIN']" fxLayoutAlign="center center" style="margin-right: 10px">
             <mat-icon>pin_drop</mat-icon>
             <a (click)="openProposeDialog()">Đề xuất cho nhóm</a>
           </div>
@@ -43,7 +42,7 @@
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
-        <mat-icon (click)="openRequestForm()" *ngIf="data.session===constantsService.SESSION.CREATED_REQUESTS" color="primary" style="float:right">
+        <mat-icon (click)="openRequestForm()" *ngIf="editable" color="primary" style="float:right">
           edit</mat-icon>
         <mat-chip-list aria-label="tag">
           <div class="priority-circle"

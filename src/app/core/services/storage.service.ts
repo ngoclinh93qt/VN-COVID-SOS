@@ -15,9 +15,11 @@ export class StorageService {
     if (result) {
       return JSON.parse(result);
     }
-    return this.constant.DEFAULT_LOCATION.HoChiMinh;
+    return;
   }
   public set location(value: any | undefined) {
+    console.log("set location: ")
+    console.log(value)
     if (value) {
       localStorage.setItem(
         this.constant.STORAGE_KEY.LOCATION,
@@ -26,7 +28,21 @@ export class StorageService {
       this.locationSubject.next(value)
     }
   }
-
+  public get last_location(): any | undefined {
+    let result = localStorage.getItem(this.constant.STORAGE_KEY.LAST_LOCATION);
+    if (result) {
+      return JSON.parse(result);
+    }
+    return;
+  }
+  public set last_location(value: any | undefined) {
+    if (value) {
+      localStorage.setItem(
+        this.constant.STORAGE_KEY.LAST_LOCATION,
+        JSON.stringify(value)
+      );
+    }
+  }
 
 
   public get userInfo(): any | undefined {
