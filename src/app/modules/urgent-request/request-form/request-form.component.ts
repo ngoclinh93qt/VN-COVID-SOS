@@ -184,7 +184,6 @@ export class RequestFormComponent implements OnInit {
       request.requester_id = this.user.id;
     }
     request.location = this.location;
-    console.log(request);
     if (this.data.action === 'update') return this.UrgentRequestService.update(this.data.request.id!, request, {}).subscribe(res => {
       this.notificationService.success("Cập nhật thành công")
       this.onClose(res)

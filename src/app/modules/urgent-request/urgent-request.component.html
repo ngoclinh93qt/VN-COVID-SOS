@@ -10,10 +10,10 @@ left: 50vw; position: fixed; z-index: 20; border-radius: 5rem;">
           <div fxLayout="row">
             <div [fxHide.lt-sm]="mobileScreen==='REQUESTS'" fxFlex.lt-sm="100" fxFlex.lt-md="45" fxFlex.gt-xs="noshrink"
               id="request_list">
-              <all-request-container  [(requests)]='requests'></all-request-container>
+              <all-request-container  [(requests)]='requests' (isMapPicked)='isCanPick($event)' [locationPicked] = '_pickedSearchLocation'></all-request-container>
             </div>
             <div [fxHide.lt-sm]="mobileScreen==='MAP'" fxFlex="fxFill" class="two">
-              <app-maps [requests]="requests"></app-maps>
+              <app-maps [requests]="requests" [selectLocationMode]="_isCanPick" (pickedLocation)="onPickNewLocation($event)"></app-maps>
             </div>
           </div>
         </ng-template>

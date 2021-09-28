@@ -11,6 +11,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { RequestFormComponent } from '../request-form/request-form.component';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
 @Component({
   selector: 'all-request-container',
@@ -19,12 +20,21 @@ import { ConstantsService } from 'src/app/shared/constant/constants.service';
 })
 export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
+  @Input() set locationPicked(latlg: google.maps.LatLng | undefined){
+    if (latlg) {
+      this.setLocation({lat: latlg.lat(), lng: latlg.lng()});
+      this.search();
+    }
+  };
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
+  @Output() isMapPicked = new EventEmitter<boolean>();
+  _isPicked = false;
   session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
+  LIMIT = 50;
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -43,7 +53,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
     private RequesterObjectStatusService: RequesterObjectStatusService,
-    private LocationService: LocationService,
+    private notification: NotificationService,
     private constantsService: ConstantsService,
   ) {
     this.statuses = this.constantsService.STATUS_LIST
@@ -53,11 +63,11 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
 
   params: IQueryPrams = {}
   paramsInit() {
-    this.params = { limit: 20, offset: 0 }
+    this.params = { limit: this.LIMIT, offset: 0 }
   }
   updateParams(returnNumber: number) {
-    if (returnNumber < 20) this.params.limit = 0; else
-      this.params.offset! += 20;
+    if (returnNumber < this.LIMIT) this.params.limit = 0; else
+      this.params.offset! += this.LIMIT;
   }
   selectPriority(type: string, $event: any) {
     this.select($event);
@@ -80,7 +90,6 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     if (index != -1 && index != undefined)
       this.filterObject.support_types?.splice(index, 1);
     else this.filterObject.support_types?.push(type);
-    console.log(this.filterObject.support_types!);
     this.search();
   }
   selectStatus(type: string, $event: any) {
@@ -192,5 +201,13 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
     this.subscriptionLocation?.unsubscribe();
+  }
+
+  selectLocation(){
+    this._isPicked = !this._isPicked
+    if(this._isPicked){
+      this.notification.info("Hãy kéo biểu tượng đánh dấu tới nơi bạn muốn tìm kiếm")
+    }
+    this.isMapPicked.emit(this._isPicked)
   }
 }

@@ -27,14 +27,25 @@ import { LocationService } from 'src/app/shared/subjects/location.service';
 })
 export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() requests?: ISOSRequest[];
+  @Input() set selectLocationMode(value: boolean){
+    this._selectLocationMode = value;
+    if(this.selectorMarker){
+      this.selectorMarker.setVisible(value)
+    }
+  };
+  @Output() pickedLocation = new EventEmitter<google.maps.LatLng>();
+
+  _selectLocationMode: boolean = false;
   map: google.maps.Map | undefined;
   infoWindow: google.maps.InfoWindow | undefined;
   toggleStatus: string = 'Ẩn bớt';
-  markers: any[] = []
+  markers: google.maps.Marker[] = []
   loader = new Loader({
     apiKey: environment.googleApiKey,
   });
   subscription: any;
+  selectorMarker?: google.maps.Marker;
+
   toggle() {
     if (this.toggleStatus == 'Ẩn bớt') {
       document.getElementById('request_list')?.classList.add('n0');
@@ -44,7 +55,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
       this.toggleStatus = 'Ẩn bớt';
     }
   }
-  constructor(private StorageService: StorageService, private constantsService: ConstantsService, private locationService: LocationService,
+  constructor(private storageService: StorageService, private constantsService: ConstantsService, private locationService: LocationService,
     private bottomsheet: MatBottomSheet) {
   }
   setMapOnAll(map: any) {
@@ -72,7 +83,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.loader.load().then(() => {
       this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: this.StorageService.location,
+        center: this.storageService.location,
         zoom: 15,
         styles: environment.mapStyle,
       });
@@ -80,8 +91,10 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
       this.requests?.forEach((request) => {
         this.addMarker(request, this.chooseRequest.bind(this));
       });
+
+    this.choseLocationMarker();
     });
-    this.subscription = this.StorageService.locationSubject.subscribe({
+    this.subscription = this.storageService.locationSubject.subscribe({
       next: (location: ILocation) => {
         this.map?.setCenter({
           lat: location.lat,
@@ -107,5 +120,24 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  choseLocationMarker(){
+    var marker = new google.maps.Marker({
+      position: this.storageService.location,
+      map: this.map,
+      draggable: true,
+      zIndex: 9999
+    });
+
+    google.maps.event.addListener(marker, 'dragend', () => {
+      const location = marker.getPosition()
+      if(location){
+        this.pickedLocation.next(location)
+      }
+    });
+
+    this.selectorMarker = marker;
+    this.selectorMarker.setVisible(this._selectLocationMode)
   }
 }
