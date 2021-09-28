@@ -58,14 +58,14 @@ const routes: Routes = [
       //     import('./modules/home/home.module').then((m) => m.HomeModule),
       // },
       {
-        path: 'urgentRequest',
+        path: '',
         loadChildren: () =>
           import('./modules/urgent-request/urgent-request.module').then(
             (m) => m.UrgentRequestModule
           ),
       },
 
-      { path: '**', redirectTo: 'urgentRequest' }
+      { path: '**', redirectTo: '' }
     ],
   },
   // { path: '**', redirectTo: 'login' },

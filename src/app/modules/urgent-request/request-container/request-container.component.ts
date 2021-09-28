@@ -192,4 +192,8 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
     this.subscriptionLocation?.unsubscribe();
   }
+
+  selectLocation(){
+    
+  }
 }

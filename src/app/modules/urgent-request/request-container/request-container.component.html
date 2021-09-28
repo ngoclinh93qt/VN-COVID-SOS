@@ -55,6 +55,9 @@
         {{ distance }}
       </button>
     </mat-menu>
+    <button mat-icon-button aria-label="drop location" (click)="selectLocation()">
+      <mat-icon>pin_drop</mat-icon>
+    </button>
   </div>
   <div class="request_items">
     <app-request-container session='{{session}}' (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
