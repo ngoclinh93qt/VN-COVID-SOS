@@ -8,7 +8,6 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { AuthenService } from 'src/app/core/http/authen.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { LocationService } from 'src/app/shared/subjects/location.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,6 +24,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
   provinces: IProvince[] = [];
   provinceForm!: FormGroup;
   isInitialized: boolean = false;
+  currentLocation: any;
   private destroy$ = new Subject();
   private DEFAULT_PROVINCE_CODE: number = 79;
 
@@ -82,16 +82,31 @@ export class ContainerComponent implements OnInit, OnDestroy {
       // },
     ];
     this.provinceForm = this.formBuilder.group({
-      province: []
+      province: [],
+      current: {}
     });
     this.provinceForm.get('province')?.valueChanges.pipe(
       takeUntil(this.destroy$)
     ).subscribe((province) => {
-      if (this.isInitialized == false) this.isInitialized = true; else {
-        const coordinates = province.default_location.split(',');
-        const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
-        this.storage.location = location;
+      if (this.isInitialized == false) {
+        this.isInitialized = true;
+        if (!!this.storage.last_location) {
+          this.currentLocation = this.storage.last_location;
+          const currentProvince: IProvince = {
+            id: 'currentLocation', name: 'Vị trí hiện tại', default_location: `${this.currentLocation.lat},${this.currentLocation.lng}`
+          }
+          this.provinces = [currentProvince, ...this.provinces];
+          this.provinceForm.get('province')?.setValue(currentProvince, { emitEvent: false });
+
+          return;
+        }
       }
+      const coordinates = province.default_location.split(',');
+      const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
+      console.log("city")
+      this.storage.location = location;
+      console.log(province)
+
     });
     this.provinceService.getProvinces().pipe(
       takeUntil(this.destroy$)
@@ -110,7 +125,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
   loginPopup(): void {
     const dialogRef = this.dialog.open(
       LoginFrameComponent,
-      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px' }
+      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px ' }
     );
     dialogRef.afterClosed().subscribe((result: any) => {
       this.checkLogin();

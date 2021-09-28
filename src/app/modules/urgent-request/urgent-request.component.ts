@@ -26,6 +26,9 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
   user: any;
   mobileScreen: string = "MAP"
   subscriptionUser: Subscription | undefined
+  _isCanPick = false;
+  _pickedSearchLocation?: google.maps.LatLng;
+
 
   constructor(
 
@@ -46,5 +49,10 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
     });
 
   }
-
+  onPickNewLocation(event:google.maps.LatLng){
+    this._pickedSearchLocation = event;
+  }
+  isCanPick(event: boolean){
+    this._isCanPick = event;
+  }
 }

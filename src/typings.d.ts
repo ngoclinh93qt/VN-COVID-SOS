@@ -183,7 +183,7 @@ interface ISupportType {
 interface ISOSRequest {
   type?: string;
   subject?: string;
-  share_phone_numbber?: string
+  share_phone_number?: string
   support_types?: ISupportType[];
   contact_info?: IContacInfo;
   requester_object_status?: IRequesterObjectStatus[];
@@ -199,7 +199,7 @@ interface ISOSRequest {
   created_time?: Date;
   id?: string;
   location?: string;
-  requester_info?: string;
+  requester_info?: any;
   status?: string;
   supporters?: [];
   updated_by?: string;

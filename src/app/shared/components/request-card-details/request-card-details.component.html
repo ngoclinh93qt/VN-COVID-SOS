@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="p-1" style="border: 1px solid #c8c8c8; border-radius: 10px">
-        <mat-icon (click)="openRequestForm()" *ngIf="data.session===constantsService.SESSION.CREATED_REQUESTS" color="primary" style="float:right">
+        <mat-icon (click)="openRequestForm()" *ngIf="editable" color="primary" style="float:right">
           edit</mat-icon>
         <mat-chip-list aria-label="tag">
           <div class="priority-circle"

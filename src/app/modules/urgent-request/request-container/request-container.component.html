@@ -56,7 +56,8 @@
       </button>
     </mat-menu>
     <button mat-icon-button aria-label="drop location" (click)="selectLocation()">
-      <mat-icon>pin_drop</mat-icon>
+      <mat-icon *ngIf="!_isPicked">pin_drop</mat-icon>
+      <mat-icon *ngIf="_isPicked" color="primary">pin_drop</mat-icon>
     </button>
   </div>
   <div class="request_items">

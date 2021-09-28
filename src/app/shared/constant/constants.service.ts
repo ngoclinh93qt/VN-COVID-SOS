@@ -9,7 +9,8 @@ export class ConstantsService {
     AMIN_INFO: 'admin_info',
     USER_INFO: 'user_info',
     AUTH_TOKEN: 'token',
-    LOCATION: 'location'
+    LOCATION: 'location',
+    LAST_LOCATION: 'last_location',
   };
   public SESSION = {
     CREATED_REQUESTS: 'created_requests',
