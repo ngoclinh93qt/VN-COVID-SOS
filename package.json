@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~12.1.0-",
     "@angular/router": "~12.1.0-",
     "@googlemaps/js-api-loader": "^1.12.1",
+    "@tabuckner/material-dayjs-adapter": "^2.0.0",
     "aws-sdk": "^2.968.0",
     "dayjs": "^1.10.7",
     "rxjs": "~6.6.0",

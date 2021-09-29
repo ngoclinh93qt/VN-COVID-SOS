@@ -50,7 +50,13 @@ export class ConstantsService {
       type: 'pending',
     },
   ];
+
+  public TYPE_REQUEST = new Map<string, any>();
   constructor() {
+    this.mapSet();
+  }
+
+  mapSet(){
     this.MAP_SESSION_STATUS.set(this.SESSION.ALL_REQUESTS, this.REQUEST_STATUS);
     this.MAP_SESSION_STATUS.set(
       this.SESSION.BOOKMARKED_REQUESTS,
@@ -178,5 +184,16 @@ export class ConstantsService {
       status_view: 'Đang chờ',
       next_step: ['canceled', 'executing'],
     });
+
+    this.TYPE_REQUEST.set('ask', {
+      key: 'ask',
+      view: 'Cần giúp đỡ',
+      color: '#E53935'
+    });
+    this.TYPE_REQUEST.set('offer', {
+      key: 'offer',
+      view: 'Muốn Giúp đỡ',
+      color: '#05944F'
+    })
   }
 }

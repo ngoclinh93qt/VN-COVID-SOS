@@ -69,6 +69,7 @@ export class RequestFormComponent implements OnInit {
     private formatService: FormatService,
   ) {
     this.requestForm = new FormGroup({
+      type: new FormControl('ask'),
       contact_info: new FormGroup({
         name: new FormControl(''),
         phone_number: new FormControl('')
@@ -174,7 +175,6 @@ export class RequestFormComponent implements OnInit {
   }
   onSubmit() {
     let request: ISOSRequest = this.requestForm.value;
-    console.log(this.requestForm.value)
     request.requester_type = 'guest';
     request.medias = this.medias;
     request.share_phone_number = 'public'
@@ -228,10 +228,6 @@ export class RequestFormComponent implements OnInit {
     })
   }
 
-  checkSubmit(isAccepted: any) {
-    console.log(this.requestForm.valid);
-    (isAccepted._checked && this.requestForm.valid && !this.onPickFile) ? this.onSubmit() : this.notificationService.error("Bạn cần điền đầy đủ thông tin")
-  }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;

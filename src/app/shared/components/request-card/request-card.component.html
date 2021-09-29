@@ -1,5 +1,5 @@
 <div *ngIf="isRemote==false" class="request_card"
-  [ngStyle]="{'border': '1px solid '+ mapPriority.get(request?.color_info?.color)}">
+  [ngStyle]="{'border-color': mapPriority.get(request?.color_info?.color)}">
   <span *ngIf="session==constant.SESSION.DEFAULT" class="bookmark">
     <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
       style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
@@ -36,8 +36,8 @@
   <hr />
   <p>
     Người gửi: <b>{{ request?.contact_info?.name }}</b>
-    <span style="margin: 0 0 0 10px">
-      {{ mapStatus.get(request?.status)?.status_view }}
+    <span style="margin: 0 0 0 10px" [ngStyle]="{'color': typesMap.get(request?.type || '')?.color}">
+      {{ typesMap?.get(request?.type || '')?.view }}
     </span>
   </p>
 </div>

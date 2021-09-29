@@ -28,7 +28,7 @@
   <!-- <p>Loại hình hỗ trợ: <span>Toàn bộ</span></p> -->
   <p>
     Thời gian hỗ trợ dự kiến:
-    <span>{{ supporter?.schedule_support_date }}</span>
+    <span>{{ supporter?.schedule_support_date | date: 'dd/MM/YY'}}</span>
   </p>
   <p>
     Mô tả: <span>{{ supporter?.description }}</span>
