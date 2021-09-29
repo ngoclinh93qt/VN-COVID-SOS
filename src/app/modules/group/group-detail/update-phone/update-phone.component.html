@@ -1,33 +1,26 @@
 <div class="container">
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
-        Chỉnh sửa
-      </h1>
-      <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
-    </div>
-    <div mat-dialog-content>
-      <form (submit)="onSubmit(form.value)" #form="ngForm">
-        <fieldset ngModelGroup="contact_info">
-          <sos-input
-            ngModel
-            name="phone_number"
-            placeholder="Số điện thoại"
-            label="Số điện thoại"
-            [required]="true"
-            [value]="fetchdata"
-            type="tel"
-          ></sos-input>
-        </fieldset>
-        <button
-          mat-flat-button
-          type="submit"
-          class="submit-btn"
-          color="accent"
-          cdkFocusInitial
-        >
-          Lưu
-        </button>
-      </form>
-    </div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h1 mat-dialog-title style="font-size: 22px; font-weight: bold;">
+      Chỉnh sửa
+    </h1>
+    <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
   </div>
-  
+  <div mat-dialog-content>
+    <form (submit)="onSubmit(form.value)" #form="ngForm">
+      <fieldset ngModelGroup="contact_info">
+        <div class="phone-confirm ">
+          <sos-input ngModel name="phone_number" placeholder="Số điện thoại" label="Số điện thoại" [required]="true"
+            [value]="fetchdata" type="tel"></sos-input>
+          <button *ngIf="form.value?.contact_info?.phone_number && group.cur_phone != form.value?.contact_info?.phone_number" type="button" mat-button color="primary"
+            (click)="requestConfirm(form.value?.contact_info?.phone_number)">gửi mã xác nhận</button>
+        </div>
+      </fieldset>
+      <sos-input ngModel name="confirm_code" matInput placeholder="Mã xác nhận" value="" [required]="true"
+        label="Mã xác nhận"></sos-input>
+
+      <button mat-flat-button type="submit" class="submit-btn" color="accent" cdkFocusInitial [disabled]='form.invalid'>
+        Lưu
+      </button>
+    </form>
+  </div>
+</div>

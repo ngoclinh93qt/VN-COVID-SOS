@@ -43,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDayjsDateModule } from '@tabuckner/material-dayjs-adapter';
 
 @NgModule({
   exports: [
@@ -90,6 +91,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    MatDayjsDateModule
   ],
 })
 export class MaterialModule {}

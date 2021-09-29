@@ -1,5 +1,5 @@
 <div *ngIf="isRemote==false" class="request_card"
-  [ngStyle]="{'border': '1px solid '+ mapPriority.get(request?.color_info?.color)}">
+  [ngStyle]="{'border-color': mapPriority.get(request?.color_info?.color)}">
   <span *ngIf="session==constant.SESSION.DEFAULT" class="bookmark">
     <mat-icon *ngIf='request?.is_bookmarked||request?.is_group_bookmarked; else elseBlock' color='primary'
       style="position: absolute; right: 0" (click)='mark($event,"unbookmark")'>bookmark
@@ -14,25 +14,20 @@
     </mat-icon>
   </span>
 
-  <mat-chip-list aria-label="tag">
-    <div>
-      <mat-chip *ngIf="(request?.support_types)![0]?.name || false">{{ (request?.support_types)![0]?.name }}
-      </mat-chip>
-      <mat-chip *ngIf="(request?.requester_object_status)![0]">
-        {{ (request?.requester_object_status)![0]?.name! }}</mat-chip>
-    </div>
-    <div *ngIf="type == 'full-width'">
+  <mat-chip-list aria-label="tag" >
+    <div class="tag-list">
       <mat-chip *ngFor="let type of request?.support_types!">{{ type.name }}
       </mat-chip>
       <mat-chip *ngFor="let status of request?.requester_object_status!">
         {{ status.name! }}</mat-chip>
+        <div class="chip icon-16"
+        [ngStyle]="{'display': request?.verify_status === 'verified'? 'inline flex': 'none', 'background-color': mapStatus.get('verified')?.bg_color, color: mapStatus.get('verified')?.color}">
+        <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}">
+          {{mapStatus.get('verified')?.icon}}</mat-icon>
+        <p>{{ mapStatus.get('verified')?.status_view }}</p>
+      </div>
     </div>
-    <div class="chip icon-16"
-      [ngStyle]="{'display': request?.verify_status === 'verified'? 'inline flex': 'none', 'background-color': mapStatus.get('verified')?.bg_color, color: mapStatus.get('verified')?.color}">
-      <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}">
-        {{mapStatus.get('verified')?.icon}}</mat-icon>
-      <p>{{ mapStatus.get('verified')?.status_view }}</p>
-    </div>
+   
   </mat-chip-list>
   <h3>
     <b>{{ request?.subject }}</b>
@@ -41,8 +36,8 @@
   <hr />
   <p>
     Người gửi: <b>{{ request?.contact_info?.name }}</b>
-    <span style="margin: 0 0 0 10px">
-      {{ mapStatus.get(request?.status)?.status_view }}
+    <span style="margin: 0 0 0 10px" [ngStyle]="{'color': typesMap.get(request?.type || '')?.color}">
+      {{ typesMap?.get(request?.type || '')?.view }}
     </span>
   </p>
 </div>

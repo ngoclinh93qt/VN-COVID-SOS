@@ -21,3 +21,15 @@ fieldset {
     width: 90vw;
   }
 }
+.phone-confirm{
+  position: relative;
+  sos-input{
+    width: 100%;
+  }
+  button{
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+  }
+
+}

@@ -2,12 +2,18 @@
   <button (click)="onClose()" mat-icon-button aria-label="close Icon">
     <mat-icon>close</mat-icon>
   </button></span>
-<form class="example-form" [formGroup]="requestForm" (ngSubmit)="checkSubmit(isAccepted)" style="width:100%">
+<form class="example-form" [formGroup]="requestForm" (ngSubmit)="onSubmit()" style="width:100%">
   <h2><b *ngIf="data.action!='update'">Gửi yêu cầu khẩn cấp</b><b *ngIf="data.action==='update'">Cập nhật yêu cầu
       khẩn cấp</b></h2>
   <br />
   <div #content class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
+
+    <mat-radio-group formControlName="type" class="type-radio">
+      <mat-radio-button value="ask" [checked]="true">Tôi cần được giúp đỡ</mat-radio-button>
+      <mat-radio-button class="btn-end" value="offer">Tôi muốn trợ giúp người khác</mat-radio-button>
+    </mat-radio-group>
+
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Người cần hỗ trợ là</mat-label>
       <mat-select formControlName="requester_object_status" multiple>
@@ -113,7 +119,7 @@
         </div>
       </div>
     </div>
-    <mat-checkbox fxLayout="wrap" class="example-full-width check-box" name="show" #isAccepted
+    <mat-checkbox fxLayout="wrap" class="example-full-width check-box" name="show"
       style="word-wrap: normal">
       Tôi đồng ý công khai số điện thoại để được liên hệ
       trợ giúp*
@@ -123,11 +129,11 @@
   <br />
   <div mat-dialog-actions class="submit-btn">
     <button *ngIf="data.action!='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
-      [disabled]='isSending'>
+      [disabled]='isSending || requestForm.invalid'>
       Gửi yêu cầu
     </button>
     <button *ngIf="data.action==='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
-      [disabled]='isSending'>
+      [disabled]='isSending || requestForm.invalid'>
       Cập nhật
     </button>
   </div>

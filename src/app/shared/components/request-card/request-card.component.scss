@@ -1,5 +1,6 @@
 .request_card {
   border: 1px solid rgb(224, 224, 224);
+  border-top-width: 5px;
   border-radius: 5px;
   padding: 15px;
   position: relative;
@@ -30,5 +31,9 @@
   mat-icon {
     font-size: 24px;
     margin-right: 10px;
+    z-index: 10;
   }
+}
+.tag-list{
+  max-width: 420px;
 }

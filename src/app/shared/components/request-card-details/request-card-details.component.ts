@@ -34,7 +34,9 @@ import { group } from '@angular/animations';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { S3Service } from 'src/app/core/services/s3.service';
 import { RequestFormComponent } from 'src/app/modules/urgent-request/request-form/request-form.component';
-
+import {MatDayjsDateModule, MAT_DAYJS_DATE_ADAPTER_OPTIONS } from '@tabuckner/material-dayjs-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-request-card-details',
   templateUrl: './request-card-details.component.html',
@@ -282,22 +284,40 @@ export class RequestCardDetailsComponent implements OnInit {
     this.editable = this.data.request?.requester_info?.id === this.user?.id
   }
 }
+
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'join',
   templateUrl: './joinForm.html',
-  providers: [MatFormFieldModule, FormsModule],
+  providers: [
+    { provide: MAT_DAYJS_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class JoinRequestComponent {
   supportTypes: ISupportType[] = [];
-  group_type: string = 'user';
+  type: string = 'user';
   groups: any[] = [];
-  is_support_all = false;
+  support_date = dayjs();
 
-  joinRequest: IJoinRequest = {
-    type: 'user',
-    supporter_id: '',
-    is_support_all: false
-  };
+  joinForm = new FormGroup({
+    type: new FormControl('user'),
+    support_date: new FormControl(dayjs()),
+    description: new FormControl(''),
+    is_support_all: new FormControl(true),
+    supporter_id: new FormControl('')
+  })
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<JoinRequestComponent>,
@@ -310,19 +330,18 @@ export class JoinRequestComponent {
       (result) => (this.supportTypes = result)
     );
     this.groups = this.storageService.userInfo?.groups || []
-    if (this.groups.length > 0) {
-      this.group_type = 'group'
-    }
+
   }
-  async onSubmit(data: any) {
-    this.joinRequest.type = this.group_type;
-    this.joinRequest.description = data.description;
-    this.joinRequest.support_date = dayjs().format('YYYY-MM-DDTHH')
-    this.joinRequest.is_support_all = this.is_support_all;
-    this.joinRequest.supporter_id = this.group_type == 'user' ? this.storageService.userInfo?.id : this.storageService.userInfo?.groups[0].id;
+  async onSubmit() {
+
+    const body: any = {}
+    Object.assign(body, this.joinForm.value)
+    body.support_date = body.support_date.format('YYYY-MM-DDTHH')
+    body.supporter_id = this.joinForm.value.type === 'user' ? this.storageService.userInfo?.id : this.joinForm.value.supporter_id;
+
     this.urgentRequestService.join(
       this.data.request_id,
-      this.joinRequest
+      body
     ).subscribe((result) => {
       this.notificationService.success("Bạn đã tham gia hổ trợ")
       this.dialogRef.close(result);

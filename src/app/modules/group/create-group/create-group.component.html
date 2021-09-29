@@ -57,7 +57,8 @@
       ></sos-input>
     </fieldset>
     <fieldset ngModelGroup="contact_info">
-      <sos-input
+      <div class="phone-confirm ">
+        <sos-input
         ngModel
         name="phone_number"
         matInput
@@ -66,7 +67,21 @@
         [required]="true"
         label="Số điện thoại"
       ></sos-input>
+      <button *ngIf="form.value?.contact_info?.phone_number" type="button" mat-button color="primary" (click)="requestConfirm(form.value?.contact_info?.phone_number)">gửi mã xác nhận</button>
+      </div>
+      
     </fieldset>
+ 
+      <sos-input
+        ngModel
+        name="confirm_code"
+        matInput
+        placeholder="Mã xác nhận"
+        value=""
+        [required]="true"
+        label="Mã xác nhận"
+      ></sos-input>
+
     <p>Loại hỗ trợ</p>
     <fieldset ngModelGroup="detail_info">
       <mat-form-field style="width: 100%;" appearance="outline">
@@ -90,6 +105,7 @@
         class="submit-btn"
         color="accent"
         cdkFocusInitial
+        [disabled]='form.invalid'
       >
         Lưu
       </button>
