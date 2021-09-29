@@ -13,7 +13,18 @@ fieldset {
   padding: 0;
   border: none;
 }
+.phone-confirm{
+  position: relative;
+  sos-input{
+    width: 100%;
+  }
+  button{
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+  }
 
+}
 
 @media (max-width: 768px) {
   ::ng-deep .diaglog-createGroup{

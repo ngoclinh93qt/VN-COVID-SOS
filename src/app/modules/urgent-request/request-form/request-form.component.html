@@ -123,11 +123,11 @@
   <br />
   <div mat-dialog-actions class="submit-btn">
     <button *ngIf="data.action!='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
-      [disabled]='isSending'>
+      [disabled]='isSending || requestForm.invalid'>
       Gửi yêu cầu
     </button>
     <button *ngIf="data.action==='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
-      [disabled]='isSending'>
+      [disabled]='isSending || requestForm.invalid'>
       Cập nhật
     </button>
   </div>
