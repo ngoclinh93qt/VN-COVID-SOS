@@ -14,13 +14,14 @@ export class RequestContainerComponent implements OnInit {
   @Input() requests?: ISOSRequest[];
   @Input() type?: String;
   @Input() session?: String;
+  @Input() isSuggested?: boolean;
+
   constructor(
     private bottomsheet: MatBottomSheet
   ) {
 
   }
   ngOnInit(): void {
-
   }
   onScrollingFinished() {
     console.log("scroll end")

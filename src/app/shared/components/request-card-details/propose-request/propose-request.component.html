@@ -5,18 +5,17 @@
   <mat-icon (click)="CloseDialog()">clear icon</mat-icon>
 </div>
 <div mat-dialog-content style="overflow: hidden; padding-top: 15px">
-  <form (submit)="onSubmit(form.value)" #form="ngForm">
+  <form (submit)="onSubmit(suggestForm.value)" [formGroup]='suggestForm'>
     <mat-form-field style="width: 100%" appearance="outline">
       <mat-label>Nhóm thiện nguyện</mat-label>
-      <mat-select ngModel name="target_id" required>
+      <mat-select formControlName="target_id" required multiple>
         <mat-option *ngFor="let group of groups" [value]="group.id"
           >{{ group.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <sos-input
-      ngModel
-      name="note"
+      formControlName="note"
       matInput
       placeholder="Viết mô tả"
       value=""
@@ -25,11 +24,11 @@
 
     <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
       <button
+      [disabled]="suggestForm.invalid"
         mat-flat-button
         type="submit"
         style="border-radius: 5rem"
         color="accent"
-        (click)="checkSubmit(form)"
         cdkFocusInitial
       >
         Đề xuất
