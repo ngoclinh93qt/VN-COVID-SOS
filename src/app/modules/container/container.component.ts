@@ -40,6 +40,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.showFiller = false;
     }
+    this.router.onSameUrlNavigation = "reload";
   }
 
   openSignupDialog(): void {
@@ -154,8 +155,11 @@ export class ContainerComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+
+
     this.loginSuccess = false;
-    this.router.navigate([''])
+    this.router.navigateByUrl('/urgentRequest');
+    window.location.reload();
     this.authService.logout();
   }
 

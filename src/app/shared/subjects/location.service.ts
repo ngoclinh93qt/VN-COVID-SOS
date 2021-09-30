@@ -8,6 +8,7 @@ export class LocationService {
   constructor(private storage: StorageService) { }
 
   public updateLocation(): any {
+    console.log("upload to location")
     var self = this;
     navigator.geolocation.getCurrentPosition(function (position: any) {
       console.log("getCurrentLocation")
