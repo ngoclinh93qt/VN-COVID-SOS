@@ -41,6 +41,7 @@
           >
             <all-request-container
               [(requests)]="requests"
+              (isMapPicked)="isCanPick($event)" [locationPicked]="_pickedSearchLocation"
             ></all-request-container>
           </div>
           <div
@@ -48,7 +49,7 @@
             fxFlex="fxFill"
             class="two"
           >
-            <app-maps [requests]="requests"></app-maps>
+            <app-maps [requests]="requests" (pickedLocation)="onPickNewLocation($event)" [selectLocationMode]="_isCanPick"></app-maps>
           </div>
         </div>
       </ng-template>
