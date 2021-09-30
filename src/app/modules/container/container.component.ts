@@ -122,6 +122,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  gotoProfile(){
+    this.router.navigate(['/profile']);
+  }
+
   loginPopup(): void {
     const dialogRef = this.dialog.open(
       LoginFrameComponent,

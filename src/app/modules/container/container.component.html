@@ -27,7 +27,7 @@
       <p (click)="loginPopup();">ĐĂNG NHẬP</p>
       <p (click)="openSignupDialog()">ĐĂNG KÍ</p>
     </div>
-    <div class="item-log" *ngIf="loginSuccess">
+    <div class="item-log" *ngIf="loginSuccess" (click)="gotoProfile()">
       <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
       <div class="short-name" *ngIf="!isAvatar">
         <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>
@@ -53,7 +53,7 @@
         <p (click)="loginPopup();">ĐĂNG NHẬP</p>
         <p>ĐĂNG KÍ</p>
       </div>
-      <div class="logg" *ngIf="loginSuccess">
+      <div class="logg" *ngIf="loginSuccess" (click)="gotoProfile()">
         <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
         <div class="short-name" *ngIf="!isAvatar">
           <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>

@@ -5,15 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { RestService } from './rest.service';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService extends RestService<IUser> {
   userSubject = new Subject<IUser>();
-  constructor(http: HttpClient, private StorageService: StorageService, private authService: AuthenService) {
+  constructor(
+    http: HttpClient,
+    private StorageService: StorageService,
+    private authService: AuthenService
+  ) {
     super(http, 'users');
   }
-
 
   confirm(body: IUser, options: any): Observable<any> {
     return this.http
@@ -36,8 +40,8 @@ export class UsersService extends RestService<IUser> {
       .pipe(
         map((res) => {
           this.StorageService.userInfo = res.data;
-          this.userSubject.next(res.data)
-          this.getProfile().subscribe();  //received object different form getProfile(); 
+          this.userSubject.next(res.data);
+          this.getProfile().subscribe(); //received object different form getProfile();
           return res.data;
         })
       );
@@ -46,9 +50,10 @@ export class UsersService extends RestService<IUser> {
     return this.http.get<{ data: IUser }>(`${this.host}/users/profile`).pipe(
       map((res) => {
         this.StorageService.userInfo = res.data;
-        this.userSubject.next(res.data)
-        return res.data
-      }));
+        this.userSubject.next(res.data);
+        return res.data;
+      })
+    );
   }
   searchProfile(data: any) {
     return this.http
@@ -60,15 +65,19 @@ export class UsersService extends RestService<IUser> {
       );
   }
   forgotPassword(body: IUser, options: any): Observable<IUser> {
+    Object.assign(body, { debug: !environment.production });
     return this.http
       .post<{ data: IUser }>(`${this.host}/forgot`, body)
       .pipe(map((res) => res.data));
   }
   resetPassword(body: IUser, options: any): Observable<IUser> {
     return this.http
-      .post<{ data: IUser, auth_token: string, access_token: string }>(`${this.host}/reset`, body)
+      .post<{ data: IUser; auth_token: string; access_token: string }>(
+        `${this.host}/reset`,
+        body
+      )
       .pipe(
-        tap(res => this.authService.autoSignin(res.auth_token, res.data)),
+        tap((res) => this.authService.autoSignin(res.auth_token, res.data)),
         map((res) => res.data)
       );
   }
