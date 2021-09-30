@@ -14,6 +14,7 @@ export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
   @Input() type?: String;
   @Input() session?: String;
+  @Input() isSuggested?: boolean = false;
   createTime: string = ''
   user: any;
   mapPriority: any;

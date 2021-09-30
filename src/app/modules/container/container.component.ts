@@ -62,7 +62,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
       {
         name: 'Yêu cầu khẩn cấp',
         icon: 'support',
-        url: 'urgentRequest',
+        url: '',
         roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
       },
       // {
@@ -158,7 +158,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
 
     this.loginSuccess = false;
-    this.router.navigateByUrl('/urgentRequest');
+    this.router.navigateByUrl('/');
     window.location.reload();
     this.authService.logout();
   }

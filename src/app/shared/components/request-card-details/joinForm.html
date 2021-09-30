@@ -3,10 +3,10 @@
   <h1><b>Gửi yêu cầu tham gia trợ giúp</b></h1>
   <br>
   <form [formGroup]="joinForm" (submit)="onSubmit()">
-    <div style="margin: 30px 0;">
+    <div style="margin: 10px 0;" *ngIf="groups.length != 0">
       <label id="example-radio-group-label">Tôi tham gia với tư cách là:</label><br>
       <mat-radio-group aria-label="Tôi tham gia với tư cách" formControlName="type">
-        <mat-radio-button value="user">Cá nhân</mat-radio-button>;
+        <mat-radio-button value="user">Cá nhân</mat-radio-button>&#160;
         <mat-radio-button value="group">Nhóm</mat-radio-button>
       </mat-radio-group>
     </div>

@@ -197,7 +197,7 @@ interface ISOSRequest {
   is_group_bookmarked?: boolean;
   created_by?: string;
   created_time?: Date;
-  id?: string;
+  id: string;
   location?: string;
   requester_info?: any;
   status?: string;
@@ -207,6 +207,7 @@ interface ISOSRequest {
   verify_status?: string;
   priority_type?: string;
   color_info?: any;
+  suggests?: any;
 }
 interface IMedias {
   mime_type?: string;

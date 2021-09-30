@@ -36,6 +36,11 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
   getGroupSuggested(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.getByParams(`groups/${id}/suggest`, queryParams);
   }
+
+  getGroupSuggestedByUser(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+    return this.getByParams(`users/mysuggests`, queryParams);
+  }
+
   getByRequesterId(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.getByParams(`sos_requests?filter_requester_id=${id}`, queryParams);
   }

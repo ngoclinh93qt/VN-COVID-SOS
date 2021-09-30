@@ -32,6 +32,7 @@
   <h3>
     <b>{{ request?.subject }}</b>
   </h3>
+  <h4 *ngIf="isSuggested">Đã đề xuất cho: <i *ngFor="let item of request?.suggests">{{item.target_name}},&#160;</i></h4>
   <mat-card-subtitle>{{createTime}} , {{distance}}</mat-card-subtitle>
   <hr />
   <p>

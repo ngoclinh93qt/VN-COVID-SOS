@@ -35,7 +35,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
-  LIMIT = 50;
+  LIMIT = 20;
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,

@@ -54,7 +54,7 @@ export class LoginFrameComponent implements OnInit {
           this.onClose();
         });
         console.log("login")
-        this.router.navigateByUrl('/urgentRequest');
+        this.router.navigateByUrl('/');
       },
       (error) => {
         this.isError = true;

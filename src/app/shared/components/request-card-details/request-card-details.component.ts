@@ -232,7 +232,7 @@ export class RequestCardDetailsComponent implements OnInit {
 
   openProposeDialog(): void {
     const dialogRef = this.dialog.open(ProposeRequestComponent, {
-      data: { request_id: this.request.id },
+      data: this.request,
     });
   }
 

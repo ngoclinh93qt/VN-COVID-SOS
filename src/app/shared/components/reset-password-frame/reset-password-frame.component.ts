@@ -198,7 +198,7 @@ export class ResetPasswordFrameComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.storageService.userInfo = { ...res };
-          // this.router.navigate(['/urgentRequest']);
+          // this.router.navigate(['/']);
           this._dialogRef.close();
         },
         (error) => console.error(error)
