@@ -40,6 +40,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.showFiller = false;
     }
+    this.router.onSameUrlNavigation = "reload";
   }
 
   openSignupDialog(): void {
@@ -61,7 +62,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
       {
         name: 'Yêu cầu khẩn cấp',
         icon: 'support',
-        url: 'urgentRequest',
+        url: '',
         roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
       },
       // {
@@ -122,6 +123,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  gotoProfile(){
+    this.router.navigate(['/profile']);
+  }
+
   loginPopup(): void {
     const dialogRef = this.dialog.open(
       LoginFrameComponent,
@@ -150,8 +155,11 @@ export class ContainerComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+
+
     this.loginSuccess = false;
-    this.router.navigate([''])
+    this.router.navigateByUrl('/');
+    window.location.reload();
     this.authService.logout();
   }
 

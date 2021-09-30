@@ -1,0 +1,25 @@
+<div>
+  <div *ngIf="userInfo.avatar != ''">
+    <img src="userInfor.avatar" alt="" />
+  </div>
+
+  <p>
+    Họ và tên: <span>{{ userInfo.last_name }} {{ userInfo.first_name }}</span>
+    <mat-icon (click)= "openEditName()">edit icon</mat-icon>
+  </p>
+  <p>
+    Số điện thoại: <span>{{ userInfo.phone_number }}</span>
+  </p>
+  <p>
+    Địa chỉ: <span>{{ userInfo.address }}</span>
+  </p>
+  <p *ngIf="userInfo.email != ''">
+    Email: <span>{{ userInfo.email }}</span>
+  </p>
+  <div *ngIf="userInfo.groups.length > 0">
+    <p>Thành viên:</p>
+    <div *ngFor="let group of userInfo.groups">
+      <p style="font-weight: bold;">{{ group.name }}</p>
+    </div>
+  </div>
+</div>

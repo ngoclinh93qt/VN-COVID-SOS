@@ -27,7 +27,7 @@
       <p (click)="loginPopup();">ĐĂNG NHẬP</p>
       <p (click)="openSignupDialog()">ĐĂNG KÍ</p>
     </div>
-    <div class="item-log" *ngIf="loginSuccess">
+    <div class="item-log" *ngIf="loginSuccess" (click)="gotoProfile()">
       <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
       <div class="short-name" *ngIf="!isAvatar">
         <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>
@@ -41,7 +41,7 @@
     <div class="drawer-items">
       <div *ngFor="let item of sideItems" (click)="closeMenu();">
         <div *ifRoles="item.roles">
-          <div class="drawer-item" [routerLink]="item.url" [routerLinkActive]="['active-item']">
+          <div class="drawer-item" [routerLink]="item.url" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active-item']">
             <mat-icon aria-hidden="false">{{ item.icon }}</mat-icon> &nbsp; &nbsp;
             {{ item.name }}
           </div>
@@ -53,7 +53,7 @@
         <p (click)="loginPopup();">ĐĂNG NHẬP</p>
         <p>ĐĂNG KÍ</p>
       </div>
-      <div class="logg" *ngIf="loginSuccess">
+      <div class="logg" *ngIf="loginSuccess" (click)="gotoProfile()">
         <img *ngIf="isAvatar" src="this.userInfor.avatar" alt="">
         <div class="short-name" *ngIf="!isAvatar">
           <span>{{getShortName(this.userInfor.last_name)}}{{getShortName(this.userInfor.first_name)}}</span>

@@ -7,16 +7,13 @@
   <br>
   <div style="position: relative; margin-bottom: 10px;">
     <div fxLayout="row">
-      <div class="search-form float-right m-3" fxFlex.gt-xs='0 0 calc(100% - 135px)' fxFlex>
+      <div class="search-form float-right m-3" fxFlex.gt-xs='0 0' fxFlex>
         <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
         <input [(ngModel)]="filterObject.keyword" type="text" class="search-input" placeholder="Tìm kiếm"
           (keyup.enter)="setKey($event)" />
         <mat-icon *ngIf="filterObject.keyword" (click)="clearKey()" class="clear-icon">close</mat-icon>
 
       </div>
-      <app-button fxHide fxShow.gt-xs style="height: 50px; right: 0; position: absolute;" (click)="openCreateForm()"
-        height="50" color="accent" text="Tạo yêu cầu">
-      </app-button>
     </div>
 
 

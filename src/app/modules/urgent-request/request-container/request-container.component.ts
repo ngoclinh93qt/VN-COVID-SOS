@@ -20,21 +20,22 @@ import { NotificationService } from 'src/app/shared/components/notification/noti
 })
 export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
-  @Input() set locationPicked(latlg: google.maps.LatLng | undefined){
+  @Input() set locationPicked(latlg: google.maps.LatLng | undefined) {
     if (latlg) {
-      this.setLocation({lat: latlg.lat(), lng: latlg.lng()});
+      this.setLocation({ lat: latlg.lat(), lng: latlg.lng() });
       this.search();
     }
   };
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
   @Output() isMapPicked = new EventEmitter<boolean>();
   _isPicked = false;
+  isLoading = false;
   session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
-  LIMIT = 50;
+  LIMIT = 20;
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -55,6 +56,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     private RequesterObjectStatusService: RequesterObjectStatusService,
     private notification: NotificationService,
     private constantsService: ConstantsService,
+    private locationService: LocationService,
   ) {
     this.statuses = this.constantsService.STATUS_LIST
     this.session = this.constantsService.SESSION.DEFAULT
@@ -140,7 +142,8 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.load();
   }
   load() {
-
+    if (this.isLoading) return;
+    this.isLoading = true;
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
         if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
@@ -150,7 +153,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
         this.updateParams(result.total);
         console.log(this.requests)
         console.log(result);
-
+        this.isLoading = false;
       });
   }
   select($event: any) {
@@ -190,6 +193,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     console.log("INITTT")
+    this.setLocation(this.StorageService.location)
+    this.search();
+    // this.locationService.updateLocation();
     console.log(this.StorageService.location)
     this.subscription = this.StorageService.locationSubject.subscribe({
       next: (location: ILocation) => {
@@ -203,9 +209,9 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.subscriptionLocation?.unsubscribe();
   }
 
-  selectLocation(){
+  selectLocation() {
     this._isPicked = !this._isPicked
-    if(this._isPicked){
+    if (this._isPicked) {
       this.notification.info("Hãy kéo biểu tượng đánh dấu tới nơi bạn muốn tìm kiếm")
     }
     this.isMapPicked.emit(this._isPicked)
