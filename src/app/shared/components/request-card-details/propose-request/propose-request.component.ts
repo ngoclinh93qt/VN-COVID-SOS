@@ -15,7 +15,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./propose-request.component.scss'],
 })
 export class ProposeRequestComponent implements OnInit {
-  groups: IVolunteerGroup[] = [];
+  groups: any[] = [];
   request!: ISOSRequest;
   suggests: any[] = [];
 
@@ -31,8 +31,9 @@ export class ProposeRequestComponent implements OnInit {
     this.request = data;
     this.suggests = this.request.suggests
     this.fetchInit();
+    console.log(this.suggests)
     this.suggestForm = new FormGroup({
-      target_id: new FormControl(this.suggests.map(e => e.target_id)),
+      targets: new FormControl(this.suggests.map(e => e.target_id)),
       note: new FormControl('')
     })
   }
@@ -41,7 +42,7 @@ export class ProposeRequestComponent implements OnInit {
 
   fetchInit() {
     this.VolunteerGroupService.findAll().subscribe((result) => {
-      this.groups = result;
+      this.groups = result
     });
   }
 
@@ -54,8 +55,13 @@ export class ProposeRequestComponent implements OnInit {
   }
 
   async onSubmit(data: any) {
-    data.target_type = 'group';
-    data.target_id = data.target_id
+    data.targets = this.groups.filter(e => data.targets.includes(e.id)).map(e => {
+      return {
+        target_name: e.name,
+        target_id: e.id,
+        target_type: 'group'
+      }
+    })
     this.UrgentRequestService.propose(this.request.id, data).subscribe(
       (result) => {
         this.notification.success("Đã đề xuất cho nhóm")
