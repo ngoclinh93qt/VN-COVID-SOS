@@ -8,7 +8,7 @@
   <form (submit)="onSubmit(suggestForm.value)" [formGroup]='suggestForm'>
     <mat-form-field style="width: 100%" appearance="outline">
       <mat-label>Nhóm thiện nguyện</mat-label>
-      <mat-select formControlName="target_id" required multiple>
+      <mat-select formControlName="targets" required multiple>
         <mat-option *ngFor="let group of groups" [value]="group.id"
           >{{ group.name }}
         </mat-option>
