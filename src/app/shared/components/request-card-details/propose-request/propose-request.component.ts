@@ -15,11 +15,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./propose-request.component.scss'],
 })
 export class ProposeRequestComponent implements OnInit {
-<<<<<<< HEAD
-  groups: any[] = [];
-=======
   groups: IVolunteerGroup[] = [];
->>>>>>> 13b4829c5bd7be1e8df9ff556eabf177219bd4b7
   request!: ISOSRequest;
   suggests: any[] = [];
 
