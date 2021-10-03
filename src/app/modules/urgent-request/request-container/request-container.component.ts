@@ -126,7 +126,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
-  search() {
+  search(isReload?: boolean) {
     console.log("search");
 
     this.requests = [];
@@ -139,21 +139,19 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     };
     this.paramsInit();
 
-    this.load();
+    this.load(isReload);
   }
-  load() {
-    if (this.isLoading) return;
-    this.isLoading = true;
+  load(isReload?:boolean) {
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
-        if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
+        if (this.params.offset != 0 && !isReload) this.requests = [...this.requests!, ...result.sos_requests];
         else this.requests = result.sos_requests;
         this.requestsChange.emit(this.requests);
         console.log(this.params.offset)
         this.updateParams(result.total);
         console.log(this.requests)
         console.log(result);
-        this.isLoading = false;
+       
       });
   }
   select($event: any) {
@@ -194,13 +192,13 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("INITTT")
     this.setLocation(this.StorageService.location)
-    this.search();
+    this.search(true);
     // this.locationService.updateLocation();
     console.log(this.StorageService.location)
     this.subscription = this.StorageService.locationSubject.subscribe({
       next: (location: ILocation) => {
         console.log("location change")
-        this.setLocation(location); console.log("location", location); this.search()
+        this.setLocation(location); console.log("location", location); this.search(true)
       }
     })
   }
