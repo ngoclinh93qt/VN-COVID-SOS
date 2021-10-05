@@ -45,6 +45,7 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     object_status: [],
     status: [],
     support_types: [],
+    verify_status: ''
   };
   queryObject: any = {};
   subscription: Subscription | undefined
@@ -127,9 +128,15 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.search();
   }
   search(isReload?: boolean) {
-    console.log("search");
 
     this.requests = [];
+
+    if (this.filterObject.status?.find(e => e === 'verified') ){
+      this.filterObject.status = this.filterObject.status.filter(e => e != 'verified')
+      this.filterObject = {...this.filterObject,  verify_status: 'verified'}
+    }
+
+
     this.queryObject = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
