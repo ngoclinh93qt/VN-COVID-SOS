@@ -164,6 +164,7 @@ interface IRequestFilter {
   keyword?: string;
   distance?: number;
   object_status?: string[];
+  verify_status?: string;
 }
 interface IRequesterObjectStatus {
   content_type?: string;

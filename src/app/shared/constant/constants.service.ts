@@ -129,7 +129,7 @@ export class ConstantsService {
       action_view: 'Hoàn thành',
       status: 'resolved',
       status_view: 'Đã giải quyết',
-      next_step: [],
+      next_step: ['re-open'],
     });
     this.REQUEST_STATUS.set('re-open', {
       action: 're-open',
@@ -184,6 +184,15 @@ export class ConstantsService {
       status_view: 'Đang chờ',
       next_step: ['canceled', 'executing'],
     });
+
+    this.SUPPORT_STATUS.set('re-open', {
+      action: 're-open',
+      action_view: 'Mở lại',
+      status: 're-open',
+      status_view: 'Đã mở lại',
+      next_step: ['executing', 'canceled', 'pending'],
+    });
+
 
     this.TYPE_REQUEST.set('ask', {
       key: 'ask',

@@ -32,8 +32,7 @@
         <button class="status-btn" mat-stroked-button color="primary"
           *ifRoles="['GUEST']">{{getStatusView(mapStatus)}}</button>
         <div *ifRoles="['OPERATOR', 'ADMIN']">
-          <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger
-            [disabled]="getStatusSteps(mapStatus).length === 0">
+          <button class="status-btn" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger>
             {{getStatusView(mapStatus)}}<mat-icon>expand_more</mat-icon></button>
           <mat-menu #menu="matMenu">
             <div>
