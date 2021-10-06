@@ -40,7 +40,7 @@
       <textarea formControlName="description" matInput placeholder="Thêm mô tả"></textarea>
     </mat-form-field>
     <br />
-    <h4><b>Thông tin người cần giúp đỡ</b></h4>
+    <h4><b>Thông tin người <span *ngIf="requestForm.value.type === 'ask'">cần</span> giúp đỡ</b></h4>
     <fieldset formGroupName="contact_info">
 
 
