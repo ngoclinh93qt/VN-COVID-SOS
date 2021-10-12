@@ -1,0 +1,9 @@
+<div class="clinic_container scrollable" scrollTracker (scrollingFinished)="onScrollingFinished()">
+    <div class="empty" *ngIf="clinics?.length === 0 || false">
+        <img src="assets/empty.jpg" alt="">
+    </div>
+    <div *ngFor="let clinic of clinics">
+        <app-clinic-card type="{{type}}" (click)="chooseClinic(clinic)" [session]="session" [clinic]="clinic">
+        </app-clinic-card>
+    </div>
+</div>

@@ -46,6 +46,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { IfNotRoleDirective } from '../core/directives/if-not-role.directive';
 import { IfRoleDirective } from '../core/directives/if-role.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ClinicContainerComponent } from './components/clinic-container/clinic-container.component';
+import { ClinicCardComponent } from './components/clinic-card/clinic-card.component';
+
 @NgModule({
   declarations: [
     CardComponent,
@@ -74,7 +77,10 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     ResetPasswordFrameComponent,
     IfRoleDirective,
     IfNotRoleDirective,
-    SpinnerComponent
+    SpinnerComponent,
+    ClinicContainerComponent,
+    ClinicCardComponent,
+
   ],
   imports: [
     CommonModule,
@@ -107,7 +113,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     ResetPasswordFrameComponent,
     IfRoleDirective,
     IfNotRoleDirective,
-    SpinnerComponent
+    SpinnerComponent,
+    ClinicContainerComponent,
+    ClinicCardComponent
   ],
   providers: [
     HttpClientModule,

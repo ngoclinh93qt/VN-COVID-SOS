@@ -1,0 +1,40 @@
+.clinic_card {
+    border: 1px solid rgb(224, 224, 224);
+    border-top-width: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    position: relative;
+    margin: 10px 10px;
+    h3 {
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+    h4 {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    span {
+      float: right;
+    }
+  }
+  
+  .mat-chip {
+    background-color: #fce7e5;
+  }
+  
+  .mat-icon {
+    font-size: 10px;
+    height: 10px;
+    width: 20px !important;
+  }
+  .bookmark {
+    mat-icon {
+      font-size: 24px;
+      margin-right: 10px;
+      z-index: 10;
+    }
+  }
+  .tag-list{
+    max-width: 420px;
+  }
+  

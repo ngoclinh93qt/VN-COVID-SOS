@@ -52,11 +52,12 @@ export class ConstantsService {
   ];
 
   public TYPE_REQUEST = new Map<string, any>();
+  public TYPE_CLINIC = new Map<string, any>();
   constructor() {
     this.mapSet();
   }
 
-  mapSet(){
+  mapSet() {
     this.MAP_SESSION_STATUS.set(this.SESSION.ALL_REQUESTS, this.REQUEST_STATUS);
     this.MAP_SESSION_STATUS.set(
       this.SESSION.BOOKMARKED_REQUESTS,

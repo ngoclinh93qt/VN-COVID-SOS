@@ -65,11 +65,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
         url: '',
         roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
       },
-      // {
-      //   name: 'Bệnh viện',
-      //   icon: 'local_hospital',
-      //   url: 'hospital',
-      // },
+      {
+        name: 'Trạm y tế',
+        icon: 'local_hospital',
+        url: 'clinic',
+        roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
+      },
       {
         name: 'Nhóm thiện nguyện',
         icon: 'group',
@@ -123,7 +124,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  gotoProfile(){
+  gotoProfile() {
     this.router.navigate(['/profile']);
   }
 
