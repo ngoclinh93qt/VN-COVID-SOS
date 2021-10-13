@@ -62,8 +62,8 @@ export class ClinicMapComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
   addMarker = (clinic: IGroup, chooseClinic: Function) => {
-    const icon = (color: string = this.constantsService.DEFAULT_REQUEST_COLOR) => {
-      return asset.createMarker(color)
+    const icon = () => {
+      return asset.createClinicIcon();
     };
     var location = clinic?.location?.split(',');
     var lat = parseFloat(location![0]);

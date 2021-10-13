@@ -16,14 +16,14 @@
 
     <mat-chip-list aria-label="tag">
         <div class="tag-list">
-            <mat-chip *ngFor="let type of clinic?.detail_info!.support_types!">{{ type.name }}
-            </mat-chip>
-            <div class="chip icon-16"
+            <!-- <mat-chip *ngFor="let type of clinic?.detail_info!.support_types!">{{ type.name }}
+            </mat-chip> -->
+            <!-- <div class="chip icon-16"
                 [ngStyle]="{'display': clinic?.verify_status === 'verified'? 'inline flex': 'none', 'background-color': mapStatus.get('verified')?.bg_color, color: mapStatus.get('verified')?.color}">
                 <mat-icon [ngStyle]="{'display': mapStatus.get('verified')?.icon? 'block': 'none'}">
                     {{mapStatus.get('verified')?.icon}}</mat-icon>
                 <p>{{ mapStatus.get('verified')?.status_view }}</p>
-            </div>
+            </div> -->
         </div>
 
     </mat-chip-list>
@@ -32,12 +32,15 @@
     </h3>
     <!-- <h4 *ngIf="isSuggested">Đã đề xuất cho: <i *ngFor="let item of clinic?.suggests">{{item.target_name}},&#160;</i></h4> -->
     <mat-card-subtitle>{{createTime}} , {{distance}}</mat-card-subtitle>
-    <p>
-        Người gửi: <b>{{ clinic?.contact_info?.name }}</b>
+    <p><b>{{clinic?.description}}</b></p>
+    <p><b>Địa chỉ:</b> {{clinic?.address_info?.address! + clinic?.address_info?.district_name!}}</p>
+    <p><b>Số điện thoại:</b> {{clinic?.contact_info?.phone_number}}</p>
+    <p><b> Người gửi:</b> {{ clinic?.contact_info?.name }}
         <hr />
-    <p><b>{{ mapStatus.get(clinic?.verify_status)?.status_view }}</b>
+    <p>
+        <!-- <b>{{ mapStatus.get(clinic?.verify_status)?.status_view }}</b>
         <span style="margin: 0 0 0 10px" [ngStyle]="{'color': typesMap.get(clinic?.type || '')?.color}">
             {{ typesMap?.get(clinic?.type || '')?.view }}
-        </span>
+        </span> -->
     </p>
 </div>
