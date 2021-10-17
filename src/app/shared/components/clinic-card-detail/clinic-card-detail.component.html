@@ -1,0 +1,12 @@
+<div class="p-1" style="position: relative;">
+    <mat-icon style="position:absolute; top: 5px; right:5px" (click)="onNoClick()">close</mat-icon>
+    <br />
+    <h3>
+        <b>{{ clinic?.name }}</b>
+    </h3>
+    <mat-card-subtitle>{{createTime}} , {{distance}}</mat-card-subtitle>
+    <p><b>{{clinic?.description}}</b></p>
+    <p><b>Địa chỉ:</b> {{clinic?.address_info?.address! + clinic?.address_info?.district_name!}}</p>
+    <p><b>Số điện thoại:</b> {{clinic?.contact_info?.phone_number}}</p>
+    <p><b> Người liên lạc:</b> {{ clinic?.contact_info?.name }}
+</div>

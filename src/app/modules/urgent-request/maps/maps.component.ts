@@ -42,6 +42,7 @@ export class MapsComponent implements OnInit, OnChanges, OnDestroy {
   markers: google.maps.Marker[] = []
   loader = new Loader({
     apiKey: environment.googleApiKey,
+    libraries: ['places']
   });
   subscription: any;
   selectorMarker?: google.maps.Marker;

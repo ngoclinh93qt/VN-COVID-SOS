@@ -5,7 +5,7 @@ export const environment = {
   production: false,
   hmr: false,
   host: 'https://sos-api.3exp8.network/api/v1',
-  googleApiKey: "AIzaSyBvYXrHhLWYyrAywQ-LvZXY1Vy8149azIc",
+  googleApiKey: "AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q",
   s3: {
     AccessKeyId: "",
     Secret: "",

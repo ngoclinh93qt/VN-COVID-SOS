@@ -9,10 +9,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UrgentRequestService extends RestService<ISOSRequest> {
-  public host: string;
   constructor(http: HttpClient) {
     super(http, 'sos_requests');
-    this.host = environment.host;
   }
   markRequest(request_id?: string, body?: any): Observable<ISOSRequest> {
     return this.http

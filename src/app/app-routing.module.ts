@@ -5,13 +5,15 @@ import { SignupComponent } from './modules/signup/signup.component';
 import { ContainerComponent } from './modules/container/container.component';
 import { AuthGuard } from './core/guards';
 import { UserLoginComponent } from './modules/user-login/user-login.component';
-import {ProfileComponent } from './modules/profile/profile.component';
+import { ProfileComponent } from './modules/profile/profile.component';
+import { ClinicComponent } from './modules/clinic/clinic.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: AuthenComponent,
   },
+
   {
     path: 'signup',
     component: SignupComponent,
@@ -51,6 +53,11 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'clinic',
+        loadChildren: () =>
+          import('./modules/clinic/clinic.module').then((m) => m.ClinicModule),
       },
       // {
       //   path: 'blocked',
