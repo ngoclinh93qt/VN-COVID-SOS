@@ -5,6 +5,7 @@ import { UsersService } from 'src/app/core/http/users.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { LocationService } from 'src/app/shared/subjects/location.service';
 import { RequestFormComponent } from '../urgent-request/request-form/request-form.component';
+import { ClinicFormComponent } from './clinic-form/clinic-form.component';
 
 @Component({
   selector: 'app-clinic',
@@ -31,9 +32,9 @@ export class ClinicComponent implements OnInit, OnDestroy {
     this.subscriptionUser?.unsubscribe();
   }
   openCreateForm(): void {
-    const dialogRef = this.dialog.open(RequestFormComponent, {
+    const dialogRef = this.dialog.open(ClinicFormComponent, {
       width: 'auto',
-      data: {},
+      data: { action: "create" },
       disableClose: true,
       maxWidth: '100vw',
     });

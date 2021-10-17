@@ -27,6 +27,7 @@ import { SuggestedComponent } from '../urgent-request/suggested/suggested.compon
 import { UrgentRequestComponent } from '../urgent-request/urgent-request.component';
 import { ClinicContainerComponent } from './clinic-container/clinic-container.component';
 import { ClinicMapComponent } from './clinic-map/clinic-map.component';
+import { ClinicFormComponent } from './clinic-form/clinic-form.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
     ClinicComponent,
     ClinicContainerComponent,
     ClinicMapComponent,
+    ClinicFormComponent,
 
 
   ],

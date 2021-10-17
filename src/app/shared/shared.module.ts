@@ -48,6 +48,7 @@ import { IfRoleDirective } from '../core/directives/if-role.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ClinicContainerComponent } from './components/clinic-container/clinic-container.component';
 import { ClinicCardComponent } from './components/clinic-card/clinic-card.component';
+import { ClinicCardDetailComponent } from './components/clinic-card-detail/clinic-card-detail.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { ClinicCardComponent } from './components/clinic-card/clinic-card.compon
     SpinnerComponent,
     ClinicContainerComponent,
     ClinicCardComponent,
+    ClinicCardDetailComponent,
 
   ],
   imports: [
@@ -115,7 +117,8 @@ import { ClinicCardComponent } from './components/clinic-card/clinic-card.compon
     IfNotRoleDirective,
     SpinnerComponent,
     ClinicContainerComponent,
-    ClinicCardComponent
+    ClinicCardComponent,
+    ClinicCardDetailComponent
   ],
   providers: [
     HttpClientModule,

@@ -17,6 +17,8 @@ import asset from '../../../../assets/marker'
 import { RequestCardDetailsComponent } from 'src/app/shared/components/request-card-details/request-card-details.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { LocationService } from 'src/app/shared/subjects/location.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ClinicCardDetailComponent } from './../../../shared/components/clinic-card-detail/clinic-card-detail.component';
 @Component({
   selector: 'app-clinic-map',
   templateUrl: './clinic-map.component.html',
@@ -40,6 +42,7 @@ export class ClinicMapComponent implements OnInit, OnDestroy, OnChanges {
   markers: google.maps.Marker[] = []
   loader = new Loader({
     apiKey: environment.googleApiKey,
+    libraries: ['places']
   });
   subscription: any;
   selectorMarker?: google.maps.Marker;
@@ -54,7 +57,7 @@ export class ClinicMapComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
   constructor(private storageService: StorageService, private constantsService: ConstantsService, private locationService: LocationService,
-    private bottomsheet: MatBottomSheet) {
+    private bottomsheet: MatBottomSheet, public dialog: MatDialog) {
   }
   setMapOnAll(map: any) {
     for (let i = 0; i < this.markers.length; i++) {
@@ -85,12 +88,71 @@ export class ClinicMapComponent implements OnInit, OnDestroy, OnChanges {
         zoom: 15,
         styles: environment.mapStyle,
       });
+
+     
+
       this.infoWindow = new google.maps.InfoWindow();
       this.clinics?.forEach((clinic) => {
         this.addMarker(clinic, this.chooseClinic.bind(this));
       });
 
       this.choseLocationMarker();
+      // const input = document.getElementById("pac-input") as HTMLInputElement;
+
+      // const searchBox = new google.maps.places.SearchBox(input);
+      // this.map.addListener("bounds_changed", () => {
+      //   searchBox.setBounds(this.map?.getBounds() as google.maps.LatLngBounds);
+      // });
+      // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      // searchBox.addListener("places_changed", () => {
+      //   const places = searchBox.getPlaces();
+
+      //   if (places?.length == 0) {
+      //     return;
+      //   }
+
+      //   // Clear out the old markers.
+      //   this.markers.forEach((marker) => {
+      //     marker.setMap(null);
+      //   });
+      //   this.markers = [];
+
+      //   // For each place, get the icon, name and location.
+      //   const bounds = new google.maps.LatLngBounds();
+
+      //   places?.forEach((place) => {
+      //     if (!place.geometry || !place.geometry.location) {
+      //       console.log("Returned place contains no geometry");
+      //       return;
+      //     }
+
+      //     const icon = {
+      //       url: place.icon as string,
+      //       size: new google.maps.Size(71, 71),
+      //       origin: new google.maps.Point(0, 0),
+      //       anchor: new google.maps.Point(17, 34),
+      //       scaledSize: new google.maps.Size(25, 25),
+      //     };
+
+      //     // Create a marker for each place.
+      //     this.markers.push(
+      //       new google.maps.Marker({
+      //         map: this.map,
+      //         icon,
+      //         title: place.name,
+      //         position: place.geometry.location,
+      //       })
+      //     );
+
+      //     if (place.geometry.viewport) {
+      //       // Only geocodes have viewport.
+      //       bounds.union(place.geometry.viewport);
+      //     } else {
+      //       bounds.extend(place.geometry.location);
+      //     }
+      //   });
+      //   this.map?.fitBounds(bounds);
+      // });
     });
     this.subscription = this.storageService.locationSubject.subscribe({
       next: (location: ILocation) => {
@@ -103,9 +165,15 @@ export class ClinicMapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   chooseClinic(clinic: IGroup) {
-    // const dialogRef = this.bottomsheet.open(RequestCardDetailsComponent, {
-    //   data: { request, session: this.constantsService.SESSION.MAP_REQUESTS },
-    // });
+    const dialogRef = this.dialog.open(ClinicCardDetailComponent, {
+      width: '250px',
+      data: clinic
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

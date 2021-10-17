@@ -86,10 +86,7 @@ export class RequestFormComponent implements OnInit {
       support_types: new FormControl(''),
       share_phone_number: new FormControl('private'),
     });
-    console.log(data.request)
-
     this.fetchInit();
-    console.log("formConstruct");
   }
 
   show(data: any) {
@@ -145,18 +142,7 @@ export class RequestFormComponent implements OnInit {
     });
     this.SupportTypesService.findAll().subscribe((result) => {
       this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
-      // let temp: ISupportType[] = [];
-      // if (this.data.action == 'update') {
-      //   this.supportTypes.forEach(x => {
-      //     this.data.request.support_types?.forEach(xx => {
-      //       if (x.type == xx.type) temp.push(x);
-      //     })
-      //   })
-      //   this.requestForm.patchValue({ support_types: temp })
-      // }
-
-
-
+   
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
       this.requesterObjectStatus = result.map(x => { return { name: x.name, type: x.key } });
@@ -257,6 +243,7 @@ export class RequestFormComponent implements OnInit {
       this.isMapCreated = true;
       const loader = new Loader({
         apiKey: environment.googleApiKey,
+        libraries: ['places']
       });
 
       loader.load().then(() => {

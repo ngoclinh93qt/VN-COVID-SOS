@@ -4,6 +4,8 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { ConstantsService } from '../../constant/constants.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { GeneralService } from 'src/app/core/services/general.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ClinicCardDetailComponent } from '../clinic-card-detail/clinic-card-detail.component';
 
 @Component({
   selector: 'app-clinic-card',
@@ -16,16 +18,29 @@ export class ClinicCardComponent implements OnInit {
   @Input() type?: String;
   @Input() session?: String;
   createTime: string = ''
+  distance: string = ''
   mapStatus: any;
   user: any;
-  distance: string = ''
+
   isRemote: boolean = false
   typesMap!: Map<string, any>;
   constructor(private generalService: GeneralService,
     private groupService: GroupService,
+    public dialog: MatDialog,
     private storageService: StorageService,
     public constantsService: ConstantsService,
     private notificationService: NotificationService) {
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ClinicCardDetailComponent, {
+      width: '250px',
+      data: this.clinic
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
   }
   mark($event: any, action?: string) {
     $event.stopPropagation();
@@ -34,8 +49,6 @@ export class ClinicCardComponent implements OnInit {
       this.notificationService.warn("Bạn cần phải đăng nhập để sử dụng chức năng này")
       return
     }
-
-
   }
 
   ngOnInit(): void {

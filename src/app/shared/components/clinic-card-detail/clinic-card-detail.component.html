@@ -1,5 +1,6 @@
-<div *ngIf="isRemote==false" class="clinic_card" (click)="openDialog()">
-
+<div class="p-1" style="position: relative;">
+    <mat-icon style="position:absolute; top: 5px; right:5px" (click)="onNoClick()">close</mat-icon>
+    <br />
     <h3>
         <b>{{ clinic?.name }}</b>
     </h3>
@@ -8,5 +9,4 @@
     <p><b>Địa chỉ:</b> {{clinic?.address_info?.address! + clinic?.address_info?.district_name!}}</p>
     <p><b>Số điện thoại:</b> {{clinic?.contact_info?.phone_number}}</p>
     <p><b> Người liên lạc:</b> {{ clinic?.contact_info?.name }}
-        <hr />
 </div>

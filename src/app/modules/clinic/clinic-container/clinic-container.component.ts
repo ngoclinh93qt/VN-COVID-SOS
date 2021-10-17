@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 import { ConstantsService } from 'src/app/shared/constant/constants.service';
 import { LocationService } from 'src/app/shared/subjects/location.service';
+import { ClinicFormComponent } from '../clinic-form/clinic-form.component';
 
 @Component({
   selector: 'all-clinic-container',
@@ -148,7 +149,21 @@ export class ClinicContainerComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
     this.subscriptionLocation?.unsubscribe();
   }
+  openCreateForm(): void {
+    const dialogRef = this.dialog.open(ClinicFormComponent, {
+      width: 'auto',
+      data: { action: "create" },
+      disableClose: true,
+      maxWidth: '100vw',
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+      this.clinics = this.clinics ? [result, ...this.clinics] : [result];
+    });
+  }
   selectLocation() {
     this._isPicked = !this._isPicked
     if (this._isPicked) {
