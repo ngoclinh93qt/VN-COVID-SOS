@@ -9,7 +9,7 @@ import { RestService } from './rest.service';
 })
 export class GroupService extends RestService<IGroup>{
   constructor(http: HttpClient) {
-    super(http, 'group');
+    super(http, 'groups');
   }
   search(body: any, queryParams?: IQueryPrams): Observable<{
     groups: IGroup[];

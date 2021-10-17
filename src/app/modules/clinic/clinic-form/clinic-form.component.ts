@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Subscription } from 'rxjs';
+import { GroupService } from 'src/app/core/http/group.service';
 import { ProvinceService } from 'src/app/core/http/province.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
 import { UsersService } from 'src/app/core/http/users.service';
@@ -36,12 +37,12 @@ export class ClinicFormComponent implements OnInit, OnDestroy {
   name: string = ''
   subscription: Subscription | undefined
   markers: any;
-  onClose(res?: ISOSRequest): void {
+  onClose(res?: IGroup): void {
     if (!this.onPickFile)
       this.dialogRef.close(res);
   }
   isSending = false;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { action: String, clinic: IGroup },
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { action: String, clinic: IGroup, },
 
     private ProvinceService: ProvinceService,
     private SupportTypesService: SupportTypesService,
@@ -53,7 +54,8 @@ export class ClinicFormComponent implements OnInit, OnDestroy {
     private userService: UsersService,
     public dialog: MatDialog,
     private storageService: StorageService,
-    private formatService: FormatService,) {
+    private formatService: FormatService,
+    private groupService: GroupService) {
     this.clinicForm = new FormGroup({
       name: new FormControl("Trạm y tế"),
       type: new FormControl('tram_y_te'),
@@ -115,10 +117,10 @@ export class ClinicFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     let clinic: IGroup = this.clinicForm.value;
     clinic.type = 'tram_y_te';
-    clinic.avatar = this.medias[0].url;
+    clinic.avatar = this.medias && this.medias.length > 0? this.medias[0].url : '';
     clinic.location = this.location;
     console.log(clinic);
-    return;
+    this.groupService.create(clinic).subscribe(gr =>  this.dialogRef.close(gr))
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
