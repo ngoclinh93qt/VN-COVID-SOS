@@ -1,6 +1,6 @@
 <div class="request_session">
     <br>
-    <button fxHide.gt-xs mat-fab style="right: 20px; bottom: 20px; position: fixed; z-index: 20;" color="accent"
+    <button fxHide.gt-xs mat-fab *ifRoles="['ADMIN', 'OPERATOR']" style="right: 20px; bottom: 20px; position: fixed; z-index: 20;" color="accent"
         (click)="openCreateForm()">
         <mat-icon>add</mat-icon>
     </button>
@@ -14,15 +14,7 @@
 
             </div>
         </div>
-        <button matBadge="{{filterObject.verify_status?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
-            class="menuTrigger" mat-stroked-button [matMenuTriggerFor]="status">Trạng thái</button>
-        <mat-menu #status="matMenu">
-            <button *ngFor="let status of statuses" mat-menu-item (click)="selectStatus(status.type, $event)">
-                <mat-icon class="empty">check_box_outline_blank</mat-icon>
-                <mat-icon class="checked red">check_box</mat-icon>{{ status.name }}
-            </button>
-        </mat-menu>
-
+      
         <button class="menuTrigger" style="width: 85px;" mat-stroked-button [matMenuTriggerFor]="distance">
             {{ filterObject.distance }} (km)
         </button>

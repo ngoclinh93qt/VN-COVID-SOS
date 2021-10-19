@@ -46,8 +46,8 @@ export class ProposeRequestComponent implements OnInit {
     });
   }
 
-  CloseDialog() {
-    this._dialogRef.close();
+  CloseDialog(data?:any) {
+    this._dialogRef.close(data);
   }
 
   isSuggested(id: string | undefined){
@@ -65,7 +65,7 @@ export class ProposeRequestComponent implements OnInit {
     this.UrgentRequestService.propose(this.request.id, data).subscribe(
       (result) => {
         this.notification.success("Đã đề xuất cho nhóm")
-        this.CloseDialog()
+        this.CloseDialog(result)
       }
     );
   }

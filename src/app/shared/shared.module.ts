@@ -49,6 +49,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ClinicContainerComponent } from './components/clinic-container/clinic-container.component';
 import { ClinicCardComponent } from './components/clinic-card/clinic-card.component';
 import { ClinicCardDetailComponent } from './components/clinic-card-detail/clinic-card-detail.component';
+import { NdaDialogComponent } from './components/nda-dialog/nda-dialog.component';
+import { NdaComponent } from './components/nda/nda.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { ClinicCardDetailComponent } from './components/clinic-card-detail/clini
     ClinicContainerComponent,
     ClinicCardComponent,
     ClinicCardDetailComponent,
+    NdaDialogComponent,
+    NdaComponent,
 
   ],
   imports: [
@@ -118,7 +122,8 @@ import { ClinicCardDetailComponent } from './components/clinic-card-detail/clini
     SpinnerComponent,
     ClinicContainerComponent,
     ClinicCardComponent,
-    ClinicCardDetailComponent
+    ClinicCardDetailComponent,
+    NdaComponent,
   ],
   providers: [
     HttpClientModule,

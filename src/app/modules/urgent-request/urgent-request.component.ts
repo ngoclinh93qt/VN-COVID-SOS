@@ -15,6 +15,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UsersService } from 'src/app/core/http/users.service';
 import { Subscription } from 'rxjs';
 import { LocationService } from 'src/app/shared/subjects/location.service';
+import { NdaDialogComponent } from 'src/app/shared/components/nda-dialog/nda-dialog.component';
 
 @Component({
   selector: 'app-urgent-request',
@@ -40,6 +41,28 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
     this.subscriptionUser?.unsubscribe();
   }
   openCreateForm(): void {
+
+    if(!this.StorageService.userInfo){
+      const ndaDialogRef = this.dialog.open(NdaDialogComponent, {
+        width: 'auto',
+        disableClose: true,
+        maxWidth: '100vw',
+      })
+
+      ndaDialogRef.afterClosed().subscribe(res => {
+        console.log(res)
+        if (res) {
+          this.showCreateForm();
+        }
+      })
+    } else {
+      this.showCreateForm();
+    }
+
+   
+  }
+
+  showCreateForm(){
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: {},
@@ -54,6 +77,7 @@ export class UrgentRequestComponent implements OnInit, OnDestroy {
       this.requests = this.requests ? [result, ...this.requests] : [result];
     });
   }
+
   toggleMap() {
     if (this.mobileScreen === 'MAP') this.mobileScreen = 'REQUESTS';
     else this.mobileScreen = 'MAP';

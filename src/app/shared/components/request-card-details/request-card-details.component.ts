@@ -64,6 +64,7 @@ export class RequestCardDetailsComponent implements OnInit {
   isActive: boolean = false;
   editable: boolean = false;
   onClose() {
+    console.log(this.request)
     this.bottomRef.dismiss(this.request);
   }
   mark($event: any, action?: string) {
@@ -234,6 +235,13 @@ export class RequestCardDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(ProposeRequestComponent, {
       data: this.request,
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result){
+        this.request = result
+      }
+    })
   }
 
   openConfirmDialog(): void {

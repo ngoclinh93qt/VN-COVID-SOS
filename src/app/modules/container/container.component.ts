@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit, OnDestroy {
-  showFiller = true;
+  showFiller = false;
   sideItems: SideItem[] | undefined;
   loginSuccess: boolean = false;
   isAvatar: boolean = false;
@@ -41,6 +41,8 @@ export class ContainerComponent implements OnInit, OnDestroy {
       this.showFiller = false;
     }
     this.router.onSameUrlNavigation = "reload";
+    this.showFiller  = !this.detectMob();
+    console.log("xxx", this.detectMob())
   }
 
   openSignupDialog(): void {
@@ -166,6 +168,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
   getShortName(fullName: string) {
     return fullName.split(' ').map(n => n[0]).join('');
+  }
+
+  detectMob() {
+    return window.matchMedia('(max-width: 700px)').matches
   }
 }
 type SideItem = {

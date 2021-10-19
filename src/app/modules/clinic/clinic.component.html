@@ -1,4 +1,4 @@
-<button *ngIf="tabGroup.selectedIndex == 0" (click)="toggleMap()" mat-stroked-button fxHide.gt-xs style="
+<button (click)="toggleMap()" mat-stroked-button fxHide.gt-xs style="
     bottom: 20px;
     transform: translateX(-50%);
     background-color: black;
@@ -11,25 +11,19 @@
     <mat-icon>map</mat-icon> {{ mobileScreen }}
 </button>
 <div class="request_page_container">
-    <div fxLayout="row" fxLayoutAlign="end" style="margin: 0; padding: 0">
-        <app-button fxHide fxShow.gt-xs (click)="openCreateForm()" height="40" color="accent" text="Tạo trạm y tế">
+    <div fxLayout="row" fxLayoutAlign="end" style="margin: 10px; padding: 0">
+        <app-button *ifRoles="['ADMIN', 'OPERATOR']" fxHide fxShow.gt-xs (click)="openCreateForm()" height="40" color="accent" text="Tạo trạm y tế">
         </app-button>
     </div>
-    <mat-tab-group fxFill #tabGroup>
-        <mat-tab label="Tất cả">
-            <ng-template matTabContent style="width: 100%">
-                <div fxLayout="row">
-                    <div [fxHide.lt-sm]="mobileScreen === 'CLINICS'" fxFlex.lt-sm="100" fxFlex.lt-md="45"
-                        fxFlex.gt-xs="noshrink" id="request_list">
-                        <all-clinic-container [(clinics)]="clinics" (isMapPicked)="isCanPick($event)"
-                            [locationPicked]="_pickedSearchLocation"></all-clinic-container>
-                    </div>
-                    <div [fxHide.lt-sm]="mobileScreen === 'MAP'" fxFlex="fxFill" class="two">
-                        <app-clinic-map [clinics]="clinics" (pickedLocation)="onPickNewLocation($event)"
-                            [selectLocationMode]="_isCanPick"></app-clinic-map>
-                    </div>
-                </div>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
+    <div fxLayout="row">
+        <div [fxHide.lt-sm]="mobileScreen === 'CLINICS'" fxFlex.lt-sm="100" fxFlex.lt-md="45"
+            fxFlex.gt-xs="noshrink" id="request_list">
+            <all-clinic-container [(clinics)]="clinics" (isMapPicked)="isCanPick($event)"
+                [locationPicked]="_pickedSearchLocation"></all-clinic-container>
+        </div>
+        <div [fxHide.lt-sm]="mobileScreen === 'MAP'" fxFlex="fxFill" class="two">
+            <app-clinic-map [clinics]="clinics" (pickedLocation)="onPickNewLocation($event)"
+                [selectLocationMode]="_isCanPick"></app-clinic-map>
+        </div>
+    </div>
 </div>
