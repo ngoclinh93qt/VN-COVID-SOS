@@ -116,6 +116,8 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: external
     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-087d3daabe878b4c0
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0b4e867ab622a3b7a
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-southeast-1:864185773574:certificate/9d6baee7-f865-4ae5-b0e4-b74374d775c6
 spec: 
   type: LoadBalancer
