@@ -1,0 +1,43 @@
+name: publish-eks
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_version:
+        description: 'The version to be deployed (tag name, ex: v1.0)'
+        required: true
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Set release version
+        run: |
+          sed -i 's/<<version>>/${{ github.event.inputs.deploy_version }}/g' ./k8s/deploy-eks-prod.yml
+      -
+        name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+     
+      - 
+       name: deploy to cluster
+       uses: kodermax/kubectl-aws-eks@master
+       env:
+         KUBE_CONFIG_DATA: ${{ secrets.AWS_KUBE_CONFIG }}
+       with:
+         args: apply -f ./k8s/deploy-eks-prod.yml --namespace=frontend
+        
+      - name: verify deployment
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.AWS_KUBE_CONFIG }}
+        with:
+          args: rollout status Deployment/nginx-deployment-prod --namespace=frontend
+  
