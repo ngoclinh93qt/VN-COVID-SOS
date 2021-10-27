@@ -46,7 +46,7 @@ spec:
     - name: http
       port: 80
       protocol: TCP
-      nodePort: 30000
+      #nodePort: 30000
   type: NodePort
 ---
 ##################################################################################################
@@ -120,7 +120,7 @@ metadata:
 spec: 
   type: LoadBalancer
   selector:   
-    app: nginx-deployment-prod
+    app: nginx
   ports:  
     - name: nginx-deployment-prod-svc-443-80
       port: 443
