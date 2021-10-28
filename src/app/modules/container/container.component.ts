@@ -17,21 +17,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit, OnDestroy {
-  showFiller = true;
+  showFiller = false;
   sideItems: SideItem[] | undefined;
   loginSuccess: boolean = false;
   isAvatar: boolean = false;
   userInfor: any;
   provinces: IProvince[] = [];
   provinceForm!: FormGroup;
-
+  isInitialized: boolean = false;
+  currentLocation: any;
   private destroy$ = new Subject();
   private DEFAULT_PROVINCE_CODE: number = 79;
 
   constructor(
     public dialog: MatDialog,
     private storage: StorageService,
-    private locationService: LocationService,
     private authService: AuthenService,
     private provinceService: ProvinceService,
     private formBuilder: FormBuilder,
@@ -41,6 +41,9 @@ export class ContainerComponent implements OnInit, OnDestroy {
     if (window.innerWidth <= 768) {
       this.showFiller = false;
     }
+    this.router.onSameUrlNavigation = "reload";
+    this.showFiller  = !this.detectMob();
+    console.log("xxx", this.detectMob())
   }
 
   openSignupDialog(): void {
@@ -62,14 +65,15 @@ export class ContainerComponent implements OnInit, OnDestroy {
       {
         name: 'Yêu cầu khẩn cấp',
         icon: 'support',
-        url: 'urgentRequest',
+        url: '',
         roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
       },
-      // {
-      //   name: 'Bệnh viện',
-      //   icon: 'local_hospital',
-      //   url: 'hospital',
-      // },
+      {
+        name: 'Trạm y tế',
+        icon: 'local_hospital',
+        url: 'clinic',
+        roles: ['OPERATOR', 'ADMIN', 'USER', 'GUEST']
+      },
       {
         name: 'Nhóm thiện nguyện',
         icon: 'group',
@@ -83,14 +87,31 @@ export class ContainerComponent implements OnInit, OnDestroy {
       // },
     ];
     this.provinceForm = this.formBuilder.group({
-      province: []
+      province: [],
+      current: {}
     });
     this.provinceForm.get('province')?.valueChanges.pipe(
       takeUntil(this.destroy$)
-    ).subscribe(province => {
+    ).subscribe((province) => {
+      if (this.isInitialized == false) {
+        this.isInitialized = true;
+        if (!!this.storage.last_location) {
+          this.currentLocation = this.storage.last_location;
+          const currentProvince: IProvince = {
+            id: 'currentLocation', name: 'Vị trí hiện tại', default_location: `${this.currentLocation.lat},${this.currentLocation.lng}`
+          }
+          this.provinces = [currentProvince, ...this.provinces];
+          this.provinceForm.get('province')?.setValue(currentProvince, { emitEvent: false });
+
+          return;
+        }
+      }
       const coordinates = province.default_location.split(',');
       const location = { lat: parseFloat(coordinates![0]), lng: parseFloat(coordinates![1]) };
+      console.log("city")
       this.storage.location = location;
+      console.log(province)
+
     });
     this.provinceService.getProvinces().pipe(
       takeUntil(this.destroy$)
@@ -106,10 +127,14 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  gotoProfile() {
+    this.router.navigate(['/profile']);
+  }
+
   loginPopup(): void {
     const dialogRef = this.dialog.open(
       LoginFrameComponent,
-      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px' }
+      { panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px ' }
     );
     dialogRef.afterClosed().subscribe((result: any) => {
       this.checkLogin();
@@ -134,13 +159,20 @@ export class ContainerComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+
+
     this.loginSuccess = false;
-    this.router.navigate([''])
+    this.router.navigateByUrl('/');
+    window.location.reload();
     this.authService.logout();
   }
 
-  getShortName(fullName: string) { 
+  getShortName(fullName: string) {
     return fullName.split(' ').map(n => n[0]).join('');
+  }
+
+  detectMob() {
+    return window.matchMedia('(max-width: 700px)').matches
   }
 }
 type SideItem = {

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ConfirmCodeService } from 'src/app/core/http/confirm-code.service';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
@@ -17,6 +18,7 @@ export class DeleteGroupComponent implements OnInit {
     private GroupService: VolunteerGroupService,
     private router: Router,
     private notification: NotificationService,
+    private confirmCode: ConfirmCodeService
   ) { }
 
   ngOnInit(): void {
@@ -35,5 +37,10 @@ export class DeleteGroupComponent implements OnInit {
       }
       this.notification.error("Xoá nhóm thất bại");
     });
+  }
+
+  requestConfirm(phone: string){
+    this.notification.info("Xin vui lòng chờ trong giây lát chúng tôi sẽ gửi mã xác nhận tới số điện thoại của bạn", 10000)
+    this.confirmCode.requestCode(phone).subscribe()
   }
 }

@@ -9,6 +9,7 @@ import { ProvinceService } from 'src/app/core/http/province.service';
 import { SupportTypesService } from 'src/app/core/http/support-types.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+import { ConfirmCodeService } from 'src/app/core/http/confirm-code.service';
 
 @Component({
   selector: 'app-create-group',
@@ -31,6 +32,7 @@ export class CreateGroupComponent implements OnInit {
     private GroupService: VolunteerGroupService,
     private FormatService: FormatService,
     private notification: NotificationService,
+    private confirmCodeService: ConfirmCodeService
   ) {
     this.fetchInit();
   }
@@ -77,4 +79,9 @@ export class CreateGroupComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  requestConfirm(phoneNumber: string){
+    this.notification.info("Xin vui lòng chờ trong giây lát chúng tôi sẽ gửi mã xác nhận tới số điện thoại của bạn", 10000)
+    this.confirmCodeService.requestCode(phoneNumber).subscribe()
+  }
 }

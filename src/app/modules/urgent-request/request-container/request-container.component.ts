@@ -10,6 +10,9 @@ import { UrgentLevelService } from '../../../core/http/urgent-level.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestFormComponent } from '../request-form/request-form.component';
+import { ConstantsService } from 'src/app/shared/constant/constants.service';
+import { NotificationService } from 'src/app/shared/components/notification/notification.service';
+import { NdaDialogComponent } from 'src/app/shared/components/nda-dialog/nda-dialog.component';
 
 @Component({
   selector: 'all-request-container',
@@ -18,12 +21,22 @@ import { RequestFormComponent } from '../request-form/request-form.component';
 })
 export class RequestContainerComponent implements OnInit, OnDestroy {
   @Input() requests?: ISOSRequest[];
+  @Input() set locationPicked(latlg: google.maps.LatLng | undefined) {
+    if (latlg) {
+      this.setLocation({ lat: latlg.lat(), lng: latlg.lng() });
+      this.search();
+    }
+  };
   @Output() requestsChange = new EventEmitter<ISOSRequest[]>();
-  urgentLevels: IPriorityType[] = [];
+  @Output() isMapPicked = new EventEmitter<boolean>();
+  _isPicked = false;
+  isLoading = false;
+  session: string;
   statuses: IRequestStatus[] = [];
   supportTypes: ISupportType[] = [];
   requesterObjectStatus: IRequesterObjectStatus[] = [];
   distanceOpt: number[] = [1, 2, 5, 10, 20, 50, 100];
+  LIMIT = 20;
   filterObject: IRequestFilter = {
     lat_position: 0,
     long_position: 0,
@@ -33,30 +46,32 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     object_status: [],
     status: [],
     support_types: [],
+    verify_status: ''
   };
   queryObject: any = {};
   subscription: Subscription | undefined
+  subscriptionLocation: Subscription | undefined
   constructor(public dialog: MatDialog,
-    private UrgentLevelService: UrgentLevelService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
     private SupportTypesService: SupportTypesService,
-    private RequestStatusService: RequestStatusService,
     private RequesterObjectStatusService: RequesterObjectStatusService,
-    private LocationService: LocationService
+    private notification: NotificationService,
+    private constantsService: ConstantsService,
+    private locationService: LocationService,
   ) {
-    this.statuses = RequestStatusService.getRequestStatus();
-    this.urgentLevels = UrgentLevelService.getUrgentLevels();
+    this.statuses = this.constantsService.STATUS_LIST
+    this.session = this.constantsService.SESSION.DEFAULT
     this.fetchInit();
   }
 
   params: IQueryPrams = {}
   paramsInit() {
-    this.params = { limit: 20, offset: 0 }
+    this.params = { limit: this.LIMIT, offset: 0 }
   }
   updateParams(returnNumber: number) {
-    if (returnNumber < 20) this.params.limit = 0; else
-      this.params.offset! += 20;
+    if (returnNumber < this.LIMIT) this.params.limit = 0; else
+      this.params.offset! += this.LIMIT;
   }
   selectPriority(type: string, $event: any) {
     this.select($event);
@@ -79,7 +94,6 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     if (index != -1 && index != undefined)
       this.filterObject.support_types?.splice(index, 1);
     else this.filterObject.support_types?.push(type);
-    console.log(this.filterObject.support_types!);
     this.search();
   }
   selectStatus(type: string, $event: any) {
@@ -114,7 +128,16 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
     this.filterObject.keyword = $event.target.value;
     this.search();
   }
-  search() {
+  search(isReload?: boolean) {
+
+    this.requests = [];
+
+    if (this.filterObject.status?.find(e => e === 'verified') ){
+      this.filterObject.status = this.filterObject.status.filter(e => e != 'verified')
+      this.filterObject = {...this.filterObject,  verify_status: 'verified'}
+    }
+
+
     this.queryObject = {
       ...this.filterObject,
       status: this.filterObject.status?.toString(),
@@ -123,15 +146,20 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       priority_type: this.filterObject.priority_type?.toString(),
     };
     this.paramsInit();
-    this.load();
+
+    this.load(isReload);
   }
-  load() {
+  load(isReload?:boolean) {
     if (this.params.limit != 0)
       this.UrgentRequestService.search(this.queryObject, this.params).subscribe((result) => {
-        if (this.params.offset != 0) this.requests = [...this.requests!, ...result.sos_requests];
+        if (this.params.offset != 0 && !isReload) this.requests = [...this.requests!, ...result.sos_requests];
         else this.requests = result.sos_requests;
         this.requestsChange.emit(this.requests);
+        console.log(this.params.offset)
         this.updateParams(result.total);
+        console.log(this.requests)
+        console.log(result);
+       
       });
   }
   select($event: any) {
@@ -149,32 +177,71 @@ export class RequestContainerComponent implements OnInit, OnDestroy {
       this.requesterObjectStatus = result;
     });
   }
-
   openCreateForm(): void {
+
+    if(!this.StorageService.userInfo){
+      const ndaDialogRef = this.dialog.open(NdaDialogComponent, {
+        width: 'auto',
+        disableClose: true,
+        maxWidth: '100vw',
+      })
+
+      ndaDialogRef.afterClosed().subscribe(res => {
+        console.log(res)
+        if (res) {
+          this.showCreateForm();
+        }
+      })
+    } else {
+      this.showCreateForm();
+    }
+
+   
+  }
+
+  showCreateForm(){
     const dialogRef = this.dialog.open(RequestFormComponent, {
       width: 'auto',
       data: {},
-      disableClose: true
+      disableClose: true,
+      maxWidth: '100vw',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) {
-        return
+        return;
       }
-      this.requests = this.requests ? [result, ...this.requests] : [result]
+      this.requests = this.requests ? [result, ...this.requests] : [result];
     });
   }
+
   setLocation(data: any) {
     this.filterObject.lat_position = data.lat?.toString();
     this.filterObject.long_position = data.lng?.toString();
   }
   ngOnInit(): void {
-    this.setLocation(this.StorageService.location);
-    this.subscription = this.LocationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
-    this.LocationService.updateLocation();
-    this.search();
+    console.log("INITTT")
+    this.setLocation(this.StorageService.location)
+    this.search(true);
+    // this.locationService.updateLocation();
+    console.log(this.StorageService.location)
+    this.subscription = this.StorageService.locationSubject.subscribe({
+      next: (location: ILocation) => {
+        console.log("location change")
+        this.setLocation(location); console.log("location", location); this.search(true)
+      }
+    })
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.subscriptionLocation?.unsubscribe();
+  }
+
+  selectLocation() {
+    this._isPicked = !this._isPicked
+    if (this._isPicked) {
+      this.notification.info("Hãy kéo biểu tượng đánh dấu tới nơi bạn muốn tìm kiếm")
+    }
+    this.isMapPicked.emit(this._isPicked)
   }
 }

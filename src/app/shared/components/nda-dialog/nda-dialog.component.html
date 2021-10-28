@@ -1,0 +1,7 @@
+<div>
+      <app-nda (acceptEvent)=checkAccept($event)></app-nda>
+      <div style="margin: 10px 0; display: flex;">
+            <button mat-flat-button color="primary" (click)="onClose()">Đóng</button>
+            <button mat-flat-button color="primary" style="margin: 0 0 0 auto;"  (click)="onClose(isAccept)">Hoàn thành</button>
+      </div>
+</div>

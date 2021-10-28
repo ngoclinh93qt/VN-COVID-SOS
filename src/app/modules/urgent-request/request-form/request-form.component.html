@@ -2,22 +2,29 @@
   <button (click)="onClose()" mat-icon-button aria-label="close Icon">
     <mat-icon>close</mat-icon>
   </button></span>
-<form class="example-form" #form="ngForm">
-  <h2><b>Gửi yêu cầu khẩn cấp</b></h2>
+<form class="example-form" [formGroup]="requestForm" (ngSubmit)="onSubmit()" style="width:100%">
+  <h2><b *ngIf="data.action!='update'">Gửi yêu cầu khẩn cấp</b><b *ngIf="data.action==='update'">Cập nhật yêu cầu
+      khẩn cấp</b></h2>
   <br />
   <div #content class="content">
     <h4><b>Nội dung yêu cầu</b></h4>
+
+    <mat-radio-group formControlName="type" class="type-radio">
+      <mat-radio-button value="ask" [checked]="true">Tôi cần được giúp đỡ</mat-radio-button>
+      <mat-radio-button class="btn-end" value="offer">Tôi muốn trợ giúp người khác</mat-radio-button>
+    </mat-radio-group>
+
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Người cần hỗ trợ là</mat-label>
-      <mat-select value="[]" ngModel name="requester_object_status" multiple>
+      <mat-select formControlName="requester_object_status" multiple>
         <mat-option *ngFor="let status of requesterObjectStatus" [value]="status">
           {{ status.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="outline">
+    <mat-form-field *ngIf="this.data.action!='update'" class="example-full-width" appearance="outline">
       <mat-label>Loại yêu cầu</mat-label>
-      <mat-select ngModel name="support_types" multiple>
+      <mat-select formControlName="support_types" multiple>
         <mat-option *ngFor="let type of supportTypes" [value]="type">
           {{ type.name }}
         </mat-option>
@@ -26,39 +33,35 @@
 
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Tiêu đề</mat-label>
-      <input ngModel name="subject" matInput placeholder="Tôi cần giúp..." value="" required />
+      <input formControlName="subject" matInput placeholder="Tôi cần giúp..." required />
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Mô tả</mat-label>
-      <input ngModel name="description" matInput placeholder="Thêm mô tả" value="" />
+      <textarea formControlName="description" matInput placeholder="Thêm mô tả"></textarea>
     </mat-form-field>
     <br />
-    <h4><b>Thông tin người cần giúp đỡ</b></h4>
-    <fieldset ngModelGroup="contact_info">
+    <h4><b>Thông tin người <span *ngIf="requestForm.value.type === 'ask'">cần</span> giúp đỡ</b></h4>
+    <fieldset formGroupName="contact_info">
 
-      <mat-checkbox class="check-box" name="show" #isAccepted>Tôi đồng ý công khai số điện thoại để được liên hệ
-        trợ giúp*
-      </mat-checkbox>
-      <div>
-        <mat-form-field class="example-left-half-width" appearance="outline">
-          <mat-label>Họ và tên</mat-label>
-          <input [(ngModel)]="formProfile.value.name" value="{{formProfile.value.name}}" name="name" matInput placeholder="Họ và tên"
-             required />
 
-        </mat-form-field>
-      </div>
+
+      <mat-form-field class="example-left-half-width" appearance="outline">
+        <mat-label>Họ và tên</mat-label>
+        <input formControlName="name" matInput placeholder="Họ và tên" required />
+      </mat-form-field>
+
 
       <mat-form-field class="example-right-half-width" appearance="outline">
         <mat-label>Số điện thoại</mat-label>
-        <input  [(ngModel)]="formProfile.value.phone_number" value="{{formProfile.value.phone_number}}" name="phone_number" matInput placeholder="Số điện thoại" value="" required />
+        <input formControlName="phone_number" matInput placeholder="Số điện thoại" required />
       </mat-form-field>
 
     </fieldset>
 
-    <fieldset ngModelGroup="address_info">
-      <mat-form-field class="example-full-width" appearance="outline">
+    <fieldset formGroupName="address_info">
+      <mat-form-field class="example-full-width" appearance="outline" required>
         <mat-label>Tỉnh/ Thành Phố</mat-label>
-        <mat-select ngModel name="province_id" required>
+        <mat-select formControlName="province_id" required>
           <mat-option *ngFor="let province of provinces" [value]="province.id" (click)="getProvince(province.id)">
             {{ province.name }}
           </mat-option>
@@ -66,7 +69,7 @@
       </mat-form-field>
       <mat-form-field class="example-left-half-width" appearance="outline">
         <mat-label>Quận/ Huyện</mat-label>
-        <mat-select ngModel name="district_code" required>
+        <mat-select formControlName="district_code" required>
           <mat-option *ngFor="let district of province.districts" [value]="district.code"
             (click)="getDistrict(district?.code)">
             {{ district.name }}
@@ -75,7 +78,7 @@
       </mat-form-field>
       <mat-form-field class="example-right-half-width" appearance="outline">
         <mat-label>Xã/ Phường</mat-label>
-        <mat-select ngModel name="ward_code" required>
+        <mat-select formControlName="ward_code" required>
           <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
             {{ ward.name }}
           </mat-option>
@@ -83,14 +86,13 @@
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Địa chỉ</mat-label>
-        <input  [(ngModel)]="formProfile.value.address" value="{{formProfile.value.address}}" name="address" matInput placeholder="Số nhà, tên đường..." value="" required />
+        <input formControlName="address" matInput placeholder="Số nhà, tên đường..." required />
       </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline">
+      <!-- <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Ghi chú địa chỉ:</mat-label>
         <input matInput placeholder="Ghi chú" value="" />
-      </mat-form-field>
+      </mat-form-field> -->
     </fieldset>
-
     <br />
 
     <a style="cursor: pointer; color: red; margin: 10px 0;" (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
@@ -108,7 +110,7 @@
         class="img-wrap">
         <button type="button" (click)="deleteImg(i)">
           <mat-icon>cancel</mat-icon>
-        </button> 
+        </button>
         <div *ngIf="item.mime_type !== 'video'"><img width="100%" src="{{item.url}}" alt=""></div>
         <div *ngIf="item.mime_type === 'video'">
           <video width="100%">
@@ -117,11 +119,22 @@
         </div>
       </div>
     </div>
+    <mat-checkbox fxLayout="wrap" class="example-full-width check-box" name="show"
+      style="word-wrap: normal">
+      Tôi đồng ý công khai số điện thoại để được liên hệ
+      trợ giúp*
+    </mat-checkbox>
   </div>
+
   <br />
   <div mat-dialog-actions class="submit-btn">
-    <button mat-flat-button type="submit" color="accent" (click)="checkSubmit(form,isAccepted)" cdkFocusInitial [disabled]='isSending'>
+    <button *ngIf="data.action!='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
+      [disabled]='isSending || requestForm.invalid'>
       Gửi yêu cầu
+    </button>
+    <button *ngIf="data.action==='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
+      [disabled]='isSending || requestForm.invalid'>
+      Cập nhật
     </button>
   </div>
 </form>

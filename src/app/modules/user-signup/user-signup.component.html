@@ -29,10 +29,11 @@
           <button mat-flat-button (click)='onResend()' style=" float:right;  margin-top: -65px; margin-right: 15px;">Gửi lại</button>
           <!-- <p>Mã xác nhận: {{user.confirm_code}}</p> -->
           <p *ngIf="isValidOTP==false">Mã không chính xác</p>
+          <app-nda (acceptEvent)=checkAccept($event)></app-nda>
           <div class="form-btn">
             <button class="w50" mat-flat-button style="color: gray;" matStepperPrevious>Quay lại</button>
             <button mat-raised-button color='primary' type="submit" class="button w50"
-              [disabled]="!secondFormGroup.valid" (click)="onConfirm($event,secondFormGroup.value)">
+              [disabled]="secondFormGroup.invalid || !isAcceptNDA" (click)="onConfirm($event,secondFormGroup.value)">
               Tiếp tục
             </button>
           </div>

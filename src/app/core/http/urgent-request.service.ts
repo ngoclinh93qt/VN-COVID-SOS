@@ -9,10 +9,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UrgentRequestService extends RestService<ISOSRequest> {
-  public host: string;
   constructor(http: HttpClient) {
     super(http, 'sos_requests');
-    this.host = environment.host;
   }
   markRequest(request_id?: string, body?: any): Observable<ISOSRequest> {
     return this.http
@@ -36,6 +34,11 @@ export class UrgentRequestService extends RestService<ISOSRequest> {
   getGroupSuggested(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.getByParams(`groups/${id}/suggest`, queryParams);
   }
+
+  getGroupSuggestedByUser(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
+    return this.getByParams(`users/mysuggests`, queryParams);
+  }
+
   getByRequesterId(id: string, queryParams?: IQueryPrams): Observable<ISOSRequest[]> {
     return this.getByParams(`sos_requests?filter_requester_id=${id}`, queryParams);
   }

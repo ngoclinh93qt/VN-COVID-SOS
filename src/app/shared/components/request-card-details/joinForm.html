@@ -1,37 +1,45 @@
 <div>
 
   <h1><b>Gửi yêu cầu tham gia trợ giúp</b></h1>
-  <div style="margin: 10px 0;">
-    <label id="example-radio-group-label">Tôi tham gia với tư cách là:</label><br><br>
-    <mat-radio-group aria-label="Tôi tham gia với tư cách" [(ngModel)]="group_type">
-      <mat-radio-button value="user">Cá nhân</mat-radio-button> &nbsp;
-      <mat-radio-button value="group">Nhóm</mat-radio-button>
-    </mat-radio-group>
-  </div>
   <br>
-  <form (submit)="onSubmit(form.value)" #form="ngForm">
-    <div *ngIf="groups.length !== 0">
-      <mat-form-field style="width: 100%;" appearance="outline" *ngIf="group_type == 'group'">
+  <form [formGroup]="joinForm" (submit)="onSubmit()">
+    <div style="margin: 10px 0;" *ngIf="groups.length != 0">
+      <label id="example-radio-group-label">Tôi tham gia với tư cách là:</label><br>
+      <mat-radio-group aria-label="Tôi tham gia với tư cách" formControlName="type">
+        <mat-radio-button value="user">Cá nhân</mat-radio-button>&#160;
+        <mat-radio-button value="group">Nhóm</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="joinForm.value.type==='group'" >
+      <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Nhóm của tôi là</mat-label>
-        <mat-select ngModel name="type" required>
-          <mat-option *ngFor="let group of groups" [value]="group">
+        <mat-select formControlName="supporter_id" required>
+          <mat-option *ngFor="let group of groups" [value]="group.id">
             {{ group.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div style="margin: 10px 0;">
-      <label >Sẽ hổ trợ một phần hay toàn bộ?</label><br><br>
-      <mat-radio-group aria-label="Tôi tham gia với tư cách" [value]="is_support_all">
+    <div style="margin: 30px 0px 20px 0;">
+      <label >Sẽ hổ trợ một phần hay toàn bộ?</label><br>
+      <mat-radio-group aria-label="Tôi tham gia với tư cách" formControlName="is_support_all">
         <mat-radio-button [checked]="true" value="false">Một phần</mat-radio-button> &nbsp;
         <mat-radio-button value="true">Toàn bộ</mat-radio-button>
       </mat-radio-group>
     </div>
-    <mat-form-field style="width: 100%;" appearance="fill">
-      <mat-label>Thêm ghi chú</mat-label>
-      <textarea ngModel name="description" matInput placeholder="Thêm ghi chú"></textarea>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Thời gian dự tính</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName='support_date'>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <button type="submit" mat-flat-button class="submit-btn" color="primary">
+
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Thêm ghi chú</mat-label>
+      <textarea formControlName="description" matInput placeholder="Thêm ghi chú"></textarea>
+    </mat-form-field>
+    <button type="submit" mat-flat-button class="submit-btn" color="primary" [disabled]="joinForm.value.type==='group' && joinForm.invalid">
       Gửi yêu cầu
     </button>
   </form>

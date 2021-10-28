@@ -164,6 +164,7 @@ interface IRequestFilter {
   keyword?: string;
   distance?: number;
   object_status?: string[];
+  verify_status?: string;
 }
 interface IRequesterObjectStatus {
   content_type?: string;
@@ -181,29 +182,33 @@ interface ISupportType {
   type: string;
 }
 interface ISOSRequest {
-  is_bookmarked?: boolean;
-  is_group_bookmarked?: boolean;
-  address_info?: IAddressInfo;
+  type?: string;
+  subject?: string;
+  share_phone_number?: string
+  support_types?: ISupportType[];
   contact_info?: IContacInfo;
-  created_by?: string;
-  created_time?: Date;
-  description?: string;
-  id?: string;
-  location?: string;
-  medias?: IMedias[];
-  requester_info?: string;
-  requester_id?: string;
   requester_object_status?: IRequesterObjectStatus[];
   requester_type?: string;
+  requester_id?: string;
+  medias?: IMedias[];
+  description?: string;
+  address_info?: IAddressInfo;
+
+  is_bookmarked?: boolean;
+  is_group_bookmarked?: boolean;
+  created_by?: string;
+  created_time?: Date;
+  id: string;
+  location?: string;
+  requester_info?: any;
   status?: string;
-  subject?: string;
-  support_types?: ISupportType[];
   supporters?: [];
   updated_by?: string;
   updated_time?: Date;
   verify_status?: string;
   priority_type?: string;
   color_info?: any;
+  suggests?: any;
 }
 interface IMedias {
   mime_type?: string;
@@ -361,4 +366,29 @@ interface IBaseStatus {
   color?: string
   bg_color?: string
   icon?: string
+}
+interface IGroup {
+  id?: string;
+  type: string;
+  name: string;
+  location?: string;
+  avatar?: string;
+  address_info?: IAddressInfo;
+  contact_info?: IContacInfo;
+  confirm_code?: string;
+  detail_info?: {
+    support_types?: ISupportType[];
+  };
+  description?: string;
+  admin_id?: string;
+  created_time?: Date;
+  verify_status?: string;
+}
+interface IGroupSearchObject {
+  lat_position: number;
+  long_position: number;
+  keyword?: string;
+  distance: number;
+  type: string;
+  verify_status: string[];
 }

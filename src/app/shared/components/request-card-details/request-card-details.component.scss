@@ -29,7 +29,10 @@
     z-index: 2;
   }
   .request_sesstion {
+    margin: 20px 0;
     position: relative;
+    overflow-y: scroll;
+    height: calc(100vh - 100px);
   }
   .img_container {
     background-color: black;
@@ -74,15 +77,15 @@ a {
 }
 
 .comment_sestion {
-  .comment-list{
+  .comment-list {
     max-height: 60vh;
     overflow: hidden;
     overflow-y: scroll;
-    @media(max-width: 599px){
-      max-height: 300px!important;
+    @media (max-width: 599px) {
+      max-height: 300px !important;
     }
   }
-  .comment-block{
+  .comment-block {
     margin-bottom: 20px;
     position: relative;
     height: auto;
@@ -116,7 +119,7 @@ a {
       position: absolute;
       display: none;
     }
-    .fileUpload{
+    .fileUpload {
       position: absolute;
       right: 15px;
       top: 15px;
@@ -134,38 +137,38 @@ a {
         filter: alpha(opacity=0);
         transform: rotate(180deg);
       }
-      span{
+      span {
         font-size: 15px;
         cursor: pointer;
       }
     }
-    .preFile{
+    .preFile {
       position: absolute;
       width: 90px;
       bottom: 10px;
       right: 30px;
-      .content-prefile{
+      .content-prefile {
         position: relative;
-        mat-icon{
+        mat-icon {
           position: absolute;
           right: -15px;
           top: -15px;
-          background-color: rgba($color: #ddd, $alpha: .3);
+          background-color: rgba($color: #ddd, $alpha: 0.3);
           border: unset;
           border-radius: 50%;
           padding: 5px;
         }
       }
-      img{
+      img {
         width: 100%;
       }
     }
-    &.active{
+    &.active {
       height: 200px;
-      button{
+      button {
         display: block;
       }
-      .fileUpload{
+      .fileUpload {
         display: block;
       }
     }

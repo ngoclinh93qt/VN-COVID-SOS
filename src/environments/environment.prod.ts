@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   hmr: false,
-  host: 'https://sos-api.3exp8.network/api/v1',
+   host: 'https://api.tiepsuc.vn/api/v1',
+  //host: 'https://sos-api.3exp8.network/api/v1',
   googleApiKey: 'AIzaSyAnCQ9qgDE8waZ0zAPG-d-QPFSkfIgSH1Q',
   s3: {
     AccessKeyId: '',

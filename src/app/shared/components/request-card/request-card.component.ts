@@ -14,6 +14,7 @@ export class RequestCardComponent implements OnInit {
   @Input() request?: ISOSRequest;
   @Input() type?: String;
   @Input() session?: String;
+  @Input() isSuggested?: boolean = false;
   createTime: string = ''
   user: any;
   mapPriority: any;
@@ -21,10 +22,11 @@ export class RequestCardComponent implements OnInit {
   distance: string = ''
   isBookmarkSession: boolean = false;
   isRemote: boolean = false
+  typesMap!: Map<string, any>;
   constructor(private GeneralService: GeneralService,
     private UrgentRequestService: UrgentRequestService,
     private StorageService: StorageService,
-    protected constant: ConstantsService,
+    public constant: ConstantsService,
     private notificationService: NotificationService) {
   }
   mark($event: any, action?: string) {
@@ -48,7 +50,8 @@ export class RequestCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.mapPriority = this.constant.MAP_PRIORITY;
-    this.mapStatus = this.constant.REQUEST_STATUS
+    this.mapStatus = this.constant.REQUEST_STATUS;
+    this.typesMap = this.constant.TYPE_REQUEST;
     this.user = this.StorageService.userInfo;
     this.isBookmarkSession = (this.session == this.constant.SESSION.BOOKMARKED_REQUESTS)
     this.createTime = this.GeneralService.diffDate(new Date(this.request?.created_time!))

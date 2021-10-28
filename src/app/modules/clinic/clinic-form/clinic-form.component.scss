@@ -1,0 +1,69 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+
+  .content {
+    height: 70vh;
+    overflow-y: scroll;
+
+    .check-box {
+      margin-bottom: 10px;
+    }
+  }
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.example-full-width {
+  width: 100%;
+}
+.example-left-half-width {
+  width: calc(50% - 10px);
+  float: left;
+}
+.example-right-half-width {
+  width: calc(50% - 10px);
+  float: right;
+}
+
+.map {
+  width: 100%;
+  height: 200px;
+}
+
+.list-img {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.add-img-btn {
+  cursor: pointer;
+  color: red;
+  border: 1px solid;
+  border-radius: 20px;
+  margin: 10px 0;
+  padding: 5px;
+}
+.img-wrap {
+  position: relative;
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent;
+  }
+}
+.type-radio {
+  display: flex;
+  margin: 20px 0px;
+  .btn-end {
+    justify-content: flex-end;
+    margin: 0px 0px 0px auto;
+  }
+}

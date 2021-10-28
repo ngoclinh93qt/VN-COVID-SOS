@@ -51,7 +51,7 @@ export abstract class RestService<T> implements IRestServices<T> {
       .pipe(map((res) => res.data));
   }
 
-  create(body: any, options: any): Observable<T> {
+  create(body: any, options?: any): Observable<T> {
     return this.http
       .put<{ data: T }>(`${this.host}/${this.pathName}`, body)
       .pipe(map((res) => res.data));

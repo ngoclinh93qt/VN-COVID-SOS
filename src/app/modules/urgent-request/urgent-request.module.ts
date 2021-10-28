@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SuggestForComponent } from './suggest-for/suggest-for.component';
 
 const routes: Routes = [
   {
@@ -45,7 +46,8 @@ const routes: Routes = [
     SuggestedComponent,
     CreatedComponent,
     JoinedComponent,
-    BookmarkedComponent
+    BookmarkedComponent,
+    SuggestForComponent
   ],
   imports: [
     CommonModule,

@@ -1,8 +1,6 @@
 import { LocationService } from './../../../shared/subjects/location.service';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { UrgentLevelService } from '../../../core/http/urgent-level.service';
-import { NgForm } from '@angular/forms';
-import { EMPTY, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { RequesterObjectStatusService } from '../../../core/http/requester-object-status.service';
 import { UrgentRequestService } from '../../../core/http/urgent-request.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,12 +9,7 @@ import { ProvinceService } from '../../../core/http/province.service';
 import {
   Component,
   OnInit,
-  OnChanges,
-  SimpleChanges,
-  Inject,
-  ElementRef,
-  ViewChild,
-  OnDestroy,
+  Inject
 } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
@@ -35,11 +28,8 @@ import { UserSignupComponent } from '../../user-signup/user-signup.component';
   styleUrls: ['./request-form.component.scss'],
 })
 export class RequestFormComponent implements OnInit {
-  public formProfile: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    phone_number: new FormControl(''),
-    address: new FormControl(''),
-  });
+  requestForm: FormGroup;
+
   location: string = '';
   provinces: IProvince[] = [];
   province: IProvince = {
@@ -64,39 +54,82 @@ export class RequestFormComponent implements OnInit {
   isSending = false;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { action: String, request: ISOSRequest },
     private RequesterObjectStatusService: RequesterObjectStatusService,
     private ProvinceService: ProvinceService,
     private SupportTypesService: SupportTypesService,
     private UrgentRequestService: UrgentRequestService,
     public dialogRef: MatDialogRef<RequestFormComponent>,
-    private urgentLevelService: UrgentLevelService,
     private notificationService: NotificationService,
     private s3Service: S3Service,
     private locationService: LocationService,
     private userService: UsersService,
-    private router: Router,
     public dialog: MatDialog,
     private storageService: StorageService,
     private formatService: FormatService,
   ) {
-    this.urgentLevels = urgentLevelService.getUrgentLevels();
+    this.requestForm = new FormGroup({
+      type: new FormControl('ask'),
+      contact_info: new FormGroup({
+        name: new FormControl(''),
+        phone_number: new FormControl('')
+      }),
+      address_info: new FormGroup({
+        district_code: new FormControl(''),
+        province_id: new FormControl(''),
+        address: new FormControl(''),
+        ward_code: new FormControl(''),
+      }),
+      description: new FormControl(''),
+      requester_object_status: new FormControl(''),
+      subject: new FormControl(''),
+      support_types: new FormControl(''),
+      share_phone_number: new FormControl('private'),
+    });
     this.fetchInit();
-    console.log("formConstruct");
   }
 
-
+  show(data: any) {
+    console.log(data)
+  }
+  formInit() {
+    if (this.data.action === 'update') {
+      this.province.id = this.data.request.address_info?.province_id!;
+      this.getProvince(this.province.id)
+      this.getDistrict(this.data.request.address_info?.district_code)
+      this.requestForm.patchValue({
+        contact_info: this.data.request.contact_info,
+        address_info: this.data.request.address_info,
+        description: this.data.request.description,
+        requester_object_status: this.data.request.requester_object_status,
+        subject: this.data.request.subject,
+        // support_types: this.data.request.support_types,
+      })
+      this.medias = this.data.request.medias!;
+      this.location = this.data.request.location!;
+      this.requestForm.value;
+    } else
+      if (this.user) {
+        this.requestForm.patchValue({
+          contact_info: {
+            name: this.user.last_name + ' ' + this.user.first_name,
+            phone_number: this.user.phone_number
+          },
+          address_info: {
+            address: this.user.address
+          }
+        })
+      }
+  }
 
   ngOnInit() {
-
-    this.setLocation(this.storageService?.location);
-    this.subscription = this.locationService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
-    this.user = this.storageService.userInfo;
-    if (this.user) {
-      this.formProfile.value.name = this.user.last_name + ' ' + this.user.first_name
-      this.formProfile.value.phone_number = this.user.phone_number
-      this.formProfile.value.address = this.user.address
-      console.log(this.formProfile.value);
+    if (this.data.action != 'update') {
+      this.setLocation(this.storageService?.location);
+      this.subscription = this.storageService.locationSubject.subscribe({ next: (location: ILocation) => { this.setLocation(location) } })
     }
+    this.user = this.storageService.userInfo;
+    this.formInit();
+    console.log(this.requestForm.value)
   }
 
   ngOnDestroy(): void {
@@ -109,34 +142,49 @@ export class RequestFormComponent implements OnInit {
     });
     this.SupportTypesService.findAll().subscribe((result) => {
       this.supportTypes = result.map(x => { return { name: x.name, type: x.type } });
-      console.log(this.supportTypes);
+   
     });
     this.RequesterObjectStatusService.findAll().subscribe((result) => {
       this.requesterObjectStatus = result.map(x => { return { name: x.name, type: x.key } });
-      console.log(this.requesterObjectStatus);
+      let temp: IRequesterObjectStatus[] = []
+      if (this.data.action == 'update') {
+        this.requesterObjectStatus.forEach(x => {
+          this.data.request.requester_object_status?.forEach(xx => {
+            if (x.type == xx.type) temp.push(x);
+          })
+        })
+        this.requestForm.patchValue({ requester_object_status: temp })
+      }
+
+
     });
   }
-  onSubmit(data: ISOSRequest) {
-    data.requester_type = 'guest';
-    data.medias = this.medias;
-    const user = this.storageService.userInfo;
-    if (user != null && user?.role !== 'GUEST') {
-      data.requester_type = 'user';
-      data.requester_id = user.id;
+  onSubmit() {
+    let request: ISOSRequest = this.requestForm.value;
+    request.requester_type = 'guest';
+    request.medias = this.medias;
+    request.share_phone_number = 'public'
+
+    if (this.user != null && this.user?.role !== 'GUEST') {
+      request.requester_type = 'user';
+      request.requester_id = this.user.id;
     }
-    data.location = this.location;
-    if (!data.support_types) data.support_types = [];
-    if (!data.requester_object_status) data.requester_object_status = [];
-    this.UrgentRequestService.create(data, {}).subscribe(res => {
+    request.location = this.location;
+    if (this.data.action === 'update') return this.UrgentRequestService.update(this.data.request.id!, request, {}).subscribe(res => {
+      this.notificationService.success("Cập nhật thành công")
+      this.onClose(res)
+      this.checkProfile(res)
+    });
+    this.UrgentRequestService.create(request, {}).subscribe(res => {
       this.notificationService.success("Yêu cầu của bạn đã được tạo thành công")
       this.onClose(res)
-      this.checkProfile(data)
+      this.checkProfile(res)
     });
-    
+    return;
   }
 
-  checkProfile(data: ISOSRequest){
-    if(this.storageService.userInfo){
+  checkProfile(data: ISOSRequest) {
+    if (this.storageService.userInfo) {
       return
     }
     this.userService.searchProfile({ phone_number: data.contact_info?.phone_number }).subscribe(res => {
@@ -148,7 +196,7 @@ export class RequestFormComponent implements OnInit {
           {
             panelClass: 'login-frame-dialog',
             width: '100%',
-            maxWidth: '585px',
+            maxWidth: '585px ',
             data: data.contact_info?.phone_number
           })
       } else {
@@ -166,16 +214,15 @@ export class RequestFormComponent implements OnInit {
     })
   }
 
-  checkSubmit(data: any, isAccepted: any) {
-     (isAccepted._checked && data.status == 'VALID' && !this.onPickFile) ? this.onSubmit(data.value) : this.notificationService.error("Bạn cần điền đầy đủ thông tin")
-  }
   getProvince(id: string) {
     this.ProvinceService.findOne(id).subscribe((result) => {
       this.province = result;
       this.formatService.format(this.province.districts)
+
     });
   }
   getDistrict(id?: number) {
+    console.log(this.province)
     this.ProvinceService.getDistrict(this.province.id, id).subscribe(
       (result) => {
         this.district = result;
@@ -184,7 +231,7 @@ export class RequestFormComponent implements OnInit {
     );
   }
   setLocation(location: ILocation) {
-    if(!location){
+    if (!location) {
       return
     }
     this.location = `${location.lat},${location.lng}`;
@@ -196,6 +243,7 @@ export class RequestFormComponent implements OnInit {
       this.isMapCreated = true;
       const loader = new Loader({
         apiKey: environment.googleApiKey,
+        libraries: ['places']
       });
 
       loader.load().then(() => {
@@ -231,7 +279,7 @@ export class RequestFormComponent implements OnInit {
 
         google.maps.event.addListener(marker, 'dragend', () => {
           const location = marker.getPosition()
-          return self.setLocation({lat: location?.lat() || 0, lng: location?.lng() || 0});
+          return self.setLocation({ lat: location?.lat() || 0, lng: location?.lng() || 0 });
         });
 
       });

@@ -22,3 +22,7 @@ if (environment.hmr) {
 } else {
   bootstrap().catch(err => console.log(err));
 }
+
+if(environment.production){
+  console.log = ()=>{}
+}

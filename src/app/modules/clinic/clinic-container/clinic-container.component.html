@@ -1,0 +1,35 @@
+<div class="request_session">
+    <br>
+    <button fxHide.gt-xs mat-fab *ifRoles="['ADMIN', 'OPERATOR']" style="right: 20px; bottom: 20px; position: fixed; z-index: 20;" color="accent"
+        (click)="openCreateForm()">
+        <mat-icon>add</mat-icon>
+    </button>
+    <div style="position: relative; margin-bottom: 10px;">
+        <div fxLayout="row">
+            <div class="search-form float-right m-3" fxFlex.gt-xs='0 0' fxFlex>
+                <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+                <input [(ngModel)]="filterObject.keyword" type="text" class="search-input" placeholder="Tìm kiếm"
+                    (keyup.enter)="setKey($event)" />
+                <mat-icon *ngIf="filterObject.keyword" (click)="clearKey()" class="clear-icon">close</mat-icon>
+
+            </div>
+        </div>
+      
+        <button class="menuTrigger" style="width: 85px;" mat-stroked-button [matMenuTriggerFor]="distance">
+            {{ filterObject.distance }} (km)
+        </button>
+        <mat-menu #distance="matMenu">
+            <button *ngFor="let distance of distanceOpt" mat-menu-item (click)="selectDistance(distance)">
+                {{ distance }}
+            </button>
+        </mat-menu>
+        <button mat-icon-button aria-label="drop location" (click)="selectLocation()">
+            <mat-icon *ngIf="!_isPicked">pin_drop</mat-icon>
+            <mat-icon *ngIf="_isPicked" color="primary">pin_drop</mat-icon>
+        </button>
+    </div>
+    <div class="request_items">
+        <app-clinic-container (scrollingFinished)="load()" type='half-width' [clinics]='clinics'>
+        </app-clinic-container>
+    </div>
+</div>

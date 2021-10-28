@@ -7,29 +7,15 @@
   <br>
   <div style="position: relative; margin-bottom: 10px;">
     <div fxLayout="row">
-      <div class="search-form float-right m-3" fxFlex.gt-xs='0 0 calc(100% - 135px)' fxFlex>
+      <div class="search-form float-right m-3" fxFlex.gt-xs='0 0' fxFlex>
         <mat-icon class="search-icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
         <input [(ngModel)]="filterObject.keyword" type="text" class="search-input" placeholder="Tìm kiếm"
           (keyup.enter)="setKey($event)" />
         <mat-icon *ngIf="filterObject.keyword" (click)="clearKey()" class="clear-icon">close</mat-icon>
 
       </div>
-      <app-button fxHide fxShow.gt-xs style="height: 50px; right: 0; position: absolute;" (click)="openCreateForm()"
-        height="50" color="accent" text="Tạo yêu cầu">
-      </app-button>
     </div>
-    <button matBadge="{{filterObject.priority_type?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
-      mat-stroked-button class="menuTrigger" [matMenuTriggerFor]="priority">
-      Mức độ
-    </button>
 
-    <mat-menu #priority="matMenu">
-      <button *ngFor="let level of urgentLevels" mat-menu-item (click)="selectPriority(level.type, $event)">
-        <mat-icon class="empty">check_box_outline_blank</mat-icon>
-        <mat-icon class="checked red">check_box</mat-icon>
-        {{ level.name }}
-      </button>
-    </mat-menu>
 
     <button matBadge="{{filterObject.support_types?.length||null}}" matBadgePosition="after" matBadgeColor="primary"
       class="menuTrigger" mat-stroked-button [matMenuTriggerFor]="support_type">
@@ -66,8 +52,12 @@
         {{ distance }}
       </button>
     </mat-menu>
+    <button mat-icon-button aria-label="drop location" (click)="selectLocation()">
+      <mat-icon *ngIf="!_isPicked">pin_drop</mat-icon>
+      <mat-icon *ngIf="_isPicked" color="primary">pin_drop</mat-icon>
+    </button>
   </div>
   <div class="request_items">
-    <app-request-container (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
+    <app-request-container session='{{session}}' (scrollingFinished)="load()" type='half-width' [requests]='requests'></app-request-container>
   </div>
 </div>

@@ -22,6 +22,7 @@ export class UserSignupComponent implements OnInit {
   thirdFormGroup!: FormGroup;
   isPhoneInUsed: boolean = false;
   isValidOTP: boolean | undefined;
+  isAcceptNDA = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public phone: number,
     private formBuilder: FormBuilder,
@@ -145,6 +146,9 @@ export class UserSignupComponent implements OnInit {
   ngOnInit(): void {
 
     this.createForm();
+  }
+  checkAccept(isAccept: boolean){
+    this.isAcceptNDA= isAccept;
   }
 }
 function MustMatch(arg0: string, arg1: string): any {

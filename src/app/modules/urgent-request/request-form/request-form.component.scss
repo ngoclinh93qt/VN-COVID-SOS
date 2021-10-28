@@ -60,3 +60,11 @@ fieldset {
     background-color: transparent;
   }
 }
+.type-radio{
+  display: flex;
+  margin: 20px 0px;
+  .btn-end{
+    justify-content: flex-end;
+    margin: 0px 0px 0px auto;
+  }
+}

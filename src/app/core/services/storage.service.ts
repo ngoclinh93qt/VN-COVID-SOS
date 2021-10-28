@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ConstantsService } from '../../shared/constant/constants.service';
 
@@ -6,24 +6,41 @@ import { ConstantsService } from '../../shared/constant/constants.service';
   providedIn: 'root',
 })
 export class StorageService {
-  locationSubject: BehaviorSubject<ILocation>;
+
+  public locationSubject = new Subject<ILocation>();
   constructor(private constant: ConstantsService) {
-    this.locationSubject = new BehaviorSubject(this.location);
   }
   public get location(): any | undefined {
     let result = localStorage.getItem(this.constant.STORAGE_KEY.LOCATION);
     if (result) {
       return JSON.parse(result);
     }
-    return this.constant.DEFAULT_LOCATION;
+    return;
   }
   public set location(value: any | undefined) {
+    console.log("set location: ")
+    console.log(value)
     if (value) {
       localStorage.setItem(
         this.constant.STORAGE_KEY.LOCATION,
         JSON.stringify(value)
       );
-      this.locationSubject.next(value);
+      this.locationSubject.next(value)
+    }
+  }
+  public get last_location(): any | undefined {
+    let result = localStorage.getItem(this.constant.STORAGE_KEY.LAST_LOCATION);
+    if (result) {
+      return JSON.parse(result);
+    }
+    return;
+  }
+  public set last_location(value: any | undefined) {
+    if (value) {
+      localStorage.setItem(
+        this.constant.STORAGE_KEY.LAST_LOCATION,
+        JSON.stringify(value)
+      );
     }
   }
 

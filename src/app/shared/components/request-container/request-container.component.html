@@ -3,7 +3,7 @@
         <img src="assets/empty.jpg" alt="">
     </div>
     <div *ngFor="let request of requests">
-        <app-request-card type="{{type}}" (click)="chooseRequest(request)" [session]="session" [request]="request">
+        <app-request-card type="{{type}}" (click)="chooseRequest(request)" [session]="session" [request]="request" [isSuggested]="isSuggested">
         </app-request-card>
     </div>
 </div>

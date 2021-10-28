@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmCodeService } from 'src/app/core/http/confirm-code.service';
 import { VolunteerGroupService } from 'src/app/core/http/volunteer-group.service';
 import { NotificationService } from 'src/app/shared/components/notification/notification.service';
 
@@ -15,7 +16,8 @@ export class UpdatePhoneComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public group: any,
     private _dialogRef: MatDialogRef<UpdatePhoneComponent>,
     private GroupService: VolunteerGroupService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private confirmCode: ConfirmCodeService
   ) {}
 
   ngAfterViewInit(): void {
@@ -28,7 +30,7 @@ export class UpdatePhoneComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  async onSubmit(data: string) {
+  async onSubmit(data: any) {
     this.GroupService.update(this.group.id, data, {}).subscribe((data: any)=>{
       if(data){
         this.notification.success("Sửa thông tin thành công");
@@ -40,4 +42,9 @@ export class UpdatePhoneComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  requestConfirm(phone: string){
+    this.notification.info("Xin vui lòng chờ trong giây lát chúng tôi sẽ gửi mã xác nhận tới số điện thoại của bạn", 10000)
+    this.confirmCode.requestCode(phone).subscribe()
+  }
 }

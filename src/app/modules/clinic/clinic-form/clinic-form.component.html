@@ -1,0 +1,121 @@
+<span style="float: right;">
+    <button (click)="onClose()" mat-icon-button aria-label="close Icon">
+        <mat-icon>close</mat-icon>
+    </button></span>
+<form class="example-form" [formGroup]="clinicForm" (ngSubmit)="onSubmit()" style="width:100%">
+    <h2><b *ngIf="data.action!='update'">Tạo trạm y tế</b><b *ngIf="data.action==='update'">Tạo trạm y tế</b></h2>
+    <br />
+    <div #content class="content">
+
+        <h4><b>Thông tin người tạo</b></h4>
+        <fieldset formGroupName="contact_info">
+            <mat-form-field class="example-left-half-width" appearance="outline">
+                <mat-label>Họ và tên</mat-label>
+                <input formControlName="name" matInput placeholder="Họ và tên" required />
+            </mat-form-field>
+
+
+            <mat-form-field class="example-right-half-width" appearance="outline">
+                <mat-label>Số điện thoại</mat-label>
+                <input formControlName="phone_number" matInput placeholder="Số điện thoại" required />
+            </mat-form-field>
+
+        </fieldset>
+        <br />
+        <h4><b>Thông tin trạm y tế</b></h4>
+        <fieldset formGroupName="detail_info">
+            <mat-form-field *ngIf="this.data.action!='update'" class="example-full-width" appearance="outline">
+                <mat-label>Loại hỗ trợ</mat-label>
+                <mat-select formControlName="support_types" multiple>
+                    <mat-option *ngFor="let type of supportTypes" [value]="type">
+                        {{ type.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </fieldset>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Tên trạm y tế</mat-label>
+            <input formControlName="name" matInput placeholder="Tên trạm y tế..." required />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Mô tả</mat-label>
+            <textarea formControlName="description" matInput placeholder="Thêm mô tả"></textarea>
+        </mat-form-field>
+
+        <fieldset formGroupName="address_info">
+            <mat-form-field class="example-full-width" appearance="outline" required>
+                <mat-label>Tỉnh/ Thành Phố</mat-label>
+                <mat-select formControlName="province_id" required>
+                    <mat-option *ngFor="let province of provinces" [value]="province.id"
+                        (click)="getProvince(province.id)">
+                        {{ province.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-left-half-width" appearance="outline">
+                <mat-label>Quận/ Huyện</mat-label>
+                <mat-select formControlName="district_code" required>
+                    <mat-option *ngFor="let district of province.districts" [value]="district.code"
+                        (click)="getDistrict(district?.code)">
+                        {{ district.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-right-half-width" appearance="outline">
+                <mat-label>Xã/ Phường</mat-label>
+                <mat-select formControlName="ward_code" required>
+                    <mat-option *ngFor="let ward of district.wards" [value]="ward.code">
+                        {{ ward.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Địa chỉ</mat-label>
+                <input formControlName="address" matInput placeholder="Số nhà, tên đường..." required />
+            </mat-form-field>
+
+        </fieldset>
+        <br />
+        <div></div>
+        <a style="cursor: pointer; color: red; margin: 10px 0;" (click)="pickLocation()">Chọn vị trí trên bản đồ </a>
+        <input [ngStyle]="{'display': isShowmap? 'block': 'none'}" id="pac-input" class="controls" type="text"
+            placeholder="Search Box" style="
+   
+        border-radius: 5rem;" />
+        <div [ngStyle]="{'display': isShowmap? 'block': 'none'}" class="map" id="mapx"></div>
+        <br>
+        <div style="margin: 20px 0;">
+            <input style="display: none;" id="input-file-id" (change)="onFilePicked($event)" type="file" />
+            <label for="input-file-id" style="cursor: pointer; color: red; margin: 10px 0;"
+                class="md-button md-stoked md-primary add-img-btn">+ Thêm hình ảnh/video</label>
+        </div>
+        <br>
+        <app-spinner *ngIf="isSending"></app-spinner>
+        <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
+            <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-sm="100%" *ngFor="let item of medias; let i = index"
+                class="img-wrap">
+                <button type="button" (click)="deleteImg(i)">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+                <div *ngIf="item.mime_type !== 'video'"><img width="100%" src="{{item.url}}" alt=""></div>
+                <div *ngIf="item.mime_type === 'video'">
+                    <video width="100%">
+                        <source src="{{item.url}}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div mat-dialog-actions class="submit-btn">
+        <button *ngIf="data.action!='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
+            [disabled]='isSending || clinicForm.invalid'>
+            Tạo mới
+        </button>
+        <button *ngIf="data.action==='update'" mat-flat-button type="submit" color="accent" cdkFocusInitial
+            [disabled]='isSending || clinicForm.invalid'>
+            Cập nhật
+        </button>
+    </div>
+</form>

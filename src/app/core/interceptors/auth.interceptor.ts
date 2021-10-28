@@ -63,7 +63,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.notificationService.error("Đã hết hạn đăng nhập")
       localStorage.clear();
       this.dialog.open(LoginFrameComponent,
-        {panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px'})
+        {panelClass: 'login-frame-dialog', width: '100%', maxWidth: '585px '})
     }
     return EMPTY;
   }

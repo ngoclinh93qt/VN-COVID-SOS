@@ -50,3 +50,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 <img width="1336" alt="Screen Shot 2021-09-12 at 2 55 07" src="https://user-images.githubusercontent.com/7227377/132956913-4d065823-22d4-4729-93df-9ff9facf8e4c.png">
 
+- Choose `publish` workflow
+- Click on `Run workflow`, fill in the release tag name (ie, v1.0.0) and it will be published to k8s on Vinacis
+
