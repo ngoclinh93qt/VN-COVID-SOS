@@ -19,7 +19,7 @@ export class UserLoginService extends RestService<IUser> {
     const url = `${root}/customers`;
     const body = {
       phone_number: phone_number,
-      debug: 'true',
+     // debug: 'true',
     };
     return this.http.put(url, body).pipe(
       map((res: any) => {

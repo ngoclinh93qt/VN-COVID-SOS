@@ -28,7 +28,7 @@ export class SignupService extends RestService<IUser> {
       phone_number: phone_number,
       first_name: first_name,
       last_name: last_name,
-      debug: 'true',
+     // debug: 'true',
     };
 
     return this.http.put(signupUrl, body).pipe(
